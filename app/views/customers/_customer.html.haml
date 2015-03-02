@@ -1,0 +1,14 @@
+.panel{ id: "customer-#{customer.id}" }
+  %header.panel-heading
+    = t_model(Customer, false)
+    %span.tools.pull-right
+      %a.fa.fa-chevron-down
+
+  .panel-body
+    .row.customer_resulted
+      - unless customer.new_record?
+        = render "#{customer.model_name.collection}/show", customer: customer
+
+    .row.customer_form
+      - if customer.new_record?
+        = render "#{customer.model_name.collection}/form", customer: customer

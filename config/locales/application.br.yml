@@ -1,0 +1,996 @@
+br:
+  # Mensagens
+  messages: &messages
+    accepted: deve ser aceito
+    already_authenticated: Você já está autenticado.
+    already_confirmed: Já foi confirmado
+    blank: não pode ficar em branco
+    cancel_account: Você está tentando excluir sua conta. Tem certeza que não deseja reconsiderar esta decisão?
+    change: Alterar
+    comment_sucess_created: 'Comentário criado com sucesso.'
+    conditions_of_sale: Condições de pagamento
+    confirmation: não está de acordo com a confirmação
+    confirmation_period_expired: "precisa ser confirmado em %{period}, solicite novamente por favor"
+    current_password: Para maior segurança digite sua senha atual.
+    currently_waiting_confirmation_for: "Aguardando confirmação para: %{for}"
+    empty: não pode ficar vazio
+    empty_record: Item vazio.
+    equal_to: deve ser igual a %{count}
+    even: deve ser par
+    exclusion: não está disponível
+    expired: "expirou, por favor solicite uma nova"
+    greater_than: deve ser maior que %{count}
+    greater_than_or_equal_to: deve ser maior ou igual a %{count}
+    how_do_i_get: Como vou receber
+    how_will_i_deliver: Como vou entregar
+    how_will_i_sell: Como vou vender
+    i_will_announce: Vou anunciar
+    inclusion: não está incluído na lista
+    inactive: A sua conta ainda não foi ativada.
+    information_of_my_product: Informações do meu produto
+    invalid: não é válido (a)
+    invalid_token: Chave de autenticação inválida.
+    invalid_password: Senha inválida
+    is_this_your_plan: "Esse é seu plano?"
+    less_than: deve ser menor que %{count}
+    less_than_or_equal_to: deve ser menor ou igual a %{count}
+    locked: A sua conta está bloqueada.
+    not_a_number: não é um número
+    not_an_integer: não é um número inteiro
+    not_found: não encontrado
+    not_found_in_database: Email ou senha inválida.
+    not_locked: não foi bloqueado
+    not_registered: Ainda não possui cadastro?
+    not_saved:
+      one: "1 erro impediu que %{resource} fosse salvo:"
+      other: "%{count} erros impediram que %{resource} fosse salvo:"
+    odd: deve ser ímpar
+    other_information: Outras informações
+    pay_with: "Pagar com %{provider}"
+    record_invalid: "A validação falhou: %{errors}"
+    recovery_password: Digite seu email ou senha e dentro de instantes você receberá um e-mail com as instruções para recuperação de sua senha.
+    restrict_dependent_destroy:
+      one: "Não é possível excluir um registro porque %{record} dependente existe"
+      many: "Não é possível excluir registro porque %{record} dependente existe"
+    subscription_confirmation: "Confirmar assinatura"
+    suggested_categories:
+      zero: Nenhuma categoria sugerida
+      one: "1 categoria sugerida"
+      other: "%{count} categorias sugeridas"
+    taken: já está em uso
+    timeout: A sua sessão expirou, por favor, faça login novamente para continuar.
+    too_long: "é muito longo(a) (máximo: %{count} caracteres)"
+    too_short: "é muito curto(a) (mínimo: %{count} caracteres)"
+    unauthenticated: Para continuar, faça login ou registre-se.
+    unconfirmed: Antes de continuar, confirme a sua conta. Um email foi enviado para você.
+    wrong_length: "não possui o tamanho esperado (%{count} caracteres)"
+    your_record_posted: "Seu %{model} foi publicado a"
+
+    # Menssagens expecíficas
+    username_format: "deve conter apenas números, letras e os caracteres (- . _)"
+
+    # Mensagens de mudanças
+    changes_messages:
+      add: Adicionou o campo %{field} com valor %{value}
+      array:
+        add: Alterou o campo %{field} acrescentando %{add}
+        add_remove: Alterou o campo %{field} acrescentando %{add} e removendo %{remove}
+        remove: Alterou o campo %{field} removendo %{remove}
+      modify: Alterou o campo %{field} de %{from} para %{to}
+      modify_no_value: Alterou o campo %{field}
+      remove: Removeu o campo %{field} (anteriormente com valor %{value})
+
+  breadcrumbs:
+    default: &default_breadcrumbs
+      # index: ""
+      all: Todos
+      edit: Editar
+      new: Novo
+      trash: Lixeira
+      dashboards: Painel
+
+    application:
+      dashboards: '<i class="fa fa-dashboard"></i> Painel'
+      root: Início
+
+    invitations:
+      <<: *default_breadcrumbs
+      index: Convites
+
+    users:
+      index: Usuários
+
+    # Providers
+    mercadolibre:
+      items:
+        <<: *default_breadcrumbs
+        index: Anúncios
+        # root: ""
+        # index: ""
+        # edit: ""
+
+  helpers: &helpers
+    actions: Ações
+    details: Detalhes
+    empty: Nenhum %{model} encontrado
+    reset_mark: Reposicionar marcador
+    confirm:
+      delete: Tem certeza que deseja remover esse %{model}?
+      destroy: Tem certeza que deseja excluir definitivamente esse %{model}?
+    select:
+      prompt: Por favor selecione
+      tags: 'Digite os serviços prestados separadas por ","'
+
+    # More used with I18n.t
+    submit:
+      cancel: Cancelar %{model}
+      create: Adicionar %{model}
+      delete: Remover %{model}
+      destroy: Excluir %{model}
+      edit: Editar %{model}
+      submit: Salvar %{model}
+      update: Atualizar %{model}
+
+
+
+    # More used with :translate_helper
+    # helpers.providers/mercadolibre/shippings.titles.request
+    actions: &helpers_actions
+      back: Voltar
+      cancel: Cancelar
+      create: Adicionar
+      complete: Completar
+      confirm: Você tem certeza?
+      copy: Copiar
+      delete: Remover
+      destroy: Excluir
+      edit: Editar
+      import: Importar
+      new: Novo
+      refresh: Atualizar
+      request: Solicitar
+      submit: Salvar
+      update: Atualizar
+      sync: Sincronizar
+
+    titles: &helpers_titles
+      back: Voltar
+      cancel: Cancelar
+      complete: Completar %{model}
+      copy: Copy to clipboard
+      create: Novo %{model}
+      delete: Remover %{model}
+      destroy: Excluir %{model} definitvamente
+      edit: Editar %{model}
+      import: Importar %{model}
+      list: Listar %{model}
+      new: Novo %{model}
+      upload: Enviar %{model}
+      refresh: Atualizar %{model}
+      restore: Restaurar %{model}
+      request: Solicitar %{model}
+      submit: Salvar %{model}
+      sync: Sincronizar %{model}
+      update: Atualizar %{model}
+
+    # "providers/mercadolibre/shippings":
+    # titles
+    feedback:
+      ratings:
+        positive: positivo
+        neutral: neutro
+        negative: negativo
+        nil_feedback: sem avaliação
+        nil: sem motivo
+
+    customers:
+      status:
+        blocked: bloqueado
+        unblocked: desbloqueado
+    boxes:
+      status_title:
+        # Box Status
+        confirmed: Pagamento
+        paid: Pago
+        cancelled: Cancelado
+        to_send: A Enviar
+        shipped: Enviado
+        delivered: Entregue
+        rated: Feedback
+        archived: Arquivado
+        locked: Bloqueado
+
+      #payment_tags of the box_tags
+      payment_tags:
+        to_be_agreed: pgmto a combinar
+        pending: pgmto pendente
+        approved: pgmto aprovado
+        in_process: processando pgmto
+        rejected: pgmto rejeitado
+        cancelled: pgmto cancelado
+        refunded: reembolsado
+        in_mediation: em mediação
+        charged_back: charge_back
+        paid: pago
+        not_paid: não pago
+
+
+      #shipping_tags of the box_tags
+      shipping_tags:
+        to_be_agreed: entrega a combinar
+        pending: entrega pendente
+        handling: empacotando
+        shipped: enviado
+        delivered: entregue
+        not_delivered: não entregue
+        cancelled: entrega cancelada
+
+      box_tags:
+        in_process: processando pgmto
+        approved: pgmto aprovado
+        rejected: pgmto rejeitado
+        refunded: reembolsado
+        in_mediation: em mediação
+        charged_back: charge_back
+        paid: pago
+        not_paid: não pago
+        handling: empacotando
+        shipped: enviado
+        delivered: entregue
+        not_delivered: não entregue
+
+        pending_payment: pgmto pendente
+        pending_shipping: entrega pendente
+        cancelled_payment: pgmto cancelado
+        cancelled_shipping: entrega cancelado
+        payment_to_be_agreed: pgmto a combinar
+        shipping_to_be_agreed: entrega a combinar
+
+        # Shipping Status
+        # shipping_to_be_agreed: Pending to be shipped, not yet paid.
+        # shipping_pending: Pending to be shipped, not yet paid.
+        # shipping_handling:  Ready to be shipped. When the payment become active.
+        # shipping_shipped: Shipped.
+        # shipping_delivered: Delivered. Automatic update with the shipment tracking number.
+        # shipping_not_delivered: Not delivered. Automatic update with the shipment tracking number.
+        # shipping_cancelled: Cancelled by sender or receiver.
+        # shipping_ready_to_ship: NOT DOCUMENTED
+        # shipping_not_verified: NOT DOCUMENTED
+
+      shippings:
+        custom: customizado
+        not specified: não especificado
+        me1: me1
+        me2: me2
+        no_street: sem rua
+        no_number: sem número
+        no_zip_code: sem cep
+        no_city: sem cidade
+        no_address: sem endereço
+        pending: pendente
+        no_pending: sem pendências
+
+      customers:
+        pending: pendente
+        no_pending: sem pendências
+        no_phone: sem telefone
+
+
+
+    results:
+      defaults:
+        counted:
+          zero: "Nenhum %{model}."
+          one: "1 %{model}"
+          other: "%{count} {model}"
+
+    # Steps
+    steps:
+      status:
+        confirmed: Pagamento
+        paid: Pago
+        cancelled: Cancelado
+        to_send: A Enviar
+        shipped: Enviado
+        delivered: Entregue
+        rated: Feedback
+        archived: Arquivado
+        locked: Bloqueado
+
+    items:
+      status:
+        empty: Item vazio
+        unpublished: Não publicado
+        invalid_data: Inválido
+        not_yet_active: Aguardando Ativação
+        payment_required: Pagamento necessário
+        paused: Pausado
+        active: Ativo
+        closed: Encerrado
+        under_review: Em revisão
+        inactive: Inativo
+
+      buying_mode:
+        auction: Arremate
+        buy_it_now:  Preço fixo
+        classified:  Classificados
+
+      conditions:
+        new: Novo
+        used: Usado
+        unespecified: Não especificado
+
+      listing_type:
+        gold_premium: Diamante
+        gold: Ouro
+        silver: Prata
+        bronze: Bronze
+        free: Grátis
+
+      shippings:
+        custom: Outras formas de envio por sua conta
+        free_shipping: Frete grátis
+        local_pick_up: Retirada em mãos
+        me: Mercado Envios
+
+      shippings_infos:
+        me: Permitirá que você faça envios pelos Correios com preços promocionais e o destacaremos nas listas.
+
+      validation_status:
+        valid: Válido
+
+      validation_status_long:
+        valid: O Anúncio é válido para o Mercado Livre
+        "body.invalid_field_types": "Tipos de campo inválido"
+
+
+    questions:
+      status:
+        closed_unanswered: não respondida
+        answered: respondida
+        closed_unanswered: fechada e não respondida
+        under_review: em revisão
+        unanswered: não respondida
+
+    # Localizações
+    locations:
+      cep: "CEP: %{cep}"
+
+    # Contatos
+    contacts:
+      type:
+        email: E-mail
+        gplus: Google Plus
+        mobile: Celular
+        phone: Telefone
+        website: Site
+        skype: Skype
+        facebook: Facebook
+        twitter: Twitter
+
+    mercadolibre:
+      shippings:
+        status_label:
+          to_be_agreed: Não definido
+          pending: Pendente
+          handling:  A enviar
+          shipped: Enviado
+          delivered: Entregue
+          not_delivered: Não Entregue
+          cancelled: Cancelado
+          ready_to_ship: Preparado para envio
+          not_verified: Não Verificado
+
+  # Atributos
+  attributes_all: &attributes_all
+    helpers:
+      <<: *helpers
+    about: Sobre
+    accepts_mercadopago: MercadoPago incluído grátis
+    account: Conta
+    actions: Ações
+    add_friend: Adicionar como amigo
+    address: Endereço
+    address_line: Endereço
+    and: e
+    available_quantity: Quantidade
+    avatar: Imagem principal
+    back: Voltar
+    body: Descrição
+    buy: Comprar
+    buyer: Comprador
+    buying_mode: Tipo de venda
+    salão_not_found: "Você ainda não possui nenhum salão, comece criando um agora mesmo clicando no botão acima."
+    category: Categoria
+    categories: Categorias
+    cancel: Cancelar
+    cancel_account: Excluir conta
+    cep: CEP
+    change_password: Alterar sua senha
+    change_status: Mudar status
+    check_in: Check-in
+    check_in_title: Faça seu check-in marcando onde está
+    city: Cidade
+    client: Cliente
+    clients_list: Lista de clientes
+    close: Fechar
+    comment: Comentário
+    condition: Condição
+    contact: Atendimento
+    contacts: Contatos
+    contact_infos: Informações de contato
+    confirm: Você tem certeza?
+    confirmation_token: Chave de confirmação
+    connect_with: Você pode se conectar via
+    category_suggest: O que irá vender?
+    country: País
+    courses: Cursos
+    current_password: Senha atual
+    customer_name: Cliente
+    delete: Excluir
+    desc: Descrição
+    description: Descrição
+    destroy: Excluir
+    developed_by: Desenvolvido pela
+    dimensions: Dimensões do pacote
+    dont_have_an_account_yet: Não possui uma conta ainda?
+    dots: Pontos (Em Breve)
+    duration: Duração
+    edit: Editar
+    email: E-mail
+    encrypted_password: Senha
+    end_time: Encerra em
+    expand: Expandir
+    feedbacks: Qualificações
+    firstname: Nome
+    forgot_your_password: Esqueceu sua senha?
+    free_trial: Experimente grátis
+    frequency: Frequência
+    friends_list: Lista de amigos
+    from: De
+    front: Frente
+    gallery: Galerias
+    geo: Cordenadas
+    geocomplete: Localização
+    genre: Modalidade
+    group: Grupo
+    home: Página Inicial
+    home_title: Voltar a página de busca
+    how_it_work: Como Funciona
+    institution: Instituição
+    invitations_count: Convites enviados
+    invited_by_id: Convidado por
+    item_information: Informações sobre o anuncio
+    joined_on: Inscreveu-se em
+    lastname: Sobrenome
+    last_sign_in_at: Último login
+    last_sync: Última sincronização
+    levels: Tipo de Cursos
+    like: Recomendar
+    liked: Recomendo
+    likes_title: Pessoas que recomendam
+    likeds_list: Recomendados por
+    loading: Carregando...
+    login: Login
+    logout: Sair
+    ml_id: ID
+    ml_order_id: ID da venda
+    more: Mais
+    my_account: Minha Conta
+    name: Título
+    nickname: Nome de usuário
+    new: Novo
+    no_history: Não existe atividades registradas
+    non_mercado_pago_payment_methods: Outros meios de pagamento
+    num: Número
+    or: OU
+    or_without_omniauth: Faça seu login ou cadastre-se
+    order: Anúncio
+    password: Senha
+    password_confirmation: Confirme sua senha
+    phone: Telefone
+    pid: ID da venda
+    policy: Termos de políticas e privacidade
+    posted: Publicado a
+    price: Valor
+    profile: Perfil
+    publish: Publicar
+    published: Publicado
+    publishing: Publicar
+    quantity_from_store: Quantidade em estoque
+    receiver_address_s: Endereço completo
+    received: MINHA
+    recovery_password: Recuperar senha
+    reports: Relatórios
+    region: Bairro
+    remember_me: Lembrar da senha
+    resend_confirmation: Reenviar confirmação
+    role: Cargo
+    save: Salvar
+    search: Buscar
+    search_clean: Limpar busca
+    search_filters: Filtros de pesquisa
+    select: Selecionar
+    selected: Selecionado
+    send: Enviar
+    send_image: Enviar imagen
+    sent: AO COMPRADOR
+    services: Serviços
+    settings: Configurações
+    shipping: Entrega
+    shipping_dimension: Tamanho do pacote
+    show_menu: Mostrar menu
+    sign_in: Entrar
+    sign_in_count: Logins
+    sign_up: Crie sua conta
+    start: Início
+    start_time: Início em
+    state: Estado
+    stop_time: Encerramento
+    street_name: Rua/Avenida
+    street_number: Número
+    submit: Salvar
+    subscribe: Assinar
+    summary: Descrição curta
+    tags: Serviços Prestados
+    text: Descrição
+    title: Título
+    to: Para
+    to_top: Voltar para o topo do site
+    trash: Lixeira
+    type: Tipo
+    uf: Estado
+    username: Usuário
+    validating_and_publishing: Validar e publicar
+    value: Valor
+    warranty: Garantia
+    website: Site
+    what_is: O que é
+    youtube_url: Link do Youtube
+    zip_code: CEP
+
+  # Ações
+  actions: &actions
+    past: &actions_past
+      create: criou
+      destroy: removeu
+      update: atualizou
+
+
+
+
+  # Cargos
+  roles:
+    admin: "Administrador"
+    guest: "Visitante"
+    regular: "Usuário"
+
+
+
+  # Menssagens de erro
+  errors: &errors
+    format: "%{attribute} %{message}"
+    messages:
+      <<: *messages
+    template:
+      body: "Por favor, verifique o(s) seguinte(s) campo(s):"
+      header:
+        one: "Não foi possível gravar %{model}: 1 erro"
+        other: "Não foi possível gravar %{model}: %{count} erros."
+
+      # Carrierwave
+      carrierwave_processing_error: failed to be processed
+      carrierwave_integrity_error: is not of an allowed file type
+      carrierwave_download_error: could not be downloaded
+      extension_white_list_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"
+      extension_black_list_error: "You are not allowed to upload %{extension} files, prohibited types: %{prohibited_types}"
+      rmagick_processing_error: "Failed to manipulate with rmagick, maybe it is not an image? Original Error: %{e}"
+      mime_types_processing_error: "Failed to process file with MIME::Types, maybe not valid content-type? Original Error: %{e}"
+      mini_magick_processing_error: "Failed to manipulate with MiniMagick, maybe it is not an image? Original Error: %{e}"
+
+
+  # ######################### #
+  #         Models            #
+  # ######################### #
+  models: &models
+    errors:
+      <<: *errors
+
+    # Modelos
+    models:
+      account:
+        one: Conta
+        other: Contas
+      box:
+        one: Venda
+        other: Vendas
+      comment:
+        one: Comentário
+        other: Comentários
+      customer:
+        one: Cliente
+        other: Clientes
+      dashboard:
+        one: Conta
+        other: Painel
+      plan:
+        one: Plano
+        other: Planos
+      schedule:
+        one: Calendário
+        other: Calendários
+      step:
+        one: Step
+        other: Steps
+      subscription:
+        one: Assinatura
+        other: Assinaturas
+      user:
+        one: Usuário
+        other: Usuários
+
+      # Meli
+      "meli/category":
+        one: Categoria
+        other: Categorias
+
+      # Mercadolibre
+      "mercadolibre/item":
+        one: Anúncio
+        other: Anúncios
+
+      "providers/mercadolibre/question":
+        one: Pergunta
+        other: Perguntas
+
+      "providers/mercadolibre/feedback":
+        one: Qualificação
+        other: Qualificações
+
+      "providers/mercadolibre/shipping":
+        one: Entrega
+        other: Entrega
+
+    # Atributos dos módulos
+    attributes:
+      account:
+        <<: *attributes_all
+      box:
+        <<: *attributes_all
+        title: Título do anuncio
+        description: Informaçõe do anuncio
+        status_form:
+          from: De
+          status: Para
+      comment:
+        <<: *attributes_all
+      customer:
+        <<: *attributes_all
+      dashboard:
+        <<: *attributes_all
+      plan:
+        <<: *attributes_all
+      schedule:
+        <<: *attributes_all
+      step:
+        <<: *attributes_all
+      subscription:
+        <<: *attributes_all
+      user:
+        <<: *attributes_all
+        name: Nome
+
+      "mercadolibre/item":
+        <<: *attributes_all
+        buying_mode: Tipo de anúncio
+        condition: Condição do produto
+        shipping: Formas de entrega
+        start_time: Inicia em
+        available_quantity: Quantidade à publicar
+
+  # overrides
+  activemodel:
+    <<: *models
+  activerecord:
+    <<: *models
+  mongoid:
+    <<: *models
+
+
+
+
+  # ######################### #
+  #       ActionMailer        #
+  # ######################### #
+  action_mailer:
+    messages:
+      <<: *messages
+      # request_confirmation: Precisa ser aceito
+      # request_notification: Tem alguem esperando por você
+
+
+
+  # ######################### #
+  #          Views            #
+  # ######################### #
+  layouts:
+    application:
+      <<: *attributes_all
+    footer:
+      <<: *attributes_all
+    navigation:
+      <<: *messages
+      <<: *attributes_all
+    omniauth:
+      <<: *attributes_all
+    search:
+      <<: *attributes_all
+    user_nav_badge:
+      <<: *attributes_all
+
+
+
+  # ######################### #
+  #       Controllers         #
+  # ######################### #
+  controllers: &controllers
+    defaults: &default_controller
+      edit:
+        <<: *attributes_all
+      form:
+        <<: *messages
+        <<: *attributes_all
+      index:
+        <<: *attributes_all
+      new:
+        <<: *attributes_all
+      show:
+        <<: *attributes_all
+
+    # overrides
+    accounts:
+      <<: *default_controller
+    boxes:
+      <<: *default_controller
+      status_form:
+        <<: *messages
+        <<: *attributes_all
+    comments:
+      <<: *default_controller
+    customers:
+      <<: *default_controller
+    dashboards:
+      <<: *default_controller
+      index:
+        <<: *attributes_all
+        last_sync: Sincronizado a
+        dashboard_synced_message:
+          zero: "Ainda não foi carregada nenhuma venda."
+          other: "#{count} venda sincronizada."
+          other: "Já foram sincronizada %{count} vendas."
+        wait_dashboard_sync: "Por favor, Aguarde! Sincronização em andamento."
+    home:
+      <<: *default_controller
+      about:
+        <<: *messages
+        <<: *attributes_all
+      contact:
+        <<: *messages
+        <<: *attributes_all
+      index:
+        <<: *messages
+        price: Preços
+      services:
+        <<: *messages
+        <<: *attributes_all
+
+      navigation:
+        <<: *messages
+        <<: *attributes_all
+        price: Preços
+    passwords:
+      <<: *default_controller
+    plans:
+      <<: *default_controller
+      plan:
+        <<: *attributes_all
+    registrations:
+      <<: *default_controller
+      password:
+        <<: *attributes_all
+    schedules:
+      <<: *default_controller
+    sessions:
+      new:
+        <<: *messages
+        <<: *attributes_all
+    steps:
+      <<: *default_controller
+      step:
+        <<: *attributes_all
+    subscriptions:
+      <<: *default_controller
+      checkout:
+        <<: *messages
+        <<: *attributes_all
+    user:
+      new:
+        <<: *attributes_all
+    users:
+      <<: *default_controller
+
+
+    # Providers
+    mercadolibre:
+      categories:
+        <<: *default_controller
+        <<: *attributes_all
+        suggest:
+          <<: *messages
+          <<: *attributes_all
+
+      items:
+        <<: *default_controller
+        show:
+          <<: *messages
+          <<: *attributes_all
+          not_valid: Seu anuncio não é válido.
+
+    providers:
+      mercadolibre:
+        name: Mercado Livre
+        questions:
+          <<: *default_controller
+        shippings:
+          <<: *default_controller
+          empty:
+            empty_record: Endereço de entrega vazio.
+
+
+  <<: *controllers
+
+
+
+  # Devise Views
+  devise:
+    change_password:
+      title: Altere sua senha
+      submit: Alterar minha senha
+    confirmations:
+      confirmed: A sua conta foi confirmada com sucesso. Aproveite!.
+      send_instructions: Dentro de instantes, você receberá um email com as instruções de confirmação da sua conta.
+      send_paranoid_instructions: Se o seu email existir em nosso banco de dados, você receberá um email com instruções sobre como confirmar sua conta dentro de instantes.
+    failure:
+      <<: *messages
+      invalid: Usuário ou senha inválidos.
+      not_active: Sua conta está desativada.
+      not_found_in_database: E-mail ou senha inválidos.
+    invitations:
+      send_instructions: 'Seu convite foi enviado para %{email}.'
+      invitation_token_invalid: 'O chave de convite fornecida não é válida!'
+      updated: 'Sua senha foi definida com sucesso. Agora você já pode desfrutar à vontade.'
+      no_invitations_remaining: "Não há convites restantes"
+      invitation_removed: 'Infelizmente seu convite foi removido.'
+      new:
+        header: "Convidar"
+        submit_button: "Convidar"
+      edit:
+        header: "Defina sua senha"
+        submit_button: "Salvar"
+    links:
+      <<: *attributes_all
+      resend_confirmation_instructions: Enviar novamente as instruções de confirmação
+      resend_unlock_instructions: Enviar novamente as instruções de recuperação de senha
+      sign_in: Entrar
+      sign_in_with_omniauth_provider: Login com %{provider}
+    login:
+      <<: *attributes_all
+      or: Ou preenchendo seu email e senha
+      login: Usuário
+      submit: Entrar
+    mailer:
+      confirmation_instructions:
+        subject: Instruções de confirmação
+      invitation_instructions:
+        subject: 'Instruções para convite'
+      reset_password_instructions:
+        subject: Instruções de reinicialização de senha
+      unlock_instructions:
+        subject: Instruções de desbloqueio
+    omniauth_callbacks:
+      failure: "Não foi possível autorizar você através do %{kind} porque \"%{reason}\"."
+      success: "Autorizado com sucesso pela sua conta conta do %{kind}."
+    passwords:
+      no_token: "Você não pode acessar esta página sem que seja a partir de um e-mail de reinicialização de senha. Se você chegou aqui através de um e-mail de reinicialização de senha, por favor verifique se você usou a URL completa que foi informada."
+      no_token: Você não pode acessar esta página sem estar autenticado. Se você veio de um email de lembre de senha, por favor certifique-se de ter  digitado a URL corretamente.
+      send_instructions: "Você receberá um e-mail com instruções sobre como reinicializar sua senha dentro de instantes."
+      send_paranoid_instructions: "Caso seu e-mail esteja cadastrado, você receberá um link para recuperação de senha no seu e-mail em poucos minutos."
+      updated: A sua senha foi alterada com sucesso. Você está autenticado.
+      updated_not_active: Sua senha foi alterada com sucesso.
+    registrations:
+      destroyed: "Até mais! Sua conta foi cancelada com sucesso. Esperamos vê-lo novamente em breve."
+      signed_up: "Bem-vindo! Você se registrou com sucesso."
+      signed_up_but_inactive: "Você se cadastrou com sucesso. Porém, sua conta ainda não está ativada."
+      signed_up_but_locked: "Você se cadastrou com sucesso. Porém, sua conta está bloqueada."
+      signed_up_but_unconfirmed: "Uma mensagem com um link de confirmação foi enviado para o seu e-mail. Por favor, siga as instruções contidas no e-mail para ativar sua conta."
+      update_needs_confirmation: "Você atualizou sua conta com sucesso, mas nós precisamos verificar seu endereço de e-mail. Por favor, verifique seus e-mails e clique no link de confirmação para finalizar a criação da sua conta."
+      updated: "Você atualizou sua conta com sucesso."
+    reset_password:
+      title: Esqueceu sua senha?
+      submit: Recuperar minha senha
+    sessions:
+      form:
+        <<: *attributes_all
+      new:
+        <<: *messages
+        <<: *attributes_all
+      signed_in: "Autenticado com sucesso."
+      signed_out: "Você se desconectou."
+    users:
+      edit_form:
+        <<: *attributes_all
+      new:
+        <<: *attributes_all
+    unlocks:
+      send_instructions: "Em instantes você receberá um e-mail com instruções sobre como desbloquear sua conta."
+      send_paranoid_instructions: "Caso seu e-mail exista em nossa base, você receberá um e-mail dentro instantes com instruções sobre como desbloqueá-la."
+      unlocked: "Sua conta foi desbloqueada com sucesso. Por favor, faça login para continuar."
+
+
+  # ######################### #
+  #       Simple Form         #
+  # ######################### #
+  #   simple_form.{namespace}.{model}.{nested}.{action}.{attribute}
+  #   simple_form.{namespace}.{model}.{nested}.{attribute}
+  #   simple_form.{namespace}.{nested}.{action}.{attribute}
+  #   simple_form.{namespace}.{nested}.{attribute}
+  #   simple_form.{namespace}.defaults.{attribute}
+  # ######################### #
+  simple_form:
+    yes: Sim
+    no: Não
+    required:
+      text: Obrigatório
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Please review the problems below:"
+
+    placeholders:
+      defaults:
+        <<: *attributes_all
+        address_line: Digite sua rua e número
+        country: País
+        duration: "6.months"
+        login: Usuário ou e-mail
+        select2: 'Use "," pra separar os serviços'
+
+      shippings:
+        receiver_address:
+          comment: "Ex: Ap. 12b"
+      "mercadolibre/item":
+        category_suggest: "Ex: iPod 5 16 GB"
+        category_name: Nenhuma categoria selecionada
+
+
+
+
+    labels:
+      defaults:
+        <<: *attributes_all
+        back: Verso
+      box:
+        # name: Título do anúncio
+        description: Informações do anúncio
+
+      shippings:
+        receiver_address:
+          comment: Complemento
+
+
+    will_paginate:
+      page_gap: "Intervalo"
+      previous_label: "anterior"
+      next_label: "próximo"

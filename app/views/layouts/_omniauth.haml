@@ -1,0 +1,8 @@
+.login-social-link
+  - if devise_mapping.omniauthable?
+    - resource_class.omniauth_providers.each do |provider|
+      - provider_named = provider.to_s.titleize
+
+      = link_to user_omniauth_authorize_path(provider), class: "btn btn-lg btn-block #{provider}" do
+        %i{ class: "fa fa-#{provider}" }
+        %span.string= provider_named

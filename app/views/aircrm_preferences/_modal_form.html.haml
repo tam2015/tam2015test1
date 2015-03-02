@@ -1,0 +1,10 @@
+#box-modal.modal.fade
+  .modal-dialog
+    .modal-content{style: "padding: 20px" }
+      / = debug @shipping.receiver_address
+      - if params[:preference_type] == "canned_response"
+        = render "canned_response_new", aircrm_question_preference: @aircrm_question_preference
+      - if params[:preference_type] == "feedback_aircrm_reason"
+        = render "reason_feedback_new", aircrm_feedback_preference: @aircrm_feedback_preference
+      - if params[:preference_type] == "seller_feedback_message"
+        = render "seller_feedback_message_new", aircrm_feedback_preference: @aircrm_feedback_preference

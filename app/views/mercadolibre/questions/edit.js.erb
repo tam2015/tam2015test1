@@ -1,0 +1,12 @@
+// $("#form_new_answer-<%= @question.id %>").html("<%= j render 'modal_form' %>");
+
+$("body")
+  .find("#box-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("modal_form") %>')
+  .find("#box-modal.modal")
+    .modal();
+
+
+

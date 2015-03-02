@@ -1,0 +1,66 @@
+= simple_form_for(@user, url: user_session_path, html: { class: "shipping_form", role: "form" }) do |f|
+
+  / = f.input :email
+  / = f.input :password
+  / = f.button :button, type: :submit, class: "btn btn-success"
+
+/ %input.form-control{autofocus: "", placeholder: "User ID", type: "text"}/
+/ %input.form-control{placeholder: "Password", type: "password"}/
+/ %label.checkbox
+/   %input{type: "checkbox", value: "remember-me"}/
+/   Remember me
+/   %span.pull-right
+/     %a{"data-toggle" => "modal", href: "#myModal"} Forgot Password?
+
+
+/ Modal
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+        %h4.modal-title Forgot Password ?
+      .modal-body
+        %p Enter your e-mail address below to reset your password.
+        %input.form-control.placeholder-no-fix{autocomplete: "off", name: "email", placeholder: "Email", type: "text"}/
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Cancel
+        %button.btn.btn-success{type: "button"} Submit
+/ modal
+
+
+/ - if devise_mapping.omniauthable? and !resource_class.omniauth_providers.empty?
+/   .horiz-bar-or= t("devise.login.or")
+/ - else
+/   .horiz-bar-or= t("devise.login.or_without_omniauth")
+/ .col-lg-12
+/   .form-group
+/     = f.text_field :email, class: "form-control login-field", placeholder: t(".email"), required: true, autofocus: true
+/     %label.login-field-icon.fui-user{for: "user_email"}
+
+/   .form-group
+/     = f.text_field :password, class: "form-control login-field", placeholder: t(".password"), required: true, type: :password
+/     %label.login-field-icon.fui-lock{for: "user_password"}
+
+/   .form-group.text-center
+/     - if devise_mapping.rememberable? # manter sessão
+/       .checkbox.remember_checkbox
+/         = f.label :remember_me do
+/           %span.icons
+/             %span.first-icon.fui-checkbox-unchecked
+/             %span.second-icon.fui-checkbox-checked
+/           = f.check_box :remember_me, "data-toggle" => "checkbox"
+/           = t("devise.login.remember_me")
+
+/   .form-group
+/     = f.button :button, t("devise.login.sign_in"), type: :submit, class: "btn btn-primary btn-lg btn-block", style:"background:#5ba0d0"
+/     / = f.button :button, type: :submit, class: 'btn btn-primary btn-lg btn-block', title: t("helpers.submit.create", model: down_model(User))do
+/     /   = t("helpers.submit.create", model: down_model(User))
+
+/     = link_to t(".sign_up"), user_registration_path, class: "btn btn-success btn-block", style:"background:#2a6496"
+
+/   .form-group.text-center
+/     - # recuperar senha
+/     - if devise_mapping.recoverable? && controller_name != 'passwords'
+/       = link_to t("devise.links.forgot_your_password"), new_password_path(resource_name), class: "login-link", style:"font-size:15px; color:#333"
+/       = link_to t("Não possui conta?"), new_user_registration_path, class: "login-link", style:"font-size:15px; color:#333"

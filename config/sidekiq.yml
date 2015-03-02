@@ -1,0 +1,25 @@
+<%
+require 'dotenv'
+Dotenv.load
+%>
+
+# Sample configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+#   sidekiq -C condig/sidekiq.yml
+---
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+
+:concurrency: <%= (ENV['WORKS_CONCURRENCY'] || 5).to_i %>
+staging:
+  :concurrency: <%= (ENV['WORKS_CONCURRENCY'] || 5).to_i %>
+production:
+  :concurrency: <%= (ENV['WORKS_CONCURRENCY'] || 5).to_i %>
+
+# Set timeout to 8 on Heroku, longer if you manage your own systems.
+:timeout: 10
+:queues:
+  - [sync_items, 7]
+  - [sync_questions, 7]
+  - [sync_account, 7]
+  - [orders, 5]

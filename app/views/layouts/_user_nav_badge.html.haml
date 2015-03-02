@@ -1,0 +1,24 @@
+%li.dropdown
+  %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+    = image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini")
+    %span.username= current_user.name
+    %b.caret
+  %ul.dropdown-menu.extended.logout
+    .log-arrow-up
+    %li
+      = link_to dashboards_path do
+        %i.fa.fa-dashboard>
+        = Dashboard.model_name.human count: 2
+    %li
+      = link_to profile_path do
+        %i.fa.fa-user>
+        = t(".profile")
+    - # %li
+    - #   = link_to account_path(current_account) do
+    - #     %i.fa.fa-cog
+    - #     Settings
+    %li
+      = link_to destroy_user_session_path do
+        %i.fa.fa-key
+        = t(".logout")
+/ user login dropdown end

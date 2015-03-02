@@ -1,0 +1,28 @@
+
+<table class="table table-striped" id= "warehouse_table">
+  <thead>
+    <tr>
+      <th>Id da Ordem</th>
+      <!-- <th>Endereço</th> -->
+      <th>Nome do Cliente</th>
+      <th>Telefone do Cliente</th>
+      <th>Email do Cliente</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order|%>
+      <tr>
+        <td><%= order.meli_order_id%></td>
+        <!-- <td><%= order.ml_shipping_address%></td> -->
+        <td><%= order.customer_name%></td>
+        <td><%= order.customer_phone%></td>
+        <td><%= order.customer_email%></td>
+
+
+        <td>
+			<%= link_to 'responder' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

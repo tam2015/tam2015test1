@@ -1,0 +1,25 @@
+- form ||= false
+
+.panel{ id: "feedback-#{feedback.id}" }
+  %header.panel-heading
+    = t(".received")
+    / %span.tools.pull-right
+    /   %a.fa.fa-chevron-down
+
+  .panel-body
+    .shipping_resulted
+      = render "#{feedback.model_name.collection}/show", feedback: feedback
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+= simple_form_for @user, url: user_registration_path, html: { class: "sign_user_form sign_up_user_form form-horizontal",  role: "form"} do |f|
+  .modal-body
+
+
+    = f.input :first_name, required: true, autofocus: true, placeholder:"Nome"
+    = f.input :last_name, required: true, placeholder:"Sobrenome"
+
+    = f.input :email, required: true
+
+    = f.input :password, required: true
+
+    = f.input :password_confirmation, required: true
+
+  .modal-footer
+    = f.button :button, type: :submit, title: t("helpers.submit.create", model: down_model(User)), style:"background: #5ba0d0" do
+      = t("helpers.submit.create", model: down_model(User))
+
+  %possuiconta{style:"float:right; margin-right:12px"}
+    = link_to "Ja possui uma conta?", new_user_session_path, method: :get,  style:"margin-left:200px; color:#5ba0d0"
+
+
+

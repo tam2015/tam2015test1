@@ -1,0 +1,18 @@
+%tr
+  - # checkbox
+  %th.table-checkbox
+  %th= @klass.human_attribute_name :name
+  %th= @klass.human_attribute_name :email
+  %th= @klass.human_attribute_name :phone
+  %th= @klass.human_attribute_name :address
+  %th= @klass.human_attribute_name :role
+  %th= t_model(Dashboard)
+  %th= t_model(Account, false)
+  %th= @klass.human_attribute_name :sign_in_count
+  %th= @klass.human_attribute_name :last_sign_in_at
+  %th= @klass.human_attribute_name :invitations_count
+  %th= @klass.human_attribute_name :invited_by_id
+  %th= Subscription.human_attribute_name :expires_in
+
+  - # actions
+  %th.table-actions

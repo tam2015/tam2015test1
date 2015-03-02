@@ -1,0 +1,93 @@
+<% variations = @item.get("variations") || [] %>
+<% variations.push({}) unless variations.length %>
+
+<% console.debug("variations", variations) %>
+<% console.debug("@variation_attributes", @variation_attributes) %>
+
+<% for variation, ix in variations: %>
+  <% for variation_attribute in @variation_attributes: %>
+    <%= "#{variation_attribute.id} - #{variation_attribute.name}" %>
+  <% end %>
+
+  <div class="item_variations_<%= ix %> text-left">
+    <!-- colors -->
+    <% if @variation_attributes["33000"] and @variation_attributes["43000"]: %>
+      <div class="item_variations_<%= ix %>_colors">
+        <div class="row">
+          <label class="control-label">Escolha as cores:</label>
+        </div>
+
+        <div class="col-md-12">
+          <!-- primary color -->
+          <div class="form-group">
+            <label class="control-label">Principal:</label>
+            <select class="form-control" name="item[variations][][color_primary_id]" id="item_variations_<%= ix %>_color_primary_id">
+              <% for color in @variation_attributes["33000"].values: %>
+                <option value="<%= color.id %>" data-color="<%= color.metadata.rgb %>" <%= 'selected=true' if variation.color_primary_id == color.id %>>
+                  <%= color.name %>
+                </option>
+              <% end %>
+            </select>
+            <script type="text/javascript" charset="utf-8">
+              $("#item_variations_<%= ix %>_color_primary_id").colorselector({ colorsPerRow : 9 });
+            </script>
+          </div>
+
+          <!-- secondary color -->
+          <div class="form-group">
+            <label class="control-label">Secundária:</label>
+            <select class="form-control" name="item[variations][][color_secundary_id]" id="item_variations_<%= ix %>_color_secundary_id">
+              <% for color in @variation_attributes["43000"].values: %>
+                <option value="<%= color.id %>" data-color="<%= color.metadata.rgb %>" <%= 'selected=true' if variation.color_secundary_id == color.id %>>
+                  <%= color.name %>
+                </option>
+              <% end %>
+            </select>
+            <script type="text/javascript" charset="utf-8">
+              $("#item_variations_<%= ix %>_color_secundary_id").colorselector({ colorsPerRow : 9 });
+            </script>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- tamanho -->
+    <% if @variation_attributes["63000"]: %>
+      <div class="form-group item_variations_<%= ix %>_size_id">
+        <label class="control-label">Tamanho</label>
+        <select class="form-control" name="item[variations][][size_id]" id="item_variations_<%= ix %>_attribute_size_id">
+          <% for size in @variation_attributes["63000"].values: %>
+            <option value="<%= size.id %>" <%= 'selected=true' if variation.size_id == size.id %>>
+              <%= size.name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+    <% end %>
+
+    <!-- available_quantity -->
+    <div class="form-group item_variations_<%= ix %>_available_quantity">
+      <label class="string optional control-label" for="item_variations_<%= ix %>_available_quantity">Quantidade</label>
+      <div class="input-group spinbox">
+        <div class="spinbox-buttons input-group-btn">
+          <button class="btn spinbox-up btn-warning" type="button">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <input class="spinbox-input string optional form-control" id="item_variations_<%= ix %>_available_quantity" name="item[variations][][available_quantity]" value="<%= variation.available_quantity %>" type="text">
+        <div class="spinbox-buttons input-group-btn">
+          <button class="btn spinbox-down btn-danger" type="button">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <script type="text/javascript" charset="utf-8">
+        $(".item_variations_<%= ix %>_available_quantity .spinbox").spinbox();
+      </script>
+    </div>
+    <!-- pictures -->
+    <div class="form-group item_variations_<%= ix %>_picture_ids">
+      <div class="dropzone picture_ids"></div>
+    </div>
+  </div>
+<% end %>

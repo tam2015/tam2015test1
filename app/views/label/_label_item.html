@@ -1,0 +1,103 @@
+<div class="collection-view step-boxes label-print-wrapper clearfix ui-sortable">
+  <div id="labels-collection-view"></div>
+</div>
+  <!-- <div id="label-container" class="label--label-paper label-grid-2-2"> -->
+
+   <!--  <p class="label-container-empty">
+      Nenhuma etiqueta adicionada. <br>
+      Arraste p/ cá as encomendas que deseja gerar as etiquetas.
+    </p>
+ -->
+
+
+<!--     <div class="label-item">
+      <img class="label-receiver-img" src="http://www2.correios.com.br/enderecador/img/destinatario_peq.gif">
+      <img class="correios-img" src="http://www2.correios.com.br/enderecador/img/logo_correios_peq.gif">
+      <label class="label_check c_on" for="checkbox-01">
+        <input id="checkbox-01" name="sample-checkbox-01" type="checkbox">
+        MP
+      </label>
+      <div class="label-receiver">
+        <p>Marcus Aroeira Gadbem Da Silva</p>
+        <p>RUA SANTA CLARA 12</p>
+        <p>COMP 230</p>
+        <p>COPACABANA</p>
+        <p>RIO DE JANEIRO / RJ</p>
+        <p>22041012</p>
+      </div>
+      <div class="label-barcode">
+        <img class="barcode_1"/>
+      </div>
+      <div class="label-sender">
+        <p><strong>Remetente:</strong></p>
+        <p>MARCUS GADBEM</p>
+        <p>RUA MAJOR PENHA  164</p>
+        <p>APTO 302</p>
+        <p>CENTRO</p>
+        <p>37440-000   CAXAMBU/MG</p>
+      </div>
+    </div>
+
+ -->
+  <!-- </div> -->
+
+
+
+<script type="text/html" id="box-item-template">
+  <div class="step-box ui-droppable" data-box-col-order="" data-pid="<%%= meli_order_id %>" id="<%%= id %>">
+    <div class="step-box-details clearfix">
+      <span class="box-short-id hide">#<%%= id %></span>
+      <div class="box_name"><%%= name %></div>
+    </div>
+    <div class="step-box-footer clearfix">
+      <p class="box_label_details box_value">Valor: R$ <%%= price %></p>
+      <p class="box_label_details box_zip_code">
+        CEP:<%%= (shipping.receiver_address) ? shipping.receiver_address.zip_code : "Pendente" %>
+
+      </p>
+      <p class="box_label_details box_shipping_type">Shipping type: <%%= shipping.shipment_type %></p>
+    </div>
+  </div>
+</script>
+
+ <script type="text/html" id="label-item-template">
+  <div class="label-item" data-box-pix="<%%= meli_order_id %>">
+      <img class="label-receiver-img" src="http://www2.correios.com.br/enderecador/img/destinatario_peq.gif">
+      <img class="correios-img" src="http://www2.correios.com.br/enderecador/img/logo_correios_peq.gif">
+      <div class="label-receiver">
+        <p><%%= customer.name %></p>
+
+        <p><%%= shipping.receiver_address.comment || "&nbsp" %></p>
+        <p>&nbsp;</p>
+        <p><%%= shipping.receiver_address.city.name %> / <%%= shipping.receiver_address.state.id.split("-")[1] %></p>
+        <p><%%= shipping.receiver_address.zip_code %></p>
+      </div>
+      <div class="label-barcode">
+        <img id="barcode_<%%= meli_order_id %>"/>
+      </div>
+      <div class="label-sender">
+        <p><strong>Remetente:</strong></p>
+      </div>
+    </div>
+</script>
+
+<script type="text/html" id="printer-container-template">
+  <div id="printer-container">
+    <h3 class="text-center">
+      Suas etiquetas estão prontas para serem impressas.
+      <button class="btn btn-shadow btn-primary" onclick="window.print();">Imprimir</button>
+      <button class="btn btn-shadow btn-alert" id="close-print-container">Fechar</button>
+    </h3>
+    <div id="clone-area" class="center-block"></div>
+  </div>
+</script>
+
+
+
+<!--
+<p><%%= label.sender.name %></p>
+        <p><%%= label.sender.full_address %></p>
+        <p><%%= label.sender.address_complement %></p>
+        <p><%%= label.sender.hood %></p>
+        <p><%%= label.sender.cep %>  <%%= label.sender.city %>/ <%%= label.sender.state %></p>
+-->

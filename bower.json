@@ -1,0 +1,25 @@
+{
+  "name": "aircrm",
+  "version": "0.1.7",
+  "authors": [
+    "Gullit Miranda <gullitmiranda@gmail.com>"
+  ],
+  "description": "AirCRM",
+  "license": "MIT",
+  "homepage": "http://www.aircrm.com.br",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "backbone-relational": "~0.8.8",
+    "backbone-deep-model": "git://github.com/gullitmiranda/backbone-deep-model.git#~0.11.0",
+    "backbone.paginator": "~2.0.2"
+  }
+}

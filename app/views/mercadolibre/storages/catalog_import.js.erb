@@ -1,0 +1,7 @@
+$("body")
+  .find("#invitation-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("catalog_import") %>')
+  .find("#invitation-modal.modal")
+    .modal();

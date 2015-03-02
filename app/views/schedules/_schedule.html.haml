@@ -1,0 +1,37 @@
+#box-modal
+  .modal-dialog
+    .modal-content
+      = simple_form_for [@schedule],  wrapper: :small, html: { class: "box_form form-horizontal",  role: "form" } do |f|
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+          %h4.modal-title Candidato
+
+
+        .modal-body
+          = f.error_notification
+
+          .col-lg-12
+            = f.label :customer_email, "Email do candidato"
+            = f.input :customer_email, autofocus: true
+            #p="Data"
+            = f.input :date_day, autofocus: true
+            = f.input :date_time, autofocus: true
+
+            #p="Endereço"
+            = f.input :address, autofocus: true
+            = f.label :note, "Anotações"
+            = f.input :note, autofocus: true
+
+
+
+        .modal-footer
+          = f.button :button, type: :submit, class: 'btn btn-primary', title: t("helpers.submit.create", model: down_model(Schedule)) do
+            = t("helpers.submit.create", model: down_model(Schedule))
+
+          %a.btn.btn-default{ href: "#", "data-dismiss" => "modal" }
+            = t("helpers.submit.cancel", model: "")
+
+          - unless @schedule.new_record?
+            = link_to(t("helpers.titles.destroy", model: ""), @step, method: :delete, class: "btn btn-danger", data: { confirm: t("helpers.confirm.destroy", model: down_model(Schedule)) })
+
+

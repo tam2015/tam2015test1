@@ -1,0 +1,11 @@
+// Use this file to override Flat UI mixins or define own mixins.
+
+// Color swatches grid
+.calc-color(@first-color, @second-color) {
+  .palette-@{first-color} {
+    background-color: ~"@{@{first-color}}";
+  }
+  .palette-@{second-color} {
+    background-color: ~"@{@{second-color}}";
+  }
+}

@@ -1,0 +1,16 @@
+- form ||= false
+
+.panel{ id: "shipping-#{shipping.id}" }
+  %header.panel-heading
+    = t_model(shipping, false)
+    %span.tools.pull-right
+      %a.fa.fa-chevron-down
+
+  .panel-body
+    .shipping_resulted
+      - _view = shipping.to_be_agreed? ? "empty" : "show"
+      = render "#{shipping.model_name.collection}/#{_view}", shipping: shipping
+
+    .shipping_form
+      - if !shipping.to_be_agreed? and form
+        = render "#{shipping.model_name.collection}/form", shipping: shipping

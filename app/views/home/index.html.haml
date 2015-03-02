@@ -1,0 +1,308 @@
+/ revolution slider start
+.fullwidthbanner-container.main-slider
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      / 1st slide
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        / THE MAIN IMAGE IN THE FIRST SLIDE
+        %img{alt: "", src: "assets/home/banner/banner_bg.jpg"}/
+        .caption.lft.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "125"}
+          Aumente suas vendas
+        .caption.lft.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "10", "data-y" => "180"}
+          com o melhor sistema do Mercado Livre
+        .caption.lft.slide_desc.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "10", "data-y" => "240"}
+          Eleito por alguns vendedores do Mercado Livre, o melhor sistema
+          %br/
+          de gerenciamento de vendas, moderno, prático e faz
+          %br/
+          quase tudo para você.
+
+        = link_to user_session_path, class: "caption lft slide_btn btn red slide_item_left", data: { easing: "easeOutExpo", speed: "400", start: "3000", x: "10", y: "360" } do
+          = t(".free_trial")
+
+        .caption.lft.start{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "2000", "data-x" => "640", "data-y" => "55"}
+          %img{alt: "man", src: "assets/home/banner/man.png"}/
+        .caption.lft.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "500", "data-start" => "5000", "data-x" => "330", "data-y" => "20"}
+          //%img#rev-hint2{alt: "txt img", src: "assets/home/banner/test_man.png"}/
+
+      / 2nd slide
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lfl.slide_item_left{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "70"}
+          %img{alt: "Image 1", src: "assets/home/banner/ban2.png"}/
+        .caption.lfr.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1000", "data-x" => "670", "data-y" => "120"}
+          Gerenciador de Vendas
+        .caption.lfr.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "190"}
+          Integrado com o Mercado Livre
+        .caption.lfr.slide_desc{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "670", "data-y" => "260"}
+          Um sistema que trabalha por você! Gerenciamento de ordens,
+          %br/
+          pagamentos, perguntas e respostas, avaliações, ordens sem frete
+          %br/
+          e sem endereço, impressão de etiquetas e muito mais.
+
+        = link_to user_session_path, class: "caption lfr slide_btn btn yellow ", data: { easing: "easeOutExpo", speed: "400", start: "3500", x: "670", y: "400" } do
+          = t(".free_trial")
+
+      / 3rd slide
+      %li{"data-delay" => "9400", "data-masterspeed" => "300", "data-slotamount" => "7", "data-thumb" => "", "data-transition" => "fade"}
+        //%img{alt: "", src: "assets/home/banner/red-bg.jpg"}/
+        .caption.lfl.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "1200", "data-start" => "1500", "data-x" => "10", "data-y" => "105"}
+          %img{alt: "Image 1", src: "assets/home/banner/imac.png"}/
+        .caption.lfl.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "1200", "data-start" => "2000", "data-x" => "25", "data-y" => "345"}
+          %img{alt: "Image 1", src: "assets/home/banner/tab.png"}/
+        .caption.lfl.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "1200", "data-start" => "2500", "data-x" => "200", "data-y" => "330"}
+          %img{alt: "Image 1", src: "assets/home/banner/mobile.png"}/
+        .caption.lfl.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "1200", "data-start" => "3000", "data-x" => "250", "data-y" => "230"}
+          %img{alt: "Image 1", src: "assets/home/banner/laptop.png"}/
+        .caption.lfl.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "500", "data-start" => "5000", "data-x" => "165", "data-y" => "30"}
+          //%img#rev-hint1{alt: "Image 1", src: "assets/home/banner/text_imac.png"}/
+        .caption.lfr.slide_title.slide_item_left.yellow-txt{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "3500", "data-x" => "670", "data-y" => "145"}
+          No Smartphone, tablet ou PC
+        .caption.lfr.slide_subtitle.slide_item_left{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "4000", "data-x" => "670", "data-y" => "200"}
+          Sistema moderno e prático
+        .caption.lfr.slide_desc.slide_item_left{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "4500", "data-x" => "670", "data-y" => "280"}
+          Seu Mercado Livre na palma da mão. Gerencie suas vendas,
+          %br/
+          pagamentos, perguntas e respostas. Automatize todo seu processo
+          %br/
+          de notificação do cliente e impressão de etiquetas.
+
+    .tp-bannertimer.tp-top
+/ revolution slider end
+/ container start
+.container
+  .row
+    / feature start
+    .text-center.feature-head
+      %h1 Como Funciona
+      //%p Professional html Template Perfect for Admin Dashboard
+    .col-lg-4.col-sm-4
+      %section
+        .f-box
+          %img{alt: "Image 1", src: "assets/logo-mercado-livre.png", style:"height:110px; width:110px"}/
+          = link_to user_omniauth_authorize_path(:mercadolibre) do
+            %h2 login com mercado livre
+
+        %p.f-text Você faz o login com seu Mercado Livre. Você terá um sistema totalmente integrado e não precisará mais entrar no site do Mercado Livre.
+    .col-lg-4.col-sm-4
+      %section
+        .f-box.active
+          %i.fa.fa-code
+          %h2 Todas informações num só lugar
+        %p.f-text Acompanhe seus anúncios, suas ordens, seus pagamentos, suas perguntas e respostas, suas avaliações com um sistema fácil de trabalhar.
+    .col-lg-4.col-sm-4
+      %section
+        .f-box
+          %i.fa.fa-gears
+          %h2 O sistema trabalha por você
+        %p.f-text Ele identfica sozinho as ordens sem endereço e sem pagamento de frete e alerta o cliente por email. Imprima etiquetas mais rapidamente.
+    / feature end
+  .row
+    / quote start
+    .quote
+      .col-lg-9.col-sm-9
+        .quote-info
+          %h1 Experimente Grátis por 14 dias
+          %p Sem  necessidade de cartão de crédito, sem taxa de inscrição e sem obrigações contratuais!
+      .col-lg-3.col-sm-3
+        = link_to t(".free_trial"), user_session_path, class: "btn btn-info purchase-btn"
+
+    / quote end
+/ property start
+.property.gray-bg
+  .container
+    .row
+      .col-lg-6.col-sm-6.text-center
+        %img{alt: "", src: "assets/home/property-img.png"}/
+      .col-lg-6.col-sm-6
+        %h1 Sistema moderno e fácil de trabalhar
+        %p Além do sistema fazer quase tudo para você na hora de identificar o que está faltando numa ordem de compra ele é muito fácil de entender. Você pode personalizar e criar rotinas de acordo com suas necessidades. Você facilmente cria e edita anúncios em massa e faz impressão de etiquetas.
+        = link_to t(".free_trial"), user_session_path, class: "btn btn-purchase"
+/ property end
+/ .container
+/   .row
+/     .col-lg-6
+/       / tab start
+/       %section.panel.tab
+/         %header.panel-heading.tab-bg-dark-navy-blue
+/           %ul.nav.nav-tabs.nav-justified
+/             %li.active
+/               %a{"data-toggle" => "tab", href: "#news"}
+/                 News
+/             %li
+/               %a{"data-toggle" => "tab", href: "#events"}
+/                 Events
+/             %li
+/               %a{"data-toggle" => "tab", href: "#notice-board"}
+/                 Notice board
+/         .panel-body
+/           .tab-content.tasi-tab
+/             #news.tab-pane.active
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   %img{alt: "", src: "assets/home/product1.jpg"}/
+/                 .media-body
+/                   %a.p-head{href: "#"} News Tittle goes here
+/                   %p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   %img{alt: "", src: "assets/home/product2.png"}/
+/                 .media-body
+/                   %a.p-head{href: "#"} News Tittle goes here 2
+/                   %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. simsut dorlor
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   %img{alt: "", src: "assets/home/product1.jpg"}/
+/                 .media-body
+/                   %a.p-head{href: "#"} News Tittle goes here 3
+/                   %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. sumon ahmed
+/             #events.tab-pane
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   / image goes here
+/                 .media-body
+/                   %a.cmt-head{href: "#"} Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+/                   %p
+/                     %i.fa.fa-clock-o
+/                     1 hours ago
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   / image goes here
+/                 .media-body
+/                   %a.cmt-head{href: "#"} Nulla vel metus scelerisque ante sollicitudin commodo
+/                   %p
+/                     %i.fa.fa-clock-o
+/                     23 mins ago
+/               %article.media
+/                 %a.pull-left.thumb.p-thumb
+/                   / image goes here
+/                 .media-body
+/                   %a.cmt-head{href: "#"} Donec lacinia congue felis in faucibus.
+/                   %p
+/                     %i.fa.fa-clock-o
+/                     15 mins ago
+/             #notice-board.tab-pane
+/               %p Notice board goes here Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ablic jiener.
+/               %p Notice board goes here Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ablic jiener.
+/       / tab end
+/     .col-lg-6
+/       / testimonial start
+/       .about-testimonial.boxed-style.about-flexslider
+/         %section.slider
+/           .flexslider
+/             %ul.slides.about-flex-slides
+/               %li
+/                 .about-testimonial-image
+/                   %img{alt: "", src: "assets/home/avatar1.png"}/
+/                 %a.about-testimonial-author{href: "#"} Leandro Nunes
+/                 %span.about-testimonial-company Vendedor Mercado Livre
+/                 .about-testimonial-content
+/                   %p.about-testimonial-quote
+/                     Nunca foi tão fácil imprimir etiquetas! O sistema trabalha sozinho alertando os clientes que não pagam frete ou esquecem de inserir seus endereços. Muito fácil de usar, consegui aumentar minhas vendas!
+/               %li
+/                 .about-testimonial-image
+/                   %img{alt: "", src: "assets/home/avatar2.png"}/
+/                 %a.about-testimonial-author{href: "#"} Patricia Petti
+/                 %span.about-testimonial-company Vendedora Mercado Livre
+/                 .about-testimonial-content
+/                   %p.about-testimonial-quote
+/                     O AirCRM é um sistema muito completo que me ajudou a aumentar as vedas dentro do Mercado Livre! Antes do AirCRM eu experimentei outros sistemas que acabei não conseguindo usar.
+/       / testimonial end
+/   / recent work start
+/   .row
+/     .col-lg-12
+/       %h2.r-work Alguns Exemplos
+/       %ul.bxslider
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img1.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img1.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img2.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img2.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img3.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img3.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img4.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img4.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img5.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img5.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img6.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img6.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img7.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img7.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/         %li
+/           .element.item.view.view-tenth{"data-zlname" => "reverse-effect"}
+/             %img{alt: "", src: "assets/home/works/img1.jpg"}/
+/             .mask
+/               %a{"data-zl-popup" => "link", href: "javascript:;"}
+/                 %i.fa.fa-link
+/               %a.fancybox{"data-zl-popup" => "link2", href: "assets/home/works/img1.jpg", rel: "group"}
+/                 %i.fa.fa-search
+/   / recent work end
+/ parallax start
+%section.parallax1
+  .container
+    .row
+      %h1
+        “Aumente suas vendas no Mercado Livre com um sistema que trabalha por você
+        %br/
+        Experimente por 14 dias grátis”
+/ parallax end
+.container
+  / clients start
+  .clients
+    .container
+      .row
+      .text-center.feature-head
+        %h3 Powered by
+        .col-lg-12.text-center
+          %ul.list-unstyled
+            %li
+              %a{href: "#"}
+                %img{alt: "", src: "assets/logowayra.png"}/
+            %li
+              %a{href: "#"}
+                %img{alt: "", src: "assets/logo-mercado-livre.png"}/
+
+  / clients end
+/ container end
+

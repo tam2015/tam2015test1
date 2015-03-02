@@ -1,0 +1,6 @@
+<% if @boxes %>
+$(".steps-canvas").html('<%= j render @steps %>');
+
+AIRCRM.dashboards.show(false)
+console.debug("ended dashboard reload");
+<% end %>

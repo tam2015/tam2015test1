@@ -1,0 +1,37 @@
+/ sidebar start
+%aside
+  #sidebar.nav-collapse
+    / sidebar menu start
+    %ul#nav-accordion.sidebar-menu
+      %li.sub-menu
+        = link_to dashboards_path, class: "#{"active" unless current_dashboard}" do
+          %i.fa.fa-sitemap
+          %span= Dashboard.model_name.human count: 2
+
+      - dashboard = current_dashboard || current_user.dashboards.first || User.where(id: current_user.invited_by_id).first.dashboards.first
+      - if dashboard || current_user.lojista?
+        %li.sub-menu.current_dashboard.sidebar
+          %a{href: "#", class: "active" }
+            %i.fa.fa-dashboard
+            %span= dashboard.name
+
+          %ul.sub
+            %li
+              = link_to t_model(Box), dashboard_index_test_path(dashboard)
+            %li
+              = link_to "#{t_model(Mercadolibre::Item)}", dashboard_items_path(dashboard)
+            / %li
+            /   = link_to "Etiquetagem", dashboard_label_index_path(dashboard)
+            %li
+              = link_to "Perguntas", dashboard_questions_path(dashboard)
+            %li
+              = link_to "Qualificação", dashboard_feedbacks_path(dashboard)
+            %li
+              = link_to "Clientes", dashboard_customers_path(dashboard)
+            %li
+              = link_to "Tendências", dashboard_trends_path(dashboard)
+            %li
+              = link_to "Configurações", profile_path(dashboard)
+
+    / sidebar menu end
+/ sidebar end

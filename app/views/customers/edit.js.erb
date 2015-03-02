@@ -1,0 +1,7 @@
+$("body")
+  .find("#box-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("modal_form") %>')
+  .find("#box-modal.modal")
+    .modal();

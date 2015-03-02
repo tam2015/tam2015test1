@@ -1,0 +1,20 @@
+#invitation-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      = form_tag import_dashboard_items_path, multipart: true, html: { class: "invitation_form form-horizontal",  role: "form" } do |f|
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+          %h4.modal-title= t(".importar estoque")
+
+        .modal-body.clearfix
+          .col-md-12
+            = file_field_tag :file, as: :file, autofocus: true, required: true
+
+        .modal-footer
+          = submit_tag "Atualizar", type: :submit, class: 'btn btn-primary' do
+            = t(".send")
+
+          %a.btn.btn-default{ href: "#", "data-dismiss" => "modal" }
+            = t(".cancel")
+
+

@@ -1,0 +1,86 @@
+!!!
+%html
+  %head
+    %meta{charset: "utf-8"}/
+    %title AirCRM
+
+    %meta{content: "aircrm, crm, online, cloud, air, system, sistema, responsivo", name: "keywords"}/
+    %meta{content: "O AirCRM é o sistema ideal para aumentar o desempenho da sua gestão de negócios.", name: "description"}/
+    %meta{content: "IE=8", "http-equiv" => "X-UA-Compatible"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    / @import asset-url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic");
+    %script
+      I18n = {};
+      I18n.defaultLocale = "#{I18n.default_locale}";
+      I18n.locale = "#{I18n.locale}";
+      I18n.fallbacks = #{!(ENV['RAILS_ENV'] == "development")};
+
+    = javascript_include_tag "locales/#{I18n.locale}", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+
+    = favicon_link_tag 'favicon.ico'
+
+    / HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries
+    /[if lt IE 9]
+      = javascript_include_tag "html5shiv", "data-turbolinks-track" => true
+      = javascript_include_tag "respond", "data-turbolinks-track" => true
+
+    = render 'layouts/inspectlet' if ENV["INSPECTLET_KEY"]
+
+    %script
+      window.DASHBOARD = #{raw (current_dashboard.nil? ? nil : current_dashboard.to_json)};
+
+    = csrf_meta_tags
+  %body.fixed{ class: "#{dispatcher_class}", "data-controller" => controller_name, "data-route" => dispatcher_route }
+    %section#container
+
+      %header.header.white-bg
+        .sidebar-toggle-box
+          .fa.fa-bars.tooltips{"data-original-title" => "Toggle Navigation", "data-placement" => "right"}
+            = "Menu"
+
+        / logo start
+        / = link_to dashboards_path, class: "logo logo-img" do
+        /   = image_tag("logo_aircrm.png", alt: "AirCRM", class: "lazy" )
+        / logo end
+
+        .top-nav
+          - if account_trial?
+            .nav.nav-alert.pull-left
+              = render 'layouts/trial_message'
+
+          / search & user info start
+          %ul.nav.pull-right.top-menu#header_tools
+            - if params[:controller] == "dashboards" and params[:action] == "show"
+              %li
+                = render "layouts/search"
+
+            = # render 'notifications/list'
+            = render 'layouts/user_nav_badge'
+
+
+      = render "layouts/sidebar"
+
+      %section#main-content
+        %section.wrapper
+          .flash-messages
+            = flash_message
+
+          = yield
+      / main content end
+
+      / footer start
+      %footer.site-footer
+        .text-center
+          &#169; 2014 AirCRM.
+          %a.go-top{href: "#"}
+            %i.fa.fa-angle-up
+      / footer end
+
+    = yield :javascript_after_load
+
+    = render 'layouts/analytics'  if ENV["GOOGLE_ANALYTICS_ACCOUNT"]
+    = render 'layouts/chat'       if ENV["ZOPIM_KEY"]
+    = render 'layouts/crazyegg'

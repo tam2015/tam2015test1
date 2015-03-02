@@ -1,0 +1,16 @@
+Olá #{@receiver.first_name}!
+
+Recebi seu pedido, porém seu endereço está em branco. Para que você possa receber seu produto necessito que me informe o endereço de entrega.
+
+Para isso, basta acessar basta clicar no link a seguir e preencher o formulário:
+
+= receiver_shippings_url(@token)
+
+
+
+
+
+Observação: O site #{link_to(root_url, "AirCRM")} é uma aplicação que utilizo para facilitar o gerenciamento das minhas vendas. Ao acessa-lo você notará que existem selos e certificados de segurança, comprovando assim sua autenticidade e veracidade.
+
+
+Porém se ainda assim você não se sentir seguro ou confortável poderá responder a esse email com o endereço de entrega.

@@ -1,0 +1,298 @@
+<% unless @boxes %>
+  <%= "Estamos puxando suas vendas do Mercado Livre" %>
+<% else %>
+
+  <section class="panel" style="background: #2a3542 ">
+    <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <form action="#" class="pull-right position">
+          <%= form_tag dashboard_index_test_path, method: :get do %>
+            <input type="text" placeholder="buscar" class="form-control search-btn "
+              <%= text_field_tag :query, params[:query] %>
+              <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+            <%end%>
+        </form>
+      </li>
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Dados <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% ["pendente", "sem pendências"].each do |status| %>
+            <li><%= link_to status, dashboard_index_test_path(status_data: status), method: :get %></li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Endereço <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% ["pendente", "sem pendências"].each do |status| %>
+            <li><%= link_to status, dashboard_index_test_path(status_address: status), method: :get %></li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Pagamento <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% list_of_payment_tags.each do |payment_status| %>
+            <li><%= link_to I18n.t(payment_status, scope: "helpers.boxes.payment_tags"), dashboard_index_test_path(status_box_payment: payment_status), method: :get %></li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Envio <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% list_of_shipping_tags.each do |shipping_status| %>
+            <li><%= link_to I18n.t(shipping_status, scope: "helpers.boxes.shipping_tags"), dashboard_index_test_path(status_box_shipping: shipping_status), method: :get %></li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+
+  <section class="panel" id="all-items">
+    <header class="panel-heading">
+      <ul class="breadcrumb">
+        <li>
+          <a >Mercado Livre</a>
+        </li>
+        <li>
+          <a >Ordens</a>
+        </li>
+        <li class="active">
+          Todos
+        </li>
+      </ul>
+    </header>
+    <div class="panel-body">
+      <div class="no-more-tables">
+        <table class="display table table-bordered table-striped table-condensed no-more-tables">
+          <thead>
+            <tr>
+              <th>Pedido</th>
+              <th>Pendências</th>
+              <th>Cliente</th>
+              <th>Entrega</th>
+              <th>Pagamento</th>
+              <th>Envio</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <% if @boxes %>
+          <% @boxes.each do |box| %>
+            <tbody id="items-body">
+              <tr>
+                <td style="width: 30px">
+                  <div class="first-part-box">
+                    <% if box.tags? and box.payments.first and box.shipping %>
+                      <% humanize_box_tags( box.tags, box.payments.first, box.shipping ).each do |tag|%>
+                      <p class="badge alert-success ">
+                      <%= tag %>
+                      </p> </br>
+                      <% end %>
+                    <% end %>
+
+                    <p class="pull-left">
+                      <%= t(box.created_at.to_date) %> </br>
+                      ID: <%= t(box.meli_order_id) %> </br>
+
+                      </br>
+                      <!-- <img alt="Test Test" class="avatar-mini" src="http://mlb-s2-p.mlstatic.com/15924-MLB20111279459_062014-O.jpg"> -->
+                      <%= t(box.name) %>
+                    </p>
+
+                    <p class="pull-left" style="color: #ff6c60; font-size: 9px">
+                      <%= "Qualificação enviada ao comprador" if box.feedback_seller.present? and box.feedback_seller.fulfilled? %>
+                    </p>
+                  </div>
+                </td>
+                <td>
+                  <!-- Peddings -->
+                  <div class="second-part-box">
+                    <% if box.shipping %>
+                      <% (box.shipping.pendings || []).each do |shipping_pending| %>
+                        <p> <%= I18n.t(shipping_pending, scope: "helpers.boxes.shippings") %> </p>
+                      <% end %>
+                    <% end %>
+
+                    <% if box.customer_id? and box.box_customer %>
+                      <% (box.box_customer.pendings || []).each do |customer_pending| %>
+                        <p> <%= I18n.t(customer_pending, scope: "helpers.boxes.customers") %> </p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </td>
+
+                <td>
+                  <% if box.customer_id? and box.box_customer %>
+                    <div class="third-part-box" style="width: 100px">
+
+                      <% status_class = box.box_customer.pendings_status == "pending" ? "danger" : "success" %>
+                      <span type="button" class="badge alert-<%= status_class %>">
+                        <%= I18n.t(box.box_customer.pendings_status, scope: "helpers.boxes.customers") || "" %>
+                      </span>
+
+                      <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.nickname  || "sem nick"     %> </p>
+                      <p><%= box.box_customer.name      || "sem nome"     %></p>
+                      <p><%= box.box_customer.phone     || "sem telefone" %></p>
+                      <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.email     || "sem email"    %></p>
+                      </br>
+                      <div class="text-left">
+                        <%= link_to edit_dashboard_customer_path(id: box.box_customer.id), remote: true,  class: "btn-link" do %>
+                          <%= translate_button_content(:edit, box.box_customer, icon: :pencil, label_class: "hidden-xs") %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+
+                <td>
+                  <% if box.shipping %>
+                    <div class="fourth-part-box" style="width: 100px">
+                        <% status_class = box.shipping.pendings_status == "pending" ? "danger" : "success" %>
+                      <span type="button" class="badge alert-<%= status_class %>">
+                        <%= I18n.t(box.shipping.pendings_status, scope: "helpers.boxes.shippings") || "" %>
+                      </span>
+
+                      <% if receiver_address = box.shipping.receiver_address %>
+                        <p> <%= receiver_address[:street_name] || I18n.t("no_street", scope: "helpers.boxes.shippings")     %> </p>
+                        <p> núm.<%= receiver_address[:street_number] || I18n.t("no_number", scope: "helpers.boxes.shippings")     %> </p>
+                        <p> compl.<%= receiver_address[:comment     ] || "sem complemento"  %> </p>
+                        <p>
+                          <% if receiver_address[:city] and receiver_address[:state] %>
+                            <%= box.shipping.region || I18n.t("no_city", scope: "helpers.boxes.shippings") %>
+                          <% end %>
+                        </p>
+
+                        <p> <%= box.shipping.receiver_address[:zip_code] ||  I18n.t("no_zipcode", scope: "helpers.boxes.shippings") %> </p>
+                      <% else %>
+                        <p>
+                          <%= I18n.t("no_address", scope: "helpers.boxes.shippings") %>
+                        </p>
+                      <% end %>
+
+                      <p style="font-size: 9px; color: #ff6c60"> <%= box.box_notify_count %> alerta(s) de cobrança de endereço enviados</p>
+                      </br>
+                      <div class="text-left">
+                        <%= link_to edit_shipping_path(box.shipping), class: "btn-link", remote: true do %>
+                          <%= translate_button_content(:edit, box.shipping, icon: :pencil, label_class: "hidden-xs") %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+
+                <td style="width: 200px">
+                  <% if box.payments.first %>
+                    <div class="fifth-part-box">
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+                          <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                          <% Mercadolibre::Payment::statuses.keys.each do |status| %>
+                            <% unless status == box.payments.first.status %>
+                              <li><%= link_to I18n.t(status, scope: "helpers.boxes.payment_tags"), edit_payment_path(box.payments.first, box_id: box.id, status: status ), remote: true %></li>
+                            <% end %>
+                          <% end %>
+                        </ul>
+                      </div>
+                      <dl class="dl-horizontal">
+
+                        <dt>Forma:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? :MP : :a_combinar %> </dd>
+
+                        <dt>ID:</dt>
+                        <dd><%= box.payments.first.meli_payment_id %></dd>
+
+                        <dt>Valor Pago:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.total_paid_amount : :a_combinar%> </dd>
+
+                        <dt>Preço:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.transaction_amount : :a_combinar%> </dd>
+
+                        <dt>Diferença:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.overpaid_amount : :a_combinar %> </dd>
+
+                        <dt>Frete:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.shipping_cost : :a_combinar %> </dd>
+
+                        <dt>Metodo:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.payment_method_id : :a_combinar %> </dd>
+
+                        <dt>Parcelas:</dt>
+                        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.installments : :a_combinar %> </dd>
+
+                      </dl>
+                    </div>
+                  <% end %>
+                </td>
+
+                <td>
+                  <% if box.shipping %>
+                    <div class="sixth-part-box">
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                          <%= !box.shipping.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.shipping_tags") : I18n.t(box.shipping.tags.join(', '), scope: "helpers.boxes.shipping_tags")%>
+                          <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                          <% Mercadolibre::Shipping::statuses.keys.each do |status| %>
+                            <% unless status == box.shipping.status %>
+                              <li><%= link_to I18n.t(status, scope: "helpers.boxes.shipping_tags"), shipping_status_path(box.shipping, box_id: box.id, status: status ), method: :post, remote: true %></li>
+                            <% end %>
+                          <% end %>
+                        </ul>
+                      </div>
+
+                      <dl class="dl-horizontal-shipping">
+                        <dt>Forma:   </dt>
+                        <dd><%= box.shipping.shipping_mode? ? I18n.t(box.shipping.shipping_mode, scope: "helpers.boxes.shippings") : I18n.t("not specified", scope: "helpers.boxes.shippings") %></dd>
+
+                        <dt>Rastr:   </dt>
+                        <dd><%= box.shipping.tracking_number ? box.shipping.tracking_number : :não_rastr %></dd>
+
+                        <dt>Envio:   </dt>
+                        <dd> <%= box.shipping.date_shipped ? box.shipping.date_shipped : :nao_definido %> </dd>
+
+                        <dt>Entrega:   </dt>
+                        <dd> <%= box.shipping.date_delivered ? box.shipping.date_delivered : :nao_definido %> </dd>
+                      </dl>
+                    </div>
+                  <% end %>
+                </td>
+
+                <td>
+                  <div class="senth-part-box">
+                    <a href="javascript:;">
+                      <i class="fa fa-envelope text-link"></i>
+                      <% if box.shipping %>
+                      <%= link_to 'Cobrar Endereço', shipping_notify_path(box.shipping, { type: :no_address }), method: :post, data: { confirm: 'Você tem certeza que deseja enviar um email para cobrar o endereço desse comprador?' }, style: "font-size: 11px" %>
+                      <% end %>
+                    </a>
+                    </br>
+                    <% if box.feedback_seller(box) %>
+                    <a href="javascript:;">
+                      <i class="fa fa-pencil text-link"></i>
+                      <%= link_to 'Editar Avaliação', feedback_edit_dashboard_boxes_path(meli_order_id: box.meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+                    </a>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="col-md-12" id="question_paginate" >
+  <%= will_paginate @boxes, previous_label: h("<"), next_label: h(">") %>
+  </div>
+
+<% end %>

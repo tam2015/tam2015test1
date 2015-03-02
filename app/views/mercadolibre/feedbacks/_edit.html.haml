@@ -1,0 +1,21 @@
+= simple_form_for @feedback, url: :feedback_update_dashboard_boxes, wrapper: :small, remote: true, html: { class: "comment_form form-horizontal",  role: "form" } do |f|
+  = f.error_notification
+
+  .col-lg-12
+    = f.hidden_field :order_id, :value => params[:order_id]
+    = f.hidden_field :dashboard_id, :value => params[:dashboard_id]
+    = f.hidden_field :updated, :value => true
+    = f.select :rating, ["positive"] #, "neutral", "negative"]
+    = f.input :message
+
+
+  .col-lg-12
+    = f.button :button, type: :submit, class: "btn-success", title: t("helpers.submit.update", model: "") do
+      = t("helpers.submit.update", model: "")
+
+
+
+
+
+
+

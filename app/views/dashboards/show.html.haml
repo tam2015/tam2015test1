@@ -1,0 +1,17 @@
+.dashboard{ id: current_dashboard.id }
+  %ul#to-top-nav.hidden
+    -#%li
+    -#  = link_to new_dashboard_step_path(current_dashboard), id: "new_step", class: 'btn btn-info', title: t("helpers.submit.create", model: down_model(Step)), remote: true do
+    -#    %i.fa.fa-plus
+    -#    = t("helpers.submit.create", model: down_model(Step))
+
+    %li
+    -#  = link_to dashboard_reload_path(current_dashboard), id: "reload_dashboard", class: 'btn btn-info', title: t("helpers.actions.update"), remote: true do
+    -#    %i.fa.fa-refresh
+
+  .steps-canvas-wrapper.nice-scroll
+    .steps-canvas.ui-sortable{ "data-update_url" => sort_dashboard_steps_path(current_dashboard), class: "#{"ui-sortable" if current_user.admin?}" }
+      = render @steps
+
+%script
+  window.DASHBOARD = #{raw @dashboard.to_json(include: :steps) || {}};

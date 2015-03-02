@@ -1,0 +1,191 @@
+<section class="panel" style="background: #2a3542 ">
+  <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Enviadas <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% ["POSITIVE", "NEGATIVE"].each do |rating| %>
+          <li><%= link_to rating.downcase, dashboard_feedbacks_path(rating_sent: rating), method: :get %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Recebidas <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% ["POSITIVE", "NEGATIVE"].each do |rating| %>
+          <li><%= link_to rating.downcase, dashboard_feedbacks_path(rating_received: rating), method: :get %></li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+
+<section class="panel" id="all-items">
+  <header class="panel-heading">
+    <ul class="breadcrumb">
+      <li>
+        <a href="/d/:dashboard.id">Mercado Livre</a>
+      </li>
+      <li>
+        <a href="/d/:dashboard.id">Qualificações</a>
+      </li>
+      <li class="active">
+        Todos
+      </li>
+    </ul>
+  </header>
+  <div class="panel-body">
+    <div class="no-more-tables">
+      <table class="display table table-bordered table-striped table-condensed no-more-tables">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Ordem</th>
+            <th>Comprador</th>
+            <th>Avaliação Recebida</th>
+            <th>Avaliação Enviada</th>
+            <th>Motivo</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <% if@buyer_feedbacks %>
+        <% @buyer_feedbacks.each do |buyer_feedback| %>
+        <tbody id="items-body">
+          <tr>
+            <td style="width: 100px">
+              <div class="first-part-feedback">
+                <div class="user-heading alt ">
+                  <p> <%= buyer_feedback.meli_item ? buyer_feedback.meli_item.title : :sem_produto%> </p>
+                  <p> <%= buyer_feedback.meli_item ? buyer_feedback.meli_item.price : :sem_produto%> </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="second-part-feedback">
+                <p> <%= buyer_feedback.meli_order_id %></p>
+                <p> <%= buyer_feedback.date_created.to_date %></p>
+              </div>
+            </td>
+            <td>
+              <div class="third-part-feedback">
+                <p> <%= box(buyer_feedback.meli_order_id).customer.nickname if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem apelido"%></p>
+                <p> <%= box(buyer_feedback.meli_order_id).customer.email if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem email"%></p>
+                <p> <%= box(buyer_feedback.meli_order_id).customer.phone if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem telefone"%></p>
+              </div>
+            </td>
+            <td>
+              <div class="fourth-part-feedback">
+                <% if buyer_feedback %>
+                  <% status_class = buyer_feedback.rating == :negative ? "danger" : "success" %>
+
+                  <span type="button" class="badge alert-<%= status_class %>">
+                    <%= buyer_feedback.rating? ? I18n.t(buyer_feedback.rating, scope: "helpers.feedback.ratings") : I18n.t(:nil_feedback, scope: "helpers.feedback.ratings")%>
+                  </span>
+                <% end %>
+                  <p>
+                    <%= buyer_feedback.message %>
+                  </p>
+                  <p> <%= buyer_feedback.date_created.to_date if buyer_feedback.message %></p>
+              </div>
+            </td>
+            <td style="width: 200px">
+              <div class="fifth-part-feedback">
+                <% if buyer_feedback and feedback_seller(buyer_feedback)%>
+                  <% status_class = feedback_seller(buyer_feedback).rating == :negative ? "danger" : "success" %>
+
+                  <span type="button" class="badge alert-<%= status_class %>">
+                    <%= I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") %>
+                  </span>
+                  <p>
+                    <%= feedback_seller(buyer_feedback).message %>
+                  </p>
+                  <p> <%= feedback_seller(buyer_feedback).date_created.to_date if feedback_seller(buyer_feedback).message %></p>
+                <% else %>
+                <span type="button" class="badge alert-danger">
+                  <%= "Qualificação não enviada a tempo" %>
+                </span>
+                <% end %>
+              </div>
+            </td>
+
+            <td>
+              <div class="fourth-part-feedback">
+                  <p>
+                    <%= t(buyer_feedback.reason, scope: "helpers.feedback.ratings") if buyer_feedback%>
+                  </p>
+              </div>
+            </td>
+
+            <td>
+                <div class="sixth-part-feedback">
+                  <a href="javascript:;">
+                  <% if box(buyer_feedback.meli_order_id) && box(buyer_feedback.meli_order_id).feedback_seller != nil && box(buyer_feedback.meli_order_id).feedback_already_updated == false %>
+                    <i class="fa fa-pencil text-link"></i>
+                    <%= link_to 'Editar enviada', feedback_edit_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+                  </a>
+                  </br>
+                    <% else %>
+                    <p style= "font-size: 9px"><%= "Já editado" %></p>
+                    <% end %>
+                  <a href="javascript:;">
+                    <i class="fa fa-pencil text-link"></i>
+                    <%= link_to 'Editar motivo', feedback_edit_reason_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+                  </a>
+                  </br>
+                  <a href="javascript:;">
+                    <i class="fa fa-pencil text-link"></i>
+                    <%= link_to 'Falar com comprador', feedback_edit_reason_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+                  </a>
+                </div>
+              <% end %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+            <div class="col-md-12" id="question_paginate" >
+            <%= will_paginate @buyer_feedbacks, previous_label: h("<"), next_label: h(">") %>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

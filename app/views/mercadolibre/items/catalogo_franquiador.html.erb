@@ -1,0 +1,251 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn-group">
+                <button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" id="more-actions" type="button">
+                  <%= t(".importar") %>
+                  <i class="fa fa-ellipsis-h"></i>
+                </button>
+                <ul aria-labelledby="more-actions" class="dropdown-menu" role="menu">
+                  <li role="presentation">
+                    <%= link_to catalog_import_dashboard_items_path, id: "import_invitation", tabindex: "-1", remote: true do %>
+                      <%= translate_button_content(:import, @klass, icon: :upload, label_class: "") %>
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<section class="panel">
+  <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 15px;">
+    <li class="dropdown" style="padding-right: 30px; float: left">
+        <a style="color:#fff; background: #4eaf00" href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Marca <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a> <%= link_to "ZIN", catalogo_franquiador_dashboard_items_path(f_marca: "ZIN"), method: :get%></a></li>
+            <li><a> <%= link_to "JOY", catalogo_franquiador_dashboard_items_path(f_marca: "ZIN"), method: :get%></a></li>
+        </ul>
+    </li>
+  </ul>
+</section>
+
+
+
+<div class="group-rom-box" style= "font-weight: bold; text-align: center">
+  <div class="first-part-box">
+    <p>
+      Código
+    </p>
+  </div>
+  <div class="second-part-box">
+    <p>
+      Descrição
+    </p>
+  </div>
+  <div class="third-part-box">
+    <p>
+      Marca
+    </p>
+  </div>
+  <div class="fourth-part-box">
+    <p>
+      Estoques
+    </p>
+  </div>
+  <div class="fourth-part-box">
+    <p>
+      Preços
+    </p>
+  </div>
+  <div class="fourth-part-box">
+    <p>
+      Anúncio
+    </p>
+  </div>
+  <div class="fourth-part-box">
+    <p>
+      Ações
+    </p>
+  </div>
+</div>
+
+<% if @items %>
+<% @items.each do |item| %>
+
+
+<div class="group-rom-box">
+  <div class="first-part-box">
+    <p style="font-weight: bold">
+      código
+    </p>
+    <p>
+      <%= item.f_codigo %>
+    </p>
+
+    </br>
+    <p style="font-weight: bold">
+      referência
+    </p>
+    <p>
+      <%= item.f_referencia %>
+    </p>
+  </div>
+
+  <div class="second-part-box">
+    <%= item.f_descricao %>
+  </div>
+
+
+  <div class="third-part-box">
+    <dl class="dl-horizontal" >
+      <dt>
+        grupo
+      </dt>
+      <dd>
+        <%= item.f_grupo %>
+      </dd>
+
+      <dt>
+        linha
+      </dt>
+      <dd>
+        <%= item.f_linha %>
+      </dd>
+
+      <dt>
+        coleção
+      </dt>
+      <dd>
+        <%= item.f_colecao %>
+      </dd>
+
+      <dt>
+        marca
+      </dt>
+      <dd>
+        <%= item.f_marca %>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="fourth-part-box">
+    <dl class="dl-horizontal" >
+      <dt>
+        próprio
+      </dt>
+      <dd>
+        <%=item.f_storage%>
+      </dd>
+
+      <dt>
+        franquiados
+      </dt>
+      <dd>
+        <%=item.quantity_from_store%>
+      </dd>
+
+      <dt>
+        total
+      </dt>
+      <dd>
+        <%=item.quantity_from_store%>
+      </dd>
+
+      </br>
+      <dt>
+      </dt>
+      <dd>
+        <%= link_to '', stores_per_item_dashboard_storages_path(f_codigo: item.f_codigo), remote: true, class: "fa fa-user text-success" %>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="fifth-part-box">
+    <dl class="dl-horizontal" >
+      <dt>
+        custo
+      </dt>
+      <dd>
+        R$<%= item.f_preco_custo %>
+      </dd>
+
+      <dt>
+        venda
+      </dt>
+      <dd>
+        R$<%= item.f_preco_venda %>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="sixth-part-box">
+
+    <button type="button" class="btn btn-round btn-success btn-xs"><%= item.status %></button>
+
+    <dl class="dl-horizontal" >
+      <dt>
+        início
+      </dt>
+      <dd>
+        <%= item.start_time %>
+      </dd>
+
+      <dt>
+         término
+       </dt>
+       <dd>
+         <%= item.end_time %>
+       </dd>
+
+     <dt>
+        qtd anunciada
+      </dt>
+      <dd>
+        50
+      </dd>
+
+      <dt>
+         preço
+       </dt>
+       <dd>
+         R$500
+       </dd>
+
+       <dt>
+          qtd não anunciada
+        </dt>
+        <dd>
+          30
+        </dd>
+
+      </br>
+      <dt>
+      </dt>
+      <dd>
+        <%= link_to '', stores_per_item_dashboard_storages_path(f_codigo: item.f_codigo), remote: true, class: "fa fa-pencil text-success" %>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="senth-part-box">
+    <a href="javascript:;">
+        <i class="fa fa-envelope text-success"></i>
+        <%= link_to 'Atualizar'%>
+    </a>
+  </div>
+
+</div>
+
+
+<%end%>
+<%end%>

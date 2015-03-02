@@ -1,0 +1,178 @@
+<section class="panel">
+  <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <form action="#" class="pull-right position">
+        <%= form_tag dashboard_questions_path, method: :get do %>
+          <input type="text" placeholder="Palavra" class="form-control search-btn "
+            <%= text_field_tag :query, params[:query] %>
+            <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+          <%end%>
+      </form>
+    </li>
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <a style="color:#31708f  ; background: #d9edf7" href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Filtrar status <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% Mercadolibre::Question::statuses.keys.each do |status| %>
+          <li><%= link_to t(status, scope: "helpers.questions.status"), dashboard_questions_path(status: status), method: :get  %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <form action="#" class="pull-right position">
+      <% status_class = "danger"   %>
+        <span type="button" class="badge alert-<%= status_class %>">
+        </span>
+      </form>
+    </li>
+
+  </ul>
+</section>
+
+<section class="panel" id="all-items">
+  <header class="panel-heading">
+    <ul class="breadcrumb">
+      <li>
+        <a>Mercado Livre</a>
+      </li>
+      <li>
+        <a>Perguntas</a>
+      </li>
+      <li class="active">
+        Todos
+      </li>
+    </ul>
+  </header>
+  <div class="panel-body">
+    <div class="no-more-tables">
+      <table class="display table table-bordered table-striped table-condensed no-more-tables">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Cliente</th>
+            <th>Pergunta</th>
+            <th>Data</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <% if @questions %>
+        <% @questions.each do |question| %>
+        <tbody id="items-body">
+          <tr>
+            <td style="width: 220px">
+              <div class="first-part-question" >
+                <% if question.meli_item %>
+                <p><%= question.meli_item.title %></p>
+                <dl class="dl-horizontal">
+                  <dt>Anúncio:</dt>
+                  <dd><%= question.meli_item_id %></dd>
+                  <dt>Preço:</dt>
+                  <dd>R$<%= question.meli_item.price%></dd>
+                  <dt>Qtd:</dt>
+                  <dd><%= question.meli_item.sold_quantity%></dd>
+                </dl>
+                <% end %>
+              </div>
+            </td>
+
+            <td style="width: 220px">
+              <div class="first-part-question" >
+                <% if question.customer %>
+                <p><%= question.customer.nickname %></p>
+                <dl class="dl-horizontal">
+                  <dt>Nome:</dt>
+                  <dd><%= question.customer.name %></dd>
+                  <dt>Telefone:</dt>
+                  <dd><%= question.customer.phone%></dd>
+                  <dt>Email:</dt>
+                  <dd><%= question.customer.email%></dd>
+                </dl>
+                <% end %>
+              </div>
+            </td>
+
+            <td>
+              <div class="second-part-question">
+                <% if question.status? %>
+                  <% status_class = "danger" if question.status == :unanswered or question.status == :closed_unanswered or question.status == :under_review %>
+                  <% status_class = "success" if question.status == :answered  %>
+
+                  <span type="button" class="badge alert-<%= status_class %>">
+                    <%= t(question.status, scope: "helpers.questions.status") || "" %>
+                  </span>
+
+                <% end %>
+
+                <% if question and question.text %>
+                <p><%= question.text.html_safe %></p>
+                <% end %>
+
+                <% if question.answered? %>
+                  <div class="group-rom" style="padding: 15px">
+                    <div class="msg-time-chat">
+                        <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini")%></a>
+                        <div class="message-body msg-in">
+                            <span class="arrow"></span>
+                            <div class="text">
+                                <p class="attribution"><a><%= question.user.name%></a> <%= I18n.l(question.created_at.to_time) %> </p>
+                                <p><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <%end%>
+              </div>
+            </td>
+            <td>
+              <div class="third-part-question">
+                <span class="time">
+                  <i class="fa fa-clock-o"></i>
+                  <time class="unloaded" datetime="<%= question.created_at %>">
+                    <%= question.created_at %>
+                  </time>
+                </span>
+              </div>
+            </td>
+            <td>
+              <ul class="fourth-part-question">
+                <% if question.unanswered? %>
+                  <a href="javascript:;">
+                    <i class="fa fa-envelope text-link"></i>
+                    <%= link_to 'Responder', edit_dashboard_question_path(current_dashboard, question.id), remote: true, style: "font-size: 11px" %>
+                  </a>
+                <%end%>
+                </br>
+                <a href="javascript:;">
+                  <i class="fa fa-envelope text-link"></i>
+                  <%= link_to 'Apagar', dashboard_question_path(current_dashboard, question.id), method: :delete, data: { confirm: 'Você tem certeza que deseja apagar?' }, remote: true, style: "font-size: 11px" %>
+                </a>
+                </br>
+              <% unless question.customer_blocked? %>
+                </br>
+                <a href="javascript:;">
+                  <i class="fa fa-envelope text-link"></i>
+                  <%= link_to 'Bloquear', block_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
+                </a>
+                <% else %>
+                </br>
+                <a href="javascript:;">
+                  <i class="fa fa-envelope text-link"></i>
+                  <%= link_to 'Desbloquear', unblock_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja desbloquear esse usuário?' }, style: "font-size: 11px" %>
+                </a>
+                <%end%>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+        <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="col-md-12" id="question_paginate" >
+<%= will_paginate @questions, previous_label: h("<"), next_label: h(">") %>
+</div>
+
+

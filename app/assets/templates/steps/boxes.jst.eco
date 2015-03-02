@@ -1,0 +1,26 @@
+<% if @boxes.length: %>
+  <% for box in @boxes.models: %>
+    <div class="step-box ui-droppable" data-update_url="<%= box.get('url') %>" id="<%= box.get('id') %>">
+      <div class="step-box-details clearfix">
+        <a class="list-box-title clear" href="<%= box.get('url') %>"><span class="box-short-id hide">#<%= box.get('id') %></span>
+          <div class="box_name">
+            <%= box.get('name') %>
+          </div>
+        </a>
+      </div>
+      <div class="step-box-footer clearfix">
+        <!-- customer -->
+        <% if customer = box.get('customer'): %>
+          <a class="customer" href="<%= customer.url %>">@<%= customer.nickname %></a>
+        <% end %>
+
+        <!-- badges -->
+        <a class="label label-inverse label-<%= box.get('shipping_status') %>" href="<%= box.get('url') %>" title="<%= box.get('shipping_status') %>">
+          <i class="fa fa-truck"></i>
+        </a>
+      </div>
+    </div>
+  <% end %>
+  <a href="#" id="nextPage" class="step-box active-box step-box-details loading">Mais</a>
+<% end %>
+

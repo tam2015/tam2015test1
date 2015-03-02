@@ -1,0 +1,18 @@
+#step-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      = simple_form_for @dashboard, wrapper: :small, html: { class: "step_form form-horizontal", role: "form" } do |f|
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+          %h4.modal-title= t_model(Dashboard, pluralize: false)
+
+        .modal-body.clearfix
+          .col-md-12
+            = f.input :name, autofocus: true, required: true
+
+        .modal-footer
+          = f.button :button, type: :submit, class: 'btn btn-primary' do
+            = t(".save")
+
+          %a.btn.btn-default{ href: "#", "data-dismiss" => "modal" }
+            = t(".cancel")

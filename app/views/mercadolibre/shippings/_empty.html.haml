@@ -1,0 +1,10 @@
+.alert.alert-warning.alert-block.fade.in.text-center
+  %h4
+    = t(".empty_record")
+
+  %p
+    = link_to shipping_notify_path(shipping, { type: :no_address }), class: "btn btn-success", id: "notify", remote: true, method: :post do
+      = translate_button_content(:request, shipping, icon: :"mail-reply", label_class: "hidden-xs")
+
+    = link_to edit_shipping_path(shipping), class: "btn btn-success", id: "edit", remote: true do
+      = translate_button_content(:complete, shipping, icon: :pencil, label_class: "hidden-xs")

@@ -1,0 +1,31 @@
+- if invitation
+  %tr{ id: "invitation_#{invitation.id}" }
+    %td.text-center.hidden-xs.table-checkbox
+      %input.list-child{type: "checkbox", value: ""}/
+    %td{ "data-title" => @klass.human_attribute_name(:name       ) }
+      = link_to invitation_path(invitation), title: invitation.name do
+        = truncate(invitation.email, length: 75)
+    %td{ "data-title" => @klass.human_attribute_name(:invitation_sent_at  ) }
+      - if invitation.invitation_sent_at
+        %time.unloaded{ datetime: invitation.invitation_sent_at.to_time }= I18n.l(invitation.invitation_sent_at.to_time)
+    %td{ "data-title" => @klass.human_attribute_name(:invitation_accepted_at   ) }
+      - if invitation.invitation_accepted_at
+        %time.unloaded{ datetime: invitation.invitation_accepted_at.to_time }= I18n.l(invitation.invitation_accepted_at.to_time)
+    %td.table-actions
+      - label_class ||= "sr-only"
+      - button_class ||= "btn-xs"
+
+      - if defined?(f) || params[:action] == "edit"
+        - # If action == form (edit or new)
+
+        = link_to :back, class: "btn btn-default #{button_class}" do
+          = translate_button_content(:back, invitation, icon: :"arrow-left", label_class: label_class)
+
+        - if defined? f
+          = # button_tag class: "btn btn-success #{button_class}" do
+          = f.button :button, type: :submit, class: "btn btn-success #{button_class}" do
+            = translate_button_content(:submit, invitation, icon: :check, label_class: label_class)
+
+      - else
+        = link_to remove_user_invitation_path(invitation), class: "btn btn-danger #{button_class}", remote: true do
+          = translate_button_content(:delete, invitation, icon: :"trash-o", label_class: label_class)

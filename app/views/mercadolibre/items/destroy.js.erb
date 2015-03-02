@@ -1,0 +1,14 @@
+$(".flash-messages").append('<%= j flash_message %>');
+
+query = $.deserialize(window.location.search.replace(/^\?/, ''));
+query_deleted = query.deleted || query.deleted == "true";
+force = <%= @force || "false" %>;
+selector = "#item_<%= @item.id %>";
+
+if (!query.deleted || force) {
+  $(selector).remove();
+} else {
+  $(selector).replaceWith('<%= j render @item %>');
+}
+
+AIRCRM.Admin.init()

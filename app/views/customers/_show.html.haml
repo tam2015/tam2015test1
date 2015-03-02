@@ -1,0 +1,23 @@
+.col-xs-12
+  = flash_message
+
+- customer ||= @customer
+- if customer
+  - klass = customer.class
+  .col-xs-12
+    %dl
+      %dt= klass.human_attribute_name :name
+      %dd= customer.name
+
+      %dt= klass.human_attribute_name :email
+      %dd= customer.email
+
+      %dt= klass.human_attribute_name :phone
+      %dd= customer.phone
+
+      %dt= klass.human_attribute_name :username
+      %dd= customer.meli_user_username
+
+  .col-xs-12.text-center
+    = link_to edit_customer_path(customer), class: "btn btn-success", id: "edit", remote: true do
+      = translate_button_content(:edit, customer, icon: :pencil, label_class: "hidden-xs")

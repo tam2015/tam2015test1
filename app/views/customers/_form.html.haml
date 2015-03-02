@@ -1,0 +1,24 @@
+- customer ||= @customer
+
+= simple_form_for(dashboard_customer_path(id: @customer.id), method: :patch,  remote: true, html: { class: "customer_form", role: "form" }) do |f|
+  .col-lg-12
+    = f.error_notification
+
+  .col-lg-12
+    .row
+      .col-lg-6
+        = f.input :nickname, disabled: true
+      .col-lg-6
+        = f.input :meli_user_id, disabled: true
+
+    = f.input :name, required: true, autofocus: true
+
+    = f.input :phone
+    = f.input :email
+
+  .col-action.text-center
+    = f.button :button, type: :submit, class: "btn btn-success" do
+      = translate_button_content(:submit, customer, icon: :check, label_class: "hidden-xs")
+
+    = link_to :back, class: "btn btn-default", id: "cancel" do
+      = translate_button_content(:cancel, customer, icon: :times, label_class: "hidden-xs")

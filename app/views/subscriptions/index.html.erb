@@ -1,0 +1,33 @@
+<h1>Listing subscriptions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Paypal customer token</th>
+      <th>Paypal recurring profile token</th>
+      <th>Account</th>
+      <th>User</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subscriptions.each do |subscription| %>
+      <tr>
+        <td><%= subscription.paypal_customer_token %></td>
+        <td><%= subscription.paypal_recurring_profile_token %></td>
+        <td><%= subscription.account_id %></td>
+        <td><%= subscription.user_id %></td>
+        <td><%= link_to 'Show', subscription %></td>
+        <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>
+        <td><%= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subscription', new_subscription_path %>

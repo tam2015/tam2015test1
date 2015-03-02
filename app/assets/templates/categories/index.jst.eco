@@ -1,0 +1,9 @@
+<% if @categories.length: %>
+  <ol class="dd-list">
+    <% for category in @categories.models: %>
+      <li id="<%= category.id %>" data-category="<%= JSON.stringify(category.toJSON()) %>" >
+        <%= category.get("name") %>
+      </li>
+    <% end %>
+  </ol>
+<% end %>

@@ -1,0 +1,23 @@
+# wercker.yml file
+# box: wercker/ruby
+box: iori/iori      # @0.0.3   # [ruby 2.1.1, imagemagick]
+
+build:
+  steps:
+    # Execute the bundle install step, a step provided by wercker
+    - bundle-install
+
+    # test steps, minify step, etc
+    # - bundle-package
+
+deploy:
+  steps:
+    - bundle-install
+
+    - script:
+        name: write shh env var
+        code: |-
+          export RUBBER_SSH_KEY=`mktemp`
+          echo -e $SSH_KEY_PRIVATE_DUMP > $RUBBER_SSH_KEY
+
+    - cap

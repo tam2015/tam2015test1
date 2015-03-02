@@ -1,0 +1,3 @@
+#!/bin/sh
+# password= password14
+psql --host=aircrm1-production.cebfxomjiiwp.us-west-2.rds.amazonaws.com --port=5432 --username=aircrm_db_user --password --dbname=aircrm_production

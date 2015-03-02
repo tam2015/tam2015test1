@@ -1,0 +1,40 @@
+    <aside class="profile-nav col-lg-3">
+      <section class="panel">
+        <div class="user-heading round">
+            <a href="#">
+              <%= image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini") %>
+            </a>
+            <h1><%=current_user.name%></h1>
+            <p><%=current_user.email%></p>
+        </div>
+
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="/profile">
+                <i class="fa fa-user"></i>
+                Dados Pessoais
+              </a>
+            </li>
+            <li>
+              <%= link_to(user_profile_plan_path) do %>
+                <i class="fa fa-user"></i> Dados Financeiros
+              <% end %>
+            </li>
+            <li>
+              <%= link_to(dashboard_aircrm_preferences_path(dashboard_id: current_user.dashboards.first.id,preference_type: "seller_feedback_message")) do %>
+                <i class="fa fa-user"></i> Qualificação ao comprador
+              <% end %>
+            </li>
+            <li>
+              <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "question"), remote: true) do %>
+                <i class="fa fa-user"></i> Perguntas
+              <% end %>
+            </li>
+            <li>
+              <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "feedback_aircrm_reason"), remote: true) do %>
+                <i class="fa fa-user"></i> Razões Qualificação
+              <% end %>
+            </li>
+        </ul>
+      </section>
+    </aside>

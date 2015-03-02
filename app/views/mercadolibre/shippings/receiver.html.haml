@@ -1,0 +1,15 @@
+.row{ id: "shipping-#{@shipping.id}", "data-shiping-id" => "#{@shipping.id}" }
+  .col-xs-8.col-xs-offset-2.col-md-6.col-md-offset-3
+    .row
+      .page-header.text-center
+        %h4 Atualizar endereço de entrega
+
+    - render_form = [:to_be_agreed, :pending, :handling].include? @shipping.status.to_sym
+    .shipping_resulted
+      - unless render_form
+        = render "show"
+
+    .shipping_form
+      - if render_form
+        = render 'form', receiver: true
+

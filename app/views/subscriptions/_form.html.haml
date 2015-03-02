@@ -1,0 +1,11 @@
+.text-center.feature-head
+  %h1= t(".is_this_your_plan")
+  %h5 Dados de pagamento fornecidos com sucesso!
+  %h6 Clique em confirmar assinatura para continuar
+
+  = form_for @subscription, url: :subscription, method: :patch  do |f|
+    = f.hidden_field :plan_id
+    = f.hidden_field :paypal_customer_token
+    = f.hidden_field :paypal_payment_token
+
+    = f.submit t(".subscription_confirmation"), class: 'btn btn-success'

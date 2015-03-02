@@ -1,0 +1,40 @@
+<% if item %>
+  <tr id="item_<%= item.id %>">
+    <td class="text-center hidden-xs table-checkbox">
+      <input class="list-child" type="checkbox">/</input>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
+      <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
+        <%= truncate(item.title, length: 75) %>
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
+      <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
+        <%= truncate(item.title, length: 75) %>
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+      <% if item.start_time %>
+        <time class="unloaded" datetime="<%= item.start_time.to_time %>">
+          <%= I18n.l(item.start_time.to_time) %>
+        </time>
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:stop_time   ) %>">
+      <% if item.stop_time %>
+        <time class="unloaded" datetime="<%= item.stop_time.to_time %>">
+          <%= I18n.l(item.stop_time.to_time) %>
+        </time>
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:infos      ) %>">
+      Pictures:
+      <%= item.meli_pictures? ? item.meli_pictures.count : (item.pictures && item.pictures.count) %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:status      ) %>">
+      <%= t(item.status, scope: "helpers.items.status") %>
+    </td>
+
+  </tr>
+<% end %>
+

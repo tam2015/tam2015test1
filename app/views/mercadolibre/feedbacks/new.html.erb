@@ -1,0 +1,17 @@
+<%= simple_form_for @feedback, url: :feedback_create_dashboard_boxes do |f| %>
+
+  <%= f.hidden_field :order_id, :value => params[:order_id] %>
+  <%= f.hidden_field :dashboard_id, :value => params[:dashboard_id] %>
+  <%= f.hidden_field :author_type, :value => "seller" %>
+  <%= f.hidden_field :status, :value => "ACTIVE" %>
+  <%= f.hidden_field :fulfilled, :value => true %>
+  <%= f.label :rating%>
+  <%= f.text_field :rating %>
+
+  <%= f.label :message%>
+  <%= f.text_field :message %>
+
+  <%= f.submit "add",  class: "btn btn-info" %>
+  <%end%>
+
+

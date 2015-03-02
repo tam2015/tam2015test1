@@ -1,0 +1,206 @@
+class BoxesController < ApplicationController
+  require 'will_paginate/array'
+
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
+  respond_to :html, :json, :js
+
+  # Callbacks
+  before_action :paginate_params, only: [ :index ]
+
+  before_action :set_box        , only: [ :show, :edit, :update, :destroy, :status ]
+
+  # DashboardsHelper callback
+  before_action :set_dashboard  , only: [ :index, :show, :edit, :update, :status,:index_test]
+
+  before_action :reload_buyer, only: [:show]
+
+  before_action :set_before_params, only: [ :status ]
+
+
+  # Breadcrumbs
+  # add_breadcrumb :index, :dashboard_path
+  before_action only: [ :show, :edit ] do
+    add_breadcrumb (@dashboard.name || :index ), dashboard_path(@dashboard)
+    add_breadcrumb (@box.name       || @box.id), dashboard_box_path(@dashboard, @box)
+  end
+
+  def index_test
+    if current_user.regular? || current_user.admin?
+      index_test_franquiador
+    elsif current_user.lojista?
+      index_test_lojista
+    end
+  end
+
+  def show
+    @customer = @box.customer || @box.customer.build
+    @feedback = @box.feedback #|| @box.feedback.build
+  end
+
+  def new
+    @box = current_user.boxes.new
+  end
+
+  def edit
+    @customer = @box.customer
+  end
+
+  def create
+    @box = Box.new(box_params)
+    @box.account_id = current_user.account_id
+
+    flash[:notice] = 'Box was successfully created.' if @box.save
+    respond_with @box
+  end
+
+  def update
+    if @dashboard and @dashboard.provider?
+      Rails.logger.debug "\n\n"
+      Rails.logger.debug " ======== Box.update#status"
+
+      box_params.slice(:status).each do |key, value|
+        @box.send("#{key}=", value) if @box.respond_to? key
+      end
+      Rails.logger.debug " =========== box.changes: #{@box.changes}"
+
+      if @box.changed?
+        provider_of_box = "#{@dashboard.provider}::Box".classify.constantize.new @dashboard
+        @box = provider_of_box.post @box
+      end
+
+      box_params.each do |key, value|
+        @box.send("#{key}=", value) if @box.respond_to? key
+      end
+
+      Rails.logger.debug "-------------------------"
+      Rails.logger.debug " =========== api posted: #{@box.inspect}"
+      Rails.logger.debug " =========== api errors: #{@box.errors.to_json}"
+      Rails.logger.debug "\n\n"
+    end
+
+    @box.save if @box.errors.empty? and @box.changed?
+
+    if !@box.errors.empty?
+      @box.errors.each do |code, message|
+        flash[:error] = message
+      end
+    else
+      flash[:success] = 'Box was successfully updated.'
+    end
+
+    respond_with @box
+  end
+
+
+
+  # DELETE /boxes/1
+  # DELETE /boxes/1.json
+  def destroy
+    # Remove comments to use Paranoia
+    # if @force = params[:force]
+      flash[:error] = "Box was successfully destroyed."
+      @box.destroy!
+    # else
+    #   flash[:alert] = "Box was successfully deleted."
+    #   @box.destroy
+    # end
+  end
+
+  # Others Controllers
+  #######################
+
+  # dashboard_box_status POST     /d/:dashboard_id/:box_id/status(.:format)
+  def status
+    # @box.status   = box_params[:status]
+    # @old_position = params[:box] ? params[:box][:old_position] : 0
+    @update_params = params[:box] || {}
+
+    # respond_with @box, location: dashboard_box_path(@dashboard, @box)
+    respond_with [@dashboard, @box]
+  end
+
+  def reload_buyer
+    #dashboard_id = Dashboard.find params[:dashboard_id]
+    box = Box.find(params[:id])
+    order_id = box.meli_order_id
+    Rails.logger.debug " \n\n\n\n\n\n\n\n\n-------------------order_id #{order_id}"
+    unless Meli::Base.oauth_connection.expired?
+      @feedback = Mercadolibre::Feedback.get! order_id, dashboard_id: params[:dashboard_id]
+    end
+  end
+
+  private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_box
+      @box = Box.find(params[:box_id] || params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def box_params
+      params.require(:box).permit(:name, :description, :position, :closed, :price, :status, :favorite, :tags,
+        # Providers
+        :meli_order_id,
+        # Assosiations
+        :account_id, :customer_id, :dashboard_id, :user_id)
+    end
+
+    def paginate_params
+      {
+        page:     (params[:page ] || 1),
+        per_page: (params[:limit] || params[:per_page] || 100)
+      }
+    end
+
+
+    def index_test_franquiador
+
+    #address_status_filter
+      if params[:status_address]
+        @boxes = Box.joins(:shipping).where(shippings: {pendings_status: "pendente"})
+        # @shippings = Mercadolibre::Shipping.where(pendings_status: params[:status_address], dashboard_id: @dashboard.id)
+        # @boxes = []
+        # @shippings.each do |shipping|
+        #   box = shipping.box
+        #   @boxes << box
+        # end
+        @boxes = @boxes.paginate(page: params[:page], per_page: 5)
+
+      elsif params[:status_customer]
+        @boxes = @dashboard.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data], dashboard_id: @dashboard.id})
+
+      #payment_status_filter
+      elsif params[:status_box_payment]
+        @boxes = @dashboard.boxes.where(" '#{params[:status_box_payment]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+
+      #shipping_status_filter
+      elsif params[:status_box_shipping]
+        @boxes = @dashboard.boxes.where(" '#{params[:status_box_shipping]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+
+      # elsif params[:status_box]
+      #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
+
+      elsif params[:query]
+        @boxes = @dashboard.boxes.where(meli_order_id: params[:query]).paginate(page: params[:page], per_page: 5)
+
+      else
+        @boxes = @dashboard.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        if @boxes.count < 1
+          redirect_to dashboards_path
+          flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
+        end
+      end
+    end
+      #testing box_tag_filter
+      #@boxes = Box.array_has_any(:tags, params[:status_box][0], params[:status_box][1]).paginate(page: params[:page], per_page: 5) if params[:status_box]
+      #@boxes = Box.where(" tags && ARRAY['paid', 'not_delivered']::character varying(255)[]")
+
+    #Used by "franquiador" business
+    def index_test_lojista params
+      @boxes = @dashboard.boxes.where(user: current_user).paginate(page: params[:page], per_page: 2)
+    end
+
+
+end

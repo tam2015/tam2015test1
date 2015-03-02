@@ -1,0 +1,114 @@
+!!!
+%html
+  / {lang: "#{I18n.locale}"}
+  %head
+    %meta{charset: "utf-8"}/
+
+    %title AirCRM
+
+    %meta{content: "aircrm, crm, online, cloud, air, system, sistema, responsivo", name: "keywords"}/
+    %meta{content: "O AirCRM é o sistema ideal para aumentar o desempenho da sua gestão de negócios.", name: "description"}/
+    %meta{content: "IE=8", "http-equiv" => "X-UA-Compatible"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+
+    = stylesheet_link_tag    "home", media: "all", "data-turbolinks-track" => true
+
+    = favicon_link_tag 'favicon.ico'
+
+    / HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries
+    /[if lt IE 9]
+      = javascript_include_tag "html5shiv", "data-turbolinks-track" => true
+      = javascript_include_tag "respond", "data-turbolinks-track" => true
+
+    = csrf_meta_tags
+
+  %body{ class: "#{dispatcher_class}", "data-route" => dispatcher_route }
+    / header start
+    %header.header-frontend
+      .navbar.navbar-default.navbar-static-top
+        .container
+          .navbar-header
+            %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
+              %span.fa.fa-bars
+            / logo start
+            = link_to dashboards_path, class: "logo logo-img" do
+              = image_tag("logoaircrm.png", alt: "AirCRM", class: "lazy" )
+            / logo end
+          .navbar-collapse.collapse
+            %ul.nav.navbar-nav
+              = render "home/navigation"
+          / .navbar
+    / header end
+
+    = yield
+
+    / footer start
+    %footer.footer
+      .container
+        .row
+          .col-lg-3.col-sm-3
+            %h1 Contato
+            %address
+              %strong Av. das Nações Unidas, 12.399
+              %br/
+              4º andar, São Paulo, SP <br />
+              Phone: (11) 5111-8277 <br />
+              Email:
+              = mail_to ENV["MAIL_DEFAULT_FROM"], ENV["MAIL_DEFAULT_FROM"], target: "_blank"
+
+          .col-lg-3.col-sm-3.col-lg-offset-2
+            %h1 AirCRM
+            %ul.list-unstyled(style= "line-height:26px")
+              %li= link_to "Termo de Uso", terms_path
+              / %li= link_to "Política de Privacidade"
+              %li= link_to "Planos e Preços", plans_path
+              %li= link_to "Produto", services_path
+              %li= link_to "Trabalhe Conosco", jobs_path
+
+
+
+
+            / %h1 Últimos tweets
+            / .tweet-box
+            /   %i.fa.fa-twitter
+            /   %em
+            /     Please follow
+            /     %a{href: "javascript:;"} @nettus
+            /     for all future updates of us!
+            /     %a{href: "javascript:;"} twitter.com/vectorlab
+          .col-lg-3.col-sm-3.col-lg-offset-1
+            %h1 Fique conectado
+            %ul.social-link-footer.list-unstyled
+              %li
+                = link_to "https://twitter.com/aircrm" do
+                  %i.fa.fa-twitter
+              %li
+                = link_to "https://www.facebook.com/aircrm.com.br" do
+                  %i.fa.fa-facebook
+              %li
+                = link_to "https://www.google.com/+AirCRMBR" do
+                  %i.fa.fa-google-plus
+              - # %li
+              - #   = link_to "http://twitter.com/AirCRM" do
+              - #     %i.fa.fa-skype
+              - # %li
+              - #   = link_to "http://twitter.com/AirCRM" do
+              - #     %i.fa.fa-dribbble
+              - # %li
+              - #   = link_to "http://twitter.com/AirCRM" do
+              - #     %i.fa.fa-linkedin
+              - # %li
+              - #   = link_to "http://twitter.com/AirCRM" do
+              - #     %i.fa.fa-github
+              - # %li
+              - #   = link_to "http://twitter.com/AirCRM" do
+              - #     %i.fa.fa-youtube
+    / footer end
+
+    / Load JS here for greater good =============================
+    = javascript_include_tag "home", "data-turbolinks-track" => true
+    = javascript_include_tag "locales/#{I18n.locale}", "data-turbolinks-track" => true
+
+    = render 'layouts/analytics'  if ENV["GOOGLE_ANALYTICS_ACCOUNT"]
+    = render 'layouts/chat'       if ENV["ZOPIM_KEY"]
+    = render 'layouts/crazyegg'

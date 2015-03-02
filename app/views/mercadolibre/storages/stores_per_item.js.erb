@@ -1,0 +1,7 @@
+$("body")
+  .find("#invitation-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("stores_per_item") %>')
+  .find("#invitation-modal.modal")
+    .modal();

@@ -1,0 +1,57 @@
+%li.active
+  %a{href: "/"} Home
+%li
+  %a{href: "/about"} Sobre
+%li
+  %a{href: "/services"} O Produto
+/ %li.dropdown
+/   %a.dropdown-toggle{"data-close-others" => "false", "data-delay" => "0", "data-hover" => "dropdown", "data-toggle" => "dropdown", href: "/feature"}
+/     Feature
+/     %b.fa.fa-angle-down
+/   %ul.dropdown-menu
+/     %li
+/       %a{href: "/features#typography"} Typography
+/     %li
+/       %a{href: "/features#buttons"} Buttons
+/ %li
+/   %a{href: "price.html"} Price
+/ %li
+/   %a{href: "http://blog.aircrm.com.br"} Blog
+%li
+  %a{href: "/contact"} Contato
+/ %li.dropdown.language
+/   %a.dropdown-toggle{"data-close-others" => "true", "data-hover" => "dropdown", "data-toggle" => "dropdown", href: "#"}
+/     = image_tag("flags/us.png", alt: "")
+/     %span.username US
+/     %b.fa.fa-angle-down
+/   %ul.dropdown-menu
+/     %li
+/       %a{href: "#"}
+/         = image_tag("flags/es.png", alt: "")
+/         Spanish
+/     %li
+/       %a{href: "#"}
+/         = image_tag("flags/de.png", alt: "")
+/         German
+/     %li
+/       %a{href: "#"}
+/         = image_tag("flags/ru.png", alt: "")
+/         Russian
+/     %li
+/       %a{href: "#"}
+/         = image_tag("flags/fr.png", alt: "")
+/         French
+
+
+- # User / Login button
+- if user_signed_in?
+  = render 'layouts/user_nav_badge'
+- else
+  %li
+    = link_to user_session_path, class: "btn btn-info" do
+      %i.fa.fa-user
+      = t(".sign_in", model: down_model(User))
+
+- # Search
+%li
+  %input.form-control.search{placeholder: " Search", type: "text"}/

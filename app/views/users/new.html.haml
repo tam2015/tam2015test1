@@ -1,0 +1,9 @@
+#registration-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        - unless params[:controller] == "registrations"
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+        %h4.modal-title Registro
+
+        = render 'form'

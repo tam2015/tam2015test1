@@ -1,0 +1,90 @@
+.tour-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  background-color: #000;
+  opacity: 0.8;
+}
+
+.tour-step-backdrop {
+  position: relative;
+  z-index: 1101;
+  background: inherit;
+}
+
+.tour-step-background {
+  position: absolute;
+  z-index: 1100;
+  background: inherit;
+  border-radius: 6px;
+}
+
+.popover[class*="tour-"] {
+  //** Popover body background color
+  @popover-tour-bg:                          @belize-hole;
+  //** Popover border color
+  @popover-tour-border-color:                rgba(0,0,0,.2);
+  //** Popover fallback border color
+  @popover-tour-fallback-border-color:       #ccc;
+
+  //** Popover title background color
+  @popover-tour-title-bg:                    darken(@popover-bg, 3%);
+  //** Popover arrow color
+  @popover-tour-arrow-color:                 @popover-bg;
+  //** Popover outer arrow color
+  @popover-tour-arrow-outer-color:           rgba(0,0,0,.25);
+  //** Popover outer arrow fallback color
+  @popover-tour-arrow-outer-fallback-color:  #999;
+
+  z-index: 1100;
+  background-color: @popover-tour-bg;
+  color: #fff;
+
+  .popover-title { background-color: darken(@popover-tour-bg, 3%); }
+
+  .popover-navigation {
+    padding: 9px 14px;
+
+    *[data-role="end"] { float: right; }
+
+    *[data-role="prev"],
+    *[data-role="next"],
+    *[data-role="end"] {
+      cursor: pointer;
+
+      &.disabled { cursor: default; }
+    }
+  }
+
+  &.orphan {
+    position: fixed;
+    margin-top: 0;
+    .arrow { display: none; }
+  }
+
+  &.top > .arrow {
+    border-top-color: @popover-tour-arrow-outer-fallback-color; // IE8 fallback
+    border-top-color: @popover-tour-arrow-outer-color;
+    &:after {
+      border-top-color: @popover-tour-arrow-color;
+    }
+  }
+  &.right > .arrow {
+    border-right-color: @popover-tour-arrow-outer-fallback-color; // IE8 fallback
+    border-right-color: @popover-tour-arrow-outer-color;
+    &:after { border-right-color: @popover-tour-arrow-color; }
+  }
+  &.bottom > .arrow {
+    border-bottom-color: @popover-tour-arrow-outer-fallback-color; // IE8 fallback
+    border-bottom-color: @popover-tour-arrow-outer-color;
+    &:after { border-bottom-color: @popover-tour-arrow-color; }
+  }
+  &.left > .arrow {
+    border-left-color: @popover-tour-arrow-outer-fallback-color; // IE8 fallback
+    border-left-color: @popover-tour-arrow-outer-color;
+    &:after { border-left-color: @popover-tour-arrow-color; }
+  }
+}

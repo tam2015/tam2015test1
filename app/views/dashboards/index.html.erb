@@ -1,0 +1,70 @@
+<h2>Import Products</h2>
+
+<%= form_tag import_dashboard_items_path(Dashboard.first.id), multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<% dashboard = current_dashboard || current_user.dashboards.first || User.where(id: current_user.invited_by_id).first.dashboards.first %>
+<% if dashboard || current_user.lojista? %>
+<div style="background:#fff; height: 600px">
+   <div class="container">
+       <div class="row">
+           <div class="row">
+               <div class="text-center feature-head">
+                   <h1> Nosso produto </h1>
+                   <p>Escolha o que deseja fazer e clique no link</p>
+               </div>
+               <div class="services">
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Vendas", dashboard_index_test_path(dashboard)%></h3>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Anúncios", dashboard_items_path(dashboard)%></h3>
+                       </div>
+                   </div>
+               </div>
+               <div class="services">
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Perguntas", dashboard_questions_path(dashboard)%></h3>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Qualificações", dashboard_feedbacks_path(dashboard)%></h3>
+                       </div>
+                   </div>
+               </div>
+               <div class="services">
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Manual", guide_path%></h3>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%= link_to "Tendências"%></h3>
+                       </div>
+                   </div>
+               </div>
+               <div class="services">
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%=link_to "Clientes", guide_path%></h3>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-sm-6" style="text-align: center; margin-top:30px">
+                       <div class="btn" style="color:#31708f  ; background: #d9edf7 ; width: 300px">
+                           <h3 class="title"><%= link_to "Etiquetas"%></h3>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<% end %>

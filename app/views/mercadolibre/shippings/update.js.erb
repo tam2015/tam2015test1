@@ -1,0 +1,12 @@
+$(".flash-messages").prepend('<%= j flash_message %>').show();
+
+<%
+if param_action_is? "status", before_params
+  # view = j render @box
+  errors = raw @shipping.errors.map{|k, v| { "#{k}" => v } }.to_json
+else
+  view = 'j render("show")'
+end
+%>
+
+AIRCRM.mercadolibre_shippings.update("<%= @shipping.id %>", <%= raw before_params.to_json %>, <%= view || errors %> );

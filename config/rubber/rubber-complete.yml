@@ -1,0 +1,5 @@
+role_dependencies:
+  web: [haproxy, newrelic]
+  app: [unicorn, newrelic]
+  # app: [puma, newrelic]
+  web_tools: [nginx, newrelic]

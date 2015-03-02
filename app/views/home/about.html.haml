@@ -1,0 +1,99 @@
+/ breadcrumbs start
+.breadcrumbs
+  .container
+    .row
+      .col-lg-4.col-sm-4
+        %h1 Sobre nós
+      .col-lg-8.col-sm-8
+        %ol.breadcrumb.pull-right
+          %li
+            %a{href: "#"} Home
+          %li
+            %a{href: "#"} Pages
+          %li.active Sobre nós
+/ breadcrumbs end
+
+/ container start
+.container
+  .row
+    .col-lg-5
+      .span5.about-carousel
+        #myCarousel.carousel.slide
+          / Carousel items
+          .carousel-inner
+            .active.item
+              %img{alt: "", src: "assets/home/about_1.jpg"}/
+              .carousel-caption
+                %p Excelência em Atendimento
+            .item
+              %img{alt: "", src: "assets/home/about_2.jpg"}/
+              .carousel-caption
+                %p Equipe experiente
+            .item
+              %img{alt: "", src: "assets/home/about_1.jpg"}/
+              .carousel-caption
+                %p Comprometimento
+          / Carousel nav
+          %a.carousel-control.left{"data-slide" => "prev", href: "#myCarousel"}
+            %i.fa.fa-angle-left
+          %a.carousel-control.right{"data-slide" => "next", href: "#myCarousel"}
+            %i.fa.fa-angle-right
+    .col-lg-7.about
+      %h3 Seja bem vindo ao AirCRM
+      %p
+
+        A AirCRM é uma empresa que nasceu em 2013 para ajudar os vendedores a aumentarem suas vendas. Nosso intuito sempre foi construir sistemas completos de forma muito simples acessível para qualquer pessoa. Em 2013 a empresa recebeu um investimento da Wayra, uma empresa do grupo telefônica. E em 2014 fechou uma parceria e recebeu um investimento do Mercado Livre e em troca nos comprometemos a construir o melhor sistema de gerenciamento de vendas para os vendedores do Mercado Livre.
+      %p
+        Em maio obtivemos muito sucesso ao participar do evento Mercado Livre Universidade. Lá podemos conhecer muitos vendedores que nos ajudaram a construir um excelente sistema. Nosso lançamento oficial ocorreu em junho de 2014.
+  .row
+    .hiring
+      .col-lg-6.col-sm-6
+
+        %img{alt: "", src: "assets/logowayra.png"}/
+        .content
+          %p Em 2013 recebemos um investimento da Wayra, uma empresa do grupo telefônica com o intuito de criar produtos para pequenas e médias empresas gerenciarem suas vendas.
+      .col-lg-6.col-sm-6
+        %img{alt: "", src: "assets/logo-mercado-livre.png"}
+        .content
+          %p Em 2014, recebemos um investimento do Mercado Livre e fechamos uma parceria onde nos comprometemos a criar o melhor sistema de gerenciamento de vendas já visto.
+.gray-box
+  .container
+    .row
+      .col-lg-5
+        / testimonial start
+        .about-testimonial.boxed-style.about-flexslider
+          %section.slider
+            .flexslider
+              %ul.slides.about-flex-slides
+                %li
+                  .about-testimonial-image
+                    %img{alt: "", src: "assets/home/avatar1.png"}/
+                  %a.about-testimonial-author{href: "#"} Leandro Nunes
+                  %span.about-testimonial-company Vendedor Mercado Livre
+                  .about-testimonial-content
+                    %p.about-testimonial-quote
+                      Nunca foi tão fácil imprimir etiquetas! O sistema trabalha sozinho alertando os clientes que não pagam frete ou esquecem de inserir seus endereços. Muito fácil de usar, consegui aumentar minhas vendas!
+                %li
+                  .about-testimonial-image
+                    %img{alt: "", src: "assets/home/avatar2.png"}/
+                  %a.about-testimonial-author{href: "#"} Patricia Petti
+                  %span.about-testimonial-company Vendedora Mercado Livre
+                  .about-testimonial-content
+                    %p.about-testimonial-quote
+                      O AirCRM é um sistema muito completo que me ajudou a aumentar as vendas dentro do Mercado Livre! Antes do AirCRM eu experimentei outros sistemas que acabei não conseguindo usar.
+        / testimonial end
+      .col-lg-7
+        %h3.skills Nossos Diferenciais
+        .about-skill-meter
+          .progress.progress-xs
+            .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", role: "progressbar", style: "width: 90%;"}
+              %span.sr-only Excelência em Atendimento : 90% Completo
+        .about-skill-meter
+          .progress.progress-xs
+            .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", role: "progressbar", style: "width: 100%;"}
+              %span.sr-only Sistema Completo : 100% Completo
+        .about-skill-meter
+          .progress.progress-xs
+            .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", role: "progressbar", style: "width: 100%;"}
+              %span.sr-only Impacto nas Vendas  : 100% Completo
+

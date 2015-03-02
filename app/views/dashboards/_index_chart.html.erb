@@ -1,0 +1,32 @@
+<% if dashboards %>
+  <script>
+    var Script = function () {
+
+    <% @dashboards.each do |dashboard| %>
+      <% if dashboard.synced_at? %>
+        //Bar chart
+        //
+        <%
+        boxes_grouped = dashboard.boxes.created_in_last(1.month).total_price_por_day
+        # labels = boxes_grouped.map { |b| I18n.l b.ordered_date, format: "%d/%b" }
+        labels = (boxes_grouped.map { |b| b.ordered_date.day } || [])
+        prices = (boxes_grouped.map { |b| b.total_price.to_i } || [])
+        %>
+
+        var dashboard_<%= dashboard.id %>_data = {
+          labels : <%= labels %>,
+          datasets : [
+            {
+              fillColor : "#a9d96c",
+              strokeColor : "rgba(220,220,220,1)",
+              data : <%= prices %>
+            }
+          ]
+        }
+
+        new Chart(document.getElementById("dashboard_<%= dashboard.id %>").getContext("2d")).Bar(dashboard_<%= dashboard.id %>_data);
+      <% end %>
+    <% end %>
+    }();
+  </script>
+<% end %>

@@ -1,0 +1,15 @@
+{
+  "name": "backbone-deep-model",
+  "description": "Improved support for models with nested attributes.",
+  "author": {
+    "name": "Charles Davison"
+  },
+  "version": "0.11.0",
+  "dependencies": {
+    "backbone": ">=0.9.10"
+  },
+  "devDependencies": {
+    "buildify": "latest"
+  },
+  "main"          : "./distribution/deep-model.js",
+}

@@ -1,0 +1,42 @@
+/ notification dropdown start
+%li#header_notification_bar.dropdown.notify
+  %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+    %i.fa.fa-bell-o
+    %span.badge.bg-warning 7
+  %ul.dropdown-menu.extended.notification
+    / .notify-arrow.notify-arrow-yellow
+    %li
+      %p.yellow You have 7 new notifications
+    %li
+      %a{href: "#"}
+        %span.label.label-danger
+          %i.fa.fa-bolt
+        Server #3 overloaded.
+        %span.small.italic 34 mins
+    %li
+      %a{href: "#"}
+        %span.label.label-warning
+          %i.fa.fa-bell
+        Server #10 not respoding.
+        %span.small.italic 1 Hours
+    %li
+      %a{href: "#"}
+        %span.label.label-danger
+          %i.fa.fa-bolt
+        Database overloaded 24%.
+        %span.small.italic 4 hrs
+    %li
+      %a{href: "#"}
+        %span.label.label-success
+          %i.fa.fa-plus
+        New user registered.
+        %span.small.italic Just now
+    %li
+      %a{href: "#"}
+        %span.label.label-info
+          %i.fa.fa-bullhorn
+        Application error.
+        %span.small.italic 10 mins
+    %li
+      %a{href: "#"} See all notifications
+/ notification dropdown end

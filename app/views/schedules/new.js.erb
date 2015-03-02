@@ -1,0 +1,7 @@
+$("body")
+  .find("#step-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("form") %>')
+  .find("#step-modal.modal")
+    .modal();

@@ -1,0 +1,25 @@
+<div id="button_create_event" class="btn" style= ";"><%= link_to "Novo Evento", new_schedule_path, remote: true, style:" color:#fff;" %></div>
+
+
+
+
+<div id="articles" style="margin-left:10%; margin-right:10%; margin-top:30px;">
+
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
+
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% if @schedules_by_date[date] %>
+      <ul>
+        <% @schedules_by_date[date].each do |schedule| %>
+          <li><%= link_to schedule.customer_email, schedule, remote: true %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
+

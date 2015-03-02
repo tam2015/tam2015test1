@@ -1,0 +1,141 @@
+/ revolution slider start
+#slide1.fullwidthbanner-container.main-slider
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      / 1 slide
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lfl.slide_item_left{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "70"}
+          %img{alt: "Image 1", src: "assets/home/banner/ban2.png"}/
+        .caption.lfr.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1000", "data-x" => "670", "data-y" => "50"}
+          Tudo que você precisa
+        %a.caption.lfr.slide_subtitle{href: "#slide2", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "120"}
+          Gerencie suas ordens
+        %a.caption.lfr.slide_subtitle{href: "#slide3","data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "170"}
+          Crie anúncio em massa
+        %a.caption.lfr.slide_subtitle{href: "#slide4","data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "220"}
+          Perguntas e respostas
+        %a.caption.lfr.slide_subtitle{href: "#slide5","data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "270"}
+          Qualificações automáticas
+        .caption.lfr.slide_subtitle{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "320"}
+          Checagem automática de endereço e frete nas ordens
+        .caption.lfr.slide_subtitle{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "370"}
+          Impressão de etiquetas
+        .caption.lfr.slide_subtitle{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "420"}
+          Bloqueio de ordens duplicadas
+
+        = link_to user_session_path, class: "caption lfr slide_btn btn yellow ", data: { easing: "easeOutExpo", speed: "400", start: "3500", x: "670", y: "480" } do
+          = t(".free_trial")
+
+/ 2nd slide
+#slide2.fullwidthbanner-container
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lfl.slide_item_left{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "100"}
+          %img{alt: "Image 1", src: "assets/home/order_management.png", style: "width: 630px; height:450px" }
+        .caption.lfr.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1000", "data-x" => "670", "data-y" => "120"}
+          Gerenciador de Vendas
+        .caption.lfr.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "190"}
+          Muito moderno e intuitivo
+        .caption.lfr.slide_desc_service{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "670", "data-y" => "260"}
+          Gerencie todas suas vendas do Mercado Livre sem precisar sair do AirCRM.
+          %br/
+          Você pode gerenciar cada ordem individualmente alterando os status de
+          %br/
+          de pagamento, entrega, dados do cliente e dados da entrega. Os pedidos
+          %br/
+          do Mercado Pago e Mercado Envios são atualizados automaticamente os que
+        .caption.lfr.slide_desc_service{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "670", "data-y" => "360"}
+          não utilizam Mercado Pago e ME1 ou ME2 são atualizados por você. Além
+          %br/
+          disso o sistema envia sozinho pelo menos um alerta cobrando o endereço
+          %br/
+          dos clientes dos pedidos que não possuem endereço.
+        %a.caption.lfr.slide_desc_service_link{href: "#slide1", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+          Voltar
+
+/ 3 slide
+#slide3.fullwidthbanner-container.main-slider-service
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lft.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "125"}
+          Crie anúncios em massa
+        .caption.lft.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "10", "data-y" => "180"}
+          Simples e rápido
+        .caption.lft.slide_desc.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "10", "data-y" => "240"}
+          Sabemos que alguns vendedores do Mercado Livre possuem um número
+          %br/
+          bastante elevado de anúncios publicados. O que de um modo
+          %br/
+          geral eleva a taxa de conversão porem causa confusão e
+          %br/
+          transtornos para os gerentes de e-commerce.
+        %a.caption.lfr.slide_desc_service_link{href: "#slide1", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "10", "data-y" => "470"}
+          Voltar
+        .caption.lft.slide_desc.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "10", "data-y" => "390"}
+          Pensando nisso, desenvolvemos uma área na plataforma que
+          %br/
+          permite a administração dos anúncios de maneira precisa e simplificada.
+
+        .caption.lft.start{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "2000", "data-x" => "640", "data-y" => "55"}
+          %img{alt: "man", src: "assets/home/banner/ban2.png"}/
+        .caption.lft.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "500", "data-start" => "5000", "data-x" => "330", "data-y" => "20"}
+          //%img#rev-hint2{alt: "txt img", src: "assets/home/banner/test_man.png"}/
+
+
+/ 4 slide
+#slide4.fullwidthbanner-container
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lfl.slide_item_left{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "100"}
+          %img{alt: "Image 1", src: "assets/home/services_slide4.png"}/
+        .caption.lfr.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1000", "data-x" => "670", "data-y" => "120"}
+          Perguntas e respostas
+        .caption.lfr.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "190"}
+          Tudo numa só tela
+        .caption.lfr.slide_desc_service{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "670", "data-y" => "260"}
+          Conforme figura abaixo, a tela lista todas as suas perguntas recebidas e
+          %br/
+          as organiza de acordo com a data, começando pela pergunta mais atual.
+          %br/
+          Você pode ver o status da pergunta para saber se ela já foi respondida.
+        .caption.lfr.slide_desc_service{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "670", "data-y" => "360"}
+          O sistema imediatamente mostrará na mesma tela a direita
+          %br/
+          os detalhes do anúncio a qual a pergunta está relacionada.
+          %br/
+          Você ainda pode bloquear e desbloquear usuários.
+        %a.caption.lfr.slide_desc_service_link{href: "#slide1", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+          Voltar
+
+/ 5 slide
+#slide5.fullwidthbanner-container.main-slider-service
+  .fullwidthabnner
+    %ul#revolutionul{style: "display:none;"}
+      %li{"data-delay" => "9400", "data-masterspeed" => "700", "data-slotamount" => "8", "data-thumb" => "", "data-transition" => "fade"}
+        .caption.lft.slide_title{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "1500", "data-x" => "10", "data-y" => "125"}
+          Qualificações automáticas
+        .caption.lft.slide_subtitle.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "10", "data-y" => "180"}
+          Sistema envia para você
+        .caption.lft.slide_desc.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "10", "data-y" => "240"}
+          Gerencie suas avaliações automaticamente.
+          %br/
+          Você pode configurar o sistema para que ele
+          %br/
+          envie avaliações de compradores automaticamente.
+        %a.caption.lfr.slide_desc_service_link{href: "#slide1", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "10", "data-y" => "470"}
+          Voltar
+
+
+        .caption.lft.slide_desc.dark-text{"data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2500", "data-x" => "10", "data-y" => "360"}
+          Além disso você pode checar todas as suas
+          %br/
+          avaliações em uma só tela.
+
+        .caption.lft.start{"data-easing" => "easeOutBack", "data-speed" => "400", "data-start" => "2000", "data-x" => "640", "data-y" => "55"}
+          %img{alt: "man", src: "assets/home/banner/ban2.png"}/
+        .caption.lft.slide_item_right{"data-easing" => "easeOutBack", "data-speed" => "500", "data-start" => "5000", "data-x" => "330", "data-y" => "20"}
+          //%img#rev-hint2{alt: "txt img", src: "assets/home/banner/test_man.png"}/
+

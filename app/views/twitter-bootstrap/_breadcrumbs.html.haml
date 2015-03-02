@@ -1,0 +1,9 @@
+- if @breadcrumbs.present?
+  %ul.breadcrumb
+    - # separator = divider.html_safe
+    - @breadcrumbs[0..-2].each do |crumb|
+      %li
+        = link_to crumb[:name].html_safe, crumb[:url], crumb[:options]
+        - # %span.divider= separator
+    %li.active
+      = @breadcrumbs.last[:name]

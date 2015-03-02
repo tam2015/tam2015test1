@@ -1,0 +1,135 @@
+<section class="panel">
+  <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <form action="#" class="pull-right position">
+        <%= form_tag dashboard_customers_path, method: :get do %>
+          <input type="text" placeholder="nickname ou nome" class="form-control search-btn "
+            <%= text_field_tag :query, params[:query] %>
+            <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+          <%end%>
+      </form>
+    </li>
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Perguntas <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+          <li><%= link_to t("bloqueado", scope: "helpers.customers.status"), dashboard_customers_path(status_question_customer: true), method: :get %></li>
+          <li><%= link_to t("desbloqueado", scope: "helpers.customers.status"), dashboard_customers_path(status_question_customer: false), method: :get %></li>
+      </ul>
+    </li>
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Vendas <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+          <li><%= link_to t("bloqueado", scope: "helpers.customers.status"), dashboard_customers_path(status_question_customer: true), method: :get %></li>
+          <li><%= link_to t("desbloqueado", scope: "helpers.customers.status"), dashboard_customers_path(status_question_customer: false), method: :get %></li>
+      </ul>
+    </li>
+
+  </ul>
+</section>
+
+<section class="panel" id="all-items">
+  <header class="panel-heading">
+    <ul class="breadcrumb">
+      <li>
+        <a>Mercado Livre</a>
+      </li>
+      <li>
+        <a>Clientes</a>
+      </li>
+      <li class="active">
+        Todos
+      </li>
+    </ul>
+  </header>
+  <div class="panel-body">
+    <div class="no-more-tables">
+      <table class="display table table-bordered table-striped table-condensed no-more-tables">
+        <thead>
+          <tr>
+            <th>Dados do cliente</th>
+            <th>Volume</th>
+            <th>Status Perguntas</th>
+            <th>Status Compra</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <% if @customers %>
+        <% @customers.each do |customer| %>
+        <tbody id="items-body">
+          <tr>
+            <td style="width: 220px">
+              <div class="first-part-question" >
+                <% if customer %>
+                <p><%= customer.nickname %></p>
+                <dl class="dl-horizontal">
+                  <dt>Nome:</dt>
+                  <dd><%= customer.name %></dd>
+                  <dt>Telefone:</dt>
+                  <dd><%= customer.phone%></dd>
+                  <dt>Email:</dt>
+                  <dd><%= customer.email%></dd>
+                </dl>
+                <% end %>
+              </div>
+            </td>
+            <td style="width: 220px">
+              <div class="first-part-question" >
+                </dd>
+                <dl class="dl-horizontal">
+                  <dt>Compras:</dt>
+                  <dd><%= customer.boxes ? customer.boxes.count : :nil%></dd>
+                  <dt>Perguntas:</dt>
+                  <dd><%= customer.questions_count(params[:dashboard_id]) ? customer.questions_count(params[:dashboard_id]) : :nil%></dd>
+                </dl>
+              </div>
+            </td>
+            <td>
+              <div class="second-part-question">
+                  <% status_class = "danger" if customer.blocked?  %>
+                  <% status_class = "success" if !customer.blocked %>
+
+                  <span type="button" class="badge alert-<%= status_class %>">
+                    <%= customer.blocked? ? t("blocked",scope: "helpers.customers.status") : t("unblocked", scope: "helpers.customers.status")%>
+                  </span>
+              </div>
+            </td>
+            <td>
+              <div class="second-part-question">
+                  <% status_class = "danger" if customer.blocked?  %>
+                  <% status_class = "success" if !customer.blocked %>
+
+                  <span type="button" class="badge alert-<%= status_class %>">
+                    <%= customer.blocked? ? t("blocked",scope: "helpers.customers.status") : t("unblocked", scope: "helpers.customers.status")%>
+                  </span>
+              </div>
+            </td>
+            <td>
+              <ul class="fourth-part-question">
+              <% unless customer.blocked? %>
+                <a href="javascript:;">
+                  <i class="fa fa-envelope text-link"></i>
+                  <%= link_to 'Bloquear', block_customer_dashboards_path(params[:dashboard_id], customer.question(current_dashboard).id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
+                </a>
+                <% else %>
+                <a href="javascript:;">
+                  <i class="fa fa-envelope text-link"></i>
+                  <%= link_to 'Desbloquear', unblock_customer_dashboards_path(params[:dashboard_id], customer.question(current_dashboard).id), method: :post, data: { confirm: 'Você tem certeza que deseja desbloquear esse usuário?' }, style: "font-size: 11px" %>
+                </a>
+                <%end%>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+        <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="col-md-12" id="question_paginate" >
+<%= will_paginate @customers, previous_label: h("<"), next_label: h(">") %>
+</div>
+
+

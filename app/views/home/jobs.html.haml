@@ -1,0 +1,66 @@
+/ breadcrumbs start
+.breadcrumbs
+  .container
+    .row
+      .col-lg-4.col-sm-4
+        %h1 Faça Parte
+      .col-lg-8.col-sm-8
+        %ol.breadcrumb.pull-right
+          %li
+            = link_to t(".home"), root_path
+          %li.active Jobs
+/ breadcrumbs end
+
+/ container start
+.container
+  .row
+    .col-lg-5
+      .span5.about-carousel
+        #myCarousel.carousel.slide
+          / Carousel items
+          .carousel-inner
+            .active.item
+              %img{alt: "", src: "assets/home/about_1.jpg"}/
+              .carousel-caption
+                %p Equipe de ponta
+            .item
+              %img{alt: "", src: "assets/home/about_2.jpg"}/
+              .carousel-caption
+                %p Profissionais experientes
+
+          / Carousel nav
+          %a.carousel-control.left{"data-slide" => "prev", href: "#myCarousel"}
+            %i.fa.fa-angle-left
+          %a.carousel-control.right{"data-slide" => "next", href: "#myCarousel"}
+            %i.fa.fa-angle-right
+    .col-lg-7.about
+      .row
+        .col-md-12
+          %h3 Faça parte da equipe da AirCRM!
+          %p
+            A AirCRM é uma empresa que nasceu em 2013 para ajudar os vendedores a aumentarem
+            suas vendas. Nosso intuito sempre foi construir sistemas completos de forma
+            muito simples acessível para qualquer pessoa. Em 2013 a empresa recebeu
+            um investimento da Wayra, uma empresa do grupo telefônica. E em 2014 fechou
+            uma parceria e recebeu um investimento do Mercado Livre e em troca nos
+            comprometemos a construir o melhor sistema de gerenciamento de vendas para
+            os vendedores do Mercado Livre.
+
+      .row
+        .col-md-12
+          %h3 Vagas disponíveis
+          %p
+            .col-sm-11.col-sm-offset-1
+              %ul
+                %li Ruby on Rails Pleno
+                %li Front-end
+                %li Designer
+                %li Atendimento
+
+          %p
+            %b OBS:
+            Para desenvolvedores, front-end e designers mande também seu github e portifólios caso possua.
+          %p
+            No assunto informe qual área em que você possui interesse.
+          %p
+            = mail_to("rh@aircrm.com.br", "Envie seu currículo", class: "btn btn-success", target: "_blank")

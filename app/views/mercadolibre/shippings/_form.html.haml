@@ -1,0 +1,46 @@
+- shipping ||= @shipping
+- receiver_page ||= false
+- receiver_address = shipping.receiver_address || {}
+
+
+= simple_form_for(shipping, as: :shipping, url: shipping_path(shipping), html: { class: "shipping_form", role: "form" }) do |f|
+  .row
+    .col-lg-12
+      = f.error_notification
+
+  .row
+    .col-lg-12
+      - #= f.input :receiver_address_s, required: true, autofocus: true, input_html: { required: true }
+
+      = f.fields_for :receiver_address do |r|
+        - #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] }
+        = r.input :street_name    , autofocus: true
+
+        .row
+          .col-xs-5
+            = r.input :street_number
+          .col-xs-7
+            = r.input :comment
+
+          .col-xs-7
+            = r.input :city           
+          .col-xs-5
+            = r.input :state          
+
+          .col-xs-5
+            = r.input :zip_code       
+          .col-xs-7
+            = r.input :country        , priority: [ "Brazil" ]#, selected: ["Brazil"]
+
+        .hidden
+          = text_field_tag :receiver, receiver_page
+
+  .row
+    .col-action.text-center
+      = f.button :button, type: :submit, class: "btn btn-success" do
+        = translate_button_content(:submit, shipping, icon: :check, label_class: "hidden-xs")
+
+      = link_to :back, class: "btn btn-default", id: "cancel" do
+        = translate_button_content(:cancel, shipping, icon: :times, label_class: "hidden-xs")
+
+

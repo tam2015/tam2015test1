@@ -1,0 +1,134 @@
+<div class="panel-body">
+<%= form_tag import_dashboard_storages_path,  multipart: true do %>
+    <form role="form">
+        <div class="form-group">
+            <label for="exampleInputFile">Importar Estoque</label>
+            <%= file_field_tag :file, :style=>"width: 300px"%>
+            <p class="help-block">Selecione seu arquivo e logo em seguida clique em atualizar.</p>
+        </div>
+        <%= submit_tag "Atualizar", type: "submit", class: "btn btn-info" %>
+    <%end%>
+    </form>
+</div>
+
+
+
+
+
+
+<section >
+    <section >
+        <!-- page start-->
+        <div class="chat-room">
+            <aside class="left-side">
+                <div class="user-head">
+                    <i class="fa fa-comments-o"></i>
+                    <h3>Filtros</h3>
+                </div>
+                <ul class="chat-list">
+                    <li class="">
+                        <a class="lobby" href="lobby.html">
+                            <h4>
+                                <i class="fa fa-list"></i>
+                                Anúncios
+                            </h4>
+                        </a>
+                    </li>
+                    <li>
+                        <li>
+                          <%= link_to(dashboard_questions_path, remote: true) do %>
+                            <i class="fa fa-rocket"></i>
+                              <spam>
+                                Todos
+                              </spam>
+                          <% end %>
+                        </li>
+                    </li>
+                </ul>
+
+            </aside>
+
+            <aside class="mid-side">
+                <div class="chat-room-head">
+                    <h3>Avaliações</h3>
+                </div>
+
+                <div class="group-rom">
+                    <ul class="first-part odd">
+                        <a class="pull-left thumb p-thumb">
+                          Foto
+                        </a>
+                    </ul>
+
+                    <div class="second-part">
+                    <p>Codigo e Descrição</p>
+
+                    </div>
+
+                    <div class="third-part">
+                    <p>Quantidade</p>
+
+                    </div>
+
+                    <div class="fourth-part">
+                    <p>Ações</p>
+
+                    </div>
+
+                <% @items.each do |item| %>
+
+
+                <div class="group-rom">
+                    <ul class="first-part odd">
+                        <a class="pull-left thumb p-thumb">
+                            <img src="/assets/logo_aircrm.png">
+                        </a>
+                    </ul>
+
+                    <div class="second-part">
+                      <p>código - <%= item.f_codigo%></p>
+                      <%= item.f_descricao %>
+                    </div>
+
+                    <div class="third-part">
+                      <p>Disponíveis</p>
+                      <p class="label label-primary pull-left r-activity">inserir</p>
+                      <p>Anunciados</p>
+                      <p class="label label-info pull-left r-activity">inserir</p>
+                      <p>Vendidos</p>
+                      <p class="label label-success pull-left r-activity">inserir</p>
+                    </div>
+
+                    <div class="fourth-part">
+                      <button type="button" class="btn btn-success dropdown-toggle btn-xs">+ Info </button>
+                    </div>
+
+                    <div class="fourth-part">
+                      <button type="button" class="btn btn-success dropdown-toggle btn-xs">Pausar</button>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                <%end%>
+            </aside>
+
+            <aside class="right-side">
+                <div class="user-head">
+                    <h3>Informações</h3>
+                </div>
+                <div id="question_details_page" ></div>
+            </aside>
+        </div>
+
+
+        <!-- page end-->
+    </section>
+</section>

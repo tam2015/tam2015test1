@@ -1,0 +1,18 @@
+.col-xs-12
+  = flash_message
+
+- feedback ||= @feedback
+- if feedback
+  - klass = feedback.class
+  .col-xs-12
+    %dl
+      %dt= klass.human_attribute_name :rating
+      %dd= feedback.rating
+
+      %dt= klass.human_attribute_name :message
+      %dd= feedback.message
+
+
+
+
+

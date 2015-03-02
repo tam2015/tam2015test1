@@ -1,0 +1,41 @@
+/ page start
+.row
+  .col-lg-12
+    %section.panel
+      .panel-body
+        .row
+          .col-md-4
+            .btn-group
+              = link_to new_user_invitation_path, id: "new_invitation", class: "btn btn-success btn-sm", remote: true do
+                = translate_button_content(:create, @klass, icon: :plus, label_class: "hidden-xs")
+
+              .btn-group
+                %button#more-actions.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                  = t(".more")
+                  %i.fa.fa-ellipsis-h
+
+                %ul.dropdown-menu{"aria-labelledby" => "more-actions", role: "menu"}
+                  %li{role: "presentation"}
+                    = link_to import_invitations_path, id: "import_invitation", tabindex: "-1", remote: true do
+                      = translate_button_content(:import, @klass, icon: :upload, label_class: "")
+
+          .col-md-8
+            =# status_label @klass::STATUS
+
+    %section#all-invitations.panel
+      %header.panel-heading
+        = render_breadcrumbs
+
+      .panel-body
+        - unless @invitations.blank?
+          .no-more-tables
+            %table.display.table.table-bordered.table-striped.table-condensed.no-more-tables
+              %thead
+                = render "index_table_head"
+
+              %tbody#invitations-body
+                = render partial: "invitation", collection: @invitations
+
+        - else @invitations.blank?
+          = translate_count_result @invitations
+

@@ -1,0 +1,26 @@
+<div>
+  <%= form_for @question, url: dashboard_question_path(current_dashboard, @question) do |f| %>
+
+
+    <div class="hidden">
+      <%= f.text_field :id %>
+    </div>
+
+
+    <div class="panel-body">
+    <%= f.fields_for :answer do |n| %>
+      <div class="col-xs-12">
+        <%=  n.text_field :text, style: "height: 300px; width: 500px" %>
+      </div>
+    </div>
+    <%end%>
+
+
+
+    <%= f.submit "responder",  class: "btn btn-info", style: "width: 500px; margin-left: 30px" %>
+
+  <% end %>
+ </div>
+
+
+

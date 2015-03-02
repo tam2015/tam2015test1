@@ -1,0 +1,7 @@
+.container
+  .row
+    - unless params[:token].present?
+      = render "checkout"
+    - else
+      = render "form"
+

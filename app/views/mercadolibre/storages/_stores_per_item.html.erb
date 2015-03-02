@@ -1,0 +1,48 @@
+
+                <div class="modal fade" id="invitation-modal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&#215;</button>
+                          <h4 class="modal-title">
+                            <%= "Lojistas" %>
+                          </h4>
+                        </div>
+                        <div class="modal-body clearfix">
+                          <div class="col-md-12">
+                          <section class="panel">
+                              <header class="panel-heading">
+                                  Lojistas
+                              </header>
+                              <div class="panel-body">
+                                  <section id="no-more-tables">
+                                      <table class="table table-bordered table-striped table-condensed cf">
+                                          <thead class="cf">
+                                          <tr>
+                                              <th>Email</th>
+                                              <th>Estoque</th>
+                                              <th class="numeric">Código Lojista</th>
+                                          </tr>
+                                          </thead>
+                                          <%@users.each do |user| %>
+                                          <tbody>
+                                          <tr>
+                                              <td data-title="Code"><%= user.email %></td>
+                                              <%@storages.each do |storage| %>
+                                              <td data-title="Company"><%=storage.l_quantity%></td>
+                                              <%end%>
+                                              <td class="numeric" data-title="Price"><%= user.id_brands%></td>
+                                          </tr>
+                                          </tbody>
+                                          <%end%>
+                                      </table>
+                                  </section>
+                              </div>
+                          </section>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+

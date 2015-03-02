@@ -1,0 +1,18 @@
+= flash_message
+
+- shipping ||= @shipping
+- if shipping
+  %address
+    %strong= shipping.title
+    %br/
+    = shipping.region
+    \-
+    = shipping.zip_code
+
+  .text-center
+    = link_to edit_shipping_path(shipping), class: "btn btn-success", id: "edit", remote: true do
+      = translate_button_content(:edit, shipping, icon: :pencil, label_class: "hidden-xs")
+
+    - if @__receiver_page
+      = button_tag class: "btn btn-info", "data-clipboard-text" => shipping.receiver_address_s, "data-copied-hint" => "Copied!" do
+        = translate_button_content(:copy, shipping, icon: :clipboard, label_class: "hidden-xs")

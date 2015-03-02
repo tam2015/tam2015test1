@@ -1,0 +1,54 @@
+
+#printer-container {
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background: white;
+  z-index:99999;
+  .label_check {
+    display:none;
+  }
+}
+
+#clone-area {
+  margin-top: 80px;
+}
+
+/**
+ * Container with rendered labels ready to print
+ */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  /**
+  * Stretch clone area to full width
+  * and reset margins
+  */
+  #clone-area {
+    margin:0;
+    width: 100%;
+  }
+
+  #printer-container {
+    /* Hide printer page header */
+    h3 { display:none; }
+
+    #labels-collection-view {
+      position:absolute;
+      z-index:99999;
+      top:0;left:0;
+      width:100%;
+      height:100%;
+      background: white;
+      visibility: visible !important;
+    }
+
+    #labels-collection-view, #labels-collection-view * {
+      visibility: visible !important;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<div class="row">
+  <%= render "sidebar" %>
+  <aside class="profile-info col-lg-9" id= "profile_plan">
+      <section class="panel" >
+          <div class="bio-graph-heading">
+              Respostas Prontas
+          </div>
+          <div>
+            <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "canned_response"), class: "btn btn-info", remote: true) do %>
+              <i class="fa fa-user"></i> Nova resposta
+            <% end %>
+          </div>
+          <% @seller_feedback_messages.each do |message| %>
+          <div class="panel-body bio-graph-info">
+              <h1>Razão número <%= message.id %></h1>
+              <div class="row">
+                  <div class="bio-row">
+                      <p><%= message.data[:aircrm_reason] if message.data and message.data[:aircrm_reason]%></p>
+                  </div>
+              </div>
+          </div>
+          <% end %>
+          <div>
+          <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "canned_response"), class: "btn btn-info", remote: true) do %>
+              <i class="fa fa-user"></i> Nova resposta
+            <% end %>
+          </div>
+      </section>
+  </aside>
+</div>
+
+

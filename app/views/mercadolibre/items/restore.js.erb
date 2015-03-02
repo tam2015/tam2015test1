@@ -1,0 +1,4 @@
+$(".flash-messages").append('<%= j flash_message %>');
+$("#item_<%= @item.id %>").replaceWith('<%= j render @item %>');
+
+AIRCRM.Admin.init()

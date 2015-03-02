@@ -1,0 +1,24 @@
+mongodb_data_dir: /mnt/mongodb
+mongodb_log_dir: /var/log/mongodb
+mongodb_log: "#{mongodb_log_dir}/mongodb.log"
+mongodb_pid: "#{mongodb_data_dir}/mongod.lock"
+
+mongodb_port: 58624
+
+role_dependencies:
+  mongodb: [mongodb, newrelic]
+  "db:primary=true": [mongodb]
+  db: [mongodb]
+
+roles:
+  mongodb:
+    packages: [mongodb-10gen]
+
+security_groups:
+  mongodb:
+    description: "To open up port 27017 for http server on web role"
+    rules:
+      - protocol: tcp
+        from_port: "#{mongodb_port}"
+        to_port: "#{mongodb_port}"
+        source_ips: [0.0.0.0/0]

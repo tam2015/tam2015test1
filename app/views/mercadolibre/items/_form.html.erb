@@ -1,0 +1,393 @@
+<% item ||= @item %>
+<% pictures    = item.pictures || [] %>
+<!-- page start
+-->
+<%= simple_form_for [@dashboard, item], url: dashboard_item_path(@dashboard, item), as: :item, html: { class: "form_mercadolibre_item form-horizontal", role: "form" } do |f| %>
+  <div class="row">
+
+    <% # breadcrumb and action buttons %>
+    <div class="col-md-12">
+      <section class="panel">
+
+        <header class="panel-heading">
+          <div class="row">
+            <div class="col-sm-8">
+              <%= render_breadcrumbs %>
+            </div>
+            <div class="col-sm-4">
+              <div class="actions pull-right">
+                <%= render 'item_actions', item: item, f: f, label_class: "hidden-sm" %>
+              </div>
+            </div>
+          </div>
+        </header>
+
+      </section>
+    </div>
+
+
+    <% # Error notifications %>
+    <div class="col-md-12">
+      <%= f.error_notification %>
+    </div>
+    <% # Validation errors %>
+    <% if item.validation_status != :valid and item.validation_errors %>
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <% item.validation_errors.each do |error| %>
+            <p id="<%= error["code"] %>">
+              <strong>
+                <%= "#{error["code"]}:" %>
+              </strong>
+              <%= error["message"] %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+
+    <% # I will announce %>
+    <% unless item.meli_item_id? %>
+      <div class="col-md-12">
+        <section class="panel">
+
+          <header class="panel-heading">
+            <%= t(".i_will_announce") %>
+            <span class="tools pull-right">
+              <a class="fa fa-chevron-down"></a>
+            </span>
+          </header>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3 text-center">
+                <% # Buying Mode %>
+                <div class="form-group radio_buttons item_buying_mode">
+                  <label class="radio_buttons control-label">
+                    <%= Mercadolibre::Item.human_attribute_name :buying_mode %>
+                  </label>
+                  <div class="btn-row">
+                    <div class="btn-group" data-toggle="buttons">
+                      <% Mercadolibre::Item::BUYING_MODE.each_with_index do |buying_mode, ix| %>
+                        <% is_active   = !!(buying_mode == item.buying_mode.to_sym) %>
+                        <% is_disabled = !!(buying_mode == :classified) %>
+                        <% label_class = (is_disabled ? "disabled" : (is_active ? "active" : "")) %>
+                        <label class="<%= label_class %> btn btn-primary">
+                          <%= f.radio_button(:buying_mode, buying_mode, checked: is_active, disabled: is_disabled) %>
+                          <%= t(buying_mode, scope: "helpers.items.buying_mode") %>
+                        </label>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <% # Categories %>
+                <div class="item_category" id="category">
+                  <label class="radio_buttons control-label">
+                    <%= Mercadolibre::Item.human_attribute_name :category %>
+                  </label>
+                  <div class="col-md-12">
+                    <%= f.input :category_id, wrapper: :small, input_html: { class: "hidden", "data-model" => "category_id" } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    <% end %>
+
+
+    <% # Information of my product %>
+    <div class="col-md-12">
+      <section class="panel depends_category hidden" id="information_of_my_product">
+
+        <header class="panel-heading">
+          <%= t(".information_of_my_product") %>
+          <span class="tools pull-right">
+            <a class="fa fa-chevron-down"></a>
+          </span>
+        </header>
+
+        <div class="panel-body">
+          <% # Item informations %>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+              <% # Title and Subtitle %>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-8">
+                    <%= f.input :title, wrapper: false, required: true %>
+                  </div>
+                  <div class="col-md-4">
+                    <%= f.input :price, wrapper: false, required: true %>
+                  </div>
+                </div>
+              </div>
+              <% # Condition %>
+              <% unless item.meli_item_id? %>
+                <div class="form-group radio_buttons item_condition">
+                  <label class="radio_buttons optional control-label">
+                    <%= Mercadolibre::Item.human_attribute_name :condition %>
+                  </label>
+                  <div class="conditions-container"></div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <% # Medias %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <% unless item.meli_item_id? %>
+                  <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                      <div class="form-group radio_buttons item_attributes">
+                        <div class="attributes-container"></div>
+                      </div>
+                      <div class="form-group radio_buttons item_variations">
+                        <div class="variations-container"></div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <% # Pictures %>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group item_picture_ids">
+                      <div class="dropzone picture_ids"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% # Movie %>
+              <div class="col-md-6 text-center">
+                <%= f.input :youtube_url %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <% # How do I get %>
+    <% unless item.meli_item_id? %>
+      <div class="col-md-12">
+        <section class="panel depends_category hidden" id="how_do_i_get">
+
+          <header class="panel-heading">
+            <%= t(".how_do_i_get") %>
+            <span class="tools pull-right">
+              <a class="fa fa-chevron-down"></a>
+            </span>
+          </header>
+
+          <div class="panel-body">
+            <div class="payment_methods-container"></div>
+          </div>
+        </section>
+      </div>
+    <% end %>
+    <% # How will I deliver %>
+    <div class="col-md-12">
+      <section class="panel depends_category hidden" id="how_will_i_deliver">
+
+        <header class="panel-heading">
+          <%= t(".how_will_i_deliver") %>
+          <span class="tools pull-right">
+            <a class="fa fa-chevron-down"></a>
+          </span>
+        </header>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-4">
+              <% # Shiping %>
+              <div class="checkbox_buttons item_shipping" id="shipping">
+                <label class="checkbox_buttons control-label">
+                  <%= Mercadolibre::Item.human_attribute_name :shipping %>
+                </label>
+                <div class="shipping-container"></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <% # Shiping package dimensions %>
+              <div class="item_shipping_package" id="package">
+                <label class="control-label">
+                  <%= Mercadolibre::Item.human_attribute_name :dimensions %>
+                </label>
+                <div class="shipping-dimensions-container"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-md-12">
+      <% # Description %>
+      <section class="panel depends_category hidden" id="description">
+
+        <header class="panel-heading">
+          <%= Mercadolibre::Item.human_attribute_name :description %>
+          <span class="tools pull-right">
+            <a class="fa fa-chevron-down"></a>
+          </span>
+        </header>
+
+        <div class="panel-body">
+          <div class="col-xs-12">
+            <%= f.input :description, as: :text, label: false, input_html: { class: "redactor", ows: 40, cols: 120 } %>
+          </div>
+        </div>
+      </section>
+    </div>
+    <% # Other information %>
+    <div class="col-md-12">
+      <section class="panel depends_category hidden" id="other_information">
+
+        <header class="panel-heading">
+          <%= t(".other_information") %>
+          <span class="tools pull-right">
+            <a class="fa fa-chevron-down"></a>
+          </span>
+        </header>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <% # Warranty %>
+              <div class="form-group checkbox_buttons item_warranty">
+                <%= f.input :warranty, as: :text %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <% # Publish %>
+    <% unless item.meli_item_id? %>
+      <div class="col-md-12">
+        <section class="panel depends_category hidden" id="how_will_i_sell">
+
+          <header class="panel-heading">
+            <%= t(".how_will_i_sell") %>
+            <span class="tools pull-right">
+              <a class="fa fa-chevron-down"></a>
+            </span>
+          </header>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-2 text-center">
+                <% # Quantity in storage %>
+                <!-- .form-group.string.optional.item_quantity_from_store
+                -->
+                <!--   = f.label :quantity_from_store
+                -->
+                <!--   .input-group.spinbox
+                -->
+                <!--     .spinbox-buttons.input-group-btn
+                -->
+                <!--       %button.btn.spinbox-up.btn-warning{:type => "button"}
+                -->
+                <!--         %i.fa.fa-plus
+                -->
+                <!--     = f.text_field :quantity_from_store, class: "spinbox-input string optional form-control"
+                -->
+                <!--     .spinbox-buttons.input-group-btn
+                -->
+                <!--       %button.btn.spinbox-down.btn-danger{:type => "button"}
+                -->
+                <!--         %i.fa.fa-minus
+                -->
+                <% # quantity to publish %>
+                <div class="form-group string optional item_available_quantity hidden">
+                  <%= f.label :available_quantity %>
+                  <div class="input-group spinbox">
+                    <div class="spinbox-buttons input-group-btn">
+                      <button class="btn spinbox-up btn-warning" type="button">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                    <%= f.text_field :available_quantity, class: "spinbox-input string optional form-control" %>
+                    <div class="spinbox-buttons input-group-btn">
+                      <button class="btn spinbox-down btn-danger" type="button">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <% # Listing Type Id - [ :gold_premium, :gold, :silver, :bronze, :free ] %>
+                <div class="form-group radio_buttons optional item_listing_type_id text-left">
+                  <%= f.label :listing_type_id %>
+                  <% Mercadolibre::Item::LISTING_TYPE_ID.each do |type| %>
+                    <div class="radio">
+                      <label>
+                        <%= f.radio_button :listing_type_id, type %>
+                        <%= t(type, scope: "helpers.items.listing_type") %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <% # Dates %>
+              <div class="col-md-offset-2 col-md-2 text-center">
+                <%= f.input :start_time %>
+                <%= f.input :end_time %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    <% end %>
+
+
+    <% # Validation errors again %>
+    <% if item.validation_status != :valid and item.validation_errors %>
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <% item.validation_errors.each do |error| %>
+            <p id="<%= error["code"] %>">
+              <strong>
+                <%= "#{error["code"]}:" %>
+              </strong>
+              <%= error["message"] %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <script>
+      window.ITEM = JSON.parse(JSON.stringify( <%=  raw item.to_json %> || {}));
+    </script>
+
+  </div>
+  <div class="row">
+    <% # breadcrumb and action buttons %>
+    <div class="col-md-12">
+      <section class="panel">
+
+        <header class="panel-heading">
+          <div class="row">
+            <div class="col-sm-8">
+              <%= render_breadcrumbs %>
+            </div>
+            <div class="col-sm-4">
+              <div class="actions pull-right">
+                <%= render 'item_actions', item: item, f: f, label_class: "hidden-sm" %>
+              </div>
+            </div>
+          </div>
+        </header>
+
+      </section>
+    </div>
+  </div>
+<% end %>
+<!-- page end
+-->

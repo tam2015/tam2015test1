@@ -1,0 +1,179 @@
+<% category               = @item and @item.category %>
+<% category_settings      = (category and category.get("settings")) || {} %>
+<% dashboard_preferences  = Aircrm.dashboard and Aircrm.dashboard.get("preferences") %>
+
+<% shipping = @item.get("shipping") %>
+
+<div class="btn-row conditions-container">
+  <% if category_settings and category_settings.item_conditions: %>
+    <% # use intersection to fix conditions order %>
+    <% item_conditions = _.intersection(['new', 'used', 'not_specified'], category_settings.item_conditions) %>
+
+    <div class="btn-group" data-toggle="buttons">
+      <% for condition in item_conditions: %>
+        <% condition = "unespecified" if condition == "not_specified" %>
+
+        <% is_active = @item.get("condition") == condition %>
+        <label class="btn btn-primary <%= 'active' if is_active %>" id="condition_<%= condition %>">
+          <input id="item_condition_<%= condition %>" name="item[condition]" <%= 'checked="checked"' if is_active %> value="<%= condition %>" type="radio" >
+          <%= I18n.t(condition, scope: "helpers.items.conditions") %>
+        </label>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="shipping-container">
+  <% shipping_modes = _.intersection(category_settings.shipping_modes, dashboard_preferences.shipping_modes) %>
+  <% if shipping_modes.length: %>
+    <% if _.include(shipping_modes, "not_specified"): %>
+      <div class="checkbox">
+        <label>
+          <input name="item[shipping][local_pick_up]" id="item_shipping_local_pick_up" value="true" <%= 'checked="checked"' if shipping.local_pick_up %> type="checkbox" >
+          <%= I18n.t("local_pick_up", scope: "helpers.items.shippings") %>
+        </label>
+      </div>
+    <% end %>
+
+
+    <% shipping_mode = shipping.mode %>
+    <% mode_me = shipping_modes.filter((mode) -> (if (mode is "me1" or mode is "me2") then mode else `undefined`))[0] %>
+
+    <% # me1 or me2 %>
+    <% if mode_me: %>
+      <div class="radio">
+        <label>
+          <input name="item[shipping][mode]" id="item_shipping_mode_<%= mode_me %>" value="<%= mode_me %>" <%= 'checked="checked"' if shipping_mode == mode_me %> type="radio" >
+          <%= I18n.t("me", scope: "helpers.items.shippings") %>
+        </label>
+
+        <span class="help-block"> <%= I18n.t("me", scope: "helpers.items.shippings_infos") %> </span>
+        <% if shipping_mode == mode_me: %>
+          <div class="form-group">
+            <div class="col-md-12">
+              <div class="radio">
+                <label>
+                  <input name="item[shipping][free_shipping]" id="item_shipping_free_shipping" value="true" <%= 'checked="checked"' if @item.get("shipping.by_buyer") %> type="radio" >
+                  <%= I18n.t("me", scope: "helpers.items.shippings") %>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input name="item[shipping][free_shipping]" id="item_shipping_free_shipping" value="true" <%= 'checked="checked"' if @item.get("shipping.free_shipping") %> type="radio" >
+                  <%= I18n.t("free_shipping", scope: "helpers.items.shippings") %>
+                </label>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if _.include(category_settings.shipping_modes, "custom"): %>
+      <div class="radio">
+        <label>
+          <input name="item[shipping][mode]" id="item_shipping_mode_custom" value="custom" <%= 'checked="checked"' if shipping_mode == "custom" %> type="radio" >
+          <%= I18n.t("custom", scope: "helpers.items.shippings") %>
+        </label>
+
+        <% if shipping_mode == "custom": %>
+          <% shipping_options = @item.get("shipping_options") || [] %>
+          <% shipping_options.push({}) %>
+
+          <% shipping_options_length = shipping_options.length %>
+
+          <% for shipping_option, ix in shipping_options: %>
+            <div class="form-group">
+              <div class="col-md-7">
+                <input name="item[shipping][costs][][name]" id="item_shipping_costs_<%= ix %>_name" value="<%= shipping_option.name %>" class="form-control" type="text" placeholder="Ex: SEDEX, SP, RJ, SC, ...">
+              </div>
+              <div class="col-md-5">
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input name="item[shipping][costs][][cost]" id="item_shipping_costs_<%= ix %>_cost" value="<%= shipping_option.cost %>" class="form-control" type="text" placeholder="Ex: 12,00">
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="shipping-dimensions-container">
+  <div class="col-md-12">
+    <!-- Length(cm)xWidth(cm)xHeight(x),Weight(gr) -->
+    <div class="form-group">
+      <input name="item[shipping][dimensions]" id="item_shipping_dimensions" value="<%= shipping.dimensions %>" class="form-control" type="text" placeholder="50x30x80,2000" required>
+      <span class="hel-block">
+        <b>Length(cm)</b>x<b>Width(cm)</b>x<b>Height(cm)</b>,<b>Weight(gr)</b>
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<div class="row payment_methods-container">
+  <div class="col-md-offset-3 col-md-4">
+    <div class="checkbox optional item_accepts_mercadopago">
+      <label class="string optional control-label" for="item_accepts_mercadopago">
+        <input id="item_accepts_mercadopago" name="item[accepts_mercadopago]" type="checkbox" value="true" <%= 'checked="checked"' if @item.get("accepts_mercadopago") %>>
+        MercadoPago
+      </label>
+
+      <fieldset id="accepts_mercadopago_methods" class="payment-method-mp custom-box">
+        <p class="help-block">
+          Os compradores poderão pagar com diversos meios de pagamento, parcelado ou à vista,
+          e você poderá transferir o valor de uma vez para uma conta bancária ao custo fixo de R$ 3.
+        </p>
+
+        <ul class="list-inline">
+          <li>
+            <img alt="Visa" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/visa.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Mastercard" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/master.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Hipercard" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/hipercard.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="American Express" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/amex.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Diners" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/diners.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Elo" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/elo.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Cartão MercadoLivre" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/melicard.gif" style="display: inline;">
+          </li>
+          <li>
+            <img alt="Boleto" class="lazy" src="https://www.mercadopago.com/org-img/MP3/API/logos/bolbradesco.gif" style="display: inline;">
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group checkbox_buttons item_non_mercado_pago_payment_methods">
+      <label class="checkbox_buttons control-label">Outros meios de pagamento</label>
+      <div class="row others_payment_methods-container">
+        <div class="col-md-12">
+          <% item_non_mercado_pago_payment_methods = @item.get("non_mercado_pago_payment_methods") || [] %>
+
+          <% for non_mp_payment_method, ix in @item.non_mercado_pago_payment_methods: %>
+            <div class="checkbox">
+              <label>
+                <input name="item[non_mercado_pago_payment_methods][]" value="<%= non_mp_payment_method.id %>" <%= 'checked="checked"' if _.include(item_non_mercado_pago_payment_methods, non_mp_payment_method.id) %> type="checkbox">
+                <%= non_mp_payment_method.description %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+# == Schema Information
+#
+# Table name: payment_notifications
+#
+#  id                    :integer          not null, primary key
+#  params                :text
+#  status                :string(255)
+#  transaction_id        :string(255)
+#  paypal_customer_token :string(255)
+#  account_id            :integer
+#  user_id               :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  subscription_id       :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  params: MyText
+  status: MyString
+  transaction_id: MyString
+  paypal_customer_token: MyString
+  user_id: 1
+
+two:
+  params: MyText
+  status: MyString
+  transaction_id: MyString
+  paypal_customer_token: MyString
+  user_id: 1

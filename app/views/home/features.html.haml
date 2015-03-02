@@ -1,0 +1,470 @@
+/ breadcrumbs start
+.breadcrumbs#typography
+  .container
+    .row
+      .col-lg-4.col-sm-4
+        %h1 Typography
+      .col-lg-8.col-sm-8
+        %ol.breadcrumb.pull-right
+          %li
+            %a{href: "#"} Home
+          %li
+            %a{href: "#"} Pages
+          %li.active Typography
+/ breadcrumbs end
+
+/ container start
+.container
+  / Typography start
+  .row
+    .col-lg-3
+      %h1 H1 Heading
+      %h2 H2 Heading
+      %h3 H3 Heading
+      %h4 H4 Heading
+      %h5 H5 Heading
+      %h6 H6 Heading
+    .col-lg-5
+      %h3 H3 Title Goes Here
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui. nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.
+    .col-lg-4
+      %h3 Texts
+      %p.text-muted Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      %p.text-info Curabitur bibendum ornare dolor, quis ullamcorper ligula
+      %p.text-primary Lorem ipsum dolor sit amet, consectetur adipiscing.
+      %p.text-warning Curabitur bibendum ornare dolor quis ullamcorper
+      %p.text-danger Nulla tellus elit, varius non commodo eget, mattis vel eros.
+      %p.text-success Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  .row
+    .col-lg-12
+      .full-width-media-text
+        %h3 Highlights
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          %span.highlight-1 Curabitur bibendum ornare dolor
+          quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo.
+          %span.highlight-2 Cum sociis natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis,
+          = succeed "," do
+            %span.highlight-3 est non commodo luctus, nisi erat porttitor ligula
+  .row
+    .col-lg-12
+      .full-width-media-text
+        %h3 HTML Styles
+        %p
+          Lorem ipsum dolor sit amet,
+          %a{href: "javascript:;"} This is text link
+          Curabitur bibendum ornare dolor quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget,
+          %span{style: "text-decoration: underline;"} This is underlined text
+          mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes,
+          = succeed "nascetur" do
+            %span{style: "color: #242424;"}
+              %strong This is Bold text
+          %span{style: "color: #9cce44;"}
+            %strong
+              %em This is Bold Emphasized text
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.
+  .row
+    .col-lg-6
+      .full-width-media-text
+        %h3 Dropcap
+        %p
+          %span.dropcap F
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut.
+    .col-lg-6
+      .full-width-media-text
+        %h3 Dropcap
+        %p
+          %span.dropcap2 F
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut.
+  .row
+    .col-lg-12
+      .full-width-media-text
+        %h3 Blockquote
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla.
+        %blockquote
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. sumon cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut.
+  .row
+    .col-lg-12
+      .full-width-media-text
+        %h3 Ordered &amp; Unordered Lists
+        .row
+          .col-lg-6.col-sm-6
+            %ol
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          .col-lg-6.col-sm-6
+            %ul
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              %li Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  .row.mtop30
+    .col-lg-6.col-sm-6
+      .full-width-media-text
+        %h4 Half Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut.
+    .col-lg-6.col-sm-6
+      .full-width-media-text
+        %h4 Half Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut.
+  .row.mtop30
+    .col-lg-4.col-sm-4
+      .full-width-media-text
+        %h4 One Third Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare.
+    .col-lg-4.col-sm-4
+      .full-width-media-text
+        %h4 One Third Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare.
+    .col-lg-4.col-sm-4
+      .full-width-media-text
+        %h4 One Third Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Nullam quis risus eget urna mollis ornare.
+  .row.mtop30
+    .col-lg-3.col-sm-3
+      .full-width-media-text
+        %h4 One Fourth Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget.
+    .col-lg-3.col-sm-3
+      .full-width-media-text
+        %h4 One Fourth Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget.
+    .col-lg-3.col-sm-3
+      .full-width-media-text
+        %h4 One Fourth Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget.
+    .col-lg-3.col-sm-3
+      .full-width-media-text
+        %h4 One Fourth Grid
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget.
+  / Typography end
+/ container end
+
+
+
+/ breadcrumbs start
+.breadcrumbs#buttons
+  .container
+    .row
+      .col-lg-4.col-sm-4
+        %h1 Buttons
+      .col-lg-8.col-sm-8
+        %ol.breadcrumb.pull-right
+          %li
+            %a{href: "#"} Home
+          %li
+            %a{href: "#"} Pages
+          %li.active Buttons
+/ breadcrumbs end
+
+
+/ container start
+.container
+  .row
+    / Buttons start
+    .col-lg-6.col-sm-6
+      %h3.skills Default Buttons
+      .btn-row
+        %button.btn.btn-default{type: "button"} Default
+        %button.btn.btn-primary{type: "button"} Primary
+        %button.btn.btn-success{type: "button"} Success
+        %button.btn.btn-info{type: "button"} Info
+        %button.btn.btn-warning{type: "button"} Warning
+        %button.btn.btn-danger{type: "button"} Danger
+      %h3.skills Rounded Buttons
+      .btn-row
+        %button.btn.btn-round.btn-default{type: "button"} Default
+        %button.btn.btn-round.btn-primary{type: "button"} Primary
+        %button.btn.btn-round.btn-success{type: "button"} Success
+        %button.btn.btn-round.btn-info{type: "button"} Info
+        %button.btn.btn-round.btn-warning{type: "button"} Warning
+        %button.btn.btn-round.btn-danger{type: "button"} Danger
+      %h3.skills Dropdowns Button
+      .btn-row
+        .btn-group
+          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+            Default
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} Action
+            %li
+              %a{href: "#"} Another action
+            %li
+              %a{href: "#"} Something else here
+            %li.divider
+            %li
+              %a{href: "#"} Separated link
+        / /btn-group
+        .btn-group
+          %button.btn.btn-primary.dropdown-toggle.btn-sm{"data-toggle" => "dropdown", type: "button"}
+            Primary
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} Action
+            %li
+              %a{href: "#"} Another action
+            %li
+              %a{href: "#"} Something else here
+            %li.divider
+            %li
+              %a{href: "#"} Separated link
+        / /btn-group
+        .btn-group
+          %button.btn.btn-success.dropdown-toggle.btn-xs{"data-toggle" => "dropdown", type: "button"}
+            Success
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} Action
+            %li
+              %a{href: "#"} Another action
+            %li
+              %a{href: "#"} Something else here
+            %li.divider
+            %li
+              %a{href: "#"} Separated link
+        / /btn-group
+      %h3.skills Split Dropdowns Button
+      .btn-row
+        .btn-group
+          %button.btn.btn-white{type: "button"} Default
+          %button.btn.btn-white.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} Action
+            %li
+              %a{href: "#"} Another action
+            %li
+              %a{href: "#"} Something else here
+            %li.divider
+            %li
+              %a{href: "#"} Separated link
+        / /btn-group
+        .btn-group.dropup
+          %button.btn.btn-white{type: "button"} Dropup
+          %button.btn.btn-white.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} Action
+            %li
+              %a{href: "#"} Another action
+            %li
+              %a{href: "#"} Something else here
+            %li.divider
+            %li
+              %a{href: "#"} Separated link
+        / /btn-group
+      %h3.skills Group Button
+      .btn-row
+        .btn-row
+          .btn-group
+            %button.btn.btn-white{type: "button"} Left
+            %button.btn.btn-white{type: "button"} Middle
+            %button.btn.btn-white{type: "button"} Right
+          .btn-group.btn-group-sm
+            %button.btn.btn-white{type: "button"} Left
+            %button.btn.btn-white{type: "button"} Middle
+            %button.btn.btn-white{type: "button"} Right
+        %p.text-muted Vertical button groups
+        .btn-row
+          .btn-group-vertical
+            %button.btn.btn-white{type: "button"} Top
+            %button.btn.btn-white{type: "button"} Middle
+            %button.btn.btn-white{type: "button"} Bottom
+        %p.text-muted Nested button groups
+        .btn-row
+          .btn-group
+            %button.btn.btn-default{type: "button"} 1
+            %button.btn.btn-danger{type: "button"} 2
+            %button.btn.btn-default{type: "button"} 3
+            .btn-group
+              %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                Dropdown
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  %a{href: "#"} Dropdown link 1
+                %li
+                  %a{href: "#"} Dropdown link 2
+                %li
+                  %a{href: "#"} Dropdown link 3
+        %p.text-muted Multiple button groups
+        .btn-row
+          .btn-toolbar
+            .btn-group
+              %button.btn.btn-info{type: "button"} 1
+              %button.btn.btn-info.active{type: "button"} 2
+              %button.btn.btn-info{type: "button"} 3
+              %button.btn.btn-info{type: "button"} 4
+            .btn-group
+              %button.btn.btn-success{type: "button"} 5
+              %button.btn.btn-success{type: "button"} 6
+              %button.btn.btn-success{type: "button"} 7
+            .btn-group
+              %button.btn.btn-warning{type: "button"} 8
+        %p.text-muted Group Checkbox
+        .btn-row
+          .btn-group{"data-toggle" => "buttons"}
+            %label.btn.btn-primary
+              %input{type: "checkbox"}/
+              Option 1
+            %label.btn.btn-primary
+              %input{type: "checkbox"}/
+              Option 2
+            %label.btn.btn-primary
+              %input{type: "checkbox"}/
+              Option 3
+        %p.text-muted Group Radio
+        .btn-row
+          .btn-group{"data-toggle" => "buttons"}
+            %label.btn.btn-default
+              %input#option1{name: "options", type: "radio"}/
+              Option 1
+            %label.btn.btn-default
+              %input#option2{name: "options", type: "radio"}/
+              Option 2
+            %label.btn.btn-default
+              %input#option3{name: "options", type: "radio"}/
+              Option 3
+    .col-lg-6.col-sm-6
+      %h3.skills Drop Shadow Buttons
+      .btn-row
+        %button.btn.btn-shadow.btn-default{type: "button"} Default
+        %button.btn.btn-shadow.btn-primary{type: "button"} Primary
+        %button.btn.btn-shadow.btn-success{type: "button"} Success
+        %button.btn.btn-shadow.btn-info{type: "button"} Info
+        %button.btn.btn-shadow.btn-warning{type: "button"} Warning
+        %button.btn.btn-shadow.btn-danger{type: "button"} Danger
+      %h3.skills Buttons Size
+      .btn-row
+        %button.btn.btn-default.btn-lg{type: "button"} Large Button
+        %button.btn.btn-primary{type: "button"} Default Button
+        %button.btn.btn-success.btn-sm{type: "button"} Small Button
+        %button.btn.btn-info.btn-xs{type: "button"} Extra Small Button
+      %h3.skills Buttons with Icon
+      .btn-row
+        %button.btn.btn-primary{type: "button"}
+          %i.fa.fa-cloud
+          Cloud
+        %button.btn.btn-success{type: "button"}
+          %i.fa.fa-eye
+          View
+        %button.btn.btn-info{type: "button"}
+          %i.fa.fa-refresh
+          Update
+        %button.btn.btn-default{type: "button"}
+          %i.fa.fa-cloud-upload
+          Upload
+        %button.btn.btn-white{"data-toggle" => "button"}
+          %i.fa.fa-thumbs-up.text-info
+          55
+        %button.btn.btn-white{"data-toggle" => "button"}
+          %i.fa.fa-home
+      %h3.skills Justified Button groups
+      .btn-row
+        .btn-group.btn-group-justified
+          %a.btn.btn-success{href: "#"} Left
+          %a.btn.btn-info{href: "#"} Middle
+          %a.btn.btn-danger{href: "#"} Right
+      %h3.skills Block level button
+      .btn-row
+        %button.btn.btn-success.btn-lg.btn-block{type: "button"} Block level button
+        %button.btn.btn-warning.btn-block{type: "button"} Block level button
+        %button.btn.btn-danger.btn-xs.btn-block{type: "button"} Block level button
+      %h3.skills Social Icons
+      %ul.social-link-footer.list-unstyled
+        %li
+          %a{href: "#"}
+            %i.fa.fa-facebook
+        %li
+          %a{href: "#"}
+            %i.fa.fa-google-plus
+        %li
+          %a{href: "#"}
+            %i.fa.fa-dribbble
+        %li
+          %a{href: "#"}
+            %i.fa.fa-linkedin
+        %li
+          %a{href: "#"}
+            %i.fa.fa-twitter
+        %li
+          %a{href: "#"}
+            %i.fa.fa-skype
+        %li
+          %a{href: "#"}
+            %i.fa.fa-github
+        %li
+          %a{href: "#"}
+            %i.fa.fa-youtube
+        %li
+          %a{href: "#"}
+            %i.fa.fa-html5
+        %li
+          %a{href: "#"}
+            %i.fa.fa-flickr
+        %li
+          %a{href: "#"}
+            %i.fa.fa-dropbox
+        %li
+          %a{href: "#"}
+            %i.fa.fa-android
+        %li
+          %a{href: "#"}
+            %i.fa.fa-gittip
+        %li
+          %a{href: "#"}
+            %i.fa.fa-apple
+        %li
+          %a{href: "#"}
+            %i.fa.fa-trello
+        %li
+          %a{href: "#"}
+            %i.fa.fa-weibo
+        %li
+          %a{href: "#"}
+            %i.fa.fa-adn
+        %li
+          %a{href: "#"}
+            %i.fa.fa-bitbucket
+        %li
+          %a{href: "#"}
+            %i.fa.fa-github
+        %li
+          %a{href: "#"}
+            %i.fa.fa-renren
+        %li
+          %a{href: "#"}
+            %i.fa.fa-vk
+        %li
+          %a{href: "#"}
+            %i.fa.fa-linux
+        %li
+          %a{href: "#"}
+            %i.fa.fa-maxcdn
+        %li
+          %a{href: "#"}
+            %i.fa.fa-instagram
+    / Buttons end
+/ container end

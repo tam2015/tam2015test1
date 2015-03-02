@@ -1,0 +1,7 @@
+$("#items-body")
+  .find("> tr")
+    .remove()
+  .end()
+  .append('<%= j render @items %>');
+
+AIRCRM.Admin.init()

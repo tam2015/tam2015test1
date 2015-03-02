@@ -1,0 +1,7 @@
+$("body")
+  .find("#shipping-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("status_form") %>')
+  .find("#shipping-modal.modal")
+    .modal();

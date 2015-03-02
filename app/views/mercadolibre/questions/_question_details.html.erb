@@ -1,0 +1,21 @@
+<aside id="item_details_<%= @item.id %>" class="profile-nav alt green-border">
+    <section class="panel">
+        <div class="user-heading alt green-bg">
+            <a href="#">
+              <%=image_tag("#{@item.pictures.first[:url] if @item and @item.pictures and @item.pictures.first}", alt: current_user.name, class: "avatar-mini")%>
+            </a>
+
+          <p><%= @item.title %></p>
+          <h3><%= @item.price if @item %></h3>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="javascript:;"> <i class="fa fa-clock-o"></i> Qtd Disponível <span class="label label-primary pull-right r-activity"><%= @item.available_quantity %></span></a></li>
+            <li><a href="javascript:;"> <i class="fa fa-calendar"></i> Qtd vendida <span class="label label-info pull-right r-activity"><%= @item.sold_quantity %></span></a></li>
+            <li><a href="javascript:;"> <i class="fa fa-bell-o"></i> Mercado Pago? <span class="label label-warning pull-right r-activity"><%= @item.accepts_mercadopago %></span></a></li>
+            <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Fim do Anúncio <span class="time"><i class="fa fa-clock-o"></i><time class="unloaded" datetime="<%= @item.end_time %>"><%= @item.end_time %></time></span></a></li>
+            <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Variações <span class="label label-success pull-right r-activity"><%= @item.variations %></span></a></li>
+        </ul>
+    </section>
+</aside>
+
+

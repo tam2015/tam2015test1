@@ -1,0 +1,4 @@
+- if account_trial?
+  .flash-message.fade.in.alert.alert-dismissable.palette-alert.palette-amethyst
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} &#215;
+    = "Faltam #{time_ago_in_words current_account.expires_in} para o seu trial expirar."

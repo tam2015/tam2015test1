@@ -1,0 +1,3 @@
+$("#customer-<%= @customer.id %> .customer_resulted").html('<%= j render("show") %>');
+
+AIRCRM.customers.update("<%= @customer.id %>")

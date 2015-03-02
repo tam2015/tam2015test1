@@ -1,0 +1,33 @@
+- if plan.present?
+  .col-lg-4.col-sm-4
+    .pricing-table{ class: "#{"most-popular" if full_plan(plan)}" }
+      .pricing-head
+        %h1
+          = plan.name and plan.name.upcase
+        %h2
+          %span.note R$
+          = plan.price
+
+      %ul.list-unstyled
+        %li Perguntas e respostas
+        %li Qualificação manual
+        %li Tendências
+        %li Cobrança de endereçø manual
+        %li Anúncios individuais
+        - if middle_plan(plan)
+          %li Gerenciador de vendas
+          %li Qualificação automática
+          %li Cobrança de endereço automática
+          %li Etiqueta individual
+        - if full_plan(plan)
+          %li Gerenciador de vendas
+          %li Qualificação automática
+          %li Cobrança de endereço automática
+          %li Etiqueta individual
+          %li Etiquetas em massa
+          %li Bloqueio de lances duplicados
+          %li Anúncios em massa
+
+      .price-actions
+        = link_to t(".subscribe"), edit_subscription_url(:id, plan_id: plan.id), class: "btn btn-success"
+

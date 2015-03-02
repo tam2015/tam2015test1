@@ -1,0 +1,38 @@
+<div class="category_show">
+  <% if @category: %>
+    <% if @category.get("path_from_root"): %>
+      <% parents_length = @category.get("path_from_root").length %>
+      <ul class="breadcrumb">
+        <% for parent, ix in @category.get("path_from_root"): %>
+          <% if ix == (parents_length - 1): %>
+            <li id="<%= parent.id %>" data-category="<%= JSON.stringify(parent) %>" class="active">
+              <%= parent.name %>
+            </li>
+          <% else: %>
+            <li id="<%= parent.id %>" data-category="<%= JSON.stringify(parent) %>" >
+              <a href="#"><%= parent.name %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <% unless @show_form: %>
+        <a href="#" class="btn-link btn-category-edit">
+          <i class="fa fa-pencil" title="Editar categoria"></i>
+          Editar categoria
+        </a>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<div class="form-group category_form category_suggest <%= 'hidden' unless @show_form %>">
+  <div class="input-group">
+    <input class="string optional form-control" id="category_suggest" placeholder="Pesquisar categoria" type="text" autocomplete="off" >
+    <span class="input-group-btn">
+      <button id="category_suggest_submit" class="btn btn-white" type="button">
+        <i class="fa fa-search"></i>
+        <span class="sr-only">Buscar</span>
+      </button>
+    </span>
+  </div>
+</div>
+<div class="category_index"></div>

@@ -1,0 +1,45 @@
+!!!
+%html
+  %head
+    %meta{charset: "utf-8"}/
+    %title Atualize o endereço de entrega do seu pedido
+
+    %meta{content: "aircrm, crm, online, cloud, air, system, sistema, responsivo", name: "keywords"}/
+    %meta{content: "O AirCRM é o sistema ideal para aumentar o desempenho da sua gestão de negócios.", name: "description"}/
+    %meta{content: "IE=8", "http-equiv" => "X-UA-Compatible"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+
+    = stylesheet_link_tag    "providers/mercadolibre", media: "all", "data-turbolinks-track" => true
+
+    = favicon_link_tag 'favicon.ico'
+
+    / HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file.
+    /[if lt IE 9]
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+
+    = render 'layouts/inspectlet' if ENV["INSPECTLET_KEY"]
+
+
+    = csrf_meta_tags
+  %body.fixed{ class: "#{dispatcher_class}", "data-route" => dispatcher_route }
+
+    #main
+      .container-fluid
+        .flash-messages
+          = flash_message
+
+        /.flash-messages
+
+        = yield
+      /.container-fluid
+    /#main
+
+    / Load JS here for greater good =============================
+    = javascript_include_tag "providers/mercadolibre", "data-turbolinks-track" => true
+    = javascript_include_tag "locales/#{I18n.locale}", "data-turbolinks-track" => true
+
+    = yield :javascript_after_load
+
+    = render 'layouts/analytics'  if ENV["GOOGLE_ANALYTICS_ACCOUNT"]
+    = render 'layouts/crazyegg'

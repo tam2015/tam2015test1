@@ -1,0 +1,12 @@
+ids = <%= @boxes_selector || [] %>;
+
+boxes = $(".step-box").each(function(index) {
+  var $this = $(this);
+
+  if (ids.indexOf(parseInt(this.id)) == -1 ) {
+    $this.addClass("hidden");
+  } else {
+    $this.removeClass("hidden");
+  };
+})
+

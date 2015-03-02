@@ -1,0 +1,16 @@
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name),  html: { class: "sign_user_form sign_in_user_form form-signin",  role: "form" }) do |f|
+  %h2.form-signin-heading= t(".sign_in")
+  .login-wrap
+    = render 'devise/sessions/form_inputs'
+    - #%p= t(".or_connect_with")
+
+    %p= t(".connect_with")
+
+    - # Omniauth
+    - if devise_mapping.omniauthable? and !resource_class.omniauth_providers.empty?
+      = render "layouts/omniauth"
+
+    .registration
+      = t(".dont_have_an_account_yet")
+      = link_to t(".sign_up"), user_omniauth_authorize_path(:mercadolibre)
+      - #= link_to t(".sign_up"), user_registration_path

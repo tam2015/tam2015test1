@@ -1,0 +1,20 @@
+#invitation-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      = simple_form_for @storage, url: :dashboard_storages, method: :put, multipart: true, html: { class: "invitation_form form-horizontal",  role: "form" } do |f|
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+          %h4.modal-title= t(".atualizar estoque")
+
+        .modal-body.clearfix
+          .col-md-12
+            = f.input :l_quantity
+            = f.hidden_field :item_id, :value => params[:item_id]
+            = f.hidden_field :f_codigo, :value => params[:f_codigo]
+
+        .modal-footer
+          = f.button :button, type: :submit, class: 'btn btn-primary' do
+            = t(".send")
+
+          %a.btn.btn-default{ href: "#", "data-dismiss" => "modal" }
+            = t(".cancel")

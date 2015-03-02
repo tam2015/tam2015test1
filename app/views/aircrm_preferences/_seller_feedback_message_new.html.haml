@@ -1,0 +1,24 @@
+- aircrm_preference ||= @aircrm_preference
+
+
+= simple_form_for @aircrm_preference, url: :dashboard_aircrm_preferences, method: :post,wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f|
+  .row
+    .col-lg-12
+      = f.error_notification
+
+  .row
+    .col-lg-12
+      = f.hidden_field :preference_type, :value => params[:preference_type]
+      = f.hidden_field :dashboard_id, :value => params[:dashboard_id]
+
+      = f.fields_for :data do |r|
+        - #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] }
+        = r.input :content    , autofocus: true
+
+
+
+  .row
+    .col-action.text-center
+      = f.button :button, type: :submit, class: "btn-success", title: t("helpers.submit.update", model: "") do
+        = t("helpers.submit.update", model: "")
+

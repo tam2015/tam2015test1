@@ -1,0 +1,40 @@
+#shipping-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      = simple_form_for @shipping, url: shipping_update_status_path(@shipping), wrapper: :small, html: { class: "shipping_form form-horizontal tasi-form",  role: "form" } do |f|
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
+          %h4.modal-title
+
+
+        .modal-body.clearfix
+          - # Status
+          .col-md-12
+            .form-group
+              = f.label :status, class: "col-md-4", for: :from
+
+              / .col-md-6
+              /   = f.input_field :from, value: "#{t(".from")} #{I18n.t(shipping.status, scope: "helpers.steps.status")}", disabled: true
+              /   = f.input_field :to, value: "#{t(".to")} #{I18n.t(update_params[:status], scope: "helpers.steps.status")}", disabled: true
+
+              .hidden
+                = f.text_field :status, value: params[:status]
+                = f.hidden_field :box_id, :value => params[:box_id]
+                = # f.text_field :mid, value: params[:shipping_id]
+                / , value: update_params[:status]
+
+
+        .modal-footer
+          = f.button :button, type: :submit, class: 'btn btn-success' do
+            = "confirmar"
+
+          %a.btn.btn-default{ href: "#", "data-dismiss" => "modal" }
+            = "cancelar"
+
+          .col-md-12
+            .form-group
+              = # debug update_params
+              = # debug params
+              = # debug shipping.changes
+              = # debug shipping
+          /     = f.input :name, autofocus: true, required: true

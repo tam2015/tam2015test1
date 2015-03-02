@@ -1,0 +1,19 @@
+.text-center.feature-head
+  %h1= t(".is_this_your_plan")
+
+.col-sm-4.col-sm-offset-4
+  .pricing-table.most-popular
+    .pricing-head
+      %h1= @plan.name.titleize
+      %h2
+        %span.note R$
+        = @plan.price
+
+    %ul.list-unstyled
+      %li
+        Clique em continuar e você será direcionada para o Paypal,
+        umas das mais respeitadas empresas de pagamento do mundo
+        onde poderá confirmar os dados de pagamento do nosso serviço.
+
+    .price-actions
+      = link_to t(".pay_with", provider: "Paypal"), checkout_subscriptions_path(plan_id: @subscription.plan_id), class: "btn btn-success"

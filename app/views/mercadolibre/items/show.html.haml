@@ -1,0 +1,159 @@
+- item ||= @item
+- pictures    = item.pictures || []
+
+- # page start
+.row
+  %aside.profile-nav.col-lg-3
+    %section.panel
+      .item-heading.blue-bg
+        = link_to item.permalink, class: "thumbnail", title: item.title do
+          = image_tag(item.thumbnail, alt: "", class: "img-rounded")
+
+        %h1
+          = link_to item.permalink do
+            = item.title
+
+        %p= status_label item.status
+
+      %ul.nav.nav-pills.nav-stacked
+        %li
+          = link_to edit_dashboard_item_path(@dashboard, item) do
+            = translate_button_content(:edit, item, icon: :edit)
+
+        %li
+          - if item.published_at?
+            %a{ href: "#publish" }
+              %span.time
+                %i.fa.fa-clock-o
+                = t(".posted")
+                %time.unloaded{ datetime: item.published_at.to_time }= I18n.l(item.published_at.to_time)
+
+          - else
+            = link_to publish_dashboard_item_path(@dashboard, item) do
+              %i.fa.fa-calendar
+              = t(".publish")
+
+        %li
+          - # DESTROY or DELETE
+          - if item.empty? or item.deleted?
+            = link_to dashboard_item_path(@dashboard, item, force: true), method: :delete, data: { confirm: t("helpers.confirm.destroy", model: down_model(item.class)) } do
+              = translate_button_content(:destroy, item, icon: :"trash-o")
+          - else
+            = link_to dashboard_item_path(@dashboard, item), method: :delete do
+              = translate_button_content(:delete, item, icon: :"trash-o")
+
+
+  %aside.profile-info.col-lg-9
+    %section.panel
+      %header.panel-heading
+        .row
+          .col-sm-8
+            = render_breadcrumbs
+          .col-sm-4
+            .actions.pull-right
+              = render 'item_actions', item: @item, label_class: "hidden-sm"
+
+    %section#publish
+      .row
+        - # Publish form
+        - if [:empty, :unpublished, :invalid_data, :not_yet_active, :payment_required, :paused].include? item.status
+          .col-lg-6
+            - if item.published_at?
+              - publish_panel_class = 'info'
+            - else
+              - publish_panel_class = item.validation_status == :valid ? 'success' : 'danger'
+
+            .panel{ class: "panel-#{publish_panel_class}"}
+              .panel-heading
+                - if item.published_at?
+                  = t(".published")
+                  = "-"
+                  = link_to(item.meli_item_id, item.permalink, target: "_blank")
+                - else
+                  = t(item.validation_status == :valid ? ".publish" : ".not_valid")
+
+              .panel-body
+                .row
+                  .col-md-12
+                    - if item.published_at?
+                      %span.time
+                        %i.fa.fa-clock-o
+                        = t(".your_record_posted", model: down_model(item.class))
+                        %time.unloaded{ datetime: item.published_at.to_time }= I18n.l(item.published_at.to_time)
+
+                    - else
+                      = status_label item.validation_status.to_s, scope: "helpers.items.validation_status_long", label_class_append: "label-block"
+                      %br
+                      = link_to t(".publish"), publish_dashboard_item_path(@dashboard, item)
+
+
+                - # Validation errors
+                - unless item.validation_status == :valid
+                  %hr
+                  .row
+                    .col-md-12
+                      .alert.alert-danger
+                        - (item.validation_errors || []).each do |error|
+                          %p{ id: error["code"] }
+                            %strong= "#{error["code"]}:"
+                            = error["message"]
+
+        - # Pictures
+        - if item.pictures? or item.meli_pictures?
+          .col-lg-6
+            .panel
+              - if item.meli_pictures?
+                %ul.grid.cs-style-3
+                  - item.meli_pictures.each do |picture|
+                    %li
+                      %figure
+                        = image_tag(picture[:url] , alt: picture[:id])
+                        %figcaption
+                          %a.fancybox{href: "#{picture[:url]}", rel: "group"} Take a look
+              - elsif item.pictures?
+                %ul.grid.cs-style-3
+                  - pictures.each do |picture|
+                    %li
+                      %figure
+                        = image_tag(picture.url(:thumb) , alt: picture.filename)
+                        %figcaption
+                          %a.fancybox{href: "#{picture.url}", rel: "group"} Take a look
+
+        - # Movie
+        - if item.video_id?
+          .col-lg-6
+            .panel
+              = item.youtube_url
+
+    %section.panel
+      .panel-body.bio-graph-info
+        %h1= t(".item_information")
+        .row
+          .bio-row
+            %p
+              %span= "#{Mercadolibre::Item.human_attribute_name :category}:"
+              = item.category and item.category.name
+          .bio-row
+            %p
+              %span= "#{Mercadolibre::Item.human_attribute_name :price}:"
+              = item.price
+          .bio-row
+            %p
+              %span= "#{Mercadolibre::Item.human_attribute_name :condition}:"
+              = t(item.condition, scope: "helpers.items.conditions")
+          .bio-row
+            %p
+              %span= "#{Mercadolibre::Item.human_attribute_name :shipping_dimension}:"
+              = item.shipping and item.shipping[:dimensions]
+
+    %hr
+
+    %section.panel
+      .panel-body
+        = raw item.description
+
+
+    .panel-footer.text-center
+      = render 'item_actions', item: item, label_class: "hidden-sm"
+
+- # page end

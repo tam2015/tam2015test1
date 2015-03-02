@@ -1,0 +1,11 @@
+<%= form_tag import_dashboard_items_path,  multipart: true do %>
+
+
+
+  <%= file_field_tag :file, :style=>"width: 300px"%>
+
+
+  <div >
+  <%= submit_tag "Importar", :style=>'height:35px; background:#4eaf00; width:20%; border:none; color:#fff; font-family: SQ Market; font-size:15px; float:left; margin-top:10px'%>
+  </div>
+  <%end%>

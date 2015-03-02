@@ -1,0 +1,8 @@
+- #= form_tag search_path, class: "header_search navbar-form navbar-left navbar-input-group", role: "search", method: :get do
+- current_dashboard = Dashboard.first
+- if current_dashboard
+  = form_tag dashboard_search_path(current_dashboard), method: :get, remote: :true, class: "header_search", role: "search", multipart: true do
+    = text_field_tag :query, params[:query], type: "search", placeholder: t('.search'), class: "form-control search"
+
+    .hidden
+      = button_tag t('.search'), type: "submit", class: 'btn btn-success', id: 'root_search'

@@ -1,0 +1,31 @@
+/ page start
+.row
+  .col-lg-12
+    %section.panel
+      .panel-body
+        .row
+          .col-md-12
+            .text-right
+              -# = link_to new_dashboard_user_path(@dashboard), id: "new_user", class: "btn btn-success btn-sm" do
+              -#   = translate_button_content(:create, @klass, icon: :plus, label_class: "hidden-xs")
+              = "#{t(".export_to")}:".html_safe
+              = "#{link_to "CSV", users_path(format: "csv")},".html_safe
+              = link_to "XLS", users_path(format: "xls")
+
+    %section#all-users.panel
+      %header.panel-heading
+        = render_breadcrumbs
+
+      .panel-body
+        - unless @users.blank?
+          .no-more-tables
+            %table.display.table.table-bordered.table-striped.table-condensed.no-more-tables
+              %thead
+                = render "index_table_head"
+
+              %tbody#users-body
+                = render @users
+
+        - else @users.blank?
+          = translate_count_result @users
+

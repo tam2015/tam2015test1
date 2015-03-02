@@ -1,0 +1,6 @@
+<% category               = @item and @item.category %>
+
+<% for attribute in @attributes: %>
+  <%#= "#{attribute.id} - #{attribute.name}" %>
+  <!-- <br /> -->
+<% end %>

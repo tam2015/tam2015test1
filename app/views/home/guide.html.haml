@@ -1,0 +1,121 @@
+/ breadcrumbs start
+.breadcrumbs
+  .container
+    .row
+      .col-lg-4.col-sm-4
+        %h1 Manual
+      .col-lg-8.col-sm-8
+        %ol.breadcrumb.pull-right
+          %li
+            = link_to t(".home"), root_path
+          %li.active Manual
+/ breadcrumbs end
+/ container start
+.container
+  .row
+    .col-lg-12.about
+      %ul
+      %h3#menu Menu
+      %a{href: "#login"}
+        1. Cadastro e login
+      </br></br>
+      %a{href: "#ordens"}
+        2. Gerenciador de ordens
+      </br></br>
+      %a{href: "#perguntas"}
+        3. Perguntas e respostas
+      </br></br>
+      %a{href: "#qualificacao"}
+        4. Qualificações
+      </br></br></br>
+      %h3#login 1. Cadastro e login
+      %p
+        Basta entrar no site http://www.aircrm.com.br/ e clicar no link “entrar”  localizado na parte de cima ao lado direito da tela. Você será direcionado para uma nova página onde aparecerá o botão “login com Mercado Livre”. Clique nesse botão, caso você ainda não esteja logado no Mercado Livre, o sistema solicitará seus dados de login e senha do Mercado Livre, caso já esteja logado no Mercado Livre, o sistema automaticamente efetuará o seu login.
+      </br>
+      %a.caption.lfr.slide_desc_service_link{href: "#menu", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+        Voltar
+      </br></br>
+      %h3#ordens 2. Gerenciador de ordens
+      %p
+        Para gerenciar suas ordens basta clicar no link “Ordens” localizado no menu direito da tela.
+      %p
+        Gerencie todas suas vendas do Mercado Livre sem precisar sair do AirCRM. Conforme figura abaixo, cada caixinha representa uma venda, você clica em cima de cada venda e arrasta-a para o status desejado e automaticamente o sistema envia a informação para o Mercado Livre e a atualização é feita. Trabalhamos com os seguintes status:
+      %p
+        a.) Aguardando pagamento
+      %p
+        b.) Pago
+      %p
+        c.) Cancelado
+      %p
+        d.) A Enviar
+      %p
+        e.) Enviado
+      %p
+        f.) Entregue
+      %p
+        g.) Qualificação
+      %p
+      Para as vendas processadas com o Mercado Pago, o sistema automaticamente puxa as informações do Mercado Livre e atualizada os status das ordens para você, dessa forma, basta observar nessa tela o status de pagamento de cada ordem.
+      %p
+      Para ver mais informações sobre a ordem basta clicar na caixinha. Será aberta uma nova tela onde você poderá ver diversas informações da ordem tais como:
+      %p
+      a.) Dados do item que recebeu a ordem de compra
+      %p
+      b.) Dados do comprador tais como nome, endereço, telefone e email
+      %p
+      c.) Dados de entrega do produto
+      %p
+      d.) Qualificações recebidas do comprador
+      %p
+      e.) Qualificações enviadas ao comprador. Caso você queira editar é possível editar no próprio local. Lembre-se que o Mercado Livre o deixa editar uma única vez a qualificação enviada ao comprador
+      %p
+      f.) Espaço para inserir lembretes e comentários para ajuda-lo a gerenciar a ordem
+      </br>
+      </br>
+      %a.caption.lfr.slide_desc_service_link{href: "#menu", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+        Voltar
+      </br></br>
+
+      %h3#perguntas
+        3. Gerenciador de perguntas e respostas
+      %p
+        Para gerenciar suas perguntas basta clicar no link “Perguntas” localizado no menu direito da tela.
+      %p
+        Gerencie todas suas perguntas e respostas do Mercado Livre sem precisar sair do AirCRM.
+        Conforme figura abaixo, a tela lista todas as suas perguntas recebidas e as organiza de acordo com a data, começando pela pergunta mais atual. Você pode ver o status da pergunta para saber se ela já foi respondida. Trabalhamos com os seguintes status para as perguntas:
+      %p
+      a.) Respondida
+      %p
+      b.) Não respondida
+      %p
+      c.) Não respondida e anúncio inativo. Isso acontece quando quando uma pergunta é recebida, o anúncio torna-se inativo e essa mesma pergunta não é respondida. Lembre-se o Mercado Livre não permite que uma pergunta seja respondida quando o anúncio está inativo.
+      %p
+        Caso você queira responder uma pergunta basta clicar no link, responder pergunta, localizado logo acima a direita da pergunta. Após o clique, o sistema abrirá  logo abaixo da pergunta uma caixinha/espaço em branco que servirá para você escrever a sua resposta. Clique em enviar/responder para enviar a resposta para o Mercado Livre e o comprador. Feito isso, você perceberá que o sistema automaticamente atualizará o status da pergunta para “respondido”.
+      %p
+        Para ver detalhes sobre a pergunta e ver a qual item ela está relacionada, basta clicar no link “detalhes” localizado acima e a direita na pergunta. O sistema imediatamente mostrará na mesma tela a direita os detalhes do anúncio a qual a pergunta está relacionada.
+      %p
+        Para bloquear um usuário de fazer uma pergunta basta clicar no link “bloquear usuário”, o sistema automaticamente enviará essa informação ao Mercado Livre e o usuário estará bloqueado. Você perceberá que o sistema atualizará a informação, mostrando que o usuário está bloqueado. Para desbloquear, basta clicar no link “desbloquear usuário” que estará disponível apenas para os usuários que estão bloqueados.
+      </br>
+      %a.caption.lfr.slide_desc_service_link{href: "#menu", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+        Voltar
+      </br></br>
+      %h3#qualificacao
+        4. Gerenciamento das qualificações
+      %p
+        Para gerenciar suas qualificações basta clicar no link “Qualificações” localizado no menu direito da tela.
+      %p
+        Conforme figura abaixo, a tela lista todas as qualificações recebidas de acordo com a ordem e as organiza de acordo com a data, começando pela pergunta mais atual. A tabela mostra:
+      %p
+        a.) o número da ordem de compra a qual a qualificação está atrelada
+      %p
+        b.) o nota recebida na avaliação do comprador
+      %p
+        c.) a qualificaçãoo/mensagem recebida do comprador na qualificação
+      %p
+        d.) a qualificação que você deu ao comprador
+      %p
+        Para obter mais detalhes da qualificação, basta clicar no link “detalhes” localizado dentro de cada linha da tabela. Você perceberá que o sistema mostrará ao lado direito da tela os dados do item a qual a qualificação está atrelada.
+      %a.caption.lfr.slide_desc_service_link{href: "#menu", "data-easing" => "easeOutExpo", "data-speed" => "400", "data-start" => "2000", "data-x" => "670", "data-y" => "470"}
+        Voltar
+      </br></br>
+
