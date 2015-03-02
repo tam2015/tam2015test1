@@ -56,7 +56,7 @@ cloud_providers:
     # us-west-1      # US West (Northern California) Region
     # us-west-2      # US West (Oregon) Region
     #
-    region: us-west-2
+    region: sa-east-1
 
     # REQUIRED The amazon keys and account ID (digits only, no dashes) used to access the AWS API
     #
@@ -71,8 +71,10 @@ cloud_providers:
     # extension ".pub".  The easiest way to get your hand on this is to create the
     # public key from the private key: ssh-keygen -y -f gsg-keypair > gsg-keypair.pub
     #
-    key_name: gsg-keypair
-    key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first}"
+    key_name: mac_pro_t2_instance_teste
+    key_file: '~/.ec2/mac_pro_t2_instance_teste'
+    #key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first}"
+
 
     # OPTIONAL: Needed for bundling a running instance using rubber:bundle
     #
@@ -89,8 +91,8 @@ cloud_providers:
     #
     # m1.small or m1.large or m1.xlarge
     # https://cloud-images.ubuntu.com/locator/ec2/
-    image_type: c1.medium
-    image_id: ami-fe1973ce
+    image_type: t2.micro
+    image_id: ami-af9925b2
 
     # OPTIONAL: EC2 spot instance request support.
     #
@@ -207,8 +209,8 @@ roles:
     assigned_security_groups: [web]
     cloud_providers:
       aws:
-        image_type: m2.xlarge
-        image_id: ami-fe1973ce
+        image_type: t2.micro
+        image_id: ami-af9925b2
   web:
     assigned_security_groups: [web]
   web_tools:

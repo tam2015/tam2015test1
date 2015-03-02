@@ -110,9 +110,9 @@ namespace :deploy do
 end
 
 # load in the deploy scripts installed by vulcanize for each rubber module
-Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
-  load deploy_file
-end
+# Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
+#   load deploy_file
+# end
 
 # capistrano's deploy:cleanup doesn't play well with FILTER
 after "deploy:update", "newrelic:notice_deployment"
