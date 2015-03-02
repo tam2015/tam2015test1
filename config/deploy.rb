@@ -33,8 +33,8 @@ end
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
-# set :user, 'ec2-user'
-set :user, 'root'
+#set :user, 'root'
+set :user, 'ec2-user'
 set :password, nil
 
 # Use sudo with user rails for cap deploy:[stop|start|restart]
