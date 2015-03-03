@@ -21,9 +21,9 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-4e6f585b
-  image_type: t2.micro
-  image_id: ami-af9925b2
+  instance_id: i-377cf23a
+  image_type: m2.xlarge
+  image_id: ami-fe1973ce
   security_groups:
   - default
   - web

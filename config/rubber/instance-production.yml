@@ -19,20 +19,20 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-4e6f585b
-  image_type: t2.micro
-  image_id: ami-af9925b2
+  instance_id: i-684d7f60
+  image_type: c1.medium
+  image_id: ami-fe1973ce
   security_groups:
   - default
-  external_host: ec2-54-94-250-210.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.250.210
-  internal_host: ip-172-31-21-201.sa-east-1.compute.internal
-  internal_ip: 172.31.21.201
-  zone: sa-east-1
+  external_host: ec2-50-112-131-216.us-west-2.compute.amazonaws.com
+  external_ip: 50.112.131.216
+  internal_host: ip-172-31-5-124.us-west-2.compute.internal
+  internal_ip: 172.31.5.124
+  zone: us-west-2c
   provider: aws
   platform: linux
   root_device_type: ebs
-  static_ip: 54.94.250.210
+  static_ip: 50.112.131.216
 - !ruby/object:Rubber::Configuration::InstanceItem
   name: jobs
   domain: aircrm.com.br
@@ -58,20 +58,20 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-4e6f585b
-  image_type: t2.micro
-  image_id: ami-af9925b2
+  instance_id: i-06ad2c0b
+  image_type: m2.xlarge
+  image_id: ami-fe1973ce
   security_groups:
   - default
-  external_host: ec2-54-94-250-210.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.250.210
-  internal_host: ip-172-31-21-201.sa-east-1.compute.internal
-  internal_ip: 172.31.21.201
-  zone: sa-east-1
+  external_host: ec2-54-187-185-20.us-west-2.compute.amazonaws.com
+  external_ip: 54.187.185.20
+  internal_host: ip-172-31-26-208.us-west-2.compute.internal
+  internal_ip: 172.31.26.208
+  zone: us-west-2a
   provider: aws
   platform: linux
   root_device_type: ebs
-  static_ip: 54.94.250.210
+  static_ip: 54.187.185.20
 - !ruby/object:Rubber::Configuration::InstanceItem
   name: app01
   domain: aircrm.com.br
@@ -94,62 +94,26 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: newrelic
     options: {}
-  instance_id: i-4e6f585b
-  image_type: t2.micro
-  image_id: ami-af9925b2
+  instance_id: i-f32dacfe
+  image_type: m2.xlarge
+  image_id: ami-fe1973ce
   security_groups:
   - default
-  external_host: ec2-54-94-250-210.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.250.210
-  internal_host: ip-172-31-21-201.sa-east-1.compute.internal
-  internal_ip: 172.31.21.201
-  zone: sa-east-1
+  external_host: ec2-54-187-87-93.us-west-2.compute.amazonaws.com
+  external_ip: 54.187.87.93
+  internal_host: ip-172-31-16-142.us-west-2.compute.internal
+  internal_ip: 172.31.16.142
+  zone: us-west-2a
   provider: aws
   platform: linux
   root_device_type: ebs
-  static_ip: 54.94.250.210
-- !ruby/object:Rubber::Configuration::InstanceItem
-  name: aircrm
-  domain: aircrm.com.br
-  roles:
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: app
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: unicorn
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: nginx
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: newrelic
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: collectd
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: monit
-    options: {}
-  instance_id: i-4e6f585b
-  image_type: t2.micro
-  image_id: ami-af9925b2
-  security_groups:
-  - default
-  - web
-  external_host: ec2-54-94-250-210.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.250.210
-  internal_host: ip-172-31-21-201.sa-east-1.compute.internal
-  internal_ip: 172.31.21.201
-  zone: sa-east-1
-  provider: aws
-  platform: linux
-  root_device_type: ebs
+  static_ip: 54.187.87.93
 - volumes: {}
   static_ips:
-    web01: 54.94.250.210
-    db01: 54.94.250.210
-    jobs: 54.94.250.210
-    app01: 54.94.250.210
+    web01: 54.186.41.158
+    db01: 50.112.131.216
+    jobs: 54.187.185.20
+    app01: 54.187.87.93
 
 
 
