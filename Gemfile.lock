@@ -38,19 +38,6 @@ GIT
       railties (>= 4.0.0, < 5)
 
 GIT
-  remote: git://github.com/rubber/rubber.git
-  revision: 8dfcfb769433c85a50ab6d3a46b79c00e4f1c5b1
-  specs:
-    rubber (2.15.1)
-      capistrano (~> 2.12)
-      clamp
-      fog (~> 1.6)
-      json
-      net-ssh (~> 2.6)
-      open4
-      thor
-
-GIT
   remote: git://github.com/samuelb2/mongoid-enum.git
   revision: bec246220792ef48c438d5bc2b4e98d338a85046
   specs:
@@ -170,7 +157,7 @@ GEM
       mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    clamp (0.6.3)
+    clamp (0.6.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.5)
@@ -214,7 +201,7 @@ GEM
     ejs (1.1.1)
     equalizer (0.0.9)
     erubis (2.7.0)
-    excon (0.43.0)
+    excon (0.44.3)
     execjs (2.2.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -226,7 +213,7 @@ GEM
     ffi (1.9.6)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
-    fog (1.27.0)
+    fog (1.28.0)
       fog-atmos
       fog-aws (~> 0.0)
       fog-brightbox (~> 0.4)
@@ -235,6 +222,7 @@ GEM
       fog-json
       fog-profitbricks
       fog-radosgw (>= 0.0.2)
+      fog-riakcs
       fog-sakuracloud (>= 0.0.4)
       fog-serverlove
       fog-softlayer
@@ -248,7 +236,7 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.0.6)
+    fog-aws (0.1.1)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
@@ -257,7 +245,7 @@ GEM
       fog-core (~> 1.22)
       fog-json
       inflecto (~> 0.0.2)
-    fog-core (1.27.3)
+    fog-core (1.29.0)
       builder
       excon (~> 0.38)
       formatador (~> 0.2)
@@ -277,19 +265,23 @@ GEM
       fog-core (>= 1.21.0)
       fog-json
       fog-xml (>= 0.0.1)
-    fog-sakuracloud (0.1.1)
+    fog-riakcs (0.1.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-sakuracloud (1.0.0)
       fog-core
       fog-json
     fog-serverlove (0.1.1)
       fog-core
       fog-json
-    fog-softlayer (0.3.30)
+    fog-softlayer (0.4.1)
       fog-core
       fog-json
     fog-storm_on_demand (0.1.0)
       fog-core
       fog-json
-    fog-terremark (0.0.3)
+    fog-terremark (0.0.4)
       fog-core
       fog-xml
     fog-vmfusion (0.0.1)
@@ -336,7 +328,7 @@ GEM
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
     hashie (3.3.2)
-    highline (1.6.21)
+    highline (1.7.1)
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
@@ -506,6 +498,14 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    rubber (2.14.0)
+      capistrano (~> 2.12)
+      clamp
+      fog (~> 1.6)
+      json
+      net-ssh (~> 2.6)
+      open4
+      thor
     ruby-ole (1.2.11.8)
     rubyzip (1.1.6)
     sdoc (0.4.1)
@@ -628,7 +628,7 @@ DEPENDENCIES
   rspec
   rspec-nc
   rspec-rails
-  rubber!
+  rubber (~> 2.14.0)
   sdoc (~> 0.4.0)
   select2-rails (~> 3.5.0)
   sidekiq

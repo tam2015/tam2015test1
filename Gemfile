@@ -58,7 +58,7 @@ gem "meli", "~> 0.0.19", path: "/www/gems/meli"
 gem "paypal-recurring"
 
 # Rubber
-gem "rubber", github: "rubber/rubber"
+gem "rubber", "~> 2.14.0"#, github: "rubber/rubber"
 gem "open4"
 
 gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
