@@ -91,7 +91,7 @@ cloud_providers:
     #
     # m1.small or m1.large or m1.xlarge
     # https://cloud-images.ubuntu.com/locator/ec2/
-    image_type: t1.micro
+    image_type: m3.medium
     image_id: ami-0276a81f
 
 
@@ -210,7 +210,7 @@ roles:
     assigned_security_groups: [web]
     cloud_providers:
       aws:
-        image_type: t1.micro
+        image_type: m3.medium
         image_id: ami-0276a81f
   web:
     assigned_security_groups: [web]

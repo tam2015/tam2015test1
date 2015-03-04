@@ -17,7 +17,7 @@ roles:
     packages: [zip]
     cloud_providers:
       aws:
-        image_type: t1.micro
+        image_type: m3.medium
         image_id: ami-0276a81f
 
 security_groups:
