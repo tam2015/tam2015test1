@@ -1,6 +1,6 @@
 ---
 - !ruby/object:Rubber::Configuration::InstanceItem
-  name: app02
+  name: app01
   domain: aircrm.com.br
   roles:
   - !ruby/object:Rubber::Configuration::RoleItem
@@ -21,61 +21,21 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-d34a7dc6
-  image_type: t2.micro
-  image_id: ami-af9925b2
+  instance_id: i-15142200
+  image_type: t1.micro
+  image_id: ami-0276a81f
   security_groups:
   - default
   - web
-  external_host: ec2-54-94-165-1.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.165.1
-  internal_host: ip-172-31-21-25.sa-east-1.compute.internal
-  internal_ip: 172.31.21.25
+  external_host: ec2-54-94-239-250.sa-east-1.compute.amazonaws.com
+  external_ip: 54.94.239.250
+  internal_host: ip-172-31-22-111.sa-east-1.compute.internal
+  internal_ip: 172.31.22.111
   zone: sa-east-1a
   provider: aws
   platform: linux
   root_device_type: ebs
-- !ruby/object:Rubber::Configuration::InstanceItem
-  name: jobs2
-  domain: aircrm.com.br
-  roles:
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: background_worker
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: sidekiq
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: redis_master
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: redis
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: newrelic
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: collectd
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: monit
-    options: {}
-  instance_id: i-69497e7c
-  image_type: t2.micro
-  image_id: ami-af9925b2
-  security_groups:
-  - default
-  external_host: ec2-54-94-241-89.sa-east-1.compute.amazonaws.com
-  external_ip: 54.94.241.89
-  internal_host: ip-172-31-23-96.sa-east-1.compute.internal
-  internal_ip: 172.31.23.96
-  zone: sa-east-1a
-  provider: aws
-  platform: linux
-  root_device_type: ebs
+  static_ip: 54.94.239.250
 - volumes: {}
   static_ips:
-    web01: 54.186.41.158
-    db01: 50.112.131.216
-    jobs: 54.187.185.20
-    app01: 54.187.87.93
+    app01: 54.94.239.250

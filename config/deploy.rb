@@ -33,8 +33,7 @@ end
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
-# set :user, 'root'
-set :user, 'ec2-user'
+set :user, 'root'
 set :password, nil
 
 # Use sudo with user rails for cap deploy:[stop|start|restart]
@@ -111,22 +110,23 @@ namespace :deploy do
 end
 
 # load in the deploy scripts installed by vulcanize for each rubber module
-# Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
-#   load deploy_file
-# end
-load  "config/rubber/deploy-collectd.rb"
-load  "config/rubber/deploy-configuration.rb"
-load  "config/rubber/deploy-graphite.rb"
-load  "config/rubber/deploy-haproxy.rb"
-load  "config/rubber/deploy-mongodb.rb"
-load  "config/rubber/deploy-monit.rb"
-load  "config/rubber/deploy-newrelic.rb"
-load  "config/rubber/deploy-nginx.rb"
-load  "config/rubber/deploy-redis.rb"
-load  "config/rubber/deploy-setup.rb"
-load  "config/rubber/deploy-sidekiq.rb"
-load  "config/rubber/deploy-unicorn.rb"
-load  "config/rubber/deploy-util.rb"
+Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
+  load deploy_file
+end
+
+# load  "config/rubber/deploy-collectd.rb"
+# load  "config/rubber/deploy-configuration.rb"
+# load  "config/rubber/deploy-graphite.rb"
+# load  "config/rubber/deploy-haproxy.rb"
+# load  "config/rubber/deploy-mongodb.rb"
+# load  "config/rubber/deploy-monit.rb"
+# load  "config/rubber/deploy-newrelic.rb"
+# load  "config/rubber/deploy-nginx.rb"
+# load  "config/rubber/deploy-redis.rb"
+# load  "config/rubber/deploy-setup.rb"
+# load  "config/rubber/deploy-sidekiq.rb"
+# load  "config/rubber/deploy-unicorn.rb"
+# load  "config/rubber/deploy-util.rb"
 
 # capistrano's deploy:cleanup doesn't play well with FILTER
 after "deploy:update", "newrelic:notice_deployment"
@@ -152,5 +152,5 @@ if Rubber::Util.has_asset_pipeline?
   callbacks[:after].delete_if {|c| c.source == "deploy:assets:precompile"}
   callbacks[:before].delete_if {|c| c.source == "deploy:assets:symlink"}
   before "deploy:assets:precompile", "deploy:assets:symlink"
-  after "rubber:configuration", "deploy:assets:precompile"
+  after "rubber:config", "deploy:assets:precompile"
 end
