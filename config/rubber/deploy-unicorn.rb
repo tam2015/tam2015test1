@@ -8,7 +8,7 @@ namespace :rubber do
     before "deploy:stop", "rubber:unicorn:stop"
     after "deploy:start", "rubber:unicorn:restart"
     after "deploy:restart", "rubber:unicorn:restart"
-    # after "deploy:restart", "rubber:unicorn:reload"
+    after "deploy:restart", "rubber:unicorn:reload"
 
     desc "Stops the unicorn server"
     task :stop, :roles => :unicorn do
@@ -28,8 +28,10 @@ namespace :rubber do
     desc "Restarts the unicorn server"
     task :restart, :roles => :unicorn do
       # rsudo "service unicorn restart"
-      rsudo "service unicorn stop"
-      rsudo "service unicorn start"
+      # rsudo "service unicorn stop"
+      # rsudo "service unicorn start"
+      "rubber:unicorn:stop"
+      "rubber:unicorn:start"
     end
 
     desc "Reloads the unicorn web server"
