@@ -193,7 +193,7 @@ GEM
     ejs (1.1.1)
     equalizer (0.0.9)
     erubis (2.7.0)
-    excon (0.44.3)
+    excon (0.44.4)
     execjs (2.2.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -490,7 +490,7 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
-    rubber (2.9.0)
+    rubber (2.16.0)
       capistrano (~> 2.12)
       clamp
       fog (~> 1.6)
@@ -619,7 +619,7 @@ DEPENDENCIES
   rspec
   rspec-nc
   rspec-rails
-  rubber (~> 2.9.0)
+  rubber (~> 2.16.0)
   sdoc (~> 0.4.0)
   select2-rails (~> 3.5.0)
   sidekiq
