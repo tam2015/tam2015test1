@@ -58,7 +58,7 @@ gem "mercadolibre", github: "gullitmiranda/mercadolibre"
 gem "paypal-recurring"
 
 # Rubber
-gem "rubber", "~> 2.9.0"#, github: "rubber/rubber"
+gem "rubber", "~> 2.16.0"#, github: "rubber/rubber"
 gem "open4"
 
 gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
