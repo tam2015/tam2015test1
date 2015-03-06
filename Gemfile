@@ -8,7 +8,7 @@ gem "bcrypt", "~> 3.1.7"
 
 gem "jquery-rails"
 gem "jquery-ui-rails"
-gem "twitter-bootstrap-rails", github: "seyhunak/twitter-bootstrap-rails", branch: "bootstrap3"
+#gem "twitter-bootstrap-rails", github: "seyhunak/twitter-bootstrap-rails", branch: "bootstrap3"
 gem "select2-rails", "~> 3.5.0"
 
 ## Maybe SASS?
@@ -33,13 +33,13 @@ gem "surus", github: "JackC/surus"
 
 # MongoID
 gem "mongoid", "~> 4.0.0.rc1"
-gem "mongoid-enum"    , github: "samuelb2/mongoid-enum"
-gem "mongoid-paranoia", github: "simi/mongoid-paranoia"
+#gem "mongoid-enum"    , github: "samuelb2/mongoid-enum"
+#gem "mongoid-paranoia", github: "simi/mongoid-paranoia"
 gem "bson_ext"
 
 gem "devise"
 gem "devise_invitable"
-gem "activerecord-session_store", github: "rails/activerecord-session_store"
+#gem "activerecord-session_store", github: "rails/activerecord-session_store"
 gem "cancan"
 gem "simple_form"
 gem "country_select"
@@ -51,8 +51,8 @@ gem "geocoder"
 
 # omniauth
 gem "omniauth"
-gem "omniauth-mercadolibre", github: "gullitmiranda/omniauth-mercadolibre"
-gem "mercadolibre", github: "gullitmiranda/mercadolibre"
+# gem "omniauth-mercadolibre", github: "gullitmiranda/omniauth-mercadolibre"
+# gem "mercadolibre", github: "gullitmiranda/mercadolibre"
 #gem "meli", "~> 0.0.19"#, path: "/www/gems/meli"
 
 gem "paypal-recurring"
@@ -62,7 +62,7 @@ gem "rubber", "~> 2.16.0"#, github: "rubber/rubber"
 gem "open4"
 
 gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
-gem "mongoid-grid_fs", github: "ahoward/mongoid-grid_fs"
+#gem "mongoid-grid_fs", github: "ahoward/mongoid-grid_fs"
 gem "mini_magick", "~> 3.7.0"
 
 group :assets do
@@ -110,4 +110,4 @@ group :production, :staging do
   gem "newrelic_rpm"
 end
 
-gem "bullet", group: :development
+
