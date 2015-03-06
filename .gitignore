@@ -51,7 +51,7 @@ public/uploads
 public/sitemap*
 
 /*.sublime-workspace
-.elasticbeanstalk/
+#.elasticbeanstalk/
 .azk
 docs/.~*
 deploy/
