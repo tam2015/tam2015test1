@@ -1,0 +1,17 @@
+services: mongodb
+
+notifications:
+  email: false
+
+language: ruby
+before_install: gem install bundler
+cache: bundler
+rvm:
+  - 2.1
+  - jruby-19mode
+
+gemfile:
+  - Gemfile
+  - gemfiles/mongoid-3.0.gemfile
+  - gemfiles/mongoid-3.1.gemfile
+  - gemfiles/mongoid-4.0.gemfile

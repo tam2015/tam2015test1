@@ -1,10 +1,10 @@
 branch-defaults:
   master:
-    environment: dev-env-dev
+    environment: dev-env
 global:
   application_name: airtest-env
   default_ec2_keyname: ManagmentKeyPar-SP
-  default_platform: RUBY
+  default_platform: PHP
   default_region: sa-east-1
   profile: eb-cli
   sc: git
