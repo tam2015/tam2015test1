@@ -1,5 +1,5 @@
-source "https://rubygems.org"
-#source "https://Wh5Lz5WJrxTHfpFD62Zn@gem.fury.io/aircrm/"
+source "http://rubygems.org"
+#source "http://Wh5Lz5WJrxTHfpFD62Zn@gem.fury.io/aircrm/"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "4.1.1"
@@ -109,5 +109,3 @@ group :production, :staging do
   gem "dotenv"
   gem "newrelic_rpm"
 end
-
-

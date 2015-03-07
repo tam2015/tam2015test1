@@ -1,8 +1,8 @@
 
 namespace :rubber do
-
+  
   namespace :collectd do
-
+  
     rubber.allow_optional_tasks(self)
 
     after "rubber:bootstrap", "rubber:collectd:bootstrap"
@@ -14,9 +14,7 @@ namespace :rubber do
       if exists.strip.size == 0
         rubber.update_code_for_bootstrap
 
-        # run_config
-        opts = " --force  --file=\"role/collectd/\""
-        rsudo "cd #{release_path} && RUBBER_ENV=#{Rubber.env} RAILS_ENV=#{Rubber.env} ./script/rubber config #{opts}"
+        rubber.run_config(:file => "role/collectd/", :force => true, :deploy_path => release_path)
 
         restart
       end
@@ -26,12 +24,12 @@ namespace :rubber do
     task :start, :roles => :collectd do
       rsudo "service collectd status || service collectd start"
     end
-
+    
     desc "Stop collectd system monitoring"
     task :stop, :roles => :collectd do
       rsudo "service collectd stop || true"
     end
-
+    
     desc "Restart collectd system monitoring"
     task :restart, :roles => :collectd do
       stop

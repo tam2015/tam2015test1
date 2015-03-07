@@ -6,21 +6,19 @@ app_user: app
 
 # REQUIRED: Notification emails (e.g. monit) get sent to this address
 #
-admin_email: "gullit@#{full_host}"
+admin_email: "thiago@#{full_host}"
 
 # OPTIONAL: If not set, you won't be able to access web_tools
 # server (graphite, graylog, monit status, haproxy status, etc)
-web_tools_user: admin
-web_tools_password: aircrm2014
+# web_tools_user: admin
+# web_tools_password: sekret
 
 # REQUIRED: The timezone the server should be in
 timezone: America/Sao_Paulo
 
 # REQUIRED: the domain all the instances should be associated with
 #
-domain: aircrm.com.br
-
-web_aliases: "*.aircrm.com.br"
+domain: foo.com
 
 # OPTIONAL: See rubber-dns.yml for dns configuration
 # This lets rubber update a dynamic dns service with the instance alias
@@ -30,7 +28,7 @@ web_aliases: "*.aircrm.com.br"
 # OPTIONAL: Additional rubber file to pull config from if it exists.  This file will
 # also be pushed to remote host at Rubber.root/config/rubber/rubber-secret.yml
 #
-# rubber_secret: "#{File.expand_path('~') + '/.ec2' + (Rubber.env == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue ''}"
+# rubber_secret: "#{File.expand_path('~') + '/.ec2' + (Rubber.env == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue 'rubber-secret.yml'}"
 
 # OPTIONAL: Encryption key that was used to obfuscate the contents of rubber-secret.yml with "rubber util:obfuscation"
 # Not that much better when stored in here, but you could use a ruby snippet in here to fetch it from a key server or something
@@ -64,6 +62,10 @@ cloud_providers:
     secret_access_key: tHeRlBtI+9VUyTw3Cn0PX/pFx/0JOviUDFJCQaBk
     account: 530769085757
 
+    # aws_access_key_id: AKIAI5Z3MPA4ID237WMA
+    # aws_secret_access_key: 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
+    # account: 530769085757
+
     # REQUIRED:  The name of the amazon keypair and location of its private key
     #
     # NOTE: for some reason Capistrano requires you to have both the public and
@@ -73,9 +75,6 @@ cloud_providers:
     #
     key_name: key-sp
     key_file: '~/.ec2/key-sp'
-    #key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first}"
-
-
     # OPTIONAL: Needed for bundling a running instance using rubber:bundle
     #
     # pk_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/pk-*'].first}"
@@ -87,13 +86,22 @@ cloud_providers:
 
     # REQUIRED: the ami and instance type for creating instances
     # The Ubuntu images at http://alestic.com/ work well
-    # Ubuntu 12.04 Precise instance-store 64-bit: ami-eafa5883
+    # Ubuntu 14.04.1 Trusty instance-store 64-bit: ami-92f569fa
     #
     # m1.small or m1.large or m1.xlarge
-    # https://cloud-images.ubuntu.com/locator/ec2/
     image_type: m3.xlarge
-    image_id: ami-05329d18
+    image_id: ami-69f54974
 
+    # OPTIONAL: Provide fog-specific options directly.  This should only be used if you need a special setting that
+    # Rubber does not directly expose.  Since these settings will be passed directly through to fog, we can't make any
+    # guarantee about how they work (if fog renames an attribute, e.g., your config will break).  Please see the fog
+    # source code for the option names.
+    # fog_options:
+      # EBS I/O optimized instance
+      # EBS-optimized instances deliver dedicated throughput between Amazon EC2 and Amazon EBS, with options
+      # between 500 Mbps and 1000 Mbps depending on the instance type used.
+      # Read more and make sure that your image_type supports ebs_optimized function at: http://aws.amazon.com/ec2/instance-types/
+      # ebs_optimized: false
 
     # OPTIONAL: EC2 spot instance request support.
     #
@@ -107,6 +115,40 @@ cloud_providers:
     # If a spot instance request can't be fulfilled in 3 minutes, fallback to on-demand instance creation.  If not set,
     # the default is infinite.
     # spot_instance_request_timeout: 180
+
+  digital_ocean:
+    # REQUIRED: The Digital Ocean region that you want to use.
+    #
+    # Options include
+    # New York 1
+    # Amsterdam 1
+    # San Francisco 1
+    # New York 2
+    # Amsterdam 2
+    # Singapore 1
+    #
+    # These change often.  Check https://www.digitalocean.com/droplets/new for the most up to date options.
+    # Default to New York 2 since this is the only region that currently supports private networking
+    region: New York 2
+
+    # REQUIRED: The image name and type for creating instances.
+    image_id: Ubuntu 14.04 x64
+    image_type: 512MB
+
+    # Optionally enable private networking for your instances.
+    # This is currently only supported in New York 2.
+    private_networking: true
+
+  # Use an alternate cloud provider supported by fog.  This doesn't fully work
+  # yet due to differences in providers within fog, but gives you a starting
+  # point for contributing a new provider to rubber.  See rubber/lib/rubber/cloud(.rb)
+  fog:
+    credentials:
+      provider: rackspace
+      rackspace_api_key: 'XXX'
+      rackspace_username: 'YYY'
+    image_type: 123
+    image_id: 123
 
 # REQUIRED the cloud provider to use
 #
@@ -160,22 +202,12 @@ web_tools_ssl_port: 8443
 #         from_port: "#{graphite_server_port}"
 #         to_port: "#{graphite_server_port}"
 #
-
-# security_groups:
-#   default:
-#     rules:
-#       - source_group_name: default
-#         source_group_account: "#{cloud_providers.aws.account}"
-#       - protocol: tcp
-#         from_port: 1
-#         to_port: 65535
-
 security_groups:
   default:
     description: The default security group
     rules:
-      # - source_group_name: default
-      #   source_group_account: "#{cloud_providers.aws.account}"
+      - source_group_name: default
+        source_group_account: "#{cloud_providers.aws.account}"
       - protocol: tcp
         from_port: 22
         to_port: 22
@@ -206,26 +238,23 @@ security_groups:
 # OPTIONAL: The default security groups to create instances with
 assigned_security_groups: [default]
 roles:
-  app:
-    assigned_security_groups: [web]
-    cloud_providers:
-      aws:
-        image_type: m3.xlarge
-        image_id: ami-05329d18
   web:
     assigned_security_groups: [web]
   web_tools:
     assigned_security_groups: [web_tools]
 
 # OPTIONAL: Automatically create security groups for each host and role
-# EC2 doesn't allow one to change what groups an instance belongs to after
-# creation, so its good to have some empty ones predefined.
+# EC2 Classic doesn't allow one to change what groups an instance belongs to after
+# creation, so it's good to have some empty ones predefined.  EC2 with VPC, however,
+# does allow changing security groups after instance creation and allows far fewer
+# security groups per instance, so you shouldn't enable this setting if using VPC.
 auto_security_groups: false
 
 # OPTIONAL: Automatically isolate security groups for each appname/environment
 # by mangling their names to be appname_env_groupname
 # This makes it safer to have staging and production coexist on the same EC2
-# account, or even multiple apps
+# account, or even multiple apps.  NB: due to the security group limits per instance
+# in EC2 with VPCs, this option should only be enabled if you're using EC2 Classic.
 isolate_security_groups: false
 
 # OPTIONAL: Prompts one to sync security group rules when the ones in amazon
@@ -250,13 +279,18 @@ packages: [postfix, build-essential, git-core, libxslt-dev, ntp]
 # it, specify 'mirror://mirrors.ubuntu.com/mirrors.txt' as the value.
 # package_manager_mirror: 'mirror://mirrors.ubuntu.com/mirrors.txt'
 
+# OPTIONAL: The command used to identify your particular OS version.  This will be used for configurations
+# in Rubber templates that are parameterized by OS version (e.g., package lists).  If not specified, Ubuntu
+# will be assumed.
+os_version_cmd: 'lsb_release -sr'
+
 # OPTIONAL: gem sources to setup for rubygems
 # gemsources: ["https://rubygems.org"]
 
 # OPTIONAL: The gems to install on all instances
 # You can install a specific version of a gem by using a sub-array of gem, version
 # For example, gem: [[rails, 2.2.2], open4, aws-s3]
-gems: [open4, aws-s3, bundler, [rubber, "2.16.0"]]
+gems: [open4, aws-s3, bundler, [rubber, "#{Rubber.version}"]]
 
 # OPTIONAL: A string prepended to shell command strings that cause multi
 # statement shell commands to fail fast.  You may need to comment this out
@@ -278,7 +312,7 @@ staging_roles: "#{known_roles.reject {|r| r =~ /slave/ || r =~ /^db$/ }.join(','
 #           globally , unless you really do want all instances to have a
 #           static IP
 #
-use_static_ip: true
+# use_static_ip: true
 
 # OPTIONAL: Specifies an instance to be created in the given availability zone
 #           Availability zones are sepcified by amazon to be somewhat isolated
@@ -304,21 +338,39 @@ use_static_ip: true
 #         zone: us-east-1a # zone to create volume in, needs to match host's zone
 #         device: /dev/sdh # OS device to attach volume to
 #         mount: /mnt/mysql # The directory to mount this volume to
-#         filesystem: ext3 # the filesystem to create on volume
-#       - size: 10 # size of vol in GBs
-#         zone: us-east-1a # zone to create volume in, needs to match host's zone
-#         device: /dev/sdi # OS device to attach volume to
-#         mount: /mnt/logs # The directory to mount this volume to
-#         filesystem: ext3 # the filesystem to create on volume
+#         filesystem: ext4 # the filesystem to create on volume
+#
+#         # OPTIONAL: Provide fog-specific options directly.  This should only be used if you need a special setting that
+#         # Rubber does not directly expose.  Since these settings will be passed directly through to fog, we can't make any
+#         # guarantee about how they work (if fog renames an attribute, e.g., your config will break).  Please see the fog
+#         # source code for the option names.
+#         fog_options:
+#           type: gp2 # type of volume, standard (EBS magnetic), io1 (provisioned IOPS - SSD), or gp2 (general purpose - SSD).
+#           iops: 500 # The number of I/O operations per second (IOPS) that the volume supports.
+#                     # Required when the volume type is io1; not used with non-provisioned IOPS volumes.
+#       - size: 10
+#         zone: us-east-1a
+#         device: /dev/sdi
+#         mount: /mnt/logs
+#         filesystem: ext4
+#         fog_options:
+#           type: io1
+#           iops: 500
 #
 #       # volumes without mount/filesystem can be used in raid arrays
 #
-#       - size: 50 # size of vol in GBs
-#         zone: us-east-1a # zone to create volume in, needs to match host's zone
-#         device: /dev/sdx # OS device to attach volume to
-#       - size: 50 # size of vol in GBs
-#         zone: us-east-1a # zone to create volume in, needs to match host's zone
-#         device: /dev/sdy # OS device to attach volume to
+#       - size: 50
+#         zone: us-east-1a
+#         device: /dev/sdx
+#         fog_options:
+#           type: gp2
+#           iops: 500
+#       - size: 50
+#         zone: us-east-1a
+#         device: /dev/sdy
+#         fog_options:
+#           type: gp2
+#           iops: 500
 #
 #    # Use some ephemeral volumes for raid array
 #    local_volumes:
@@ -390,6 +442,3 @@ use_static_ip: true
 # hosts:
 #   somehost:
 #     packages: []
-hosts:
-  staging:
-    packages: []

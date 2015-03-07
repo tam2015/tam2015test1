@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 201501281959542) do
+ActiveRecord::Schema.define(version: 20150301232008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,11 +73,6 @@ ActiveRecord::Schema.define(version: 201501281959542) do
     t.boolean  "blocked",         default: false
     t.string   "pendings_status"
     t.string   "pendings",                        array: true
-  end
-
-  create_table "customers_to_users", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "dashboards", force: true do |t|
@@ -419,7 +414,7 @@ ActiveRecord::Schema.define(version: 201501281959542) do
   create_table "users_to_customers", force: true do |t|
     t.integer  "customer_id"
     t.integer  "user_id"
-    t.boolean  "blocked_to_questions"
+    t.boolean  "blocked_to_questions", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

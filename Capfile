@@ -1,6 +1,3 @@
-require 'dotenv'
-Dotenv.load
-
 gemfile = File.expand_path(File.join(__FILE__, '..', 'Gemfile'))
 if File.exist?(gemfile) && ENV['BUNDLE_GEMFILE'].nil?
   puts "Respawning with 'bundle exec'"
@@ -21,4 +18,3 @@ require 'rubber/capistrano'
 
 Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 load 'config/deploy'
-load 'config/deploy-rails'
