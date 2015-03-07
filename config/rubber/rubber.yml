@@ -91,8 +91,8 @@ cloud_providers:
     #
     # m1.small or m1.large or m1.xlarge
     # https://cloud-images.ubuntu.com/locator/ec2/
-    image_type: m3.medium
-    image_id: ami-0276a81f
+    image_type: m3.xlarge
+    image_id: ami-05329d18
 
 
     # OPTIONAL: EC2 spot instance request support.
@@ -210,8 +210,8 @@ roles:
     assigned_security_groups: [web]
     cloud_providers:
       aws:
-        image_type: m3.medium
-        image_id: ami-0276a81f
+        image_type: m3.xlarge
+        image_id: ami-05329d18
   web:
     assigned_security_groups: [web]
   web_tools:

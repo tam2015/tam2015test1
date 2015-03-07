@@ -17,8 +17,8 @@ roles:
     packages: [zip]
     cloud_providers:
       aws:
-        image_type: m3.medium
-        image_id: ami-0276a81f
+        image_type: m3.xlarge
+        image_id: ami-05329d18
 
 security_groups:
   redis:
