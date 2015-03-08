@@ -15,9 +15,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: blog_development
+  database: aircrm_development
   pool: 5
-  username: blog
+  username: postgres
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -41,15 +41,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: blog_test
+  database: aircrm_test
   pool: 5
-  username: blog
+  username: postgres
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: blog_production
+  database: aircrm_production
   pool: 5
-  username: blog
+  username: postgres
   password:
