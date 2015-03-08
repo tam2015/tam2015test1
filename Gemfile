@@ -58,11 +58,11 @@ gem "mercadolibre", github: "gullitmiranda/mercadolibre"
 gem "paypal-recurring"
 
 # Rubber
-gem "rubber", "~> 2.16.0"#, github: "rubber/rubber"
-gem "open4"
+#gem "rubber", "~> 2.16.0"#, github: "rubber/rubber"
+# gem "open4"
 
 gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
-gem "mongoid-grid_fs", github: "ahoward/mongoid-grid_fs"
+# gem "mongoid-grid_fs", github: "ahoward/mongoid-grid_fs"
 gem "mini_magick", "~> 3.7.0"
 
 group :assets do

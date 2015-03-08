@@ -6,14 +6,6 @@ GIT
       activerecord (~> 4.0)
 
 GIT
-  remote: git://github.com/ahoward/mongoid-grid_fs.git
-  revision: 2507e65a60206cb726c0a38bdab8dd343150c0e0
-  specs:
-    mongoid-grid_fs (2.1.0)
-      mime-types (>= 1.0, < 3.0)
-      mongoid (>= 3.0, < 5.0)
-
-GIT
   remote: git://github.com/gullitmiranda/mercadolibre.git
   revision: 82f8148a8b0dc733da2e5c9d1751bb198a2c3113
   specs:
@@ -75,7 +67,6 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    CFPropertyList (2.3.0)
     actionmailer (4.1.1)
       actionpack (= 4.1.1)
       actionview (= 4.1.1)
@@ -129,12 +120,6 @@ GEM
     bson_ext (1.5.1)
     builder (3.2.2)
     cancan (1.6.10)
-    capistrano (2.15.5)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -146,7 +131,6 @@ GEM
       mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    clamp (0.6.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.5)
@@ -190,7 +174,6 @@ GEM
     ejs (1.1.1)
     equalizer (0.0.9)
     erubis (2.7.0)
-    excon (0.44.4)
     execjs (2.2.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -200,88 +183,6 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
-    fission (0.5.0)
-      CFPropertyList (~> 2.2)
-    fog (1.28.0)
-      fog-atmos
-      fog-aws (~> 0.0)
-      fog-brightbox (~> 0.4)
-      fog-core (~> 1.27, >= 1.27.3)
-      fog-ecloud
-      fog-json
-      fog-profitbricks
-      fog-radosgw (>= 0.0.2)
-      fog-riakcs
-      fog-sakuracloud (>= 0.0.4)
-      fog-serverlove
-      fog-softlayer
-      fog-storm_on_demand
-      fog-terremark
-      fog-vmfusion
-      fog-voxel
-      fog-xml (~> 0.1.1)
-      ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
-    fog-atmos (0.1.0)
-      fog-core
-      fog-xml
-    fog-aws (0.1.1)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
-      ipaddress (~> 0.8)
-    fog-brightbox (0.7.1)
-      fog-core (~> 1.22)
-      fog-json
-      inflecto (~> 0.0.2)
-    fog-core (1.29.0)
-      builder
-      excon (~> 0.38)
-      formatador (~> 0.2)
-      mime-types
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-    fog-ecloud (0.0.2)
-      fog-core
-      fog-xml
-    fog-json (1.0.0)
-      multi_json (~> 1.0)
-    fog-profitbricks (0.0.1)
-      fog-core
-      fog-xml
-      nokogiri
-    fog-radosgw (0.0.3)
-      fog-core (>= 1.21.0)
-      fog-json
-      fog-xml (>= 0.0.1)
-    fog-riakcs (0.1.0)
-      fog-core
-      fog-json
-      fog-xml
-    fog-sakuracloud (1.0.0)
-      fog-core
-      fog-json
-    fog-serverlove (0.1.1)
-      fog-core
-      fog-json
-    fog-softlayer (0.4.1)
-      fog-core
-      fog-json
-    fog-storm_on_demand (0.1.0)
-      fog-core
-      fog-json
-    fog-terremark (0.0.4)
-      fog-core
-      fog-xml
-    fog-vmfusion (0.0.1)
-      fission
-      fog-core
-    fog-voxel (0.0.2)
-      fog-core
-      fog-xml
-    fog-xml (0.1.1)
-      fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
     geocoder (1.2.6)
     guard (2.11.1)
@@ -317,15 +218,12 @@ GEM
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
     hashie (3.3.2)
-    highline (1.7.1)
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
     i18n-js (3.0.0.rc8)
       i18n (~> 0.6)
     ice_nine (0.11.1)
-    inflecto (0.0.2)
-    ipaddress (0.8.0)
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -362,6 +260,9 @@ GEM
       moped (~> 2.0.0)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
+    mongoid-grid_fs (2.1.0)
+      mime-types (>= 1.0, < 3.0)
+      mongoid (>= 3.0, < 5.0)
     moped (2.0.3)
       bson (~> 2.2)
       connection_pool (~> 2.0)
@@ -370,13 +271,6 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.1.1)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-sftp (2.1.2)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     newrelic_rpm (3.9.9.275)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
@@ -397,7 +291,6 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
-    open4 (1.3.4)
     optionable (0.2.0)
     origin (2.1.1)
     orm_adapter (0.5.0)
@@ -487,14 +380,6 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
-    rubber (2.16.0)
-      capistrano (~> 2.12)
-      clamp
-      fog (~> 1.6)
-      json
-      net-ssh (~> 2.6)
-      open4
-      thor
     ruby-ole (1.2.11.8)
     rubyzip (1.1.6)
     sdoc (0.4.1)
@@ -597,12 +482,10 @@ DEPENDENCIES
   mini_magick (~> 3.7.0)
   mongoid (~> 4.0.0.rc1)
   mongoid-enum!
-  mongoid-grid_fs!
   mongoid-paranoia!
   newrelic_rpm
   omniauth
   omniauth-mercadolibre!
-  open4
   paperclip
   paypal-recurring
   pg
@@ -614,7 +497,6 @@ DEPENDENCIES
   rspec
   rspec-nc
   rspec-rails
-  rubber (~> 2.16.0)
   sdoc (~> 0.4.0)
   select2-rails (~> 3.5.0)
   sidekiq
