@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "~/.ec2"  , "/home/vagrant/.ec2"          , umask: 755#, type: "nfs"
 
   # config.vm.network :forwarded_port, guest: 3000, host: 3000
-  config.vm.network :forwarded_port, guest: 22, host: 1237
+  config.vm.network :forwarded_port, guest: 22, host: 1234
 
   # Use hostonly network with a static IP Address and enable
   # hostmanager so we can have a custom domain for the server
