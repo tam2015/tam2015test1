@@ -3,7 +3,6 @@ source "http://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "4.1.1"
-#gem 'yui-compressor', :git => "git://github.com/oleander/ruby-yui-compressor.git", :require  => "yui/compressor"
 gem "bcrypt", "~> 3.1.7"
 
 gem "jquery-rails"
@@ -71,6 +70,7 @@ group :assets do
   gem "coffee-rails", "~> 4.0.0"
   gem "i18n-js", "~> 3.0.0.rc7"
   #gem "yui-compressor"
+  gem 'yui-compressor', :git => "git://github.com/oleander/ruby-yui-compressor.git", :require  => "yui/compressor"
   # Use Uglifier as compressor for JavaScript assets
   gem "uglifier", ">= 1.3.0"
   gem "backbone-on-rails"

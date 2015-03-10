@@ -21,6 +21,12 @@ GIT
       omniauth-oauth2 (~> 1.2, >= 1.2.0)
 
 GIT
+  remote: git://github.com/oleander/ruby-yui-compressor.git
+  revision: 644218d2bb7a80295317c26b54f071f5090de6b1
+  specs:
+    yui-compressor (0.9.3)
+
+GIT
   remote: git://github.com/rails/activerecord-session_store.git
   revision: 2d9517d0f26281e76e80e63ca202fb7dafbe27cb
   specs:
@@ -528,3 +534,4 @@ DEPENDENCIES
   virtus!
   will_paginate (~> 3.0)
   will_paginate_mongoid (~> 2.0.1)
+  yui-compressor!
