@@ -116,4 +116,4 @@ gem 'capistrano-rails'
 
 gem 'unicorn'
 
-gem "yui-compressor", "~> 0.12.0"
+gem "yui-compressor", "~> 0.10.0"
