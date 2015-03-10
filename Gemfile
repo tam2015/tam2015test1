@@ -19,7 +19,6 @@ gem "haml-rails", "~> 0.5.3"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.0"
 
-gem "unicorn", "~> 4.8.3"
 gem "sidekiq"
 # if you require "sinatra" you get the DSL extended to Object
 gem "sinatra", "~> 1.4.5", require: nil
@@ -109,3 +108,10 @@ group :production, :staging do
   gem "dotenv"
   gem "newrelic_rpm"
 end
+
+gem "capistrano", "~> 3.3.5"
+gem 'capistrano-rvm'
+gem 'capistrano3-unicorn'
+gem 'capistrano-rails'
+
+gem 'unicorn'
