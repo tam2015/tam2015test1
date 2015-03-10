@@ -458,7 +458,6 @@ GEM
     will_paginate_mongoid (2.0.1)
       mongoid
       will_paginate (~> 3.0)
-    yui-compressor (0.12.0)
 
 PLATFORMS
   ruby
@@ -529,4 +528,3 @@ DEPENDENCIES
   virtus!
   will_paginate (~> 3.0)
   will_paginate_mongoid (~> 2.0.1)
-  yui-compressor
