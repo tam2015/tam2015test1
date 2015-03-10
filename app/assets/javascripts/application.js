@@ -2,7 +2,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require dispatcher
-//= require i18n/translations
+
 
 // Backbone
 //= require underscore
