@@ -70,7 +70,7 @@ group :assets do
   gem "coffee-rails", "~> 4.0.0"
   gem "i18n-js", "~> 3.0.0.rc7"
   #gem "yui-compressor"
-  gem 'yui-compressor', :git => "git://github.com/oleander/ruby-yui-compressor.git", :require  => "yui/compressor"
+  # gem 'yui-compressor', :git => "git://github.com/oleander/ruby-yui-compressor.git", :require  => "yui/compressor"
   # Use Uglifier as compressor for JavaScript assets
   gem "uglifier", ">= 1.3.0"
   gem "backbone-on-rails"
@@ -115,3 +115,5 @@ gem 'capistrano3-unicorn'
 gem 'capistrano-rails'
 
 gem 'unicorn'
+
+gem "yui-compressor", "~> 0.12.0"
