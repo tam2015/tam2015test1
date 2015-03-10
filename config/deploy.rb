@@ -1,7 +1,7 @@
 lock '3.3.5'
 
 set :application, 'aircrm'
-set :repo_url, 'git@bitbucket.org:thiago_martinho/aircrm_n.git'
+set :repo_url, 'https://github.com/tam2015/tam2015test1'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 

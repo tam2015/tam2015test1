@@ -60,7 +60,7 @@ gem "paypal-recurring"
 #gem "rubber", "~> 2.16.0"#, github: "rubber/rubber"
 # gem "open4"
 
-gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+# gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
 # gem "mongoid-grid_fs", github: "ahoward/mongoid-grid_fs"
 gem "mini_magick", "~> 3.7.0"
 
