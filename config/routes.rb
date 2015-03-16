@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   resources :plans        , only: [ :index ]
 
   providers = Regexp.union Webhook.providers
-  post "webhook/:provider",
-    constraints: { provider: providers },
-    to: "webhook#provider"
+  # post "webhook/:provider",
+  #   constraints: { provider: providers },
+  #   to: "webhook#provider"
 
   devise_scope :user do
      get "profile"      => "users#show"             , as: :profile
