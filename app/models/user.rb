@@ -82,12 +82,12 @@ class User < ActiveRecord::Base
 
   before_validation :normalize_email, on: :create
 
-  # geocoded_by     :address
-  # before_save   :geocode
-  # #after_create    :send_welcome_email
-  # before_destroy  :destroy_dashboards
-  # after_save      :associate_user_with_dashboards
-  # after_save :default_steps
+  geocoded_by     :address
+  before_save   :geocode
+  after_create    :send_welcome_email
+  before_destroy  :destroy_dashboards
+  after_save      :associate_user_with_dashboards
+  after_save :default_steps
 
   # after_find :set_meli
   #
@@ -162,20 +162,22 @@ class User < ActiveRecord::Base
       end
     end
 
-    # Associate the identity with the user if needed
+    #Associate the identity with the user if needed
     # if identity.user != user
     #   identity.user = user
     #   identity.save!
     # end
 
 
-    # # Find or create dashboard with oauth credentials
-    # unless Dashboard.find_for_oauth(auth, user)
-    #   Rails.logger.debug " :::::   User.find_for_oauth #update_token: #{auth.to_json}\n"
-    #   Dashboard.update_token(auth)
-    # end
+    # Find or create dashboard with oauth credentials
+    unless Dashboard.find_for_oauth(auth, user)
+      Rails.logger.debug " :::::   User.find_for_oauth #update_token: #{auth.to_json}\n"
+      Dashboard.update_token(auth)
+    end
 
     user
+
+    puts "thiago thiago thiago 33333333"
   end
 
   # User.current
