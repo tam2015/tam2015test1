@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
   #after_create    :send_welcome_email
   before_destroy  :destroy_dashboards
   after_save      :associate_user_with_dashboards
-  after_save :default_steps
+  #after_save :default_steps
 
   # after_find :set_meli
   #
@@ -163,10 +163,10 @@ class User < ActiveRecord::Base
     end
 
     #Associate the identity with the user if needed
-    # if identity.user != user
-    #   identity.user = user
-    #   identity.save!
-    # end
+    if identity.user != user
+      identity.user = user
+      identity.save!
+    end
 
     # Find or create dashboard with oauth credentials
     unless Dashboard.find_for_oauth(auth, user)
