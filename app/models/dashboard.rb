@@ -27,8 +27,8 @@ class Dashboard < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
 
-  has_many :users_to_dashboards
-  has_many :users, through: :users_to_dashboards
+  # has_many :users_to_dashboards
+  # has_many :users, through: :users_to_dashboards
 
   has_many :aircrm_preferences
 
