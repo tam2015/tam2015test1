@@ -38,8 +38,8 @@ class Dashboard < ActiveRecord::Base
   # CALLBACKS
   after_find :load_provider
 
-  after_create  :increment_users_counter
-  after_destroy :decrement_users_counter
+  #after_create  :increment_users_counter
+  #after_destroy :decrement_users_counter
 
   def self.find_for_oauth(auth, user)
     return unless user or !user.is_a? User
