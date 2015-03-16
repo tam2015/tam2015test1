@@ -82,11 +82,11 @@ class User < ActiveRecord::Base
 
   before_validation :normalize_email, on: :create
 
-  geocoded_by     :address
-  before_save   :geocode
-  #after_create    :send_welcome_email
-  before_destroy  :destroy_dashboards
-  after_save      :associate_user_with_dashboards
+  # geocoded_by     :address
+  # before_save   :geocode
+  # #after_create    :send_welcome_email
+  # before_destroy  :destroy_dashboards
+  # after_save      :associate_user_with_dashboards
   # after_save :default_steps
 
   # after_find :set_meli
