@@ -163,17 +163,17 @@ class User < ActiveRecord::Base
     end
 
     # Associate the identity with the user if needed
-    if identity.user != user
-      identity.user = user
-      identity.save!
-    end
+    # if identity.user != user
+    #   identity.user = user
+    #   identity.save!
+    # end
 
 
-    # Find or create dashboard with oauth credentials
-    unless Dashboard.find_for_oauth(auth, user)
-      Rails.logger.debug " :::::   User.find_for_oauth #update_token: #{auth.to_json}\n"
-      Dashboard.update_token(auth)
-    end
+    # # Find or create dashboard with oauth credentials
+    # unless Dashboard.find_for_oauth(auth, user)
+    #   Rails.logger.debug " :::::   User.find_for_oauth #update_token: #{auth.to_json}\n"
+    #   Dashboard.update_token(auth)
+    # end
 
     user
   end
