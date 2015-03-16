@@ -1,12 +1,12 @@
 class WebhookController < ApplicationController
 
   skip_before_action  :verify_authenticity_token
-  before_filter       :avoid_session
+  # before_filter       :avoid_session
 
   # Mapping available providers
   @@providers = Webhook.providers.map(&:to_sym)
 
-  respond_to :json
+  # respond_to :json
 
   # def provider
   #   @provider_name = params[:provider].to_sym
