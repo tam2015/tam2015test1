@@ -42,6 +42,7 @@ class Dashboard < ActiveRecord::Base
   after_destroy :decrement_users_counter
 
   def self.find_for_oauth(auth, user)
+    puts "thiago thiago"
     return unless user or !user.is_a? User
     dashboard = self.where(meli_user_id: auth.uid.to_i, provider: auth.provider).first_or_initialize
     dashboard.meli_user_username = auth.info.username # TODO: what happens here?

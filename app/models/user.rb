@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 
   geocoded_by     :address
   before_save   :geocode
-  after_create    :send_welcome_email
+  #after_create    :send_welcome_email
   before_destroy  :destroy_dashboards
   after_save      :associate_user_with_dashboards
   after_save :default_steps
@@ -167,7 +167,6 @@ class User < ActiveRecord::Base
     #   identity.user = user
     #   identity.save!
     # end
-
 
     # Find or create dashboard with oauth credentials
     unless Dashboard.find_for_oauth(auth, user)
@@ -363,7 +362,6 @@ class User < ActiveRecord::Base
   def send_welcome_email
     #Mailing::Notify.welcome.delay(queue: :seldom, retry: false).welcome_email(self).deliver unless self.invalid?
     #Mailing::Notify.welcome(self).deliver unless self.invalid?
-    puts "thiago thiago thiago 3333"
   end
 
   # Destroi todos os dashboards relacionados (caso seja unico proprietário)
