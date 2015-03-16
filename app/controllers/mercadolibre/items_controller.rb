@@ -45,174 +45,50 @@ class Mercadolibre::ItemsController < ApplicationController
     end
   end
 
-  def refresh
-    Mercadolibre::Workers::ItemWorker.perform_async @dashboard.meli_user_id
-
-    if request.format.html?
-      redirect_to dashboard_items_path @dashboard
-    else
-      @items = @klass.where(dashboard_id: @dashboard.id).all
-    end
-  end
-
-  # ON MEMBER
 
   # GET /items/1
   def show
   end
 
-  # GET /items/new
+
   def new
-    @item = Mercadolibre::Item.empty.where(dashboard_id: @dashboard.id).first_or_initialize do |item|
-      item.user_id      = current_user.id    if current_user
-      item.account_id   = current_account.id if current_account
-      item.save
-    end
-
-    if @item.created_at? and !request.xhr?
-      redirect_to edit_dashboard_item_path @dashboard, @item
-    end
+    @item = Mercadolibre::Item.new
   end
 
-  # GET /items/1/edit
-  def edit
-    if @item.empty?
-      add_breadcrumb :new
-    else
-      add_breadcrumb :edit
-    end
-  end
 
   # POST /items
   def create
     @item = Mercadolibre::Item.new(item_params)
     @item.dashboard_id = @dashboard.id      if @dashboard
-    @item.user_id      = current_user.id    if current_user
     @item.account_id   = current_account.id if current_account
+    @item.status       = :unpublished
 
     if @item.save
       flash[:success] = "Item was successfully updated."
-      location= dashboard_item_path(@dashboard, @item)
+      redirect_to dashboard_pictures_path(id: @item.id), method: :get
     else
       location= edit_dashboard_item_path(@dashboard, @item)
     end
 
-    respond_with @item, location: location
-  end
+    #create item_meli_info
+    item_meli_info = Mercadolibre::MeliInfo.where(item_id: @item.id).first_or_initialize
+    item_meli_info.accepts_mercadopago                      = true if params["meli_infos"]["accepts_mercadopago"] == true
+    item_meli_info.shipping                                 = {"mode"=>"me2", "local_pick_up"=>true, "free_shipping"=>false, "methods"=>[], "dimensions"=>dimension} if  @dashboard.preferences.shipping_modes.include?("me2") and  params["meli_infos"]["shipping"] == true
+    item_meli_info.non_mercado_pago_payment_methods         = [{"id"=>"MLBMO", "description"=>"Dinheiro", "type"=>"G"}, {"id"=>"MLBCC", "description"=>"Cartão de Crédito", "type"=>"N"}, {"id"=>"MLBDE", "description"=>"Depósito Bancário", "type"=>"D"}].to_json #if row["non_mercado_pago_payment_methods"] == "sim" #and item.price < 200
+    item_meli_info.site_id                                  = "MLB"
+    item_meli_info.currency_id                              = "BRL"
+    item_meli_info.save
 
-  # PATCH/PUT /items/1
-  def update
-    puts "\n\n\n\n"
-
-    # Use update ':attributes' and ':save' instead of ':update'
-    puts " => params = #{item_params.to_h.to_json}"
-    puts "\n\n"
-
-    @item.attributes= item_params.to_h
-
-    puts " ===> changed? = #{@item.changed?}"
-    puts " => changes: #{@item.changes.to_json}"
-    puts "\n\n"
-    puts " => variations: #{item_params[:variations].to_json}"
-    puts "\n\n\n\n"
-
-    # if published update, else valid
-    if @item.changed?
-      if @item.meli_item_id?
-        # Update in meli
-        if @item.publish_in_meli!
-          flash[:success] = "O Anúncio foi atualizado no Mercado Livre."
-          location= dashboard_item_path(@dashboard, @item)
-        else
-          flash[:alert] = "Não possível atualizar o anúncio no Mercado Livre."
-          location= edit_dashboard_item_path(@dashboard, @item)
-        end
-      else
-        # valid and save
-        if @item.validate_in_meli!
-          if @item.validation_status == :valid
-            flash[:success] = "O Anúncio foi atualizado e validado no Mercado Livre."
-          else
-            flash[:alert] = "O Anúncio foi atualizado porém não é válido para o Mercado Livre."
-          end
-
-          location= dashboard_item_path(@dashboard, @item)
-        else
-          location= edit_dashboard_item_path(@dashboard, @item)
-        end
-      end
-    else
-      flash[:success] = "O Anúncio não sofreu alterações."
-      location= dashboard_item_path(@dashboard, @item)
-    end
-
-    respond_with @item, location: location
-  end
-
-  # DELETE /items/1
-  def destroy
-    if @force = params[:force]
-      flash[:error] = "Item was successfully destroyed."
-      @item.destroy!
-    else
-      flash[:alert] = "Item was successfully deleted."
-      @item.destroy
-    end
-    respond_with nil, location: dashboard_items_path(@dashboard)
-  end
-
-  # Sync with API
-  def restore
-    @item.restore
-    flash[:success] = "Item was successfully restored."
-    respond_with @item
+    #create item_storage
+    item_storage = Mercadolibre::ItemStorage.where(item_id: @item.id).first_or_initialize
+    Rails.logger.debug "\n\n\n\n\n\n----------- params#{params[:item][:item_storages][:available_quantity]}\n\n\n\n\n--------"
+    item_storage.available_quantity = params[:item][:item_storages][:available_quantity]
+    item_storage.save
   end
 
   def publish
-    if @item.publish_in_meli
-      @item.save
-      flash[:success] = "Item was successfully restored."
-    else
-      @item.errors.each do |error|
-        flash[:error] = "<b>Erro #{error}:</b> #{@item.errors.messages[error].join(' ')}"
-      end
-    end
-
-    redirect_to dashboard_item_path(@dashboard, @item)
-  end
-
-  # upload and relation picture
-  def upload
-    picture = @item.pictures.build
-    puts "* PICTURE: #{picture.inspect}"
-    picture.image = params[:pictures]
-
-    if params[:variation_index] and picture
-      variation_index = params[:variation_index].to_i
-
-      @item.variations ||= []
-      @item.variations[variation_index] ||= {}
-      @item.variations[variation_index][:picture_ids] ||= []
-      @item.variations[variation_index][:picture_ids] << picture.id.to_s
-    end
-
-    @item.pictures << picture
-    @item.save
-
-    location= dashboard_item_path(@dashboard, @item)
-    respond_with @item, location: location
-  end
-
-  # get all picutres
-  def pictures
-  end
-
-  # Sync with API
-  def sync
-    respond_with @item
-  end
-
-  def catalog_import
+    item = Mercadolibre::Item.find params[:id]
+    item.publish_in_meli @dashboard
   end
 
   def import
@@ -224,22 +100,6 @@ class Mercadolibre::ItemsController < ApplicationController
     end
   end
 
-  # def catalogo_franquiador
-  #   user_brands = User.user_brands(current_user)
-  #   if user_brands
-  #     #@items = Mercadolibre::Item.where("f_marca" => { "$in" => ["mor", "bea", "joy"] }).paginate(page: params[:page], per_page: 7) #inserir where(catalog_id: "x",)
-  #     @items = Mercadolibre::Item.where(dashboard_id: @dashboard.id).where("f_marca" => { "$in" => user_brands }).paginate(page: params[:page], per_page: 7) #inserir where(catalog_id: "x",)
-  #   end
-  # end
-
-  def catalogo_franquiador
-    if !params[:f_marca]
-      @items = Mercadolibre::Item.all.paginate(page: params[:page], per_page: 7) #inserir where(catalog_id: "x",)
-    end
-    if params[:f_marca]
-      @items = Mercadolibre::Item.where(f_marca: params[:f_marca]).all.paginate(page: params[:page], per_page: 7) #inserir where(catalog_id: "x",)
-    end
-  end
 
   private
 
@@ -258,32 +118,19 @@ class Mercadolibre::ItemsController < ApplicationController
       params.require(:item).permit(
         :title,
         :condition,
+        :warranty,
 
         :buying_mode,
-        :price, :base_price,
+        :price,
         :listing_type_id,
-        :original_price,
-        :coverage_areas, :attributes_ajusted, :listing_source,
-        :tags, :warranty, :catalog_product_id, :seller_custom_field,
-        :differential_pricing, :automatic_relist,
-
-        # Quantities
-        :initial_quantity, :available_quantity, :sold_quantity, :quantity_from_store,
-
-        # Shipping
-        :location, :geolocation,
-        :seller_address, :seller_contact,
+        :category_id,
 
         # Status
-        :status, :sub_status,
+        :status,
 
         # Medias
         :thumbnail, :secure_thumbnail, :pictures, :description, :permalink,
         :youtube_url,
-
-        # Dates
-        :created_at, :updated_at,
-        :start_time, :stop_time, :end_time,
 
         # associations
         :user_id,
@@ -296,26 +143,13 @@ class Mercadolibre::ItemsController < ApplicationController
         :site_id,
         :category_id,
         :currency_id,
-        :parent_item_id,
-
-        # Payment
-        :accepts_mercadopago,
 
         variations: [
           :color_primary_id,
           :color_secundary_id,
           :size_id,
           :available_quantity
-        ],
-        shipping: [
-          :local_pick_up,
-          :mode,
-          :free_shipping,
-          :dimensions,
-
-          costs:      [ :name, :cost ]
-        ],
-        non_mercado_pago_payment_methods: []
+        ]
         )
     end
 end

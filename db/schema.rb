@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301232008) do
+ActiveRecord::Schema.define(version: 20150315202247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 20150301232008) do
     t.text     "source"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "cwave"
   end
 
   add_index "pictures", ["meli_url"], name: "index_pictures_on_meli_url", using: :btree

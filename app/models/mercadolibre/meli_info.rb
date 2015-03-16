@@ -4,10 +4,7 @@ module Mercadolibre
 
     serialize :shipping
     serialize :seller_address
-    serialize :seller_contact
-    serialize :location
     serialize :geolocation
-    serialize :differential_pricing
 
   end
 end

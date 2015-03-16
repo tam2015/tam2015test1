@@ -30,6 +30,6 @@ class Ability
   end
 
   def provider_models
-    %W(Item).map { |name| "Mercadolibre::#{name}".constantize }
+    %W(Item Picture).map { |name| "Mercadolibre::#{name}".constantize }
   end
 end

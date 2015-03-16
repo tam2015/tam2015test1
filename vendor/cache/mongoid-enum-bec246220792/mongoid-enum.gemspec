@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Nicholas Bruning"]
-  s.date = "2015-03-06"
+  s.date = "2015-03-14"
   s.description = "Heavily inspired by DDH's ActiveRecord::Enum, this little library is there to help you cut down the cruft in your models and make the world a happier place at the same time."
   s.email = ["nicholas@bruning.com.au"]
   s.files = [".autotest", ".gitignore", ".rspec", ".travis.yml", "Gemfile", "LICENSE.txt", "README.md", "Rakefile", "lib/mongoid/enum.rb", "lib/mongoid/enum/validators/multiple_validator.rb", "lib/mongoid/enum/version.rb", "mongoid-enum.gemspec", "spec/mongoid/enum/validators/multiple_validator_spec.rb", "spec/mongoid/enum_spec.rb", "spec/spec_helper.rb", "spec/support/mongoid.yml"]

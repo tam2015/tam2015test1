@@ -4,13 +4,15 @@ class Mercadolibre::CategoriesController < ApplicationController
 
   def index
     if params[:q]
-      @categories = Meli::CategorySuggest.find params[:q]
+      #@categories = Meli::CategorySuggest.find params[:q]
+      @categories = Meli::Category.find(params[:q]).children_categories
+    elsif params[:b]
+      category_mother_id = Meli::Category.find(params[:b]).path_from_root.last(2).first.id
+      @categories = Meli::Category.find(category_mother_id).children_categories
     else
       @categories = Meli::Category.all
       @count      = @categories.count
     end
-
-    respond_with @categories
   end
 
   def show

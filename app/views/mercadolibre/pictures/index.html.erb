@@ -1,0 +1,24 @@
+<h1>Painting Gallery</h1>
+
+<div id="pictures">
+<% @pictures.each do |picture| %>
+  <div class="picture">
+    <%= link_to image_tag(picture.source) %>
+  </div>
+<% end %>
+</div>
+<div class="clear"></div>
+
+<%= form_for @picture, url: :dashboard_pictures, method: :post do |f| %>
+  <%= f.hidden_field :item_id, value: params[:id] %>
+  <%= f.label :cwave, "Upload paintings:" %>
+  <%= f.file_field :cwave %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h1 style= "text-align: center;">
+  <%= link_to "publicar", publish_dashboard_item_path(id: params[:id]) %>
+</h1>
+

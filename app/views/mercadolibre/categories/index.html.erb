@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <section class="panel" style= "min-height: 500px; text-align: center;">
+
+      <h1 style= "text-align: center">
+      <%= link_to "voltar", dashboard_categories_path(b: params[:b]) %>
+      </h1>
+
+      <% @categories.each do |category| %>
+      <p ><%= link_to category.name, dashboard_categories_path(q: category.id) %></p>
+      <% end %>
+
+      <h1 style= "text-align: center;">
+      <% if @categories == [] %>
+      <%= link_to "continuar", new_dashboard_item_path(category_id: params[:q]) %>
+      <% end %>
+      </h1>
+
+    </section>
+  </div>
+</div>
+

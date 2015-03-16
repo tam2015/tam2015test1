@@ -29,12 +29,12 @@
   -#   = link_to dashboard_item_sync_path(@dashboard, item), class: "btn btn-primary #{button_class}", remote: true do
   -#     = translate_button_content(:sync, item, icon: :"cloud-upload", label_class: label_class)
 
-- # DESTROY or DELETE
-- if item.empty? or item.deleted?
-  = link_to dashboard_item_path(@dashboard, item, force: true), class: "btn btn-danger #{button_class}", method: :delete, remote: delete_remote, data: { confirm: t("helpers.confirm.destroy", model: down_model(item.class)) } do
-    = translate_button_content(:destroy, item, icon: :"trash-o", label_class: label_class)
+/ - # DESTROY or DELETE
+/ - if item.empty? or item.deleted?
+/   = link_to dashboard_item_path(@dashboard, item, force: true), class: "btn btn-danger #{button_class}", method: :delete, remote: delete_remote, data: { confirm: t("helpers.confirm.destroy", model: down_model(item.class)) } do
+/     = translate_button_content(:destroy, item, icon: :"trash-o", label_class: label_class)
 
-- else
-  = link_to dashboard_item_path(@dashboard, item), class: "btn btn-danger #{button_class}", method: :delete, remote: delete_remote do
-    = translate_button_content(:delete, item, icon: :"trash-o", label_class: label_class)
+/ - else
+/   = link_to dashboard_item_path(@dashboard, item), class: "btn btn-danger #{button_class}", method: :delete, remote: delete_remote do
+/     = translate_button_content(:delete, item, icon: :"trash-o", label_class: label_class)
 

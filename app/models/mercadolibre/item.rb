@@ -6,7 +6,7 @@ module Mercadolibre
 
     enum buying_mode: [ :buy_it_now, :auction, :classified ]#, default: :buy_it_now
 
-    enum listing_type_id: [ :gold_special, :gold_premium, :gold, :silver, :bronze, :free ]#, default: :free
+    enum listing_type_id: [ :gold_pro, :gold_special, :gold_premium, :gold, :silver, :bronze, :free ]#, default: :free
 
     enum status: [ :empty, :unpublished, :invalid_data, :not_yet_active, :payment_required, :paused, :active, :closed, :under_review, :inactive ]
 
@@ -139,7 +139,7 @@ module Mercadolibre
       aircrm_item.listing_type_id                        =  meli_item.listing_type_id
       aircrm_item.status                                 =  meli_item.status
       aircrm_item.title                                  =  meli_item.title
-#      aircrm_item.description                            =  meli_item.description.text
+      aircrm_item.description                            =  meli_item.description.serializable_hash if meli_item.description
       aircrm_item.condition                              =  meli_item.condition
       aircrm_item.price                                  =  meli_item.price
       aircrm_item.base_price                             =  meli_item.base_price
@@ -221,9 +221,9 @@ module Mercadolibre
 
       aircrm_item_infos.accepts_mercadopago               =  meli_item.accepts_mercadopago
       aircrm_item_infos.non_mercado_pago_payment_methods  =  meli_item.non_mercado_pago_payment_methods.to_json
-      aircrm_item_infos.shipping                          =  meli_item.shipping if meli_item.shipping != nil
-      aircrm_item_infos.seller_address                    =  meli_item.seller_address if meli_item.seller_address != nil
-      aircrm_item_infos.geolocation                       =  meli_item.geolocation
+      aircrm_item_infos.shipping                          =  meli_item.shipping.serializable_hash if meli_item.shipping != nil
+      aircrm_item_infos.seller_address                    =  meli_item.seller_address.serializable_hash if meli_item.seller_address != nil
+      aircrm_item_infos.geolocation                       =  meli_item.geolocation.serializable_hash
       aircrm_item_infos.site_id                           =  meli_item.site_id
       aircrm_item_infos.currency_id                       =  meli_item.currency_id
       aircrm_item_infos.permalink                         =  meli_item.permalink
@@ -231,7 +231,7 @@ module Mercadolibre
       aircrm_item_infos.secure_thumbnail                  =  meli_item.secure_thumbnail
       aircrm_item_infos.meli_start_time                   =  meli_item.start_time
       aircrm_item_infos.meli_stop_time                    =  meli_item.stop_time
-      aircrm_item_infos.meli_end_time                     =  meli_item.end_time
+      aircrm_item_infos.meli_end_time                     =  meli_item.end_time?
       aircrm_item_infos.meli_last_updated                 =  meli_item.last_updated
 
       aircrm_item_infos.save
@@ -295,7 +295,7 @@ module Mercadolibre
 
     def to_meli #filter_attributes
       filter_attributes = ["buying_mode", "listing_type_id", "status", "title", "condition",
-                       "site_id", "currency_id", "price", "available_quantity",
+                       "site_id", "currency_id", "price", "available_quantity", "description",
                        "accepts_mercadopago", "non_mercado_pago_payment_methods",
                       "warranty", "seller_custom_field", "automatic_relist",
                        "video_id", "category_id", "pictures", "shipping"]#"variations","seller_address", "location",
@@ -317,10 +317,10 @@ module Mercadolibre
 
           #create item_attributes
           item.status       = :unpublished
+          item.description  = {"text" => row["description"]}
           item.attributes = row.to_hash.slice(
-                      "buying_mode", "listing_type_id", "title", "condition",
-                      "description", "price", "warranty", "seller_custom_field",
-                      "automatic_relist", "video_id", "category_id")#, "status"
+                      "buying_mode", "listing_type_id", "title", "condition", "price", "warranty",
+                      "seller_custom_field", "automatic_relist", "video_id", "category_id")#, "status"
 
           item.save!
 
@@ -346,8 +346,6 @@ module Mercadolibre
           #   aircrm_picture.save
           # end
 
-
-
           #create item_meli_info
           dimension = row["dimension"]
           item_meli_info = Mercadolibre::MeliInfo.where(item_id: item.id).first_or_initialize
@@ -365,25 +363,26 @@ module Mercadolibre
           item_storage.save
 
 
-          #if item.new_record?
-            record = item.to_meli
-            response = Mercadolibre::Item.api.item_valid? record
-            meli_item_responsed = Mercadolibre::Item.api.create_item record
-            item.update(
-              meli_item_id:  meli_item_responsed.id
-              )
-            # item.meli_info.update(
-            #   non_mercado_pago_payment_methods: meli_item_responsed.non_mercado_pago_payment_methods.to_json,
-            #   shipping: meli_item_responsed.shipping
-            #   )
-            self.create_or_update_record(meli_item_responsed, dashboard, opts = {})
-          # end
+          item.publish_in_meli dashboard
 
 
-          #item.validate_in_meli!
         end
       end
     end
+
+    def publish_in_meli dashboard
+      unless meli_item_id
+        record = to_meli
+        #validate
+        response = Mercadolibre::Item.api.item_valid? record
+        #publish
+        meli_item_responsed = Mercadolibre::Item.api.create_item record
+        if update(meli_item_id:  meli_item_responsed.id)
+          Mercadolibre::ItemWorker.perform_async dashboard.meli_user_id, meli_item_id
+        end
+      end
+    end
+
 
     def self.open_spreadsheet(file)
       case File.extname(file.original_filename)

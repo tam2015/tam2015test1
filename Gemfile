@@ -51,7 +51,7 @@ gem "geocoder"
 gem "omniauth"
 gem "omniauth-mercadolibre", github: "gullitmiranda/omniauth-mercadolibre"
 gem "mercadolibre", github: "gullitmiranda/mercadolibre"
-#gem "meli", "~> 0.0.19"#, path: "/www/gems/meli"
+gem "meli", "~> 0.0.19", path: "/www/gems/meli"
 
 gem "paypal-recurring"
 
@@ -117,3 +117,7 @@ gem 'capistrano-rails'
 gem 'unicorn'
 
 gem "yui-compressor", "~> 0.10.0"
+
+gem "carrierwave"
+
+gem 'jquery-fileupload-rails'

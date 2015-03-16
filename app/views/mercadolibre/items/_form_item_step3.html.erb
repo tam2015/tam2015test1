@@ -1,0 +1,111 @@
+<!-- MELI:  Buying mode,
+              Quantity,
+              Price,
+              Start Time,
+              End Time(-),
+              Payment (renders partial)
+                - MercadoPago,
+                - Custom[Até 199 reais],
+              Shipping (renders partial)
+                - Me1/Me2,
+                - Custom,
+                - Local Pickup),
+              Warranty -->
+
+  <div id="item-step-infos" class="row">
+    <div class="col-lg-12">
+
+
+      <div class="panel">
+        <div class="panel-body">
+          <div class="panel-heading">Informe preço e quantidade</div>
+
+          <!-- Buying Mode -->
+          <!-- :buy_it_now, :auction, :classified -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Tipo e condições de venda</h4>
+
+          <div class="radios">
+            <label class="label_radio r_on" style="display:block;">
+              <input id="item_buying_mode_buy_it_now_0" name="item[buying_mode]" type="radio" value="buy_it_now">
+              <span class="translation_missing" title="translation missing: br.helpers.items.buying_mode.0">Preço Fixo</span>
+            </label>
+            <label class="label_radio r_on" style="display:block;">
+              <input id="item_buying_mode_auction_1" name="item[buying_mode]" type="radio" value="auction">
+              <span class="translation_missing" title="translation missing: br.helpers.items.buying_mode.1">Arremate</span>
+            </label>
+            <label class="label_radio r_on" style="display:block;">
+              <input id="item_buying_mode_classified_2" name="item[buying_mode]" type="radio" value="classified">
+              <span class="translation_missing" title="translation missing: br.helpers.items.buying_mode.2">Classificados</span>
+            </label>
+          </div>
+
+          <!-- Quantity -->
+          <%=  f.fields_for :item_storages do |builder| %>
+          <%= builder.input :available_quantity, wrapper: false  %>
+          <% end %>
+
+
+          <!-- Price -->
+          <%= f.input :price, wrapper: false, required: true %>
+
+
+          <!-- Dates -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <%=  f.fields_for :meli_infos do |builder| %>
+          <!-- Payment -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Meios de pagamento</h4>
+          <%= render partial: "form_item_payment", f: builder %>
+
+
+          <!-- Shipping -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Formas de entrega</h4>
+          <%= render partial: "form_item_shipping", f: builder %>
+          <% end %>
+
+          <!-- Warranty -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Garantia</h4>
+          <%= f.input :warranty, as: :text, wrapper: false %>
+
+          <br>
+          <h4>Tipo de Anúncio</h4>
+          <div class="radios">
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_gold_special_0" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="gold_special">
+              ouro especial
+            </label>
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_gold_premium_1" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="gold_premium">
+              ouro premium
+            </label>
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_gold_2" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="gold">
+              ouro
+            </label>
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_silver_3" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="silver">
+              prata
+            </label>
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_bronze_4" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="bronze">
+              bronze
+            </label>
+            <label class="label_radio r_on item-condition">
+              <input id="item_listing_type_id_free_5" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[listing_type_id]" type="radio" value="free">
+              grátis
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>

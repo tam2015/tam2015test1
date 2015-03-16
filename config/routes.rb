@@ -95,11 +95,8 @@ Rails.application.routes.draw do
         resources :items do
           member do
             get "publish"
-            get "restore"
-            get "sync"
 
-            get  "pictures", to: "items#pictures"
-            post "pictures", to: "items#upload"
+          resources :pictures, only: [:index, :new, :create]
           end
 
           collection do
