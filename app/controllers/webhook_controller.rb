@@ -17,7 +17,7 @@ class WebhookController < ApplicationController
 
     @webhook    = Webhook.new @provider_name, @notification
     @hook       = @webhook.instantiate_topic_class
-    queue_id    = @hook.queue_notification
+    queue_id    = @hook.queue_notification if @hook
 
     Rails.logger.info "\n\n\n-- WebhookController -------------------------------------------- "
     Rails.logger.info "*** Provider: #{params[:provider]}"
