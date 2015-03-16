@@ -8,27 +8,27 @@ class WebhookController < ApplicationController
 
   respond_to :json
 
-  def provider
-    @provider_name = params[:provider].to_sym
-    @notification  = params[:webhook]
+  # def provider
+  #   @provider_name = params[:provider].to_sym
+  #   @notification  = params[:webhook]
 
-    # Quit Request if provider is not available
-    head :not_acceptable unless @@providers.include?(@provider_name)
+  #   # Quit Request if provider is not available
+  #   head :not_acceptable unless @@providers.include?(@provider_name)
 
-    @webhook    = Webhook.new @provider_name, @notification
-    @hook       = @webhook.instantiate_topic_class
-    queue_id    = @hook.queue_notification if @hook
+  #   @webhook    = Webhook.new @provider_name, @notification
+  #   @hook       = @webhook.instantiate_topic_class
+  #   queue_id    = @hook.queue_notification if @hook
 
-    Rails.logger.info "\n\n\n-- WebhookController -------------------------------------------- "
-    Rails.logger.info "*** Provider: #{params[:provider]}"
-    Rails.logger.info "*** Type: #{@notification[:topic].capitalize} "
-    Rails.logger.info "*** Hook: #{@hook.class} - #{@hook} "
-    Rails.logger.info "*** Hook Queue ID: #{queue_id} "
-    Rails.logger.info "----------------------------------------------"
+  #   Rails.logger.info "\n\n\n-- WebhookController -------------------------------------------- "
+  #   Rails.logger.info "*** Provider: #{params[:provider]}"
+  #   Rails.logger.info "*** Type: #{@notification[:topic].capitalize} "
+  #   Rails.logger.info "*** Hook: #{@hook.class} - #{@hook} "
+  #   Rails.logger.info "*** Hook Queue ID: #{queue_id} "
+  #   Rails.logger.info "----------------------------------------------"
 
-    # Notification stored
-    head :ok
-  end
+  #   # Notification stored
+  #   head :ok
+  # end
 
   private
 
