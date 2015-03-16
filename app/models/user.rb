@@ -176,8 +176,6 @@ class User < ActiveRecord::Base
     end
 
     user
-
-    puts "thiago thiago thiago 33333333"
   end
 
   # User.current
@@ -364,7 +362,8 @@ class User < ActiveRecord::Base
 
   def send_welcome_email
     #Mailing::Notify.welcome.delay(queue: :seldom, retry: false).welcome_email(self).deliver unless self.invalid?
-    Mailing::Notify.welcome(self).deliver unless self.invalid?
+    #Mailing::Notify.welcome(self).deliver unless self.invalid?
+    puts "thiago thiago thiago 3333"
   end
 
   # Destroi todos os dashboards relacionados (caso seja unico proprietário)
