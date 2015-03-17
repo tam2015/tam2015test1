@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315202247) do
+ActiveRecord::Schema.define(version: 20150317154241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,7 +280,7 @@ ActiveRecord::Schema.define(version: 20150315202247) do
   create_table "questions", force: true do |t|
     t.integer  "status"
     t.string   "meli_item_id",         limit: 15
-    t.string   "text"
+    t.text     "text"
     t.integer  "meli_question_id",     limit: 8
     t.boolean  "hold"
     t.boolean  "deleted_from_listing"

@@ -14,14 +14,14 @@
       <% end %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-      <% if item.meli_info.meli_start_time if item.meli_info %>
+      <% if item and item.meli_info and item.meli_info.meli_start_time  %>
         <time class="unloaded" datetime="<%= item.meli_info.meli_start_time.to_time %>">
           <%= I18n.l(item.meli_info.meli_start_time.to_time) %>
         </time>
       <% end %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:stop_time   ) %>">
-      <% if item.meli_info.meli_stop_time %>
+      <% if item and item.meli_info and item.meli_info.meli_stop_time %>
         <time class="unloaded" datetime="<%= item.meli_info.meli_stop_time.to_time %>">
           <%= I18n.l(item.meli_info.meli_stop_time.to_time) %>
         </time>
