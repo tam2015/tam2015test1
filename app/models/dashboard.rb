@@ -46,8 +46,9 @@ class Dashboard < ActiveRecord::Base
     dashboard = self.where(meli_user_id: auth.uid.to_i, provider: auth.provider).first_or_initialize
     dashboard.meli_user_username = auth.info.username # TODO: what happens here?
     dashboard.name              = "Mercado Livre" #I18n.t("providers.#{auth.provider}.name")
-    dashboard.user_ids          = [user.id]
+    #dashboard.user_ids          = [user.id]
     dashboard.account_id        = user.account.id
+
 
     if auth.provider == "mercadolibre" and auth.extra.present? and auth.extra.raw_info.present?
       dashboard.preferences.country_id                = auth.extra.raw_info.country_id
@@ -66,6 +67,8 @@ class Dashboard < ActiveRecord::Base
     dashboard.refresh_token     = auth.credentials.refresh_token
     dashboard.token_expires_at  = Time.at(auth.credentials.expires_at).to_i
     dashboard.save
+
+    UsersToDashboard.create(user_id: user.id, dashboard_id: dashboard.id)
 
     # reload provider
     dashboard.load_provider
