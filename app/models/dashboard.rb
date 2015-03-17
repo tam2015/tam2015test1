@@ -27,8 +27,8 @@ class Dashboard < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
 
-  # has_many :users_to_dashboards
-  # has_many :users, through: :users_to_dashboards
+  has_many :users_to_dashboards
+  has_many :users, through: :users_to_dashboards
 
   has_many :aircrm_preferences
 
@@ -46,7 +46,7 @@ class Dashboard < ActiveRecord::Base
     dashboard = self.where(meli_user_id: auth.uid.to_i, provider: auth.provider).first_or_initialize
     dashboard.meli_user_username = auth.info.username # TODO: what happens here?
     dashboard.name              = "Mercado Livre" #I18n.t("providers.#{auth.provider}.name")
-    #dashboard.user_ids          = [user.id]
+    dashboard.user_ids          = [user.id]
     dashboard.account_id        = user.account.id
 
     if auth.provider == "mercadolibre" and auth.extra.present? and auth.extra.raw_info.present?
