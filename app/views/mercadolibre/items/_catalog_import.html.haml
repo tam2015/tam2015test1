@@ -1,7 +1,7 @@
 #invitation-modal.modal.fade
   .modal-dialog
     .modal-content
-      = form_tag import_dashboard_items_path(Dashboard.first.id), multipart: true, html: { class: "invitation_form form-horizontal",  role: "form" } do |f|
+      = form_tag import_dashboard_items_path(params[:dashboard_id]), multipart: true, html: { class: "invitation_form form-horizontal",  role: "form" } do |f|
         .modal-header
           %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &#215;
           %h4.modal-title= t(".importar catalogo")

@@ -14,7 +14,7 @@
       <% end %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-      <% if item.meli_info.meli_start_time %>
+      <% if item.meli_info.meli_start_time if item.meli_info %>
         <time class="unloaded" datetime="<%= item.meli_info.meli_start_time.to_time %>">
           <%= I18n.l(item.meli_info.meli_start_time.to_time) %>
         </time>
