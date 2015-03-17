@@ -8,7 +8,7 @@ module Mercadolibre
       puts "* Mercadolibre::OrderWorker.perform!\n"
 
       dashboard = ::Dashboard.includes(:account, :users).find_by(meli_user_id: user_id)
-      # raise ArgumentError, "Invalid dashboard element.\n meli_user_id=`#{user_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
+      raise ArgumentError, "Invalid dashboard element.\n meli_user_id=`#{user_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
 
       meli_order = Meli::Order.find(meli_order_id)
 
