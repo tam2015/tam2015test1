@@ -68,8 +68,10 @@
                   <dd><%= question.meli_item_id %></dd>
                   <dt>Preço:</dt>
                   <dd>R$<%= question.meli_item.price%></dd>
-                  <dt>Qtd:</dt>
-                  <dd><%= question.meli_item.sold_quantity%></dd>
+                  <% if question.meli_item and question.meli_item.item_storage %>
+                    <dt>Qtd:</dt>
+                    <dd><%= question.meli_item.item_storage.sold_quantity%></dd>
+                  <% end %>
                 </dl>
                 <% end %>
               </div>

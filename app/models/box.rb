@@ -141,7 +141,7 @@ class Box < ActiveRecord::Base
       tags:             order.tags?,
 
       # created_at:       order.date_created?,
-      closed_at:        order.date_last_updated?,
+      #closed_at:        order.date_last_updated?,
       price:            order.total_amount?
     }
   end

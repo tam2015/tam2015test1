@@ -10,7 +10,7 @@ module Mercadolibre
 
     alias_attribute :date_created, :created_at
 
-    enum status: [ :to_be_agreed, :pending, :handling, :shipped, :delivered, :not_delivered, :cancelled ]
+    enum status: [ :to_be_agreed, :pending, :handling, :ready_to_ship, :shipped, :delivered, :not_delivered, :cancelled ]
 
     #geocoded_by :receiver_address_s
     #before_save :normalize#, on: [:save, :create, :update]
