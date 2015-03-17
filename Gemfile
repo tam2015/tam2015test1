@@ -102,6 +102,11 @@ group :development, :test do
   gem "rails-dev-tweaks"
   gem "awesome_print"
   gem "factory_girl_rails"
+  gem "capistrano", "~> 3.3.5"
+  gem 'capistrano-rvm'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-rails'
+  gem 'capistrano-sidekiq'
 end
 
 group :production, :staging do
@@ -109,10 +114,7 @@ group :production, :staging do
   gem "newrelic_rpm"
 end
 
-gem "capistrano", "~> 3.3.5"
-gem 'capistrano-rvm'
-gem 'capistrano3-unicorn'
-gem 'capistrano-rails'
+
 
 gem 'unicorn'
 
