@@ -52,7 +52,7 @@ module Mercadolibre
         question.author_id              = meli_item_question.from.id
         question.seller_id              = meli_item_question.seller_id
 
-        question.date_created           = meli_item_question.date_created
+        # question.date_created           = meli_item_question.date_created
         question.meli_item_id           = meli_item_question.item_id
         question.text                   = meli_item_question.text
         question.meli_question_id       = meli_item_question.id
