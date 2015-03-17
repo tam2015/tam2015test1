@@ -220,6 +220,7 @@ br:
         to_be_agreed: entrega a combinar
         pending: entrega pendente
         handling: empacotando
+        ready_to_ship: pronto para entrega
         shipped: enviado
         delivered: entregue
         not_delivered: não entregue
