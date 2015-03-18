@@ -44,7 +44,7 @@ module Mercadolibre
         # attributes available only when fetching from API
         feedback_buyer.reason       = meli_order_feedback.reason?
         feedback_buyer.message      = meli_order_feedback.message?
-        feedback_buyer.reply        = meli_order_feedback.reply?
+        #feedback_buyer.reply        = meli_order_feedback.reply?
 
         feedback_buyer.status       = meli_order_feedback.status
 
@@ -74,7 +74,7 @@ module Mercadolibre
         # attributes available only when fetching from API
         feedback_seller.reason       = meli_order_feedback.reason?
         feedback_seller.message      = meli_order_feedback.message?
-        feedback_seller.reply        = meli_order_feedback.reply?
+        #feedback_seller.reply        = meli_order_feedback.reply?
 
         feedback_seller.status       = meli_order_feedback.status
 
@@ -125,7 +125,7 @@ module Mercadolibre
         # attributes available only for replying a feedback
         feedback_buyer.reason       = feedback_purchase.reason?
         feedback_buyer.message      = feedback_purchase.message?
-        feedback_buyer.reply        = feedback_purchase.reply?
+        # feedback_buyer.reply        = feedback_purchase.reply?
 
         feedback_buyer.status       = feedback_purchase.status
 
@@ -146,7 +146,7 @@ module Mercadolibre
         # attributes available only when fetching from API
         feedback_seller.reason       = feedback_sale.reason?
         feedback_seller.message      = feedback_sale.message?
-        feedback_seller.reply        = feedback_sale.reply?
+        #feedback_seller.reply        = feedback_sale.reply?
 
         feedback_seller.status       = feedback_sale.status
 
@@ -182,7 +182,7 @@ module Mercadolibre
       # attributes available only when fetching from API
       feedback_seller.reason            = meli_order_feedback.reason?
       feedback_seller.message           = meli_order_feedback.message?
-      feedback_seller.reply             = meli_order_feedback.reply?
+      #feedback_seller.reply             = meli_order_feedback.reply?
 
       feedback_seller.date_created      = meli_order_feedback.date_created
       feedback_seller.author_type       = meli_order_feedback.cust_role
@@ -256,7 +256,7 @@ module Mercadolibre
 
           reason:     @feedback.reason,
           message:    @feedback.message,
-          reply:      @feedback.reply,
+          #reply:      @feedback.reply,
 
           status:     @feedback.status,
 
