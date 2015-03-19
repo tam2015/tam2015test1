@@ -78,7 +78,14 @@ class Mercadolibre::ItemsController < ApplicationController
 
   def publish
     item = Mercadolibre::Item.find params[:id]
-    item.publish_in_meli @dashboard
+    published_item = item.publish_in_meli @dashboard
+    if item.meli_item_id #check if meli_response has a meli_item_id
+      flash[:success] = "Anúncio publicado com sucesso."
+      redirect_to dashboard_items, method: :get
+    else
+      flash[:error] = "Não foi possível publicar o seu anúncio. Faça seu logout, faça o login e tente novamente"
+      redirect_to dashboard_items, method: :get
+    end
   end
 
   def import
