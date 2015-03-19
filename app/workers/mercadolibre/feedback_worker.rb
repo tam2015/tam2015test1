@@ -40,11 +40,12 @@ module Mercadolibre
       if meli_order_id
         params = {
           "fulfilled" => true,
-          "rating"    => "neutral",
+          "rating"    => "positive",
           "message"   => "Bom comprador."
         }
         # Post seller Feedback on Meli
-        meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
+        #meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
+        meli_order_feedback  = Mercadolibre::Feeback.api.give_feedback_to_order(meli_order_id, params)
 
         puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
         # Update Feedbacks
