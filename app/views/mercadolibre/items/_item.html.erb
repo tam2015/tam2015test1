@@ -4,35 +4,39 @@
       <input class="list-child" type="checkbox">/</input>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
+      <div class="user-heading round">
+      <% if item.pictures %>
+        <a href="#">
+            <%= image_tag item.pictures.first.meli_url, style: "width: 50px" %>
+        </a>
+      <% end %>
+      </div>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:meli_item_id       ) %>">
       <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
-        <%= truncate(item.title, length: 75) %>
+        <%= truncate(item.meli_item_id, length: 75) %>
       <% end %>
     </td>
-    <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
+    <td data-title="<%= @klass.human_attribute_name(:meli_item_id       ) %>">
       <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
         <%= truncate(item.title, length: 75) %>
       <% end %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-      <% if item and item.meli_info and item.meli_info.meli_start_time  %>
-        <time class="unloaded" datetime="<%= item.meli_info.meli_start_time.to_time %>">
-          <%= I18n.l(item.meli_info.meli_start_time.to_time) %>
-        </time>
+      <%= item.price %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+      <% if item.item_storage %>
+        <%= item.item_storage.sold_quantity %>
       <% end %>
     </td>
-    <td data-title="<%= @klass.human_attribute_name(:stop_time   ) %>">
-      <% if item and item.meli_info and item.meli_info.meli_stop_time %>
-        <time class="unloaded" datetime="<%= item.meli_info.meli_stop_time.to_time %>">
-          <%= I18n.l(item.meli_info.meli_stop_time.to_time) %>
-        </time>
+    <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+      <% if item.item_storage %>
+        <%= item.item_storage.available_quantity %>
       <% end %>
-    </td>
-    <td data-title="<%= @klass.human_attribute_name(:infos      ) %>">
-      Pictures:
-      <%= item.pictures ? item.pictures.count : (item.pictures && item.pictures.count) %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:status      ) %>">
-      <%= t(item.status, scope: "helpers.items.status") %>
+      <%= link_to 'Editar Avaliação', edit_dashboard_item_path(id: item.id),style: "font-size: 11px" %>
     </td>
 
   </tr>

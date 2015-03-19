@@ -1,17 +1,5 @@
 <!-- Pictures, Video, Description, Title, Condition -->
 <%= f.hidden_field :category_id, value: params[:category_id] %>
-<div class="row">
-  <div class="col-md-12">
-    <section class="panel">
-      <header class="panel-heading">
-        Variações
-      </header>
-      <div class="panel-body" id="variations-container">
-        <!-- Variations will be appended here -->
-      </div>
-    </section>
-  </div>
-</div>
 
 <script id="template-upload" type="text/x-tmpl">
 <div class="upload">
@@ -46,15 +34,18 @@
         <h4>Qual a condição do seu produto?</h4>
         <% #= Mercadolibre::Item.human_attribute_name :condition %>
         <div class="radios">
-          <%
-          Mercadolibre::Item::CONDITIONS.each do |condition|
-          condition = unspecified if condition == :not_specified
-          %>
           <label class="label_radio r_on item-condition">
-            <%= f.radio_button(:condition, condition, input_html_options: { name: "sample-radio" }) %>
-            <%= condition %>
+            <input id="item_condition_new" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[condition]" type="radio" value="new">
+            novo
           </label>
-          <% end %>
+          <label class="label_radio r_on item-condition">
+            <input id="item_condition_used" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[condition]" type="radio" value="used">
+            usado
+          </label>
+          <label class="label_radio r_on item-condition">
+            <input id="item_condition_not_specified" input_html_options="{:name=>&quot;sample-radio&quot;}" name="item[condition]" type="radio" value="not_specified">
+            não especificado
+          </label>
         </div>
       </div>
     </div>

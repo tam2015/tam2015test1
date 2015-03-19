@@ -4,14 +4,11 @@ class Mercadolibre::ItemsController < ApplicationController
   load_and_authorize_resource
   # load_and_authorize_resource class: Mercadolibre::Item
 
-  protect_from_forgery except: :upload
-
-
   respond_to :html, :json, :js
 
   before_action :set_klass
   # DashboardsHelper callback
-  before_action :set_dashboard, except: [ :restory ]
+  before_action :set_dashboard
   before_action :set_item, only: [ :show, :edit, :update, :destroy]#, :restore, :upload, :pictures ]
 
 
@@ -31,18 +28,7 @@ class Mercadolibre::ItemsController < ApplicationController
 
   # GET /items
   def index
-    unless @dashboard.nil?
-      @items =
-        if params[:deleted]
-          add_breadcrumb :trash
-
-          @klass.where(dashboard_id: @dashboard.id).includes(:pictures).deleted
-        else
-          add_breadcrumb :all
-
-          @klass.where(dashboard_id: @dashboard.id).includes(:pictures).all
-        end
-    end
+    @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures)
   end
 
 
@@ -64,7 +50,7 @@ class Mercadolibre::ItemsController < ApplicationController
     @item.status       = :unpublished
 
     if @item.save
-      flash[:success] = "Item was successfully updated."
+      flash[:success] = "Etapa concluída com sucesso."
       redirect_to dashboard_pictures_path(id: @item.id), method: :get
     else
       location= edit_dashboard_item_path(@dashboard, @item)
@@ -84,6 +70,10 @@ class Mercadolibre::ItemsController < ApplicationController
     Rails.logger.debug "\n\n\n\n\n\n----------- params#{params[:item][:item_storages][:available_quantity]}\n\n\n\n\n--------"
     item_storage.available_quantity = params[:item][:item_storages][:available_quantity]
     item_storage.save
+  end
+
+  def edit
+    @item = Mercadolibre::Item.find params[:id]
   end
 
   def publish
