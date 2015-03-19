@@ -45,7 +45,7 @@ module Mercadolibre
         }
         # Post seller Feedback on Meli
         #meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
-        meli_order_feedback  = Mercadolibre::Feeback.api.give_feedback_to_order(meli_order_id, params)
+        meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, params)
 
         puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
         # Update Feedbacks
