@@ -24,10 +24,11 @@ class Mercadolibre::PicturesController < ApplicationController
   def create
     @picture = Mercadolibre::Picture.new(picture_params)
     @picture.item_id = params[:id]
-    a = "http://www.aircrm.com.br"
-    b = @picture.cwave.url
-    @picture.source  = a + b
     if @picture.save
+      a = "http://www.aircrm.com.br"
+      b = @picture.cwave.url
+      c = a + b
+      @picture.update(source: c)
       redirect_to dashboard_pictures_path
     end
   end

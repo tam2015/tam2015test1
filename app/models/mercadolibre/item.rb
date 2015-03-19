@@ -373,6 +373,8 @@ module Mercadolibre
     def publish_in_meli dashboard
       unless meli_item_id
         record = to_meli
+        refresh_token = dashboard.credentials[:refresh_token]
+        Mercadolibre::Item.api.update_token(refresh_token)
         #validate
         response = Mercadolibre::Item.api.item_valid? record
         #publish
