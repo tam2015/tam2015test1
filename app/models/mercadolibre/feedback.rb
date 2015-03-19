@@ -173,7 +173,7 @@ module Mercadolibre
     #
     def self.update_feedback_from_post(dashboard_id, meli_order_id, meli_order_feedback)
 
-      feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: "seller")#meli_order_feedback.cust_role)
+      feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: meli_order_feedback.cust_role)
 
       feedback_seller.meli_feedback_id  = meli_order_feedback.id
       feedback_seller.rating            = meli_order_feedback.rating.downcase
@@ -185,7 +185,7 @@ module Mercadolibre
       #feedback_seller.reply             = meli_order_feedback.reply?
 
       feedback_seller.date_created      = meli_order_feedback.date_created
-      feedback_seller.author_type       = "seller" #meli_order_feedback.cust_role
+      feedback_seller.author_type       = meli_order_feedback.cust_role
 
       feedback_seller.status            = meli_order_feedback.status
 
