@@ -213,11 +213,11 @@ class Box < ActiveRecord::Base
       ::Mercadolibre::FeedbackWorker.perform_async :post_sale_feedback, @dashboard.id, meli_order.id
     end
 
-    if meli_order.feedback.sale.present? ||
-       meli_order.feedback.purchase.present?
-       puts "* Feedback: Sale and/or Purchase are present"
-      ::Mercadolibre::FeedbackWorker.perform_async :retrieve_item_feedback, @dashboard.id, meli_order.id
-     end
+    # if meli_order.feedback.sale.present? ||
+    #    meli_order.feedback.purchase.present?
+    #    puts "* Feedback: Sale and/or Purchase are present"
+    #   ::Mercadolibre::FeedbackWorker.perform_async :retrieve_item_feedback, @dashboard.id, meli_order.id
+    #  end
   end
 
 
