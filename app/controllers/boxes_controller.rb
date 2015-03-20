@@ -169,24 +169,24 @@ class BoxesController < ApplicationController
         @boxes = @boxes.paginate(page: params[:page], per_page: 5)
 
       elsif params[:status_customer]
-        @boxes = @dashboard.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data], dashboard_id: @dashboard.id})
+        @boxes = current_user.dashboards.first.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data], dashboard_id: @dashboard.id})
 
       #payment_status_filter
       elsif params[:status_box_payment]
-        @boxes = @dashboard.boxes.where(" '#{params[:status_box_payment]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where(" '#{params[:status_box_payment]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
 
       #shipping_status_filter
       elsif params[:status_box_shipping]
-        @boxes = @dashboard.boxes.where(" '#{params[:status_box_shipping]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where(" '#{params[:status_box_shipping]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
 
       # elsif params[:status_box]
       #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
 
       elsif params[:query]
-        @boxes = @dashboard.boxes.where(meli_order_id: params[:query]).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where(meli_order_id: params[:query]).paginate(page: params[:page], per_page: 5)
 
       else
-        @boxes = @dashboard.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.dashboard.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
         if @boxes.count < 1
           redirect_to dashboards_path
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"

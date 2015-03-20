@@ -8,11 +8,11 @@ class Mercadolibre::FeedbacksController < ApplicationController
 
   def index
     if params[:rating_received]
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: @dashboard.id, author_type: "buyer", rating: params[:rating_received]).paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer", rating: params[:rating_received]).paginate(page: params[:page], per_page: 7)
     elsif params[:rating_sent]
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: @dashboard.id, author_type: "seller", rating: params[:rating_sent]).paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).paginate(page: params[:page], per_page: 7)
     else
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: @dashboard.id, author_type: "buyer").paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer").paginate(page: params[:page], per_page: 7)
       if @buyer_feedbacks.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas qualificações recebidas. Por favor aguarde um momento"

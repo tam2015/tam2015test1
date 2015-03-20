@@ -1,9 +1,14 @@
 class Mercadolibre::QuestionsController < ApplicationController
   require 'will_paginate/array'
+
+  before_action :authenticate_user!
+
   respond_to :html, :js, :json
 
   # DashboardsHelper callback
   before_action :set_dashboard, only: [:index, :reload]
+  load_and_authorize_resource
+
 
   def index
 
@@ -18,14 +23,14 @@ class Mercadolibre::QuestionsController < ApplicationController
 
   #to filter a question
     elsif params[:status]
-      @questions = Mercadolibre::Question.where(status: params[:status].to_sym).paginate(page: params[:page], per_page: 5)
+      @questions = Mercadolibre::Question.where(status: params[:status].to_sym, dashboard_id: current_user.dashboards.first.id).paginate(page: params[:page], per_page: 5)
 
   #to search a question
     elsif params[:query]
       @questions = Mercadolibre::Question.where("meli_item_id ilike :q or text ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
 
     else
-      @questions = Mercadolibre::Question.where(dashboard_id: params[:dashboard_id]).paginate(page: params[:page], per_page: 5)
+      @questions = Mercadolibre::Question.where(dashboard_id: current_user.dashboards.first.id).paginate(page: params[:page], per_page: 5)
       if @questions.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas perguntas. Por favor aguarde um momento"
