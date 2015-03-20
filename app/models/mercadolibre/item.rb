@@ -379,9 +379,7 @@ module Mercadolibre
         response = Mercadolibre::Item.api.item_valid? record
         #publish
         meli_item_responsed = Mercadolibre::Item.api.create_item record
-        if update(meli_item_id:  meli_item_responsed.id)
-          Mercadolibre::ItemWorker.perform_async dashboard.meli_user_id, meli_item_id
-        end
+        update(meli_item_id:  meli_item_responsed.id)
       end
     end
 
