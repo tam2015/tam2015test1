@@ -2,7 +2,7 @@
   = f.error_notification
 
   .col-lg-12
-    = f.hidden_field :order_id, :value => params[:order_id]
+    = f.hidden_field :meli_order_id, :value => params[:meli_order_id]
     = f.hidden_field :dashboard_id, :value => params[:dashboard_id]
     = f.hidden_field :updated, :value => true
     = f.select :rating, ["positive"] #, "neutral", "negative"]

@@ -226,7 +226,12 @@ module Mercadolibre
 
 
 
-    def self.meli_update(order_id, kind, feedback_data)
+    def self.meli_update(order_id, kind, feedback_data, dashboard)
+      #update token before feedback posting
+      refresh_token = dashboard.credentials[:refresh_token]
+      Mercadolibre::Feedback.api.update_token(refresh_token)
+
+      #using old mercadolivre gem
       @feedback = ::Dashboard.api.change_feedback_from_order(order_id, kind, feedback_data)
     end
 

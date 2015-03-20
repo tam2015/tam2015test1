@@ -46,6 +46,7 @@ class Mercadolibre::FeedbacksController < ApplicationController
   end
 
   def update
+    dashboard = Dashboard.find params[:dashboard_id]
     @feedback = Mercadolibre::Feedback.where(meli_order_id: feedback_params[:meli_order_id], author_type: "seller").first
     @feedback.update(feedback_params)
     Rails.logger.debug "\n\n\n\n\n\n\n\n\n\n  ---- #{@feedback.to_json}"
@@ -57,7 +58,12 @@ class Mercadolibre::FeedbacksController < ApplicationController
       fulfilled: true,
       message: @feedback.message
     }
-    @meli_updated_feedback = Mercadolibre::Feedback.meli_update(order_id, kind, feedback_data)
+    @meli_updated_feedback = Mercadolibre::Feedback.meli_update(order_id, kind, feedback_data, dashboard)
+    if @meli_updated_feedback
+      flash[:success] = "Qualificação editada com sucesso."
+      redirect_to ashboard_feedbacks_path, method: :get
+    end
+
   end
 
   private
