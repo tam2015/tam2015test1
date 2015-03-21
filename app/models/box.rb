@@ -208,7 +208,7 @@ class Box < ActiveRecord::Base
     # Seller gives his feedback then we are able to fetch
     # Purchase feedback again and if it is "nil",
     # update will income from Mercadolibre::Hooks
-    unless meli_order.feedback.sale.present? and meli_order.date_created < Time.now - 21.days
+    if !meli_order.feedback.sale.present? and meli_order.date_created > Time.now - 21.days
       puts "* Feedback: No sale present"
       ::Mercadolibre::FeedbackWorker.perform_async :post_sale_feedback, @dashboard.id, meli_order.id
     end

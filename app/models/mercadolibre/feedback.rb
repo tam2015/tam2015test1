@@ -32,7 +32,7 @@ module Mercadolibre
     def self.parse(dashboard_id, meli_order)
 
       # Create Buyer feedback is available
-      if meli_order.feedback.purchase?
+      if meli_order.feedback.purchase.present?
         feedback_buyer              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
         meli_order_feedback         = meli_order.feedback.purchase
 
@@ -62,7 +62,7 @@ module Mercadolibre
       end
 
       # Create Seller feedback is available
-      if meli_order.feedback.sale?
+      if meli_order.feedback.sale.present?
         feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
         meli_order_feedback          = meli_order.feedback.sale
 

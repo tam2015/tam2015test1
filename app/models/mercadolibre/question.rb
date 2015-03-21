@@ -49,7 +49,12 @@ module Mercadolibre
         question.dashboard_id           = dashboard.id
         question.user_id                = dashboard.users.first.id
 
-        question.author_id              = meli_item_question.from.id
+        #user this line to Meli
+        # question.author_id              = meli_item_question.from.id
+
+        #user this line to old gem
+        question.author_id              = meli_item_question.user_id
+
         question.seller_id              = meli_item_question.seller_id
 
         # question.date_created           = meli_item_question.date_created

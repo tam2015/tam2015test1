@@ -14,7 +14,8 @@ module Mercadolibre
       # TODO: ✔ if anything under AccountSync break,
       #       AccountSyncWorker will repet ItemSyncWorker and QuestionSyncWorker
       #       We should avoid it to happen breaking AccountSync.new to a worker
-      [:recent, :archived].each do |_kind|
+      #[:recent, :archived].each do |_kind|
+      [:recent].each do |_kind|
         ::Mercadolibre::OrderSyncWorker.perform_async dashboard_id, _kind
       end
     end

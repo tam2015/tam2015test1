@@ -15,7 +15,10 @@ module Mercadolibre
         raise ArgumentError, "Invalid dashboard ID: dashboard=`#{dashboard_id}`."
       end
 
-      meli_questions = Meli::Question.all_questions
+      # meli_questions = Meli::Question.all_questions
+      refresh_token = dashboard.credentials[:refresh_token]
+      Mercadolibre::Question.api.update_token(refresh_token)
+      meli_questions = Mercadolibre::Question.api.get_all_questions limit: 200
       Mercadolibre::Question.create_or_update_record(meli_questions, dashboard)
     end
 
