@@ -185,8 +185,11 @@ class BoxesController < ApplicationController
       elsif params[:query]
         @boxes = current_user.dashboards.first.boxes.where(meli_order_id: params[:query]).paginate(page: params[:page], per_page: 5)
 
+      elsif current_user.admin?
+        @boxes = Box.all.limit(50).includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+
       else
-        @boxes = current_user.dashboards.first.dashboard.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
         if @boxes.count < 1
           redirect_to dashboards_path
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
