@@ -15,8 +15,12 @@ module Mercadolibre
         meli_customer  = Meli::User.find(customer_id)
         meli_seller = ::Dashboard.find_by(meli_user_id: user_id).users.first
 
-        # Update Item
-        ::Customer.parse(meli_customer, meli_seller)
+        # Update Customer
+        unless customer = ::Customer.where({ meli_user_id: meli_customer.id }).first
+          ::Customer.parse(meli_customer, meli_seller)
+        end
+
+
 
         # Data Collection for post analysis
         #Datastores.create!(from: :meli_item,
