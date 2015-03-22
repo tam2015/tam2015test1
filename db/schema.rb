@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317154241) do
+ActiveRecord::Schema.define(version: 20150321225331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,20 +35,23 @@ ActiveRecord::Schema.define(version: 20150317154241) do
   create_table "boxes", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "closed",                   default: false
+    t.boolean  "closed",                       default: false
     t.decimal  "price"
-    t.boolean  "favorite",                 default: false
+    t.boolean  "favorite",                     default: false
     t.integer  "account_id"
     t.integer  "customer_id"
     t.integer  "dashboard_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "meli_order_id"
-    t.string   "status",                   default: "0"
+    t.string   "status",                       default: "0"
     t.datetime "closed_at"
     t.integer  "user_id"
-    t.string   "meli_item_id",  limit: 40
-    t.string   "tags",                                     array: true
+    t.string   "meli_item_id",      limit: 40
+    t.string   "tags",                                         array: true
+    t.string   "meli_date_created"
+    t.string   "meli_date_closed"
+    t.string   "meli_last_updated"
   end
 
   create_table "canned_responses", force: true do |t|
@@ -106,14 +109,15 @@ ActiveRecord::Schema.define(version: 20150317154241) do
     t.string   "reply"
     t.string   "status"
     t.string   "author_type"
-    t.integer  "meli_feedback_id", limit: 8
-    t.string   "meli_item_id",     limit: 15
-    t.integer  "meli_order_id",    limit: 8
+    t.integer  "meli_feedback_id",  limit: 8
+    t.string   "meli_item_id",      limit: 15
+    t.integer  "meli_order_id",     limit: 8
     t.integer  "dashboard_id"
-    t.boolean  "updated",                     default: false
-    t.boolean  "restock_item",                default: false
+    t.boolean  "updated",                      default: false
+    t.boolean  "restock_item",                 default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "meli_date_created"
   end
 
   add_index "feedbacks", ["meli_order_id", "author_type"], name: "index_feedbacks_on_meli_order_id_and_author_type", using: :btree
@@ -181,12 +185,12 @@ ActiveRecord::Schema.define(version: 20150317154241) do
     t.string   "permalink"
     t.string   "thumbnail"
     t.string   "secure_thumbnail"
-    t.datetime "meli_start_time"
-    t.datetime "meli_stop_time"
-    t.datetime "meli_end_time"
-    t.datetime "meli_last_updated"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "meli_start_time"
+    t.string   "meli_stop_time"
+    t.string   "meli_end_time"
+    t.string   "meli_last_updated"
   end
 
   create_table "notifies", force: true do |t|
@@ -292,6 +296,7 @@ ActiveRecord::Schema.define(version: 20150317154241) do
     t.boolean  "customer_blocked",                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "meli_date_created"
   end
 
   add_index "questions", ["meli_question_id", "meli_item_id"], name: "index_questions_on_meli_question_id_and_meli_item_id", using: :btree

@@ -2,6 +2,7 @@ module Mercadolibre
   class Feedback < ActiveRecord::Base
     include Provider::ModelBase
 
+    default_scope  { order(:meli_date_created => :desc) }
 
     # belongs_to :box
     alias_attribute :date_created, :created_at
@@ -184,7 +185,7 @@ module Mercadolibre
       feedback_seller.message           = meli_order_feedback.message?
       #feedback_seller.reply             = meli_order_feedback.reply?
 
-      feedback_seller.date_created      = meli_order_feedback.date_created
+      feedback_seller.meli_date_created = meli_order_feedback.date_created?.to_date.to_s
       feedback_seller.author_type       = meli_order_feedback.cust_role
 
       feedback_seller.status            = meli_order_feedback.status

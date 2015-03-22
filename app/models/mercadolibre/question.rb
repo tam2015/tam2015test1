@@ -2,6 +2,8 @@ module Mercadolibre
   class Question < ActiveRecord::Base
     include Provider::ModelBase
     serialize :answer
+
+    default_scope  { order(:meli_date_created => :desc) }
     # Question status. Possible values:
       # unanswered: Question is not answered yet.
       # answered: Question was answered.
@@ -57,7 +59,7 @@ module Mercadolibre
 
         question.seller_id              = meli_item_question.seller_id
 
-        # question.date_created           = meli_item_question.date_created
+        question.meli_date_created      = meli_item_question.date_created.to_date.to_s
         question.meli_item_id           = meli_item_question.item_id
         question.text                   = meli_item_question.text
         question.meli_question_id       = meli_item_question.id

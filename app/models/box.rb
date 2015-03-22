@@ -25,6 +25,8 @@ class Box < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Provider::ModelBase
 
+  default_scope  { order(:meli_date_created => :desc) }
+
   #associations
   has_many   :payments, class: ::Mercadolibre::Payment
   has_one    :shipping, class: ::Mercadolibre::Shipping
@@ -140,8 +142,9 @@ class Box < ActiveRecord::Base
       status:           order.status?,
       tags:             order.tags?,
 
-      # created_at:       order.date_created?,
-      #closed_at:        order.date_last_updated?,
+      meli_date_created:       order.date_created?.to_s,
+      meli_last_updated:       order.last_updated?.to_s,
+      meli_date_closed:        order.date_closed?.to_s,
       price:            order.total_amount?
     }
   end

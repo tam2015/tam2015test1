@@ -229,10 +229,10 @@ module Mercadolibre
       aircrm_item_infos.permalink                         =  meli_item.permalink
       aircrm_item_infos.thumbnail                         =  meli_item.thumbnail
       aircrm_item_infos.secure_thumbnail                  =  meli_item.secure_thumbnail
-      # aircrm_item_infos.meli_start_time                   =  meli_item.start_time
-      # aircrm_item_infos.meli_stop_time                    =  meli_item.stop_time
-      # aircrm_item_infos.meli_end_time                     =  meli_item.end_time?
-      # aircrm_item_infos.meli_last_updated                 =  meli_item.last_updated
+      aircrm_item_infos.meli_start_time                   =  meli_item.start_time.to_date.to_s
+      aircrm_item_infos.meli_stop_time                    =  meli_item.stop_time.to_date.to_s
+      aircrm_item_infos.meli_end_time                     =  meli_item.end_time.to_date.to_s if meli_item.end_time
+      aircrm_item_infos.meli_last_updated                 =  meli_item.last_updated.to_date.to_s
 
       aircrm_item_infos.save
     end
