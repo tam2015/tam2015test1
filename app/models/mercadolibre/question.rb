@@ -52,10 +52,10 @@ module Mercadolibre
         question.user_id                = dashboard.users.first.id
 
         #user this line to Meli
-        question.author_id              = meli_item_question.from.id if meli_item_question.from and  meli_item_question.from.id
+        # question.author_id              = meli_item_question.from.id
 
         #user this line to old gem
-        question.author_id              = meli_item_question.user_id if meli_item_question.user_id
+        question.author_id              = meli_item_question.user_id
 
         question.seller_id              = meli_item_question.seller_id
 
