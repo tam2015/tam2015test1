@@ -1,7 +1,7 @@
 module Mercadolibre
   class OrderWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :orders, retry: true, backtrace: true
+    sidekiq_options queue: :orders, retry: false, backtrace: true
 
     def perform(user_id, meli_order_id)
 
