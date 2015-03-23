@@ -1,7 +1,7 @@
 module Mercadolibre
   class ShippingWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :orders, retry: false, backtrace: true
+    sidekiq_options queue: :orders, retry: true, backtrace: true
 
     def perform(dashboard_id, order_id, box_id)
       puts "\n\n* Mercadolibre::ShippingWorker.perform!\n"

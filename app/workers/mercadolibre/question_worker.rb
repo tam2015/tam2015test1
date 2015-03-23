@@ -1,7 +1,7 @@
 module Mercadolibre
   class QuestionWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :orders, retry: false, backtrace: true
+    sidekiq_options queue: :orders, retry: true, backtrace: true
 
     def perform(user_id, item_id = [], question_id = nil)
       puts "\n\n* Mercadolibre::QuestionWorker.perform - meli_user_id: #{user_id}, item_id: #{item_id}, question_id: #{question_id}\n"

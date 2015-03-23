@@ -1,7 +1,7 @@
 module Mercadolibre
   class ItemWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :sync_items, retry: false, backtrace: true
+    sidekiq_options queue: :sync_items, retry: true, backtrace: true
 
     def perform(user_id, item_id)
       puts "\n\n* Mercadolibre::ItemWorker.perform - meli_user_id: #{user_id}, item_id: #{item_id}\n"

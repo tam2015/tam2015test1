@@ -1,7 +1,7 @@
 module Mercadolibre
   class QuestionSyncWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :sync_questions, retry: false, backtrace: true
+    sidekiq_options queue: :sync_questions, retry: true, backtrace: true
 
     def perform(dashboard_id)
       puts "\n# QuestionSyncWorker.initialize - dashboard_id: #{dashboard_id}"

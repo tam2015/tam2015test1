@@ -1,7 +1,7 @@
 module Mercadolibre
   class FeedbackWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :orders, retry: false, backtrace: true
+    sidekiq_options queue: :orders, retry: true, backtrace: true
 
     def perform(worker_type, dashboard_id, meli_order_id = nil)
       puts "\n\n* Mercadolibre::FeedbackWorker.perform! type: #{worker_type}\n"
