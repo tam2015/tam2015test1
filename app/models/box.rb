@@ -413,19 +413,18 @@ class Box < ActiveRecord::Base
     # Avoid inline conditionals when there is more than 1 condition
     tag_of_shipping = box.shipping.tags[0] if box.shipping and box.shipping.tags.present? and box.shipping.tags != nil and params_from_user != nil
 
-    if box and box.status != "archived"
+    if box and box.status != "archived" and !box.tags.include?(tag_of_payment)
       order = box.to_meli
       order.tags = []
       order.tags << tag_of_payment
       order.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
       order.save
-    end
-
-    record_from_meli = Meli::Order.find box.meli_order_id
-    if record_from_meli
-      #box_tags = [] if box.tags == nil
-      box.tags = record_from_meli.tags
-      box.save
+      record_from_meli = Meli::Order.find box.meli_order_id
+      if record_from_meli
+        #box_tags = [] if box.tags == nil
+        box.tags = record_from_meli.tags
+        box.save
+      end
     end
   end
 
@@ -474,21 +473,21 @@ class Box < ActiveRecord::Base
 
     tag_of_payment = box.payments.first.tags[0] if box.payments.first and box.payments.first.present?
 
-    if box and box.status != "archived"
+    if box and box.status != "archived" and !box.tags.include?(tag_of_shipping)
       order = box.to_meli
       order.tags = []
       order.tags = order.tags << tag_of_shipping
       order.tags = order.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
       order.save
-    end
 
-    record_from_meli = Meli::Order.find box.meli_order_id
-    #if record_from_meli != 404
-    box_tags = [] if box.tags == nil
-    box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
-    box.tags_will_change!
-    box.save
-    #end
+      record_from_meli = Meli::Order.find box.meli_order_id
+      #if record_from_meli != 404
+      box_tags = [] if box.tags == nil
+      box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
+      box.tags_will_change!
+      box.save
+      #end
+    end
   end
 
   def update_come_from_shipping_parse(box, shipping, params_from_user)
