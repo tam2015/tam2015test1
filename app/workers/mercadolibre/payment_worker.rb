@@ -1,7 +1,7 @@
 module Mercadolibre
   class PaymentWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :boxes, retry: true, backtrace: true
+    sidekiq_options queue: :boxes, retry: false, backtrace: true
 
     def perform(dashboard_id, payment_id = nil)
       puts "\n\n* Mercadolibre::PaymentWorker.perform!\n"

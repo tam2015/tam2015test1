@@ -1,7 +1,7 @@
 module Mercadolibre
   class AccountSyncWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :sync_account, retry: true, backtrace: true
+    sidekiq_options queue: :sync_account, retry: false, backtrace: true
 
     def perform(dashboard_id)
       # Sync Item by Item from User  (Seller)

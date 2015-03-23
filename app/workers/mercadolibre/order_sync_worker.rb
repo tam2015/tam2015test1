@@ -1,7 +1,7 @@
 module Mercadolibre
   class OrderSyncWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :orders, retry: true, backtrace: true
+    sidekiq_options queue: :orders, retry: false, backtrace: true
 
     def perform(dashboard_id, kind)
       puts "\n# OrderSyncWorker.initialize - dashboard_id: #{dashboard_id}"
