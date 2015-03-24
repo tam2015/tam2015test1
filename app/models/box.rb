@@ -211,7 +211,7 @@ class Box < ActiveRecord::Base
     # Seller gives his feedback then we are able to fetch
     # Purchase feedback again and if it is "nil",
     # update will income from Mercadolibre::Hooks
-    if !meli_order.feedback.sale.present? and meli_order.date_created > Time.now - 21.days
+    if meli_order.feedback.sale == nil and meli_order.date_created > Time.now - 21.days
       puts "* Feedback: No sale present"
       ::Mercadolibre::FeedbackWorker.perform_async :post_sale_feedback, @dashboard.id, meli_order.id
     end
@@ -471,7 +471,7 @@ class Box < ActiveRecord::Base
     shipping.tags = [] << tag_of_shipping
     shipping.save
 
-    tag_of_payment = box.payments.first.tags[0] if box.payments.first and box.payments.first.present?
+    tag_of_payment =  box.payments.first.tags[0] if box.payments.first and box.payments.first.tags.present? and box.payments.first.tags != nil
 
     if box and box.status != "archived" and !box.tags.include?(tag_of_shipping)
       order = box.to_meli
