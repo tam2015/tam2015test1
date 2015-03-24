@@ -172,12 +172,12 @@ module Mercadolibre
 
 
     def parse_item_variations aircrm_item, meli_item
-      if aircrm_item.variations
-        aircrm_item.variations.each do |variation_to_be_deleted|
-          variation_to_be_deleted.variation_to_types.destroy_all
-          variation_to_be_deleted.destroy
-        end
-      end
+      # if aircrm_item.variations
+      #   aircrm_item.variations.each do |variation_to_be_deleted|
+      #     variation_to_be_deleted.variation_to_types.destroy_all
+      #     variation_to_be_deleted.destroy
+      #   end
+      # end
       meli_item.variations.map do |meli_variation|
         variation = Mercadolibre::Variation.new
         variation.item_id                           =   aircrm_item.id
@@ -190,7 +190,7 @@ module Mercadolibre
         meli_variation.attribute_combinations.map do |meli_variation_type|
           variation_type                            = Mercadolibre::VariationType.where(meli_value_id: meli_variation_type.value_id?).first_or_initialize
           variation_type.meli_id                    = meli_variation_type.id?
-          # variation_type.meli_name                  = meli_variation_type.name?
+          variation_type.meli_name                  = meli_variation_type.name?
           variation_type.meli_value_id              = meli_variation_type.value_id?
           variation_type.meli_value_name            = meli_variation_type.value_name?
 
