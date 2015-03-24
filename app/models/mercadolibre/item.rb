@@ -190,7 +190,7 @@ module Mercadolibre
         meli_variation.attribute_combinations.map do |meli_variation_type|
           variation_type                            = Mercadolibre::VariationType.where(meli_value_id: meli_variation_type.value_id?).first_or_initialize
           variation_type.meli_id                    = meli_variation_type.id?
-          variation_type.meli_name                  = meli_variation_type.name?
+          # variation_type.meli_name                  = meli_variation_type.name?
           variation_type.meli_value_id              = meli_variation_type.value_id?
           variation_type.meli_value_name            = meli_variation_type.value_name?
 
