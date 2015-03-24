@@ -172,8 +172,9 @@ module Mercadolibre
 
 
     def parse_item_variations aircrm_item, meli_item
-      if aircrm_item.variations
-        aircrm_item.variations.destroy_all
+      if aircrm_item.variations.each do |variation_to_be_deleted|
+        variation_to_be_deleted.variation_to_types.destroy_all
+        variation_to_be_deleted.destroy
       end
       meli_item.variations.map do |meli_variation|
         variation = Mercadolibre::Variation.new
@@ -231,7 +232,7 @@ module Mercadolibre
       aircrm_item_infos.secure_thumbnail                  =  meli_item.secure_thumbnail
       aircrm_item_infos.meli_start_time                   =  meli_item.start_time.to_date.to_s
       aircrm_item_infos.meli_stop_time                    =  meli_item.stop_time.to_date.to_s
-      aircrm_item_infos.meli_end_time                     =  meli_item.end_time.to_date.to_s if meli_item.end_time
+      aircrm_item_infos.meli_end_time                     =  meli_item.end_time?.to_date.to_s if meli_item and meli_item.end_time?
       aircrm_item_infos.meli_last_updated                 =  meli_item.last_updated.to_date.to_s
 
       aircrm_item_infos.save
@@ -381,6 +382,24 @@ module Mercadolibre
         meli_item_responsed = Mercadolibre::Item.api.create_item record
         update(meli_item_id:  meli_item_responsed.id)
       end
+    end
+
+    def update_in_meli dashboard
+      if meli_item_id
+        record = to_meli_update
+        refresh_token = dashboard.credentials[:refresh_token]
+        Mercadolibre::Item.api.update_token(refresh_token)
+        #validate
+        response = Mercadolibre::Item.api.item_valid? record
+        #meli update
+        meli_item_responsed = Mercadolibre::Item.api.update_item_fields(meli_item_id, record)
+      end
+    end
+
+    def to_meli_update #filter_attributes
+      filter_attributes = ["title", "price"]#, "available_quantity", "description",
+                      #"warranty"]#"variations","seller_address", "location",
+      merge_serializables.slice(*filter_attributes)
     end
 
 
