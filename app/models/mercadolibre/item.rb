@@ -172,12 +172,13 @@ module Mercadolibre
 
 
     def parse_item_variations aircrm_item, meli_item
-      # if aircrm_item.variations
-      #   aircrm_item.variations.each do |variation_to_be_deleted|
-      #     variation_to_be_deleted.variation_to_types.destroy_all
-      #     variation_to_be_deleted.destroy
-      #   end
-      # end
+      if aircrm_item.variations
+        aircrm_item.variations.each do |variation_to_be_deleted|
+          Mercadolibre::VariationToType.where(variation_id: variation_to_be_deleted)
+          Mercadolibre::Variation.find(variation_to_be_deleted.id)
+        end
+      end
+
       meli_item.variations.map do |meli_variation|
         variation = Mercadolibre::Variation.new
         variation.item_id                           =   aircrm_item.id
