@@ -66,7 +66,6 @@ Rails.application.routes.draw do
       # get "/feedbacks"   => "feedbacks#index"
 
       resources :aircrm_preferences
-      resources :label
 
       get "/reload"     => "dashboards#reload"
       get "/search"     => "dashboards#search"
@@ -75,6 +74,10 @@ Rails.application.routes.draw do
 
       # Mercadolibre
       scope module: 'mercadolibre' do
+        resources :label
+        get "meli_label", to: "label#meli_label"
+
+
         resources :categories, only: [ :index, :show ] do
           # On collection
           get "suggest", on: :collection
@@ -95,6 +98,7 @@ Rails.application.routes.draw do
         resources :items do
           member do
             get "publish"
+            get "meli_update"
 
           resources :pictures, only: [:index, :new, :create]
           end

@@ -1,0 +1,28 @@
+<!-- page start
+-->
+<div class="row">
+  <div class="col-lg-12">
+
+
+
+    <section class="panel" id="all-items">
+      <header class="panel-heading">
+        <%= render_breadcrumbs %>
+      </header>
+      <div class="panel-body">
+        <% if @shippings.present? %>
+          <div class="no-more-tables">
+            <table class="display table table-bordered table-striped table-condensed no-more-tables">
+              <thead>
+                <%= render "index_table_head" %>
+              </thead>
+              <tbody id="items-body">
+                <%= render 'shipping' %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>

@@ -6,6 +6,7 @@ module Mercadolibre
     # include Geocoder::Model::Mongoid
     has_one :NotifyAgent, as: "sender"
     has_one :NotifyAgent, as: "receiver"
+    has_one :label
     belongs_to :box
 
     alias_attribute :date_created, :created_at
@@ -124,27 +125,28 @@ module Mercadolibre
       shipping = ::Mercadolibre::Shipping.find_or_initialize_by(meli_order_id: meli_order.id)
 
       # Associations
-      shipping.dashboard_id   = box.dashboard_id.to_i
-      shipping.box_id         = box.id.to_i
-      shipping.meli_order_id  = meli_order.id
-      shipping.meli_item_id   = meli_order.order_items[0].item.id
+      shipping.dashboard_id         = box.dashboard_id.to_i
+      shipping.box_id               = box.id.to_i
+      shipping.meli_order_id        = meli_order.id
+      shipping.meli_item_id         = meli_order.order_items[0].item.id
 
       # If Shipping Status is to_be_agreed means that
       # there is no more information about it.
       # We create Shipping to have a model with an association
       # and explicit status of to_be_agreed
       if meli_order.shipping.status.to_sym == :to_be_agreed
-        shipping.status         =  :to_be_agreed
-        shipping.shipping_mode  =  "not specified"
+        shipping.status             =  :to_be_agreed
+        shipping.shipping_mode      =  "not specified"
 
       elsif meli_order.shipping.id.present?
-        meli_order_shipping     = meli_order.shipping
+        meli_order_shipping         = meli_order.shipping
 
-        shipping.meli_shipping_id = meli_order_shipping.id
-        shipping.status         = meli_order_shipping.status
-        shipping.shipping_mode  = meli_order_shipping.shipping_mode
-        shipping.shipment_type  = meli_order_shipping.shipment_type
-        shipping.cost           = meli_order_shipping.cost?
+        shipping.meli_shipping_id   = meli_order_shipping.id
+        shipping.status             = meli_order_shipping.status
+        shipping.shipping_mode      = meli_order_shipping.shipping_mode
+        shipping.shipment_type      = meli_order_shipping.shipment_type
+        shipping.cost               = meli_order_shipping.cost?
+        shipping.date_first_printed = meli_order_shipping.date_first_printed?
 
         # tracking - attributes available only when fetching from API
         #shipping.tracking_number = meli_order_shipping.tracking_number?

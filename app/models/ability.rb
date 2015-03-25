@@ -25,11 +25,10 @@ class Ability
       can :create, [Box, Customer, Dashboard]
 
       can :manage, User, id: user.id
-      can :manage, Label
     end
   end
 
   def provider_models
-    %W(Item Picture MeliInfo ItemStorage Question Shipping Payment Feedback).map { |name| "Mercadolibre::#{name}".constantize }
+    %W(Item Picture MeliInfo ItemStorage Question Shipping Payment Feedback Label).map { |name| "Mercadolibre::#{name}".constantize }
   end
 end
