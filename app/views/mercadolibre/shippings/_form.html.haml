@@ -14,21 +14,21 @@
 
       = f.fields_for :receiver_address do |r|
         - #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] }
-        = r.input :street_name    , autofocus: true
+        = r.input :street_name    , autofocus: true, input_html: { value: receiver_address[:street_name] }
 
         .row
           .col-xs-5
-            = r.input :street_number
+            = r.input :street_number, input_html: { value: receiver_address[:street_number] }
           .col-xs-7
-            = r.input :comment
+            = r.input :comment, input_html: { value: receiver_address[:comment] }
 
           .col-xs-7
-            = r.input :city           
+            = r.input :city, input_html: { value: receiver_address[:city] }
           .col-xs-5
-            = r.input :state          
+            = r.input :state, input_html: { value: receiver_address[:state] }
 
           .col-xs-5
-            = r.input :zip_code       
+            = r.input :zip_code, input_html: { value: receiver_address[:zip_code] }
           .col-xs-7
             = r.input :country        , priority: [ "Brazil" ]#, selected: ["Brazil"]
 

@@ -7,14 +7,15 @@
   .col-lg-12
     .row
       .col-lg-6
-        = f.input :nickname, disabled: true
+        %h3= @customer.nickname
       .col-lg-6
-        = f.input :meli_user_id, disabled: true
+        %h3= @customer.meli_user_id
 
-    = f.input :name, required: true, autofocus: true
 
-    = f.input :phone
-    = f.input :email
+    = f.input :name, required: true, autofocus: true, input_html: { value: @customer.name }
+
+    = f.input :phone, input_html: { value: @customer.phone }
+    = f.input :email, input_html: { value: @customer.email }
 
   .col-action.text-center
     = f.button :button, type: :submit, class: "btn btn-success" do
