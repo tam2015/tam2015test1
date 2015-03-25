@@ -29,6 +29,13 @@ class Mercadolibre::ItemsController < ApplicationController
   # GET /items
   def index
     @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures)
+
+    # respond_with @items
+    respond_with(@items) do |format|
+      format.csv { send_data @items.to_csv, filename: 'aircrm_anuncios.csv' }
+      format.xls { send_data @items.to_xls, filename: 'aircrm_anuncios.xls' }
+      # format.xls # { send_data @users.to_csv(col_sep: "\t") }
+    end
   end
 
 
@@ -53,8 +60,9 @@ class Mercadolibre::ItemsController < ApplicationController
       flash[:success] = "Etapa concluída com sucesso."
       redirect_to dashboard_pictures_path(id: @item.id), method: :get
     else
-      location= edit_dashboard_item_path(@dashboard, @item)
+      location= new_dashboard_item_path(@dashboard, @item)
     end
+    new_dashboard_item_path(category_id: item_params[:category_id])
 
     #create item_meli_info
     item_meli_info = Mercadolibre::MeliInfo.where(item_id: @item.id).first_or_initialize
@@ -76,11 +84,60 @@ class Mercadolibre::ItemsController < ApplicationController
     @item = Mercadolibre::Item.find params[:id]
   end
 
+  def update
+    @item = Mercadolibre::Item.find(params[:id])#.edit(item_params)
+    @item.category_id       = @item.category_id
+    @item.title             = item_params[:title]
+    @item.description       = item_params[:description]
+    @item.condition         = item_params[:condition]
+    @item.buying_mode       = item_params[:buying_mode]
+    @item.listing_type_id   = item_params[:listing_type_id]
+    @item.price             = item_params[:price]
+    @item.warranty          = item_params[:warranty]
+
+    if @item.save
+      flash[:success] = "Etapa concluída com sucesso."
+      redirect_to dashboard_pictures_path(id: @item.id, goal: "update_item"), method: :get
+    else
+      location= edit_dashboard_item_path(@dashboard, @item)
+    end
+
+    #update item_meli_info
+    if item_meli_info = Mercadolibre::MeliInfo.where(item_id: @item.id).first
+      item_meli_info.accepts_mercadopago                      = true if params["meli_infos"]["accepts_mercadopago"] == true
+      item_meli_info.shipping                                 = {"mode"=>"me2", "local_pick_up"=>true, "free_shipping"=>false, "methods"=>[], "dimensions"=>dimension} if  @dashboard.preferences.shipping_modes.include?("me2") and  params["meli_infos"]["shipping"] == true
+      item_meli_info.non_mercado_pago_payment_methods         = [{"id"=>"MLBMO", "description"=>"Dinheiro", "type"=>"G"}, {"id"=>"MLBCC", "description"=>"Cartão de Crédito", "type"=>"N"}, {"id"=>"MLBDE", "description"=>"Depósito Bancário", "type"=>"D"}].to_json #if row["non_mercado_pago_payment_methods"] == "sim" #and item.price < 200
+      item_meli_info.site_id                                  = "MLB"
+      item_meli_info.currency_id                              = "BRL"
+      item_meli_info.save
+    end
+
+    #update item_storage
+    if item_storage = Mercadolibre::ItemStorage.where(item_id: @item.id).first_or_initialize
+      Rails.logger.debug "\n\n\n\n\n\n----------- params#{params[:item][:item_storages][:available_quantity]}\n\n\n\n\n--------"
+      item_storage.available_quantity = params[:item][:item_storages][:available_quantity]
+      item_storage.save
+    end
+
+  end
+
   def publish
     item = Mercadolibre::Item.find params[:id]
     published_item = item.publish_in_meli @dashboard
     if item.meli_item_id #check if meli_response has a meli_item_id
       flash[:success] = "Anúncio publicado com sucesso."
+      redirect_to dashboard_items_path, method: :get
+    else
+      flash[:error] = "Não foi possível publicar o seu anúncio. Faça seu logout, faça o login e tente novamente"
+      redirect_to dashboard_items_path, method: :get
+    end
+  end
+
+  def meli_update
+    item = Mercadolibre::Item.find params[:id]
+    published_item = item.update_in_meli @dashboard
+    if item.meli_item_id #check if meli_response has a meli_item_id
+      flash[:success] = "Anúncio editado com sucesso."
       redirect_to dashboard_items_path, method: :get
     else
       flash[:error] = "Não foi possível publicar o seu anúncio. Faça seu logout, faça o login e tente novamente"

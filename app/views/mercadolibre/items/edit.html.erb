@@ -1,0 +1,44 @@
+<%
+  item      ||= @item
+  pictures  =   item.pictures || []
+%>
+
+<%= simple_form_for [@dashboard, item], url: dashboard_item_path(@dashboard, item), as: :item, method: :put, html: { class: "form_mercadolibre_item form-horizontal", role: "form" } do |f| %>
+
+  <!-- ML step 2 -->
+  <!-- Pictures, Video, Description, Title, Condition -->
+  <!-- MELI: Pictures, Video, Title, Description, Condition -->
+  <%= render partial: "form_item_step2", locals: { item: item, f: f } %>
+  <!-- <br><br><br><br><br><br><br><br><br><br> -->
+
+  <!-- ML step 3 -->
+  <!-- ... -->
+  <!-- MELI:  Buying mode,
+              Quantity,
+              Price,
+              Start Time,
+              End Time(-),
+              Payment (:form_item_payment)
+                - MercadoPago,
+                - Custom[Até 199 reais],
+              Shipping (:form_item_shipping)
+                - MercadoEnvios 1 / MercadoEnvios 2,
+                - Custom,
+                - Local Pickup),
+              Warranty -->
+  <%= render partial: "form_item_step3", locals: { item: item, f: f } %>
+  <!-- <br><br><br><br><br><br><br><br><br><br> -->
+
+
+  <!-- ML step 4 -->
+  <!-- Listing Type -->
+  <%= render partial: "form_item_step4", locals: { item: item, f: f } %>
+  <!-- <br><br><br><br><br><br><br><br><br><br> -->
+
+  <!-- Error Notifications and Validation Erros -->
+  <% #= render partial: 'form_items_errors', locals: { item: item, f: f, label_class: "hidden-sm" } %>
+
+  <br>
+  <%= render 'item_actions', item: item, f: f, label_class: "hidden-sm" %>
+
+<% end %>

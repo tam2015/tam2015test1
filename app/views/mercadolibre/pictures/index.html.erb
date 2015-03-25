@@ -51,6 +51,15 @@
    <%= "Publicar Anúncio" %>
   <% end %>
 </div>
+
+<% if params[:goal] %>
+<div class="col-action text-left">
+  <%= link_to meli_update_dashboard_item_path(id: params[:id]), class: "btn btn-success" do %>
+   <%= "Editar Anúncio" %>
+  <% end %>
+</div>
+<% end %>
+
 </div>
 
 </section>

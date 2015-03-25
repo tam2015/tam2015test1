@@ -9,7 +9,7 @@
          <!-- Only modifiable if item is not published -->
          <% unless !item.meli_item_id? %>
            <%= f.label :listing_type_id %>
-           <% Mercadolibre::Item::LISTING_TYPE_ID.each do |type| %>
+           <% Mercadolibre::Item.listing_type_ids.each do |type| %>
              <%= f.radio_button :listing_type_id, type %>
              <%= t(type, scope: "helpers.items.listing_type") %>
            <% end %>
