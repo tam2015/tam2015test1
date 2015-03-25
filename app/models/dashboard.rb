@@ -68,7 +68,7 @@ class Dashboard < ActiveRecord::Base
     dashboard.token_expires_at  = Time.at(auth.credentials.expires_at).to_i
     dashboard.save
 
-    UsersToDashboard.create(user_id: user.id, dashboard_id: dashboard.id)
+    UsersToDashboard.find_or_create_by(user_id: user.id, dashboard_id: dashboard.id)
 
     # reload provider
     dashboard.load_provider
