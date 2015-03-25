@@ -33,6 +33,13 @@ module Mercadolibre
       shipping.date_delivered      = shipping_hash.status_history.date_delivered
 
       shipping.save
+
+      if shipping.shipping_mode == "me2" and box.payments.first.approved?
+        label = ::Mercadolibre::Label.find_or_initialize_by(shipping_id: shipping.id)
+        label.meli_first_date_printed   =shipping.date_first_printed
+        label.save
+      end
+
     end
   end
 end
