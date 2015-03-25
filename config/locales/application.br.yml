@@ -266,6 +266,7 @@ br:
         no_street: sem rua
         no_number: sem número
         no_zip_code: sem cep
+        no_zipcode: sem cep
         no_city: sem cidade
         no_address: sem endereço
         pending: pendente
