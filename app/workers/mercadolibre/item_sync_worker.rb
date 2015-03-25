@@ -18,10 +18,12 @@ module Mercadolibre
       refresh_token = dashboard.credentials[:refresh_token]
       Mercadolibre::Item.api.update_token(refresh_token)
       ids = Mercadolibre::Item.api.get_my_item_ids
-      meli_item_ids = ids[:results]
-      meli_item_ids.map do |meli_item_id|
-        # Fire another worker to handle API request
-        Mercadolibre::ItemWorker.perform_async dashboard.meli_user_id, meli_item_id
+      meli_item_ids = ids[:results] if ids
+      if meli_item_ids
+        meli_item_ids.map do |meli_item_id|
+          # Fire another worker to handle API request
+          Mercadolibre::ItemWorker.perform_async dashboard.meli_user_id, meli_item_id
+        end
       end
     end
 
