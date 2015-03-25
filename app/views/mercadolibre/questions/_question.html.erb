@@ -1,113 +1,111 @@
-
-  <% if question %>
-    <div id="delete_question-<%= question.id %>" >
-        <div class="group-rom-question">
-          <div class="first-part-question" >
-            <div class="user-heading alt ">
-                <a href="#">
-                  <%=image_tag("#{Mercadolibre::Item.where(mid: "MLB559706000").first.pictures.first[:url] if Mercadolibre::Item.where(mid: "MLB559706000").first and Mercadolibre::Item.where(mid: "MLB559706000").first.pictures and Mercadolibre::Item.where(mid: "MLB559706000").first.pictures.first}", alt: current_user.name, class: "avatar-mini")%>
-                </a>
-              <% if Mercadolibre::Item.where(mid: question.meli_item_id).first %>
-              <p><%= Mercadolibre::Item.where(mid: question.meli_item_id).first.title %></p>
-              <p>R$ <%= Mercadolibre::Item.where(mid: question.meli_item_id).first.price %></p>
-
-                  Qtd Disponível <%= Mercadolibre::Item.where(mid: question.meli_item_id).first.available_quantity %></br>
-                  Qtd vendida <%= Mercadolibre::Item.where(mid: question.meli_item_id).first.sold_quantity %></br>
-                  Mercado Pago? <%= Mercadolibre::Item.where(mid: question.meli_item_id).first.accepts_mercadopago %></br>
-                  Fim do Anúncio <time class="unloaded" datetime="<%= Mercadolibre::Item.where(mid: question.meli_item_id).first.end_time %>"><%= Mercadolibre::Item.where(mid: question.meli_item_id).first.end_time %></time></br>
-              <% end %>
-            </div>
-          </div>
-    <!--       <div class="second-part">
-            # <%= link_to question.user.name, dashboard_questions_path(meli_item_id: question.meli_item_id), remote: true %>
-          </div> -->
-          <div class="second-part-question">
-            <% if question.status? %>
-              <% status_class = "danger" if question.status == :unanswered or question.status == :closed_unanswered or question.status == :under_review %>
-              <% status_class = "success" if question.status == :answered  %>
-
-              <span type="button" class="badge alert-<%= status_class %>">
-                <%= t(question.status, scope: "helpers.questions.status") || "" %>
-              </span>
-
-            <% end %>
-            <p><%= link_to question.text.html_safe, dashboard_questions_path(current_dashboard, meli_item_id: question.meli_item_id), remote: true %></p>
-
-            <% if question.answered? %>
-              <div class="group-rom" style="padding: 15px">
-                <div class="msg-time-chat">
-                    <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini")%></a>
-                    <div class="message-body msg-in">
-                        <span class="arrow"></span>
-                        <div class="text">
-                          <%= link_to(dashboard_questions_path(current_dashboard, meli_item_id: question.meli_item_id), remote: true) do %>
-                            <p class="attribution"><a href="#"><%= question.user.name%></a> <%= I18n.l(question.created_at.to_time) %> </p>
-                            <p><%= question.answer and question.answer[:text]%></p>
-                          <%end%>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            <%end%>
-
-          </div>
-
-          <div class="third-part-question">
-            <span class="time">
-              <i class="fa fa-clock-o"></i>
-              <time class="unloaded" datetime="<%= question.created_at %>">
-                <%= question.created_at %>
-              </time>
-            </span>
-          </div>
-
-            <ul class="fourth-part-question">
-              <a href="javascript:;">
-                <i class="fa fa-envelope text-success"></i>
-                <%= link_to 'Detalhes', dashboard_questions_path(current_dashboard, meli_item_id: question.meli_item_id), remote: true, style: "font-size: 11px" %>
-              </a>
-
-
-              <% if question.unanswered? %>
-              </br>
-                <a href="javascript:;">
-                  <i class="fa fa-envelope text-success"></i>
-                  <%= link_to 'Responder', edit_dashboard_question_path(current_dashboard, question.id), remote: true, style: "font-size: 11px" %>
-                </a>
-              <%end%>
-
-              </br>
-              <a href="javascript:;">
-                <i class="fa fa-envelope text-success"></i>
-                <%= link_to 'Apagar', dashboard_question_path(current_dashboard, question.id), method: :delete, data: { confirm: 'Você tem certeza que deseja apagar?' }, remote: true, style: "font-size: 11px" %>
-              </a>
-
-            <% if question.customer_blocked == false %>
-              </br>
-              <a href="javascript:;">
-                <i class="fa fa-envelope text-success"></i>
-                <%= link_to 'Bloquear', block_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
-              </a>
-              <% else %>
-              <a href="javascript:;">
-                <i class="fa fa-envelope text-success"></i>
-                <%= link_to 'Desbloquear', unblock_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
-              </a>
-
-
-                <%end%>
-
-
-            </ul>
-
-
-
-          <div class="group-rom" id="form_new_answer-<%= question.id %>">
-
-          </div>
-
-        </div>
+<% if question %>
+  <tr id="question_<%= question.id %>">
+    <td style= "width: 230px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+      <dl class="dl-horizontal">
+        <dt>Data:</dt>
+        <dd><%= question.meli_date_created[0..9] if question.meli_date_created %></dd>
+        <dt>Anúncio:</dt>
+        <% if question.meli_item %>
+        <dd><%= t(question.meli_item.meli_item_id) %></dd>
+        <dt>Preço:</dt>
+        <dd>R$ <%= question.meli_item.price %></dd>
+        <dt>Qtd disponível:</dt>
+        <dd><%= t(question.meli_item.item_storage.available_quantity) %></dd>
+        <% end %>
+        
+      </dl>
+      <div class="user-heading round">
+      <% if question.meli_item and question.meli_item.pictures and question.meli_item.pictures.first and question.meli_item.pictures.first.meli_url != nil%>
+        <a href="#">
+            <%= image_tag question.meli_item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
+            <%= truncate(question.meli_item.title, length: 18) %></br>
+        </a>
       <% end %>
-   </div>
+      </div>
+      </br>
+    </td>
 
+    <td style="width:210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">    
+      <% if question.customer %>
+      <dl class="dl-horizontal">
+        <dt>Nickname:</dt>
+        <dd><%= question.customer.nickname %></dd>
+        <dt>Nome:</dt>
+        <dd><%= question.customer.name %></dd>
+        <dt>Telefone:</dt>
+        <dd><%= question.customer.phone%></dd>
+        <dt>Email:</dt>
+        <dd style="width: 80px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= question.customer.email%></dd>
+      </dl>
+      <% end %>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+
+      <% if (question.status == :unanswered or question.status == :closed_unanswered or question.status == :under_review) %>
+        <span type="button" class="badge alert-danger">
+          <%= t(question.status, scope: "helpers.questions.status") || "" %>
+        </span>
+      <% end %>
+
+      <% if question.status? %>
+        <span type="button" class="badge alert-success">
+          <%= t(question.status, scope: "helpers.questions.status") || "" %>
+        </span>
+      <% end %>      
+
+      <% if question and question.text %>
+      <p><%= question.text.html_safe %></p>
+      <% end %>
+
+      <% if question.answered? %>
+        <div class="group-rom" style="padding: 15px">
+          <div class="msg-time-chat">
+              <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini")%></a>
+              <div class="message-body msg-in">
+                  <span class="arrow"></span>
+                  <div class="text">
+                      <p class="attribution"><a><%= question.user.name%></a> <%= I18n.l(question.created_at.to_time) %> </p>
+                      <p><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
+                  </div>
+              </div>
+          </div>
+        </div>
+      <%end%>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <ul>
+        <% if question.unanswered? %>
+          <a href="javascript:;">
+            <i class="fa fa-envelope text-link"></i>
+            <%= link_to 'Responder', edit_dashboard_question_path(current_dashboard, question.id), remote: true, style: "font-size: 11px" %>
+          </a>
+        <%end%>
+        </br>
+        <a href="javascript:;">
+          <i class="fa fa-envelope text-link"></i>
+          <%= link_to 'Apagar', dashboard_question_path(current_dashboard, question.id), method: :delete, data: { confirm: 'Você tem certeza que deseja apagar?' }, remote: true, style: "font-size: 11px" %>
+        </a>
+        </br>
+      <% unless question.customer_blocked? %>
+        </br>
+        <a href="javascript:;">
+          <i class="fa fa-envelope text-link"></i>
+          <%= link_to 'Bloquear', block_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
+        </a>
+        <% else %>
+        </br>
+        <a href="javascript:;">
+          <i class="fa fa-envelope text-link"></i>
+          <%= link_to 'Desbloquear', unblock_customer_dashboards_path(current_dashboard, question.id), method: :post, data: { confirm: 'Você tem certeza que deseja desbloquear esse usuário?' }, style: "font-size: 11px" %>
+        </a>
+        <%end%>
+      </ul>
+    </td>
+
+
+
+  </tr>
+<% end %>
 

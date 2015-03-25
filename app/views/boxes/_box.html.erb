@@ -1,0 +1,207 @@
+<% if box %>
+  <tr id="item_<%= box.id %>">
+    <td style= "width: 200px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+      <dl class="dl-horizontal">
+        <dt>Ordem:</dt>
+        <dd><%= t(box.meli_order_id) %></dd>
+        <dt>Preço:</dt>
+        <dd>R$ <%= t(box.item.price) %></dd>
+        <dt>Data:</dt>
+        <dd><%= box.meli_date_created[0..9] if box.meli_date_created %></dd>
+      </dl>
+      <div class="user-heading round">
+      <% if box.item and box.item.pictures and box.item.pictures.first and box.item.pictures.first.meli_url != nil%>
+        <a href="#">
+            <%= image_tag box.item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
+            <%= truncate(box.item.title, length: 18) %></br>
+        </a>
+      <% end %>
+      </div>
+      </br>
+      <p class="pull-left" style="color: #58c9f3; font-size: 11px">
+        <%= "Qualificação enviada ao comprador" if box.feedback_seller.present? and box.feedback_seller.fulfilled? %>
+      </p>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <% if box.customer_id? and box.box_customer %>
+        <% status_class = box.box_customer.pendings_status == "pending" ? "danger" : "success" %>
+        <span type="button" class="badge alert-<%= status_class %>">
+          <%= I18n.t(box.box_customer.pendings_status, scope: "helpers.boxes.customers") || "" %>
+        </span>
+        </br>
+        </br>
+        <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.nickname  || "sem nick"     %> </p>
+        <p style="margin-top:-7px"><%= box.box_customer.name      || "sem nome"     %></p>
+        <p style="margin-top:-7px"><%= box.box_customer.phone     || "sem telefone" %></p>
+        <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.email     || "sem email"    %></p>
+        <div class="text-left">
+          <%= link_to edit_dashboard_customer_path(id: box.box_customer.id), remote: true,  class: "btn-link" do %>
+            <%= translate_button_content(:edit, box.box_customer, icon: :pencil, label_class: "hidden-xs") %>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+
+    <td style="width:150px"data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <% if box.shipping %>
+        <% status_class = box.shipping.pendings_status == "pending" ? "danger" : "success" %>
+        <span type="button" class="badge alert-<%= status_class %>">
+          <%= I18n.t(box.shipping.pendings_status, scope: "helpers.boxes.shippings") || "" %>
+        </span>
+        </br>
+        </br>
+
+        <% if receiver_address = box.shipping.receiver_address %>
+          <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> <%= receiver_address[:street_name] || I18n.t("no_street", scope: "helpers.boxes.shippings")     %> </p>
+          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> núm.<%= receiver_address[:street_number] || I18n.t("no_number", scope: "helpers.boxes.shippings")     %> </p>
+          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> compl.<%= receiver_address[:comment     ] || "sem complemento"  %> </p>
+          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis">
+            <% if receiver_address[:city] and receiver_address[:state] %>
+              <%= box.shipping.region || I18n.t("no_city", scope: "helpers.boxes.shippings") %>
+            <% end %>
+          </p>
+
+          <p style="margin-top:-7px"> <%= box.shipping.receiver_address[:zip_code] ||  I18n.t("no_zipcode", scope: "helpers.boxes.shippings") %> </p>
+        <% else %>
+          <p style="margin-top:-7px">
+            <%= I18n.t("no_address", scope: "helpers.boxes.shippings") %>
+          </p>
+        <% end %>
+
+        <p style="font-size: 11px; color: #58c9f3"> <%= box.box_notify_count %> alerta(s) de cobrança de endereço enviados</p>
+        <div class="text-left">
+          <%= link_to edit_shipping_path(box.shipping), class: "btn-link", remote: true do %>
+            <%= translate_button_content(:edit, box.shipping, icon: :pencil, label_class: "hidden-xs") %>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <% if box.payments.first %>
+      <div class="btn-group">
+        <a href="#" class="btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+        </a>
+
+        <ul class="dropdown-menu">
+          <% Mercadolibre::Payment::statuses.keys.each do |status| %>
+            <% unless status == box.payments.first.status %>
+              <li><%= link_to I18n.t(status, scope: "helpers.boxes.payment_tags"), edit_payment_path(box.payments.first, box_id: box.id, status: status ), remote: true %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      </br>
+      </br>
+      <dl class="dl-horizontal">
+
+        <dt>Forma:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? :MP : :a_combinar %> </dd>
+
+        <dt>ID:</dt>
+        <dd><%= box.payments.first.meli_payment_id %></dd>
+
+        <dt>Valor Pago:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.total_paid_amount : :a_combinar%> </dd>
+
+        <dt>Preço:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.transaction_amount : :a_combinar%> </dd>
+
+        <dt>Diferença:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.overpaid_amount : :a_combinar %> </dd>
+
+        <dt>Frete:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.shipping_cost : :a_combinar %> </dd>
+
+        <dt>Metodo:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.payment_method_id : :a_combinar %> </dd>
+
+        <dt>Parcelas:</dt>
+        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.installments : :a_combinar %> </dd>
+
+      </dl>
+    <% end %>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <% if box.shipping%>
+        <div class="btn-group">
+          <% if box.shipping.tags and box.shipping.tags.include?("delivered") %>
+          <a href="#" class="btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <%= !box.shipping.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.shipping_tags") : I18n.t(box.shipping.tags.join(', '), scope: "helpers.boxes.shipping_tags")%>
+          </a>
+          <% elsif box.shipping.tags and box.shipping.tags.include?("ready_to_ship")%>
+          <a href="#" class="btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <%= !box.shipping.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.shipping_tags") : I18n.t(box.shipping.tags.join(', '), scope: "helpers.boxes.shipping_tags")%>
+          </a>
+          <% elsif box.shipping.tags and (box.shipping.tags.include?("not_delivered") or box.shipping.tags.include?("cancelled") )%>
+          <a href="#" class="btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <%= !box.shipping.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.shipping_tags") : I18n.t(box.shipping.tags.join(', '), scope: "helpers.boxes.shipping_tags")%>
+          </a>
+          <% else %>
+          <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <%= !box.shipping.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.shipping_tags") : I18n.t(box.shipping.tags.join(', '), scope: "helpers.boxes.shipping_tags")%>
+          </a>
+          <% end %>
+
+          <ul class="dropdown-menu">
+            <% Mercadolibre::Shipping::statuses.keys.each do |status| %>
+              <% unless status == box.shipping.status %>
+                <li><%= link_to I18n.t(status, scope: "helpers.boxes.shipping_tags"), shipping_status_path(box.shipping, box_id: box.id, status: status ), method: :post, remote: true %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+        </br>
+        </br>
+        <dl class="dl-horizontal-shipping">
+          <dt>Forma:   </dt>
+          <dd><%= box.shipping.shipping_mode? ? I18n.t(box.shipping.shipping_mode, scope: "helpers.boxes.shippings") : I18n.t("not specified", scope: "helpers.boxes.shippings") %></dd>
+
+          <dt>Rastr:   </dt>
+          <dd><%= box.shipping.tracking_number ? box.shipping.tracking_number : :não_rastr %></dd>
+
+          <dt>Envio:   </dt>
+          <dd> <%= box.shipping.date_shipped ? box.shipping.date_shipped[0..9] : :nao_definido %> </dd>
+
+          <dt>Entrega:   </dt>
+          <dd> <%= box.shipping.date_delivered ? box.shipping.date_delivered[0..9] : :nao_definido %> </dd>
+
+          <dt>Preço do frete:   </dt>
+          <dd> <%= box.shipping.cost ? box.shipping.cost : :nao_definido %> </dd>
+        </dl>
+      <% end %>
+    </td>
+
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <a href="javascript:;">
+        <i class="fa fa-envelope text-link"></i>
+        <% if box.shipping %>
+        <%= link_to 'Cobrar Endereço', shipping_notify_path(box.shipping, { type: :no_address }), method: :post, data: { confirm: 'Você tem certeza que deseja enviar um email para cobrar o endereço desse comprador?' }, style: "font-size: 11px" %>
+        <% end %>
+      </a>
+      </br>
+      <% if box.feedback_seller(box) %>
+      <a href="javascript:;">
+        <i class="fa fa-pencil text-link"></i>
+        <%= link_to 'Editar Avaliação', feedback_edit_dashboard_boxes_path(meli_order_id: box.meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+      </a>
+      <% end %>
+      </br>
+
+      <a href="javascript:;">
+        <i class="fa fa-pencil text-link"></i>
+        <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: box.id) ,style: "font-size: 11px" %>
+      </a>
+    </td>
+
+  </tr>
+<% end %>
+
