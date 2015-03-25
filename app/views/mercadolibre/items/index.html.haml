@@ -10,6 +10,7 @@
 
             /   = "No momento não é possível criar novos anúncios pelo AirCRM, logo estaremos com essa funcionalidade funcionando a todo vapor, podendo inclusive criar e editar anúncios em massa."
 
+
           .col-md-4
             .btn-group
               = link_to dashboard_categories_path(@dashboard), id: "new_item", class: "btn btn-success btn-sm" do
@@ -29,7 +30,7 @@
 
               .btn-group
                 %button#more-actions.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-                  = t(".importar")
+                  = t(".excel")
                   %i.fa.fa-ellipsis-h
 
                 %ul.dropdown-menu{"aria-labelledby" => "more-actions", role: "menu"}
@@ -37,8 +38,16 @@
                     = link_to catalog_import_dashboard_items_path, id: "import_invitation", tabindex: "-1", remote: true do
                       = translate_button_content(:import, @klass, icon: :upload, label_class: "")
 
+                  %li{role: "presentation"}
+                    = link_to "planilha modelo", dashboard_items_path(format: "xls")
+
+
+
+
           .col-md-8
             =# status_label @klass::STATUS
+
+
 
     %section#all-items.panel
       %header.panel-heading
