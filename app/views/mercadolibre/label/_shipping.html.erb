@@ -1,42 +1,48 @@
 <% if @shippings %>
   <% @shippings.each do | shipping| %>
-  <tr id="item_<%= shipping.id %>">
-    <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
-      <div class="user-heading round">
-      <% if shipping.box.item.pictures and shipping.box.item.pictures.first and shipping.box.item.pictures.first.meli_url != nil %>
-        <a href="#">
-            <%= image_tag shipping.box.item.pictures.first.meli_url, style: "width: 50px; height: 30px" %>
-            <%= truncate(shipping.box.item.title, length: 28) %>
-        </a>
-      <% end %>
-      </div>
-    </td>
-    <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
-        <%= shipping.box.meli_order_id %>
-    </td>
-    <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
-        <%= shipping.box.customer.nickname %>
-    </td>
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
-      <%= shipping.receiver_address[:address_line] %>
-    </td>
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
-      <% if shipping.label.aircrm_date_printed? %>
-      <span type="button" class="badge alert-success"> 
-      <%= "impresso" %>
-      </span>
-      <%= shipping.label.aircrm_date_printed[0..9] %>
-      <% else %>
-      <span type="button" class="badge alert-success">
-      <%= "não impresso" %>
-      </span>
-      <% end %>
-    </td>
-    <td style= "width: 100px" data-title="<%= Mercadolibre::Label.human_attribute_name(:status      ) %>">
-      <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: shipping.box.id) ,style: "font-size: 11px" %>
-    </td>
+    <% if shipping.label %>
+      <tr id="item_<%= shipping.id %>">
+        <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+          <div class="user-heading round">
+          <% if shipping.box.item.pictures and shipping.box.item.pictures.first and shipping.box.item.pictures.first.meli_url != nil %>
+            <a href="#">
+                <%= image_tag shipping.box.item.pictures.first.meli_url, style: "width: 50px; height: 30px" %>
+                <%= truncate(shipping.box.item.title, length: 28) %>
+            </a>
+          <% end %>
+          </div>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+            <%= shipping.box.meli_order_id %>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+          <% if shipping.box.customer %>
+            <%= shipping.box.customer.nickname %>
+          <% end %>
+        </td>
+        <td data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if shipping.receiver_address %>
+            <%= shipping.receiver_address[:address_line] %>
+          <% end %>
+        </td>
+        <td style= "max-width: 90px" data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if shipping.label and shipping.label.aircrm_date_printed? %>
+          <span type="button" class="badge alert-success"> 
+          <%= "impresso" %>
+          </span>
+          <%= shipping.label.aircrm_date_printed[0..9] %>
+          <% else %>
+          <span type="button" class="badge alert-success">
+          <%= "não impresso" %>
+          </span>
+          <% end %>
+        </td>
+        <td style= "width: 100px" data-title="<%= Mercadolibre::Label.human_attribute_name(:status      ) %>">
+          <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: shipping.box.id) ,style: "font-size: 11px" %>
+        </td>
 
-  </tr>
+      </tr>
+    <% end %>
   <% end %>
 <% end %>
 
