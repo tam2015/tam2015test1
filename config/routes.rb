@@ -96,9 +96,11 @@ Rails.application.routes.draw do
 
 
         resources :items do
+            get "monitor", to: "items#monitor", on: :collection
           member do
             get "publish"
             get "meli_update"
+            
 
           resources :pictures, only: [:index, :new, :create]
           end

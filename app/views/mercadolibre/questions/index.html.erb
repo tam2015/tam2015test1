@@ -12,7 +12,7 @@
     <li class="dropdown" style="padding-right: 30px; float: left">
       <form action="#" class="pull-right position">
         <%= form_tag dashboard_questions_path, method: :get do %>
-          <input type="text" placeholder="Palavra" class="form-control search-btn "
+          <input type="text" placeholder="Palavra ou Anúncio" class="form-control search-btn "
             <%= text_field_tag :query, params[:query] %>
             <%= submit_tag "Search", name: nil, class: "hidden" %>
 
@@ -40,7 +40,14 @@
 
     <section class="panel" id="all-items">
       <header class="panel-heading">
-        <%= render_breadcrumbs %>
+        <ul class="breadcrumb">
+          <li>
+            <a href="/d">Painél</a>
+          </li>
+          <li class="active">
+            Perguntas
+          </li>
+        </ul>
       </header>
       <div class="panel-body">
         <% if @questions.present? %>

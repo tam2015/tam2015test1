@@ -11,8 +11,8 @@
     <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
       <li class="dropdown" style="padding-right: 30px; float: left">
         <form action="#" class="pull-right position">
-          <%= form_tag dashboard_index_test_path, method: :get do %>
-            <input type="text" placeholder="buscar" class="form-control search-btn "
+          <%= form_tag dashboard_categories_path, method: :get do %>
+            <input type="text" placeholder="número da ordem" class="form-control search-btn "
               <%= text_field_tag :query, params[:query] %>
               <%= submit_tag "Search", name: nil, class: "hidden" %>
 
@@ -22,15 +22,15 @@
       <li class="dropdown" style="padding-right: 30px; float: left">
         <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Dados <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <% ["pendente", "sem pendências"].each do |status| %>
-            <li><%= link_to status, dashboard_index_test_path(status_data: status), method: :get %></li>
+          <% ["pending", "no_pending"].each do |status| %>
+            <li><%= link_to I18n.t(status, scope: "helpers.boxes.shippings"), dashboard_index_test_path(status_data: status), method: :get %></li>
           <% end %>
         </ul>
       </li>
       <li class="dropdown" style="padding-right: 30px; float: left">
         <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Endereço <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <% ["pendente", "sem pendências"].each do |status| %>
+          <% ["pending", "no_pending"].each do |status| %>
             <li><%= link_to status, dashboard_index_test_path(status_address: status), method: :get %></li>
           <% end %>
         </ul>
@@ -56,7 +56,14 @@
 
     <section class="panel" id="all-items">
       <header class="panel-heading">
-        <%= render_breadcrumbs %>
+        <ul class="breadcrumb">
+          <li>
+            <a href="/d">Painél</a>
+          </li>
+          <li class="active">
+            Vendas
+          </li>
+        </ul>
       </header>
       <div class="panel-body">
         <% if @boxes.present? %>

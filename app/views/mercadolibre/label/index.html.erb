@@ -7,8 +7,15 @@
 
     <section class="panel" id="all-items">
       <header class="panel-heading">
-        <%= render_breadcrumbs %>
-      </header>
+        <ul class="breadcrumb">
+          <li>
+            <a href="/d">Painél</a>
+          </li>
+          <li class="active">
+            Etiquetas
+          </li>
+        </ul>
+      </header>   
       <div class="panel-body">
         <% if @shippings.present? %>
           <div class="no-more-tables">

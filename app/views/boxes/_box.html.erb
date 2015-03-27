@@ -5,7 +5,7 @@
         <dt>Ordem:</dt>
         <dd><%= t(box.meli_order_id) %></dd>
         <dt>Preço:</dt>
-        <dd>R$ <%= t(box.item.price) %></dd>
+        <dd>R$ <%= box.item.price %></dd>
         <dt>Data:</dt>
         <dd><%= box.meli_date_created[0..9] if box.meli_date_created %></dd>
       </dl>
