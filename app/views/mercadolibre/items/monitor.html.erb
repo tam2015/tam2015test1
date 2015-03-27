@@ -1,0 +1,35 @@
+<!-- page start
+-->
+<div class="row">
+  <div class="col-lg-12">
+
+    <section class="panel" id="all-items">
+      <header class="panel-heading">
+        <ul class="breadcrumb">
+          <li>
+            <a href="/d">Painél</a>
+          </li>
+          <li class="active">
+            Vendas
+          </li>
+        </ul>
+      </header>
+      <div class="panel-body">
+        <% if @items.present? %>
+          <div class="no-more-tables">
+            <table class="display table table-bordered table-striped table-condensed no-more-tables">
+              <thead>
+                <%= render "monitor_table_head" %>
+              </thead>
+              <tbody id="items-body">
+                <%= render "monitor" %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+  </div>
+</div>
+
