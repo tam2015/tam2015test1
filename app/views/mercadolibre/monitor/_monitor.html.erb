@@ -1,0 +1,33 @@
+<% if @items %>
+  <% @items.each do |item| %>
+  <tr id="item_<%= item.id %>">
+    <td>
+      <%= link_to dashboard_item_path(current_dashboard, item), title: item.title do %>
+        <%= truncate(item.id, length: 75) %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to dashboard_item_path(current_dashboard, item), title: item.title do %>
+        <%= truncate(item.title, length: 75) %>
+      <% end %>
+    </td>
+    <td>
+      <%= item.listing_type_id %>
+    </td>    
+    <td>
+      <%= item.price %>
+    </td>
+    <td>
+        <%= item.sold_quantity? %>
+    </td>
+    <td>
+        <%= item.available_quantity? %>
+    </td>
+    <td>
+        <%= link_to item.seller.id?, item.permalink %>
+    </td>    
+
+  </tr>
+  <% end %>
+<% end %>
+

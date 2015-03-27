@@ -29,7 +29,7 @@
     </ul>
   </div>
   <form action="#" class="pull-center position" style="padding: 20px">
-    <%= form_tag dashboard_index_test_path, method: :get do %>
+    <%= form_tag dashboard_categories_path, method: :get do %>
       <input type="text" placeholder="buscar" class="form-control search-btn "
         <%= text_field_tag :query, params[:query] %>
         <%= submit_tag "Search", name: nil, class: "hidden" %>

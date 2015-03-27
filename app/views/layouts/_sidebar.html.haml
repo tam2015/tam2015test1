@@ -31,6 +31,8 @@
             %li
               = link_to "Clientes", dashboard_customers_path(dashboard)
             %li
+              = link_to "Concorrência", monitor_from_categories_dashboards_path(dashboard_id: dashboard.id, view: "alternative_view")              
+            %li
               = link_to "Tendências", dashboard_trends_path(dashboard)
             %li
               = link_to "Configurações", profile_path(dashboard)

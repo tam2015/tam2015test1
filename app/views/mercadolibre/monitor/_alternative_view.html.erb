@@ -1,0 +1,32 @@
+<section class="panel" style= "min-height:500px ">  
+  <form action="#" class="pull-center position" style="padding: 20px">
+    <%= form_tag monitor_from_categories_dashboards_path, method: :get do %>
+      <input type="text" placeholder="buscar" class="form-control search-btn "
+        <%= text_field_tag :query, params[:query] %>
+        <%= submit_tag "Search", name: nil, class: "hidden" %>
+    <%end%>
+  </form>  
+  <div class="row">
+      <div class="col-md-4 category-column category-preselected hub-std" style="text-align:center; margin-top:20px">
+        <img src="https://secure.mlstatic.com/sell/assets/hub-std-0d2cf612703ffe1f295cfe7c153832be.png">
+        <div class="gradient"></div>
+      </div>
+      <div class="col-md-8" style="margin-top:20px; width: 300px">      
+
+        <div style="border:1px solid #CCC;padding-top: 20px" >
+        <% @categories.each do |category| %>
+          <p style="padding-left:20px" ><%= link_to category.name, monitor_from_categories_dashboards_path(q: category.id, dashboard_id: current_user.dashboards.first.id, view: "alternative_view") %></p>
+        <% end %>
+        <h3 style= "text-align: center; margin-top: -10px">
+        <% if @categories == [] %>
+        <%= link_to "Ver concorrentes", monitor_dashboards_path(category_id: params[:q], dashboard_id: current_dashboard.id, view: "alternative_view") %>
+        <% end %>
+        </h3>
+      </div>
+        
+      </div>
+  </div>
+</section>
+
+
+

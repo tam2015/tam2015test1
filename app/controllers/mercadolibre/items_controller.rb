@@ -154,11 +154,6 @@ class Mercadolibre::ItemsController < ApplicationController
     end
   end
 
-  def monitor
-    @meli_items = Meli::Item.items_by_category_id params[:category_id]
-    @items = @meli_items.results#.paginate(page: params[:page], per_page: 5)
-  end
-
   private
 
     # Short class

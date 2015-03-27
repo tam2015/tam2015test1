@@ -1,0 +1,19 @@
+<% if @categories %>
+  <% @categories.each do |category| %>
+  <tr id="category_<%= category.id %>">
+    <td>
+      <%= category.id %>
+    </td>       
+    <td>
+      <%= category.name %>
+    </td>           
+    <td>
+      <%= link_to 'Ver concorrentes', monitor_dashboards_path(category_id: category.id, dashboard_id: current_dashboard.id) %>
+    </td>
+    <td>
+      <%= link_to "próxima categoria", monitor_from_categories_dashboards_path(q: category.id, dashboard_id: current_dashboard.id) %>
+    </td>
+  </tr>
+  <% end %>
+<% end %>
+

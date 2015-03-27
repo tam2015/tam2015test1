@@ -38,7 +38,7 @@
     <td data-title="<%= @klass.human_attribute_name(:status      ) %>">
       <%= link_to 'Editar Anúncio', edit_dashboard_item_path(id: item.id),style: "font-size: 11px" %>
     </br>
-      <%= link_to 'Ver concorrentes', monitor_dashboard_items_path(category_id: item.category_id),style: "font-size: 11px" %>
+      <%= link_to 'Ver concorrentes', monitor_dashboards_path(category_id: item.category_id, dashboard_id: @dashboard.id),style: "font-size: 11px" %>
     </td>
 
   </tr>

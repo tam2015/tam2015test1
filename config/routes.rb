@@ -77,6 +77,8 @@ Rails.application.routes.draw do
         resources :label
         get "meli_label", to: "label#meli_label"
 
+        get "monitor", to: "monitor#monitor", on: :collection
+        get "monitor_from_categories", to: "monitor#monitor_from_categories", on: :collection
 
         resources :categories, only: [ :index, :show ] do
           # On collection
@@ -94,9 +96,7 @@ Rails.application.routes.draw do
           end
         end
 
-
         resources :items do
-            get "monitor", to: "items#monitor", on: :collection
           member do
             get "publish"
             get "meli_update"
