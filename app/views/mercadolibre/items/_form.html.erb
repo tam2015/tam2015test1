@@ -5,6 +5,7 @@
 
 <%= simple_form_for [@dashboard, item], url: dashboard_items_path(@dashboard, item), as: :item, method: :post, html: { class: "form_mercadolibre_item form-horizontal", role: "form" } do |f| %>
 
+  <%= render 'steps' %>
   <!-- ML step 2 -->
   <!-- Pictures, Video, Description, Title, Condition -->
   <!-- MELI: Pictures, Video, Title, Description, Condition -->

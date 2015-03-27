@@ -1,67 +1,52 @@
+<%= render 'steps' %>
+
 <section class="panel" >
-<div class= "panel-body" >
+  <div class= "panel-body" >
+    <h3>Adicione fotos do seu produto</h3>
+    <%= form_for @picture, url: :dashboard_pictures, method: :post do |f| %>
+      <%= f.hidden_field :item_id, value: params[:id] %>
+      <%= f.label :cwave, "Clique em Choose File depois clique em Adicionar para cada foto" %>
+      <%= f.file_field :cwave %>
 
-<h3>Adicione fotos do seu produto</h3>
-
-<%= form_for @picture, url: :dashboard_pictures, method: :post do |f| %>
-  <%= f.hidden_field :item_id, value: params[:id] %>
-  <%= f.label :cwave, "Clique em Choose File depois clique em Adicionar para cada foto" %>
-  <%= f.file_field :cwave %>
-
-  </br>
-  <div class="col-action text-left">
-    <%= f.button :button, type: :submit, class: "btn btn-success" do %>
-    <%= "adicionar" %>
+      </br>
+      <div class="col-action text-left">
+        <%= f.button :button, type: :submit, class: "btn btn-success" do %>
+        <%= "adicionar" %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
-
-
-</div>
-</section>
-
-
-
-
-<section class="panel" >
-<div class= "panel-body" >
-<ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
-  <% @pictures.each do |picture| %>
-  <li class="dropdown" style="padding-right: 30px; float: left">
-    <%= image_tag picture.cwave_url(:thumb) %>
-  </li>
-  <% end %>
-</ul>
-
-
-
-</br>
-
-
-
-
-</div>
-
 </section>
 
 <section class="panel" >
-<div class= "panel-body" >
-<div class="col-action text-left">
-  <%= link_to publish_dashboard_item_path(id: params[:id]), class: "btn btn-success" do %>
-   <%= "Publicar Anúncio" %>
-  <% end %>
-</div>
+  <div class= "panel-body" >
+    <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
+      <% @pictures.each do |picture| %>
+        <li class="dropdown" style="padding-right: 30px; float: left">
+          <%= image_tag picture.cwave_url(:thumb) %>
+        </li>
+      <% end %>
+    </ul>
+  </br>
+  </div>
+</section>
 
-<% if params[:goal] %>
-<div class="col-action text-left">
-  <%= link_to meli_update_dashboard_item_path(id: params[:id]), class: "btn btn-success" do %>
-   <%= "Editar Anúncio" %>
-  <% end %>
-</div>
-<% end %>
+<section class="panel" >
+  <div class= "panel-body" >
+    <div class="col-action text-left">
+      <%= link_to publish_dashboard_item_path(id: params[:id]), class: "btn btn-success" do %>
+       <%= "Publicar Anúncio" %>
+      <% end %>
+    </div>
 
-</div>
-
+    <% if params[:goal] %>
+    <div class="col-action text-left">
+      <%= link_to meli_update_dashboard_item_path(id: params[:id]), class: "btn btn-success" do %>
+       <%= "Editar Anúncio" %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
 </section>
 
 

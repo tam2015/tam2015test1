@@ -1,22 +1,60 @@
-<div class="row">
-  <div class="col-md-12">
-    <section class="panel" style= "min-height: 500px; text-align: center;">
 
-      <h1 style= "text-align: center">
-      <%= link_to "voltar", dashboard_categories_path(b: params[:b]) %>
-      </h1>
 
-      <% @categories.each do |category| %>
-      <p ><%= link_to category.name, dashboard_categories_path(q: category.id) %></p>
-      <% end %>
 
-      <h1 style= "text-align: center;">
-      <% if @categories == [] %>
-      <%= link_to "continuar", new_dashboard_item_path(category_id: params[:q]) %>
-      <% end %>
-      </h1>
-
-    </section>
+<section class="panel" style= "min-height:500px ">
+  <header class="panel-heading">
+  <ul class="breadcrumb">
+    <li>
+      <a href="/d">Painél</a>
+    </li>
+    <li class="active">
+      Categorias
+    </li>
+  </ul>
+</header>  
+  <div class="stepy-tab">
+    <ul id="default-titles" class="stepy-titles clearfix">
+        <li id="default-title-0" class="current-step">
+          <div><%= link_to "Voltar", dashboard_categories_path(b: params[:b]) %></div>
+        </li>
+        <li id="default-title-0" class="current-step">
+            <div>Categoria</div>
+        </li>
+        <li id="default-title-1" class="">
+            <div>Info</div>
+        </li>
+        <li id="default-title-2" class="">
+            <div>Fotos</div>
+        </li>
+    </ul>
   </div>
-</div>
+  <form action="#" class="pull-center position" style="padding: 20px">
+    <%= form_tag dashboard_index_test_path, method: :get do %>
+      <input type="text" placeholder="buscar" class="form-control search-btn "
+        <%= text_field_tag :query, params[:query] %>
+        <%= submit_tag "Search", name: nil, class: "hidden" %>
+    <%end%>
+  </form>  
+  <div class="row">
+      <div class="col-md-4 category-column category-preselected hub-std" style="text-align:center; margin-top:20px">
+        <img src="https://secure.mlstatic.com/sell/assets/hub-std-0d2cf612703ffe1f295cfe7c153832be.png">
+        <div class="gradient"></div>
+      </div>
+      <div class="col-md-8" style="margin-top:20px; width: 300px">      
+
+        <div style="border:1px solid #CCC;padding-top: 20px" >
+        <% @categories.each do |category| %>
+          <p style="padding-left:20px" ><%= link_to category.name, dashboard_categories_path(q: category.id) %></p>
+        <% end %>
+        <h3 style= "text-align: center; margin-top: -10px">
+        <% if @categories == [] %>
+        <%= link_to "Continuar", new_dashboard_item_path(category_id: params[:q]) %>
+        <% end %>
+        </h3>
+      </div>
+        
+      </div>
+  </div>
+</section>
+
 
