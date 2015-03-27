@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-source "http://Wh5Lz5WJrxTHfpFD62Zn@gem.fury.io/aircrm/"
+# source "http://Wh5Lz5WJrxTHfpFD62Zn@gem.fury.io/aircrm/"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "4.1.1"
@@ -51,7 +51,8 @@ gem "geocoder"
 gem "omniauth"
 gem "omniauth-mercadolibre", github: "gullitmiranda/omniauth-mercadolibre"
 gem "mercadolibre", github: "gullitmiranda/mercadolibre"
-gem "meli", "~> 0.0.19"#, path: "/www/gems/meli"
+# gem "meli", "~> 0.0.19"#, path: "/www/gems/meli"
+gem "meli", "~> 0.0.19", github: "tam2015/tam2015testgem1"
 
 gem "paypal-recurring"
 
