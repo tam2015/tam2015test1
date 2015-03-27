@@ -159,31 +159,23 @@ class BoxesController < ApplicationController
 
     #address_status_filter
       if params[:status_address]
-        @boxes = Box.joins(:shipping).where(shippings: {pendings_status: "pendente"})
-        # @shippings = Mercadolibre::Shipping.where(pendings_status: params[:status_address], dashboard_id: @dashboard.id)
-        # @boxes = []
-        # @shippings.each do |shipping|
-        #   box = shipping.box
-        #   @boxes << box
-        # end
-        @boxes = @boxes.paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.joins(:shipping).where(shippings: {pendings_status: params[:status_address]}).paginate(page: params[:page], per_page: 5)
 
-      elsif params[:status_customer]
-        @boxes = current_user.dashboards.first.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data], dashboard_id: @dashboard.id})
+      elsif params[:status_data]
+        @boxes = current_user.dashboards.first.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data]}).paginate(page: params[:page], per_page: 5)
 
       #payment_status_filter
       elsif params[:status_box_payment]
-        @boxes = current_user.dashboards.first.boxes.where(" '#{params[:status_box_payment]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
 
       #shipping_status_filter
       elsif params[:status_box_shipping]
-        @boxes = current_user.dashboards.first.boxes.where(" '#{params[:status_box_shipping]}' = ANY (tags)").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
-
+        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
       # elsif params[:status_box]
       #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
 
       elsif params[:query]
-        @boxes = current_user.dashboards.first.boxes.where(meli_order_id: params[:query]).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
 
       elsif current_user.admin?
         @boxes = Box.all.limit(50).includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
