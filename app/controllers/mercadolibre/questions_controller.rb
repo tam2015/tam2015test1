@@ -27,7 +27,11 @@ class Mercadolibre::QuestionsController < ApplicationController
 
   #to search a question
     elsif params[:query]
-      @questions = Mercadolibre::Question.where("meli_item_id ilike :q or text ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
+      @dashboard_questions = Mercadolibre::Question.where(dashboard_id: current_dashboard.id)
+      @questions = @dashboard_questions.where("meli_item_id ilike :q or text ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
+
+    elsif params[:author_id] and params[:meli_item_id]
+      @questions = Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: params[:author_id], meli_item_id: params[:meli_item_id]).paginate(page: params[:page], per_page: 5)
 
     else
       @questions = Mercadolibre::Question.where(dashboard_id: current_user.dashboards.first.id).paginate(page: params[:page], per_page: 5)

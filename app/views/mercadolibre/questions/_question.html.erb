@@ -54,24 +54,27 @@
         </span>
       <% end %>      
 
-      <% if question and question.text %>
-      <p><%= question.text.html_safe %></p>
-      <% end %>
+      <% if Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: question.author_id, meli_item_id: question.meli_item_id).count > 1%>
+        <span type="button" class="badge alert-warning">
+          <%= link_to 'Ver histórico', dashboard_questions_path(author_id: question.author_id, meli_item_id: question.meli_item_id), method: :get, style: "font-size: 11px" %>
+        </span>    
+      <% end %>           
 
-      <% if question.answered? %>
-        <div class="group-rom" style="padding: 15px">
-          <div class="msg-time-chat">
-              <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini")%></a>
-              <div class="message-body msg-in">
-                  <span class="arrow"></span>
-                  <div class="text">
-                      <p class="attribution"><a><%= question.user.name%></a> <%= I18n.l(question.created_at.to_time) %> </p>
-                      <p><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
-                  </div>
-              </div>
-          </div>
+      <div class="group-rom" style="margin-top:15px">
+        <div class="msg-time-chat">
+            <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: question.customer.nickname, class: "lazy avatar-mini")%></a>
+            <div class="message-body msg-in">
+                <span class="arrow"></span>
+                <div class="text">
+                    <p class="attribution"><a style= "color: #333"><%= question.customer.nickname%></a> <%= question.meli_date_created %> </p>
+                    <p><%= question.text.html_safe if question and question.text %></p>
+                </div>
+            </div>
         </div>
-      <%end%>
+      </div>
+
+      <p style="margin-top: 0px"><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
+
     </td>
 
     <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
