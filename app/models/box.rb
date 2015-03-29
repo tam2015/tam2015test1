@@ -25,7 +25,7 @@ class Box < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Provider::ModelBase
 
-  default_scope  { order(:meli_date_created => :desc) }
+  #default_scope  { order(:meli_date_created => :desc) }
 
   #associations
   has_many   :payments, class: ::Mercadolibre::Payment
