@@ -37,6 +37,8 @@ module Mercadolibre
     end
 
     def post_sale_feedback(dashboard_id, meli_order_id)
+    dashboard = ::Dashboard.find_by(id: dashboard_id)
+    raise ArgumentError, "Invalid dashboard element.\n dashboard_id=`#{dashboard_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
       if meli_order_id
 
         meli_order = Meli::Order.find meli_order_id
@@ -48,8 +50,11 @@ module Mercadolibre
             "message"   => "Bom comprador."
           }
           # Post seller Feedback on Meli
-          meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
-          # meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, params)
+          # meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
+ 
+          refresh_token = dashboard.credentials[:refresh_token]
+          Mercadolibre::Feedback.api.update_token(refresh_token)
+          meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, params)
 
           puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
           # Update Feedbacks
