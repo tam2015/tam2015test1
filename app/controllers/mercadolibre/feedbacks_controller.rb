@@ -13,6 +13,8 @@ class Mercadolibre::FeedbacksController < ApplicationController
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     elsif params[:query]
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, meli_order_id: params[:query]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
+    elsif current_user.admin?
+      @buyer_feedbacks = Mercadolibre::Feedback.where(author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)    
     else
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
       if @buyer_feedbacks.count < 1
