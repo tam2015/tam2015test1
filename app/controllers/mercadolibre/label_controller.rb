@@ -14,7 +14,7 @@ class Mercadolibre::LabelController < ApplicationController
     elsif params[:print_status] == "não impressas"
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
     elsif current_user.admin?
-    @shippings = Mercadolibre::Shipping.all.paginate(page: params[:page], per_page: 7)      
+      @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)      
     else
     @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7) 
       if @shippings.count < 1
