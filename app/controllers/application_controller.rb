@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   around_filter :set_currents
   before_filter :set_before_params, only: [ :index, :show, :new, :edit ]
+  before_filter :check_subscription_expired
 
   # -------------------
   # Error routes rescue

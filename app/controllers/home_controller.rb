@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   layout "home"
-
+  skip_before_filter :check_subscription_expired
+  
   def index
   end
 
