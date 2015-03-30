@@ -1,6 +1,6 @@
 <% if question %>
   <tr id="question_<%= question.id %>">
-    <td style= "width: 230px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+    <td style= "width: 210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
       <dl class="dl-horizontal">
         <dt>Data:</dt>
         <dd><%= question.meli_date_created[0..9] if question.meli_date_created %></dd>
@@ -77,7 +77,7 @@
 
     </td>
 
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <td style="width:100px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
       <ul>
         <% if question.unanswered? %>
           <a href="javascript:;">

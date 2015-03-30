@@ -31,10 +31,10 @@
         </span>
         </br>
         </br>
-        <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.nickname  || "sem nick"     %> </p>
+        <p style="width: 110px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.nickname  || "sem nick"     %> </p>
         <p style="margin-top:-7px"><%= box.box_customer.name      || "sem nome"     %></p>
         <p style="margin-top:-7px"><%= box.box_customer.phone     || "sem telefone" %></p>
-        <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.email     || "sem email"    %></p>
+        <p style="margin-top:-7px; width: 110px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"><%= box.box_customer.email     || "sem email"    %></p>
         <div class="text-left">
           <%= link_to edit_dashboard_customer_path(id: box.box_customer.id), remote: true,  class: "btn-link" do %>
             <%= translate_button_content(:edit, box.box_customer, icon: :pencil, label_class: "hidden-xs") %>
@@ -43,7 +43,7 @@
       <% end %>
     </td>
 
-    <td style="width:150px"data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <td style="width:180px"data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
       <% if box.shipping %>
         <% status_class = box.shipping.pendings_status == "pending" ? "danger" : "success" %>
         <span type="button" class="badge alert-<%= status_class %>">
@@ -53,10 +53,10 @@
         </br>
 
         <% if receiver_address = box.shipping.receiver_address %>
-          <p style="width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> <%= receiver_address[:street_name] || I18n.t("no_street", scope: "helpers.boxes.shippings")     %> </p>
-          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> núm.<%= receiver_address[:street_number] || I18n.t("no_number", scope: "helpers.boxes.shippings")     %> </p>
-          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> compl.<%= receiver_address[:comment     ] || "sem complemento"  %> </p>
-          <p style="margin-top:-7px; width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis">
+          <p style="width: 150px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> <%= receiver_address[:street_name] || I18n.t("no_street", scope: "helpers.boxes.shippings")     %> </p>
+          <p style="margin-top:-7px; width: 150px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> núm.<%= receiver_address[:street_number] || I18n.t("no_number", scope: "helpers.boxes.shippings")     %> </p>
+          <p style="margin-top:-7px; width: 150px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis"> compl.<%= receiver_address[:comment     ] || "sem complemento"  %> </p>
+          <p style="margin-top:-7px; width: 150px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis">
             <% if receiver_address[:city] and receiver_address[:state] %>
               <%= box.shipping.region || I18n.t("no_city", scope: "helpers.boxes.shippings") %>
             <% end %>
@@ -78,7 +78,7 @@
       <% end %>
     </td>
 
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <td  style="width:200px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
     <% if box.payments.first %>
       <div class="btn-group">
         <a href="#" class="btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
@@ -126,7 +126,7 @@
     <% end %>
     </td>
 
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <td style="width:190px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
       <% if box.shipping%>
         <div class="btn-group">
           <% if box.shipping.tags and box.shipping.tags.include?("delivered") %>
@@ -180,7 +180,7 @@
       <% end %>
     </td>
 
-    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+    <td style="width:130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
       <a href="javascript:;">
         <i class="fa fa-envelope text-link"></i>
         <% if box.shipping %>
