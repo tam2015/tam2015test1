@@ -1,7 +1,7 @@
 - feedback ||= @feedback
 
 
-= simple_form_for @feedback, url: :feedback_update_dashboard_boxes, wrapper: :small, remote: true, html: { class: "comment_form form-horizontal",  role: "form" } do |f|
+= simple_form_for @feedback, url: :feedback_update_dashboard_boxes, wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f|
   .row
     .col-lg-12
       = f.error_notification

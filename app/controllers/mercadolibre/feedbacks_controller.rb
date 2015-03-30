@@ -8,11 +8,13 @@ class Mercadolibre::FeedbacksController < ApplicationController
 
   def index
     if params[:rating_received]
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer", rating: params[:rating_received]).paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer", rating: params[:rating_received]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     elsif params[:rating_sent]
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
+    elsif params[:query]
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, meli_order_id: params[:query]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     else
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer").paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
       if @buyer_feedbacks.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas qualificações recebidas. Por favor aguarde um momento"
@@ -46,30 +48,32 @@ class Mercadolibre::FeedbacksController < ApplicationController
   end
 
   def update
+    Rails.logger.debug "\n\n\n\n\n\n\n\n\n\n  ---- #{mercadolibre_feedback_params}"
     dashboard = Dashboard.find params[:dashboard_id]
-    @feedback = Mercadolibre::Feedback.where(meli_order_id: feedback_params[:meli_order_id], author_type: "seller").first
-    @feedback.update(feedback_params)
-    Rails.logger.debug "\n\n\n\n\n\n\n\n\n\n  ---- #{@feedback.to_json}"
+    @feedback = Mercadolibre::Feedback.where(meli_order_id: mercadolibre_feedback_params[:meli_order_id], author_type: "seller").first
 
     order_id = @feedback.meli_order_id
     kind = @feedback.author_type
     feedback_data = {
-      rating: @feedback.rating,
+      rating: mercadolibre_feedback_params[:rating],
       fulfilled: true,
-      message: @feedback.message
+      message: mercadolibre_feedback_params[:message]
     }
     @meli_updated_feedback = Mercadolibre::Feedback.meli_update(order_id, kind, feedback_data, dashboard)
-    if @meli_updated_feedback
-      flash[:success] = "Qualificação editada com sucesso."
-      redirect_to ashboard_feedbacks_path, method: :get
+    if @meli_updated_feedback and @meli_updated_feedback["status"] != 400
+       @feedback.update(mercadolibre_feedback_params)
+       flash[:success] = "Qualificação editada com sucesso."
+       redirect_to dashboard_feedbacks_path, method: :get
+     else
+       flash[:error] = "Não foi possível a qualificação."
+       redirect_to dashboard_feedbacks_path, method: :get
     end
-
   end
 
   private
 
-    def feedback_params
-      params.require(:mercadolibre_feedback).permit(:rating, :message, :order_id, :dashboard_id, :author_type, :status, :fulfilled, :updated, :reason)
+    def mercadolibre_feedback_params
+      params.require(:mercadolibre_feedback).permit(:rating, :message, :order_id, :dashboard_id, :author_type, :status, :fulfilled, :updated, :reason, :meli_order_id)
     end
 
 end

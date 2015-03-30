@@ -38,18 +38,23 @@ module Mercadolibre
 
     def post_sale_feedback(dashboard_id, meli_order_id)
       if meli_order_id
-        params = {
-          "fulfilled" => true,
-          "rating"    => "positive",
-          "message"   => "Bom comprador."
-        }
-        # Post seller Feedback on Meli
-        meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
-        # meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, params)
 
-        puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
-        # Update Feedbacks
-        Mercadolibre::Feedback.update_record(:post_sale_feedback, dashboard_id, meli_order_id, meli_order_feedback)
+        meli_order = Meli::Order.find meli_order_id
+        if meli_order and meli_order.feedback.sale == nil 
+
+          params = {
+            "fulfilled" => true,
+            "rating"    => "positive",
+            "message"   => "Bom comprador."
+          }
+          # Post seller Feedback on Meli
+          meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
+          # meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, params)
+
+          puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
+          # Update Feedbacks
+          Mercadolibre::Feedback.update_record(:post_sale_feedback, dashboard_id, meli_order_id, meli_order_feedback)
+        end
       end
     end
 

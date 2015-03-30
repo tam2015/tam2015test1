@@ -1,18 +1,33 @@
 <section class="panel" style="background: #2a3542 ">
   <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
     <li class="dropdown" style="padding-right: 30px; float: left">
+      <%= link_to dashboard_feedbacks_path(@dashboard), id: "refresh_items", class: "btn btn-info btn-sm" do %>
+        <%= translate_button_content(:refresh, Box, icon: :refresh, label_class: "sr-only") %>
+      <% end %>        
+    </li>    
+    <li class="dropdown" style="padding-right: 30px; float: left">
+      <form action="#" class="pull-right position">
+        <%= form_tag dashboard_feedbacks_path, method: :get do %>
+          <input type="text" placeholder="buscar pela ordem" class="form-control search-btn "
+            <%= text_field_tag :query, params[:query] %>
+            <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+          <%end%>
+      </form>
+    </li>    
+    <li class="dropdown" style="padding-right: 30px; float: left">
       <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Enviadas <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <% ["POSITIVE", "NEGATIVE"].each do |rating| %>
-          <li><%= link_to rating.downcase, dashboard_feedbacks_path(rating_sent: rating), method: :get %></li>
+        <% ["positive", "negative", "neutral"].each do |rating| %>
+          <li><%= link_to I18n.t(rating, scope: "helpers.feedback.ratings"), dashboard_feedbacks_path(rating_sent: rating), method: :get %></li>
         <% end %>
       </ul>
     </li>
     <li class="dropdown" style="padding-right: 30px; float: left">
       <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Recebidas <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <% ["POSITIVE", "NEGATIVE"].each do |rating| %>
-          <li><%= link_to rating.downcase, dashboard_feedbacks_path(rating_received: rating), method: :get %></li>
+        <% ["positive", "negative","neutral"].each do |rating| %>
+          <li><%= link_to I18n.t(rating, scope: "helpers.feedback.ratings"), dashboard_feedbacks_path(rating_received: rating), method: :get %></li>
         <% end %>
       </ul>
     </li>
@@ -24,13 +39,10 @@
   <header class="panel-heading">
     <ul class="breadcrumb">
       <li>
-        <a href="/d/:dashboard.id">Mercado Livre</a>
-      </li>
-      <li>
-        <a href="/d/:dashboard.id">Qualificações</a>
+        <a href="/d">Painél</a>
       </li>
       <li class="active">
-        Todos
+        Qualificações
       </li>
     </ul>
   </header>
@@ -44,7 +56,6 @@
             <th>Comprador</th>
             <th>Avaliação Recebida</th>
             <th>Avaliação Enviada</th>
-            <th>Motivo</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -63,7 +74,6 @@
             <td>
               <div class="second-part-feedback">
                 <p> <%= buyer_feedback.meli_order_id %></p>
-                <p> <%= buyer_feedback.date_created.to_date %></p>
               </div>
             </td>
             <td>
@@ -83,9 +93,11 @@
                   </span>
                 <% end %>
                   <p>
+                    <%= buyer_feedback.meli_date_created[0..9] if buyer_feedback.meli_date_created %>
+                  </p>                  
+                  <p>
                     <%= buyer_feedback.message %>
                   </p>
-                  <p> <%= buyer_feedback.date_created.to_date if buyer_feedback.message %></p>
               </div>
             </td>
             <td style="width: 200px">
@@ -97,22 +109,16 @@
                     <%= I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") %>
                   </span>
                   <p>
+                    <%= feedback_seller(buyer_feedback).meli_date_created[0..9] if feedback_seller(buyer_feedback).meli_date_created %>
+                  </p>                                    
+                  <p>
                     <%= feedback_seller(buyer_feedback).message %>
                   </p>
-                  <p> <%= feedback_seller(buyer_feedback).date_created.to_date if feedback_seller(buyer_feedback).message %></p>
                 <% else %>
                 <span type="button" class="badge alert-danger">
                   <%= "Qualificação não enviada a tempo" %>
                 </span>
                 <% end %>
-              </div>
-            </td>
-
-            <td>
-              <div class="fourth-part-feedback">
-                  <p>
-                    <%= t(buyer_feedback.reason, scope: "helpers.feedback.ratings") if buyer_feedback%>
-                  </p>
               </div>
             </td>
 
@@ -127,15 +133,7 @@
                     <% else %>
                     <p style= "font-size: 9px"><%= "Já editado" %></p>
                     <% end %>
-                  <a href="javascript:;">
-                    <i class="fa fa-pencil text-link"></i>
-                    <%= link_to 'Editar motivo', feedback_edit_reason_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
-                  </a>
                   </br>
-                  <a href="javascript:;">
-                    <i class="fa fa-pencil text-link"></i>
-                    <%= link_to 'Falar com comprador', feedback_edit_reason_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
-                  </a>
                 </div>
               <% end %>
               <% end %>
@@ -151,9 +149,9 @@
 
 
 
-            <div class="col-md-12" id="question_paginate" >
-            <%= will_paginate @buyer_feedbacks, previous_label: h("<"), next_label: h(">") %>
-            </div>
+<div class="col-md-12" id="question_paginate" >
+  <%= will_paginate @buyer_feedbacks, previous_label: h("<"), next_label: h(">") %>
+</div>
 
 
 

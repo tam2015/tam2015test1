@@ -2,8 +2,6 @@ module Mercadolibre
   class Feedback < ActiveRecord::Base
     include Provider::ModelBase
 
-    default_scope  { order(:meli_date_created => :desc) }
-
     # belongs_to :box
     alias_attribute :date_created, :created_at
 
@@ -34,62 +32,64 @@ module Mercadolibre
 
       # Create Buyer feedback is available
       if meli_order.feedback.purchase.present?
-        feedback_buyer              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
-        meli_order_feedback         = meli_order.feedback.purchase
+        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
+        meli_order_feedback                    = meli_order.feedback.purchase
 
-        feedback_buyer.rating       = meli_order_feedback.rating
-        feedback_buyer.fulfilled    = meli_order_feedback.fulfilled
+        feedback_buyer.meli_date_created       = meli_order_feedback.date_created?
+        feedback_buyer.rating                  = meli_order_feedback.rating
+        feedback_buyer.fulfilled               = meli_order_feedback.fulfilled
 
         puts "\n\n* MESSAGE? Purchase - #{meli_order.id} #{meli_order_feedback.inspect}\n\n"
 
         # attributes available only when fetching from API
-        feedback_buyer.reason       = meli_order_feedback.reason?
-        feedback_buyer.message      = meli_order_feedback.message?
+        feedback_buyer.reason                  = meli_order_feedback.reason?
+        feedback_buyer.message                 = meli_order_feedback.message?
         #feedback_buyer.reply        = meli_order_feedback.reply?
 
-        feedback_buyer.status       = meli_order_feedback.status
+        feedback_buyer.status                  = meli_order_feedback.status
 
         # Associations
-        feedback_buyer.meli_item_id = meli_order.order_items[0].item.id
-        feedback_buyer.dashboard_id = dashboard_id
+        feedback_buyer.meli_item_id            = meli_order.order_items[0].item.id
+        feedback_buyer.dashboard_id            = dashboard_id
 
         feedback_buyer.save
 
       else # create empty objects
-        feedback_buyer              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
-        feedback_buyer.meli_item_id = meli_order.order_items[0].item.id
-        feedback_buyer.dashboard_id = dashboard_id
+        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
+        feedback_buyer.meli_item_id            = meli_order.order_items[0].item.id
+        feedback_buyer.dashboard_id            = dashboard_id
         feedback_buyer.save
       end
 
       # Create Seller feedback is available
       if meli_order.feedback.sale.present?
-        feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
-        meli_order_feedback          = meli_order.feedback.sale
+        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
+        meli_order_feedback                    = meli_order.feedback.sale
 
-        feedback_seller.rating       = meli_order_feedback.rating
-        feedback_seller.fulfilled    = meli_order_feedback.fulfilled
+        feedback_seller.meli_date_created      = meli_order_feedback.date_created?        
+        feedback_seller.rating                 = meli_order_feedback.rating
+        feedback_seller.fulfilled              = meli_order_feedback.fulfilled
 
         puts "\n\n* MESSAGE? Sale - #{meli_order.id} #{meli_order_feedback.inspect}\n\n"
 
         # attributes available only when fetching from API
-        feedback_seller.reason       = meli_order_feedback.reason?
-        feedback_seller.message      = meli_order_feedback.message?
+        feedback_seller.reason                 = meli_order_feedback.reason?
+        feedback_seller.message                = meli_order_feedback.message?
         #feedback_seller.reply        = meli_order_feedback.reply?
 
-        feedback_seller.status       = meli_order_feedback.status
+        feedback_seller.status                 = meli_order_feedback.status
 
         # Associations
-        feedback_seller.meli_item_id = meli_order.order_items[0].item.id
-        feedback_seller.dashboard_id = dashboard_id
+        feedback_seller.meli_item_id           = meli_order.order_items[0].item.id
+        feedback_seller.dashboard_id           = dashboard_id
 
         feedback_seller.save
 
       else # create empty objects
 
-        feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
-        feedback_seller.meli_item_id = meli_order.order_items[0].item.id
-        feedback_seller.dashboard_id = dashboard_id
+        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
+        feedback_seller.meli_item_id           = meli_order.order_items[0].item.id
+        feedback_seller.dashboard_id           = dashboard_id
         feedback_seller.save
       end
 
@@ -116,19 +116,20 @@ module Mercadolibre
       if  meli_order_feedback.purchase.present? and
           meli_order_feedback.purchase.id.present?
 
-        feedback_buyer              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :buyer)
-        feedback_purchase           = meli_order_feedback.purchase
+        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :buyer)
+        feedback_purchase                      = meli_order_feedback.purchase
 
-        feedback_buyer.meli_feedback_id = feedback_purchase.id
-        feedback_buyer.rating       = feedback_purchase.rating
-        feedback_buyer.fulfilled    = feedback_purchase.fulfilled
+        feedback_buyer.meli_feedback_id        = feedback_purchase.id
+        feedback_buyer.meli_date_created       = feedback_purchase.date_created?        
+        feedback_buyer.rating                  = feedback_purchase.rating
+        feedback_buyer.fulfilled               = feedback_purchase.fulfilled
 
         # attributes available only for replying a feedback
-        feedback_buyer.reason       = feedback_purchase.reason?
-        feedback_buyer.message      = feedback_purchase.message?
+        feedback_buyer.reason                  = feedback_purchase.reason?
+        feedback_buyer.message                 = feedback_purchase.message?
         # feedback_buyer.reply        = feedback_purchase.reply?
 
-        feedback_buyer.status       = feedback_purchase.status
+        feedback_buyer.status                  = feedback_purchase.status
 
         feedback_buyer.save
       end
@@ -137,21 +138,22 @@ module Mercadolibre
       if  meli_order_feedback.sale.present? and
           meli_order_feedback.sale.id.present?
 
-        feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :seller)
-        feedback_sale                = meli_order_feedback.sale
+        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :seller)
+        feedback_sale                          = meli_order_feedback.sale
 
-        feedback_seller.meli_feedback_id = feedback_sale.id
-        feedback_seller.rating       = feedback_sale.rating
-        feedback_seller.fulfilled    = feedback_sale.fulfilled
+        feedback_seller.meli_feedback_id       = feedback_sale.id
+        feedback_seller.meli_date_created      = feedback_sale.date_created?        
+        feedback_seller.rating                 = feedback_sale.rating
+        feedback_seller.fulfilled              = feedback_sale.fulfilled
 
         # attributes available only when fetching from API
-        feedback_seller.reason       = feedback_sale.reason?
-        feedback_seller.message      = feedback_sale.message?
+        feedback_seller.reason                 = feedback_sale.reason?
+        feedback_seller.message                = feedback_sale.message?
         #feedback_seller.reply        = feedback_sale.reply?
 
-        feedback_seller.status       = feedback_sale.status
+        feedback_seller.status                 = feedback_sale.status
 
-        feedback_seller.restock_item = feedback_sale.restock_item
+        feedback_seller.restock_item           = feedback_sale.restock_item
 
         feedback_seller.save
       end
@@ -174,7 +176,7 @@ module Mercadolibre
     #
     def self.update_feedback_from_post(dashboard_id, meli_order_id, meli_order_feedback)
 
-      feedback_seller              = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: meli_order_feedback.cust_role)
+      feedback_seller                   = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: meli_order_feedback.cust_role)
 
       feedback_seller.meli_feedback_id  = meli_order_feedback.id
       feedback_seller.rating            = meli_order_feedback.rating.downcase
