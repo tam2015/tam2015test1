@@ -70,7 +70,9 @@
             <div class="message-body msg-in">
                 <span class="arrow"></span>
                 <div class="text">
+                  <% if question.customer and question.customer.nickname.present? %>
                     <p class="attribution"><a style= "color: #333"><%= question.customer.nickname%></a> <%= question.meli_date_created %> </p>
+                  <% end %>  
                     <p><%= question.text.html_safe if question and question.text %></p>
                 </div>
             </div>
