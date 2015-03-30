@@ -8,26 +8,70 @@
           %span.note R$
           = plan.price
 
-      %ul.list-unstyled
-        %li Perguntas e respostas
-        %li Qualificação manual
-        %li Tendências
-        %li Cobrança de endereçø manual
-        %li Anúncios individuais
-        - if middle_plan(plan)
-          %li Gerenciador de vendas
-          %li Qualificação automática
-          %li Cobrança de endereço automática
-          %li Etiqueta individual
-        - if full_plan(plan)
-          %li Gerenciador de vendas
-          %li Qualificação automática
-          %li Cobrança de endereço automática
-          %li Etiqueta individual
-          %li Etiquetas em massa
-          %li Bloqueio de lances duplicados
-          %li Anúncios em massa
-
       .price-actions
         = link_to t(".subscribe"), edit_subscription_url(:id, plan_id: plan.id), class: "btn btn-success"
+
+      %ul.list-unstyled
+        %li.h4 Gerenciador de perguntas
+        %li Histórico de conversas        
+        %li Bloqueio de perguntas
+        %li Fitro por anúncio e ordem                        
+        %br
+        %li.h4 Gerenciador de vendas        
+        %li Checagem de pendências
+        %li Cobrança de endereço
+        %li Acompanhamento de status
+        %li Código de rastreamento 
+        %li Bloqueio de lances duplicados                       
+        %br
+        %li.h4 Gerenciador de etiquetas
+        %li Impressão de etiquetas
+        %li Filtragem de não impressas        
+        %br        
+        %li.h4 Gerenciador de qualificações
+        %li Qualificação automática
+        %li Filtragem por rating        
+        %br        
+        %li.h4 Monitoramento de concorrência
+        %li Preçø
+        %li Estoque
+        %li Vendas
+        %li Tipo de anúncio
+        %br        
+        %li.h4 Anúncios
+        %li Criação em massa
+        %li Criação individual
+        %li Edição individual        
+        %li Comparação com concorrência                        
+        %br        
+        %li.h4 Gerenciador de clientes
+        %li Histórico de clientes
+        %li Vendas por cliente
+        %li Perguntas por cliente                
+        %br        
+        %li.h4 Análise de tendências
+        %li Palavras chaves
+        %li Palavras chaves por categoria        
+
+
+      / %ul.list-unstyled
+      /   %li Perguntas e respostas
+      /   %li Qualificação manual
+      /   %li Tendências
+      /   %li Cobrança de endereçø manual
+      /   %li Anúncios individuais
+      /   - if middle_plan(plan)
+      /     %li Gerenciador de vendas
+      /     %li Qualificação automática
+      /     %li Cobrança de endereço automática
+      /     %li Etiqueta individual
+      /   - if full_plan(plan)
+      /     %li Gerenciador de vendas
+      /     %li Qualificação automática
+      /     %li Cobrança de endereço automática
+      /     %li Etiqueta individual
+      /     %li Etiquetas em massa
+      /     %li Bloqueio de lances duplicados
+      /     %li Anúncios em massa
+
 

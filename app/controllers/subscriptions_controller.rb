@@ -1,32 +1,16 @@
 class SubscriptionsController < ApplicationController
   layout "home"
   before_action :authenticate_user!
-
-
+  skip_before_filter :check_subscription_expired
 
   def index
     @subscriptions = Subscription.all
   end
 
   def edit
-    if !current_account.subscription.present?
-      @subscription = Subscription.where(account_id: current_account.id).first
-      @plan = if params[:plan_id]
-      Plan.find(params[:plan_id])
-    else
-      Plan.first
-    end
-
+    @subscription = Subscription.where(account_id: current_account.id).first
+    @plan = Plan.find(params[:plan_id]) 
     @subscription = @plan.subscriptions.build
-    if params[:PayerID]
-      @subscription.paypal_customer_token = params[:PayerID]
-      @subscription.paypal_payment_token = params[:token]
-      #@subscription.email = @subscription.paypal.checkout_details.email
-    end
-    else
-      flash[:notice] = 'subscription already paid'
-      redirect_to dashboards_path
-    end
   end
 
   def update
@@ -62,9 +46,9 @@ class SubscriptionsController < ApplicationController
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def subscription_params
-      params.require(:subscription).permit(:paypal_customer_token, :paypal_payment_token, :paypal_recurring_profile_token,
-        # Assosiations
-        :account_id, :user_id, :plan_id )
-    end
+  def subscription_params
+    params.require(:subscription).permit(:paypal_customer_token, :paypal_payment_token, :paypal_recurring_profile_token,
+      # Assosiations
+      :account_id, :user_id, :plan_id )
+  end
 end
