@@ -10,6 +10,11 @@
 <section class="panel">
   <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
     <li class="dropdown" style="padding-right: 30px; float: left">
+      <%= link_to dashboard_questions_path(@dashboard), id: "refresh_items", class: "btn btn-info btn-sm" do %>
+        <%= translate_button_content(:refresh, Mercadolibre::Question, icon: :refresh, label_class: "sr-only") %>
+      <% end %>        
+    </li>    
+    <li class="dropdown" style="padding-right: 30px; float: left">
       <form action="#" class="pull-right position">
         <%= form_tag dashboard_questions_path, method: :get do %>
           <input type="text" placeholder="Palavra ou Anúncio" class="form-control search-btn "
