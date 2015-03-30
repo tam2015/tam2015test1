@@ -174,28 +174,47 @@ module Mercadolibre
     #  "reply_date"=>nil,
     #   "visibility_date"=>nil, "cust_to"=>172340277, "reply"=>nil, "rating"=>"NEUTRAL"}
     #
+    # def self.update_feedback_from_post(dashboard_id, meli_order_id, meli_order_feedback)
+
+    #   feedback_seller                   = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: "seller") #meli_order_feedback.cust_role)
+
+    #   feedback_seller.meli_feedback_id  = meli_order_feedback.id
+    #   feedback_seller.rating            = meli_order_feedback.rating.downcase
+    #   feedback_seller.fulfilled         = meli_order_feedback.fulfilled
+
+    #   # attributes available only when fetching from API
+    #   feedback_seller.reason            = meli_order_feedback.reason?
+    #   feedback_seller.message           = meli_order_feedback.message?
+    #   #feedback_seller.reply             = meli_order_feedback.reply?
+
+    #   feedback_seller.meli_date_created = meli_order_feedback.date_created?.to_date.to_s
+    #   feedback_seller.author_type       = "seller"#meli_order_feedback.cust_role
+
+    #   feedback_seller.status            = meli_order_feedback.status
+
+    #   feedback_seller.save
+    # end
+
     def self.update_feedback_from_post(dashboard_id, meli_order_id, meli_order_feedback)
 
       feedback_seller                   = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: "seller") #meli_order_feedback.cust_role)
 
-      feedback_seller.meli_feedback_id  = meli_order_feedback.id
-      feedback_seller.rating            = meli_order_feedback.rating.downcase
-      feedback_seller.fulfilled         = meli_order_feedback.fulfilled
+      feedback_seller.meli_feedback_id  = meli_order_feedback[:id]
+      feedback_seller.rating            = meli_order_feedback[:rating].downcase
+      feedback_seller.fulfilled         = meli_order_feedback[:fulfilled]
 
       # attributes available only when fetching from API
-      feedback_seller.reason            = meli_order_feedback.reason?
-      feedback_seller.message           = meli_order_feedback.message?
+      # feedback_seller.reason            = meli_order_feedback[:reason]
+      feedback_seller.message           = meli_order_feedback[:message]
       #feedback_seller.reply             = meli_order_feedback.reply?
 
-      feedback_seller.meli_date_created = meli_order_feedback.date_created?.to_date.to_s
+      feedback_seller.meli_date_created = meli_order_feedback[:date_created].to_date.to_s
       feedback_seller.author_type       = "seller"#meli_order_feedback.cust_role
 
-      feedback_seller.status            = meli_order_feedback.status
+      feedback_seller.status            = meli_order_feedback[:status]
 
       feedback_seller.save
     end
-
-
 
 
 

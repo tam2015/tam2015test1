@@ -79,10 +79,10 @@ module Mercadolibre
         new_question = question.new_record?
 
         # save Question and fetch meli_customer associated to the question
-        if question.save
+        question.save
           #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
-          customer = ::Customer.get_customer(question.seller_id, question.author_id, dashboard)
-        end
+        customer = ::Customer.get_customer(question.seller_id, question.author_id, dashboard)
+        
 
         # If Question is new, we can
         # notify user with an email
