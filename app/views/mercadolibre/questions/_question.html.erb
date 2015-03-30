@@ -62,7 +62,11 @@
 
       <div class="group-rom" style="margin-top:15px">
         <div class="msg-time-chat">
-            <a href="#" class="message-img"><%=image_tag("theme/avatar-mini.jpg", alt: question.customer.nickname, class: "lazy avatar-mini")%></a>
+          <% if question.customer and question.customer.nickname.present? %>
+            <a href="#" class="message-img">
+              <%=image_tag("theme/avatar-mini.jpg", alt: question.customer.nickname, class: "lazy avatar-mini")%>
+            </a>
+          <% end %>
             <div class="message-body msg-in">
                 <span class="arrow"></span>
                 <div class="text">
