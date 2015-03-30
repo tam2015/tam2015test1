@@ -80,7 +80,8 @@ module Mercadolibre
 
         # save Question and fetch meli_customer associated to the question
         if question.save
-          customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
+          #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
+          customer = Mercadolibre::Customer.get_customer(question.seller_id, question.author_id, dashboard)
         end
 
         # If Question is new, we can

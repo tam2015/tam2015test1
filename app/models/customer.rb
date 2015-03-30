@@ -81,6 +81,21 @@ class Customer < ActiveRecord::Base
     customer
   end
 
+  def self.get_customer(user_id, customer_id, dashboard)
+
+    if user_id and customer_id
+      # Fetch Item fom Meli
+      meli_customer  = Meli::User.find(customer_id)
+      meli_seller = Dashboard.find_by(meli_user_id: user_id).users.first
+
+      # Update Customer
+      unless customer = ::Customer.where({ meli_user_id: meli_customer.id }).first
+        Customer.parse(meli_customer, meli_seller)
+      end
+    end
+  end
+
+
   def self.phone_to_s(phone)
     return nil if phone.nil?
 
