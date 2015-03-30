@@ -58,7 +58,7 @@ module Mercadolibre
 
           puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
           # Update Feedbacks
-          Mercadolibre::Feedback.update_record(:post_sale_feedback, dashboard_id, meli_order_id, meli_order_feedback)
+          # Mercadolibre::Feedback.update_record(:post_sale_feedback, dashboard_id, meli_order_id, meli_order_feedback)
         end
       end
     end
