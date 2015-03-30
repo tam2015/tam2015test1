@@ -44,7 +44,7 @@ module Mercadolibre
         refresh_token = dashboard.credentials[:refresh_token]
         ::Box.api.update_token(refresh_token)
         meli_order = ::Box.api.get_order meli_order_id
-        if meli_order and meli_order.feedback.sale == nil 
+        if meli_order and meli_order.seller_feedback == nil 
 
           params = {
             "fulfilled" => true,
