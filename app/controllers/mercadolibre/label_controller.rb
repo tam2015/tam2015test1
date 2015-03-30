@@ -9,7 +9,20 @@ class Mercadolibre::LabelController < ApplicationController
   before_action :set_dashboard, only: [:index]
 
   def index
-    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label) #::Box.all#current_user.dashboards.first.boxes.all#joins(:customer, :shipping).where("boxes.tags && ARRAY['not_paid']::character varying(255)[]").limit(15)
+    if params[:query]
+      @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id, meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
+    elsif params[:print_status] == "não impressas"
+      @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
+    elsif current_user.admin?
+    @shippings = Mercadolibre::Shipping.all.paginate(page: params[:page], per_page: 7)      
+    else
+    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7) 
+      if @shippings.count < 1
+        redirect_to dashboards_path
+        flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
+      end
+    end
+
   end
 
   def meli_label
