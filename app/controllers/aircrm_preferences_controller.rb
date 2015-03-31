@@ -19,7 +19,7 @@ class AircrmPreferencesController < ApplicationController
   private
 
   def aircrm_preference_params
-    data_params = [ :answer, :tags, :time, :aircrm_reason, :content ]
+    data_params = [ :answer, :tags, :time, :aircrm_reason, :content, :payment_status, :shipping_status, :status ]
     params.require(:aircrm_preference).permit(:preference_type, :account_id, :dashboard_id, data: data_params)
   end
 

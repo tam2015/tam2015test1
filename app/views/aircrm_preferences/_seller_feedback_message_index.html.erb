@@ -5,24 +5,36 @@
           <div class="bio-graph-heading">
               Mensagens das Avaliações ao Comprador
           </div>
+        </br>
           <div>
+            <% if @seller_feedback_messages.count == 0  %>
             <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "seller_feedback_message"), class: "btn btn-info", remote: true) do %>
-              <i class="fa fa-user"></i> Adicionar motivo
+              <i class="fa fa-user"></i> Adicionar 
+            <% end %>
             <% end %>
           </div>
           <% @seller_feedback_messages.each do |message| %>
           <div class="panel-body bio-graph-info">
-              <h1>messagem número <%= message.id %></h1>
+              <h3>Dados da qualificação a ser enviada</h3>
               <div class="row">
-                  <div class="bio-row">
-                      <p><%= message.data[:content] if message.data and message.data[:content]%></p>
-                  </div>
+                <dl class="dl-horizontal">
+                  <dt>status da qualificação automática:</dt>
+                  <dd><%= message.data[:status] if message.data and message.data[:status]%></dd>
+                  <dt>status do pagamento:</dt>
+                  <dd><%= message.data[:payment_status] if message.data and message.data[:payment_status]%></dd>                      
+                  <dt>status do envio:</dt>
+                  <dd><%= message.data[:shipping_status] if message.data and message.data[:shipping_status]%></dd>                                            
+                  <dt>conteúdo:</dt>
+                  <dd><%= message.data[:content] if message.data and message.data[:content]%></dd>
+                </dl>
               </div>
           </div>
           <% end %>
           <div>
+            <% if @seller_feedback_messages.count != 0 %>
             <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "seller_feedback_message"), class: "btn btn-info", remote: true) do %>
-              <i class="fa fa-user"></i> Adicionar motivo
+              <i class="fa fa-user"></i> Editar
+            <% end %>
             <% end %>
           </div>
       </section>

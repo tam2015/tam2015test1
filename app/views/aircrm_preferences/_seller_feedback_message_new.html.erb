@@ -1,0 +1,42 @@
+<% aircrm_preference ||= @aircrm_preference %>
+<%= simple_form_for @aircrm_preference, url: :dashboard_aircrm_preferences, method: :post,wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f| %>
+  <div class="row">
+    <div class="col-lg-12">
+      <%= f.error_notification %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <%= f.hidden_field :preference_type, :value => params[:preference_type] %>
+      <%= f.hidden_field :dashboard_id, :value => params[:dashboard_id] %>
+      <%= f.fields_for :data do |r| %>
+        <div class="radios">
+          <label class="label_radio r_on item-condition">
+            <input id="item_condition_new" input_html_options="{:name=>&quot;sample-radio&quot;}" name="aircrm_preference[data][status]" type="radio" value="active">
+            Ativado
+          </label>
+          <label class="label_radio r_on item-condition">
+            <input id="item_condition_used" input_html_options="{:name=>&quot;sample-radio&quot;}" name="aircrm_preference[data][status]" type="radio" value="inactive">
+            Desativado
+          </label>
+        </div>        
+
+        <% #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] } %>
+        <%= r.input :content, as: :text, required: true %>
+        <%= r.input :payment_status, collection: Mercadolibre::Payment.statuses.keys, prompt: "Selecione o status do pagamento", required: true %>        
+        <%= r.input :shipping_status, collection: Mercadolibre::Shipping.statuses.keys, prompt: "Selecione o status do envio", required: true %>                
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-action text-center">
+      <%= f.button :button, type: :submit, class: "btn-success", title: t("helpers.submit.update", model: "") do %>
+        <%= t("helpers.submit.update", model: "") %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+
+
