@@ -66,8 +66,8 @@ class Customer < ActiveRecord::Base
       saved = b.save!
 
     if saved
-        user_to_customer = UsersToCustomer.where(customer_id: b.id, user_id: meli_seller.id).first_or_initialize
-        user_to_customer.save
+      user_to_customer = UsersToCustomer.where(customer_id: b.id, user_id: meli_seller.id).first_or_initialize
+      user_to_customer.save
     end
 
     end
@@ -89,9 +89,7 @@ class Customer < ActiveRecord::Base
       meli_seller = Dashboard.find_by(meli_user_id: user_id).users.first
 
       # Update Customer
-      unless customer = ::Customer.where({ meli_user_id: meli_customer.id }).first
-        Customer.parse(meli_customer, meli_seller)
-      end
+      Customer.parse(meli_customer, meli_seller)
     end
   end
 
