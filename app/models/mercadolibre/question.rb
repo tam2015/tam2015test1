@@ -106,6 +106,8 @@ module Mercadolibre
 
     # Post question
     def self.post(question_id, text, dashboard)
+      refresh_token = dashboard.credentials[:refresh_token]
+      Mercadolibre::Question.api.update_token(refresh_token)
        response_from_meli = Meli::Question.answer_question(question_id, text)
        if response_from_meli.status != 404
          question = Mercadolibre::Question.find_by(meli_question_id: question_id)
