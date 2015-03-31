@@ -65,7 +65,7 @@ module Mercadolibre
         question.meli_question_id       = meli_item_question.id
         question.deleted_from_listing   = meli_item_question.deleted_from_listing?
         question.status                 = meli_item_question.status.downcase
-        question.hold                   = meli_item_question.hold
+        question.hold                   = meli_item_question.hold?
         unless meli_item_question.answer.nil?
           question.answer                 = {
             text:                     meli_item_question.answer.text.to_s,
