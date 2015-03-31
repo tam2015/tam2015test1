@@ -113,10 +113,9 @@ module Mercadolibre
     def self.update_feedback(dashboard_id, meli_order_id, meli_order_feedback)
       puts "* update_feedback: #{meli_order_feedback.to_json}"
       # Create Buyer feedback is available
-      if  meli_order_feedback.purchase.present? and
-          meli_order_feedback.purchase.id.present?
+      if  meli_order_feedback.purchase.present? and meli_order_feedback.purchase.id.present?
 
-        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :buyer)
+        feedback_buyer                         = ::Mercadolibre::Feedback.where(meli_order_id: meli_order_id, author_type: "buyer").first_or_initialize
         feedback_purchase                      = meli_order_feedback.purchase
 
         feedback_buyer.meli_feedback_id        = feedback_purchase.id
@@ -135,10 +134,9 @@ module Mercadolibre
       end
 
       # Create Seller feedback is available
-      if  meli_order_feedback.sale.present? and
-          meli_order_feedback.sale.id.present?
+      if  meli_order_feedback.sale.present? and meli_order_feedback.sale.id.present?
 
-        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: :seller)
+        feedback_seller                        = ::Mercadolibre::Feedback.where(meli_order_id: meli_order_id, author_type: "seller").first_or_initialize
         feedback_sale                          = meli_order_feedback.sale
 
         feedback_seller.meli_feedback_id       = feedback_sale.id
