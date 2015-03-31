@@ -11,10 +11,11 @@ module Mercadolibre
       raise ArgumentError, "Invalid dashboard element.\n meli_user_id=`#{user_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
 
 
-      #meli_order = Meli::Order.find(meli_order_id)
+      #meli_order = ::Box.api.get_order(meli_order_id)
       refresh_token = dashboard.credentials[:refresh_token]
       ::Box.api.update_token(refresh_token)      
-      meli_order = ::Box.api.get_order(meli_order_id)
+      meli_order = Meli::Order.find(meli_order_id)      
+
 
       ::Box.new.create_or_update_order(dashboard, meli_order)
     end
