@@ -439,10 +439,10 @@ class Box < ActiveRecord::Base
       box.save
 
 
-      order.tags = []
-      order.tags << tag_of_payment
-      order.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
-      order.save
+      # order.tags = []
+      # order.tags << tag_of_payment
+      # order.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
+      # order.save
 
       #temporary removed
       # record_from_meli = Meli::Order.find box.meli_order_id
@@ -510,10 +510,10 @@ class Box < ActiveRecord::Base
       box.tags_will_change!
       box.save
 
-      order.tags = []
-      order.tags = order.tags << tag_of_shipping
-      order.tags = order.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
-      order.save
+      # order.tags = []
+      # order.tags = order.tags << tag_of_shipping
+      # order.tags = order.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
+      # order.save
 
 
       #temporary removed  
