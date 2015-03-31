@@ -216,7 +216,7 @@ module Mercadolibre
           "rating"    => "positive",
           "message"   => "Excelente comprador."
         }
-        Post seller Feedback on Meli
+        # Post seller Feedback on Meli
         meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)
 
         puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
