@@ -432,11 +432,11 @@ class Box < ActiveRecord::Base
 
 
       #temporary solution to fix the bug "order was being modified that came from sidekiq"
-      # box.tags = []
-      # box.tags << tag_of_payment
-      # box.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
-      # box.tags_will_change!      
-      # box.save
+      box.tags = []
+      box.tags << tag_of_payment
+      box.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
+      box.tags_will_change!      
+      box.save
 
 
       order.tags = []
@@ -502,11 +502,11 @@ class Box < ActiveRecord::Base
       order = box.to_meli
 
       #temporary solution to fix the bug "order was being modified that came from sidekiq"
-      # box.tags = [] if box.tags == nil
-      # box.tags = box.tags << tag_of_shipping
-      # box.tags = box.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
-      # box.tags_will_change!
-      # box.save
+      box.tags = [] if box.tags == nil
+      box.tags = box.tags << tag_of_shipping
+      box.tags = box.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
+      box.tags_will_change!
+      box.save
 
       order.tags = []
       order.tags = order.tags << tag_of_shipping
