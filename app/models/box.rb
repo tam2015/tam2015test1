@@ -193,7 +193,7 @@ class Box < ActiveRecord::Base
     # If Shipping.status is :to_be_agreed,
     # means that there is no Shipping association
     # to be retrieved from Meli
-     unless meli_order.shipping.status.to_sym == :to_be_agreed
+    unless meli_order.shipping.status.to_sym == :to_be_agreed
       ::Mercadolibre::ShippingWorker.perform_async @dashboard.id, meli_order.id, box.id
     end
 
@@ -211,16 +211,30 @@ class Box < ActiveRecord::Base
     # Seller gives his feedback then we are able to fetch
     # Purchase feedback again and if it is "nil",
     # update will income from Mercadolibre::Hooks
+
+
+    # if meli_order.feedback.sale == nil and meli_order.date_created > Time.now - 21.days
+    #   puts "* Feedback: No sale present"
+    #   ::Mercadolibre::FeedbackWorker.perform_async :post_sale_feedback, @dashboard.id, meli_order.id
+    # end
+
+    # if meli_order.feedback.sale.present? ||
+    #    meli_order.feedback.purchase.present?
+    #    puts "* Feedback: Sale and/or Purchase are present"
+    #   ::Mercadolibre::FeedbackWorker.perform_async :retrieve_item_feedback, @dashboard.id, meli_order.id
+    #  end
+
+
     if meli_order.feedback.sale == nil and meli_order.date_created > Time.now - 21.days
       puts "* Feedback: No sale present"
-      ::Mercadolibre::FeedbackWorker.perform_async :post_sale_feedback, @dashboard.id, meli_order.id
+      ::Mercadolibre::Feedback.post_seller_feedback @dashboard.id, meli_order.id
     end
 
-    if meli_order.feedback.sale.present? ||
-       meli_order.feedback.purchase.present?
+    if meli_order.feedback.sale.present? || meli_order.feedback.purchase.present?
        puts "* Feedback: Sale and/or Purchase are present"
-      ::Mercadolibre::FeedbackWorker.perform_async :retrieve_item_feedback, @dashboard.id, meli_order.id
-     end
+      ::Mercadolibre::Feedback.get_meli_feedback @dashboard.id, meli_order.id
+    end
+
   end
 
 
@@ -415,6 +429,16 @@ class Box < ActiveRecord::Base
 
     if box and box.status != "archived" and !box.tags.include?(tag_of_payment)
       order = box.to_meli
+
+
+      #temporary solution to fix the bug "order was being modified that came from sidekiq"
+      # box.tags = []
+      # box.tags << tag_of_payment
+      # box.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
+      # box.tags_will_change!      
+      # box.save
+
+
       order.tags = []
       order.tags << tag_of_payment
       order.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
@@ -422,7 +446,8 @@ class Box < ActiveRecord::Base
       record_from_meli = Meli::Order.find box.meli_order_id
       if record_from_meli
         #box_tags = [] if box.tags == nil
-        box.tags = record_from_meli.tags
+        box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
+        box.tags_will_change!
         box.save
       end
     end
@@ -475,6 +500,14 @@ class Box < ActiveRecord::Base
 
     if box and box.status != "archived" and !box.tags.include?(tag_of_shipping)
       order = box.to_meli
+
+      #temporary solution to fix the bug "order was being modified that came from sidekiq"
+      # box.tags = [] if box.tags == nil
+      # box.tags = box.tags << tag_of_shipping
+      # box.tags = box.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
+      # box.tags_will_change!
+      # box.save
+
       order.tags = []
       order.tags = order.tags << tag_of_shipping
       order.tags = order.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
