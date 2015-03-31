@@ -26,7 +26,7 @@
           <% end %>
         </td>
         <td style= "max-width: 90px" data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
-          <% if shipping.label and shipping.label.aircrm_date_printed? %>
+          <% if shipping.label and (shipping.label.aircrm_date_printed? or shipping.label.meli_first_date_printed?) %>
           <span type="button" class="badge alert-success"> 
           <%= "impresso" %>
           </span>
