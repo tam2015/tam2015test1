@@ -27,5 +27,7 @@ module Mercadolibre
     belongs_to :shipping
     SHIPPING_SERVICES = %w(pac sedex)
 
+    default_scope  { order(:shipping_id => :desc) }
+
   end
 end
