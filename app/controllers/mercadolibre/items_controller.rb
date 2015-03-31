@@ -36,6 +36,9 @@ class Mercadolibre::ItemsController < ApplicationController
       format.xls { send_data @items.to_xls, filename: 'aircrm_anuncios.xls' }
       # format.xls # { send_data @users.to_csv(col_sep: "\t") }
     end
+    if current_user.admin?
+      @items = @klass.all.active.includes(:pictures)      
+    end
   end
 
 
