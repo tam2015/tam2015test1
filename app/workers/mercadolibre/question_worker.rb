@@ -25,10 +25,11 @@ module Mercadolibre
       if question_id
         # Fetch Item fom Meli
         question = []
-        #meli_question  = Meli::Question.find question_id
+
+        # meli_question = Mercadolibre::Question.api.get_question question_id
         refresh_token = dashboard.credentials[:refresh_token]
         Mercadolibre::Question.api.update_token(refresh_token)
-        meli_question = Mercadolibre::Question.api.get_question question_id
+        meli_question  = Meli::Question.find question_id        
         question << meli_question
 
         # Create Question
