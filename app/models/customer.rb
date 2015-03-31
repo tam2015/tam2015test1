@@ -81,8 +81,7 @@ class Customer < ActiveRecord::Base
     customer
   end
 
-  def self.get_customer(user_id, customer_id, dashboard)
-
+  def self.get_customer(user_id, customer_id)
     if user_id and customer_id
       # Fetch Item fom Meli
       meli_customer  = Meli::User.find(customer_id)
