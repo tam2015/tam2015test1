@@ -206,7 +206,7 @@ module Mercadolibre
       end
     end
 
-    def post_seller_feedback(dashboard_id, meli_order_id)
+    def self.post_seller_feedback(dashboard_id, meli_order_id)
     dashboard = ::Dashboard.find_by(id: dashboard_id)
     raise ArgumentError, "Invalid dashboard element.\n dashboard_id=`#{dashboard_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
       if meli_order_id
