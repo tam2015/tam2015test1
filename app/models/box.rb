@@ -443,13 +443,15 @@ class Box < ActiveRecord::Base
       order.tags << tag_of_payment
       order.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
       order.save
-      record_from_meli = Meli::Order.find box.meli_order_id
-      if record_from_meli
-        #box_tags = [] if box.tags == nil
-        box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
-        box.tags_will_change!
-        box.save
-      end
+
+      #temporary removed
+      # record_from_meli = Meli::Order.find box.meli_order_id
+      # if record_from_meli
+      #   #box_tags = [] if box.tags == nil
+      #   box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
+      #   box.tags_will_change!
+      #   box.save
+      # end
     end
   end
 
@@ -513,13 +515,15 @@ class Box < ActiveRecord::Base
       order.tags = order.tags << tag_of_payment if tag_of_payment.present? and tag_of_payment != tag_of_shipping and tag_of_payment != []
       order.save
 
-      record_from_meli = Meli::Order.find box.meli_order_id
-      #if record_from_meli != 404
-      box_tags = [] if box.tags == nil
-      box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
-      box.tags_will_change!
-      box.save
-      #end
+
+      #temporary removed  
+      # record_from_meli = Meli::Order.find box.meli_order_id
+      # #if record_from_meli != 404
+      # box_tags = [] if box.tags == nil
+      # box.tags = record_from_meli.tags if record_from_meli and record_from_meli.tags.present?
+      # box.tags_will_change!
+      # box.save
+      # #end
     end
   end
 
