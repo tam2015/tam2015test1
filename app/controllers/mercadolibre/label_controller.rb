@@ -8,13 +8,22 @@ class Mercadolibre::LabelController < ApplicationController
   # DashboardsHelper callback
   before_action :set_dashboard, only: [:index]
 
+
+
+
   def index
+    if current_user.admin?
+      index_admin
+    elsif current_user.regular?
+      index_regular      
+    end
+  end
+
+  def index_regular
     if params[:query]
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id, meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
     elsif params[:print_status] == "não impressas"
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
-    elsif current_user.admin?
-      @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)      
     else
     @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7) 
       if @shippings.count < 1
@@ -22,8 +31,22 @@ class Mercadolibre::LabelController < ApplicationController
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
       end
     end
-
   end
+
+  def index_admin
+    if params[:query]
+      @shippings = Mercadolibre::Shipping.all(meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
+    elsif params[:print_status] == "não impressas"
+      @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
+    else
+    @shippings = Mercadolibre::Shipping.all.includes(:label).paginate(page: params[:page], per_page: 7) 
+      if @shippings.count < 1
+        redirect_to dashboards_path
+        flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
+      end
+    end
+  end
+
 
   def meli_label
     box = ::Box.find params[:box_id]
