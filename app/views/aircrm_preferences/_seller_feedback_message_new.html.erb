@@ -24,8 +24,8 @@
 
         <% #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] } %>
         <%= r.input :content, as: :text, label: "Mensagem", required: true %>
-        <%= r.input :payment_status , label: "Status do Pagamento", collection: %W(pagamento_a_combinar pagamento_pendente pagamento_aprovado processando_pagamento pagamento_pendente pagamento_cancelado pagamento_estornado em_mediação charged_back), prompt: "Selecione o status do pagamento", required: true %>        
-        <%= r.input :shipping_status, label: "Status do Envio", collection: %W(entrega_a_combinar entrega_pendente empacotando enviado entregue devolvido entrega_cancelado), prompt: "Selecione o status do envio", required: true %>                
+        <%= r.input :payment_status , label: "Status do Pagamento", collection: Mercadolibre::Payment.statuses.keys, prompt: "Selecione o status do pagamento", required: true %>        
+        <%= r.input :shipping_status, label: "Status do Envio", collection: Mercadolibre::Shipping.statuses.keys, prompt: "Selecione o status do envio", required: true %>                
       <% end %>
     </div>
   </div>

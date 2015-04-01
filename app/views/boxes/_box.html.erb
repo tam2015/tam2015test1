@@ -90,25 +90,25 @@
         <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
           <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
-        </a>   
+        </a>
 
         <% elsif box.payments.first.tags and box.payments.first.tags.include?("in_process") %>
         <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
           <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
-        </a>  
+        </a>
 
         <% elsif box.payments.first.tags and box.payments.first.tags.include?("approved") %>
         <a href="#" class="btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
           <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
-        </a>          
+        </a>
 
-        <% else %>                    
+        <% else %>
         <a href="#" class="btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
           <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
-        </a>          
+        </a>
         <% end %>
 
         <ul class="dropdown-menu">

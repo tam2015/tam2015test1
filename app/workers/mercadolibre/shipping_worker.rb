@@ -35,7 +35,7 @@ module Mercadolibre
       shipping.save
 
       if shipping.shipping_mode == "me2" and box.payments.first.approved?
-        label = ::Mercadolibre::Label.find_or_initialize_by(shipping_id: shipping.id)
+        label = ::Mercadolibre::Label.where(shipping_id: shipping.id).first_or_initialize
         label.meli_first_date_printed   =shipping.date_first_printed
         label.save
       end

@@ -62,6 +62,8 @@
 
               %tbody#items-body
                 = render @items
+                #question_paginate.col-md-12
+                = will_paginate @items, previous_label: h("<"), next_label: h(">")
         - else
           = translate_count_result @items
 
