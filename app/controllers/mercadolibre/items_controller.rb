@@ -28,16 +28,17 @@ class Mercadolibre::ItemsController < ApplicationController
 
   # GET /items
   def index
-    @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures)
-
-    # respond_with @items
-    respond_with(@items) do |format|
-      format.csv { send_data @items.to_csv, filename: 'aircrm_anuncios.csv' }
-      format.xls { send_data @items.to_xls, filename: 'aircrm_anuncios.xls' }
-      # format.xls # { send_data @users.to_csv(col_sep: "\t") }
-    end
     if current_user.admin?
-      @items = @klass.all.active.includes(:pictures)      
+      @items = @klass.all.active.includes(:pictures).paginate(page: params[:page], per_page: 5)
+    else
+      @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures).paginate(page: params[:page], per_page: 5)
+
+      # respond_with @items
+      respond_with(@items) do |format|
+        format.csv { send_data @items.to_csv, filename: 'aircrm_anuncios.csv' }
+        format.xls { send_data @items.to_xls, filename: 'aircrm_anuncios.xls' }
+        # format.xls # { send_data @users.to_csv(col_sep: "\t") }
+      end
     end
   end
 
