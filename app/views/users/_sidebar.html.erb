@@ -25,16 +25,6 @@
                 <i class="fa fa-user"></i> Qualificação ao comprador
               <% end %>
             </li>
-            <li>
-              <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "question"), remote: true) do %>
-                <i class="fa fa-user"></i> Perguntas
-              <% end %>
-            </li>
-            <li>
-              <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "feedback_aircrm_reason"), remote: true) do %>
-                <i class="fa fa-user"></i> Razões Qualificação
-              <% end %>
-            </li>
         </ul>
       </section>
     </aside>

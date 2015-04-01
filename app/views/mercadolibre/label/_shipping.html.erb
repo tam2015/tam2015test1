@@ -30,7 +30,8 @@
           <span type="button" class="badge alert-success"> 
           <%= "impresso" %>
           </span>
-          <%= shipping.label.aircrm_date_printed[0..9] %>
+          <%= shipping.label.aircrm_date_printed[0..9] if shipping.label.aircrm_date_printed?%>
+          <%= shipping.label.meli_first_date_printed[0..9] if shipping.label.meli_first_date_printed?%>
           <% else %>
           <span type="button" class="badge alert-success">
           <%= "não impresso" %>

@@ -5,7 +5,7 @@
     </td>
     <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
       <div class="user-heading round">
-      <% if item.pictures and item.pictures.first and item.pictures.first.meli_url.present? %>
+      <% if item.pictures and item.pictures.first %>
         <a href="#">
             <%= image_tag item.pictures.first.meli_url, style: "width: 50px" %>
         </a>
