@@ -36,8 +36,8 @@ module Mercadolibre
         meli_order_feedback                    = meli_order.feedback.purchase
 
         feedback_buyer.meli_date_created       = meli_order_feedback.date_created?
-        feedback_buyer.rating                  = meli_order_feedback.rating
-        feedback_buyer.fulfilled               = meli_order_feedback.fulfilled
+        feedback_buyer.rating                  = meli_order_feedback.rating?
+        feedback_buyer.fulfilled               = meli_order_feedback.fulfilled?
 
         puts "\n\n* MESSAGE? Purchase - #{meli_order.id} #{meli_order_feedback.inspect}\n\n"
 
@@ -46,7 +46,7 @@ module Mercadolibre
         feedback_buyer.message                 = meli_order_feedback.message?
         #feedback_buyer.reply        = meli_order_feedback.reply?
 
-        feedback_buyer.status                  = meli_order_feedback.status
+        feedback_buyer.status                  = meli_order_feedback.status?
 
         # Associations
         feedback_buyer.meli_item_id            = meli_order.order_items[0].item.id
@@ -67,8 +67,8 @@ module Mercadolibre
         meli_order_feedback                    = meli_order.feedback.sale
 
         feedback_seller.meli_date_created      = meli_order_feedback.date_created?        
-        feedback_seller.rating                 = meli_order_feedback.rating
-        feedback_seller.fulfilled              = meli_order_feedback.fulfilled
+        feedback_seller.rating                 = meli_order_feedback.rating?
+        feedback_seller.fulfilled              = meli_order_feedback.fulfilled?
 
         puts "\n\n* MESSAGE? Sale - #{meli_order.id} #{meli_order_feedback.inspect}\n\n"
 
@@ -77,7 +77,7 @@ module Mercadolibre
         feedback_seller.message                = meli_order_feedback.message?
         #feedback_seller.reply        = meli_order_feedback.reply?
 
-        feedback_seller.status                 = meli_order_feedback.status
+        feedback_seller.status                 = meli_order_feedback.status?
 
         # Associations
         feedback_seller.meli_item_id           = meli_order.order_items[0].item.id
