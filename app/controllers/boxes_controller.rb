@@ -30,7 +30,7 @@ class BoxesController < ApplicationController
     if current_user.admin?
       index_test_franquiador_admin
     elsif current_user.regular?
-      index_test_franquiador      
+      index_test_franquiador
     elsif current_user.lojista?
       index_test_lojista
     end
@@ -177,10 +177,13 @@ class BoxesController < ApplicationController
       #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
 
       elsif params[:query]
-        @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
-
-      elsif current_user.admin?
-        @boxes = Box.all.limit(50).includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5)
+        elsif current_user.customers.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.customers.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        elsif current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        end          
 
       else
         @boxes = current_user.dashboards.first.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
@@ -211,7 +214,13 @@ class BoxesController < ApplicationController
       #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
 
       elsif params[:query]
-        @boxes = Box.all.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
+        if Box.all.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = Box.all.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5)
+        elsif Customer.where(email: params[:query]).first and Customer.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = Customer.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        elsif Customer.where(nickname: params[:query]).first and Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)          
+        end        
 
       else
         @boxes = Box.all.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
@@ -220,7 +229,7 @@ class BoxesController < ApplicationController
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
         end
       end
-    end    
+    end
       #testing box_tag_filter
       #@boxes = Box.array_has_any(:tags, params[:status_box][0], params[:status_box][1]).paginate(page: params[:page], per_page: 5) if params[:status_box]
       #@boxes = Box.where(" tags && ARRAY['paid', 'not_delivered']::character varying(255)[]")
