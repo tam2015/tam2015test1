@@ -183,7 +183,7 @@ class BoxesController < ApplicationController
           @boxes = current_user.customers.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
         elsif current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
           @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
-        end          
+        end
 
       else
         @boxes = current_user.dashboards.first.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
@@ -219,8 +219,8 @@ class BoxesController < ApplicationController
         elsif Customer.where(email: params[:query]).first and Customer.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
           @boxes = Customer.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
         elsif Customer.where(nickname: params[:query]).first and Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
-          @boxes = Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)          
-        end        
+          @boxes = Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        end
 
       else
         @boxes = Box.all.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)

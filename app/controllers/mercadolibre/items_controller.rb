@@ -29,9 +29,9 @@ class Mercadolibre::ItemsController < ApplicationController
   # GET /items
   def index
     if current_user.admin?
-      @items = @klass.all.active.includes(:pictures).paginate(page: params[:page], per_page: 5)
+      @items = @klass.all.active.includes(:pictures).paginate(page: params[:page], per_page: 7)
     else
-      @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures).paginate(page: params[:page], per_page: 5)
+      @items = @klass.where(dashboard_id: @dashboard.id).active.includes(:pictures).paginate(page: params[:page], per_page: 7)
 
       # respond_with @items
       respond_with(@items) do |format|

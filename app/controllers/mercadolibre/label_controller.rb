@@ -15,7 +15,7 @@ class Mercadolibre::LabelController < ApplicationController
     if current_user.admin?
       index_admin
     elsif current_user.regular?
-      index_regular      
+      index_regular
     end
   end
 
@@ -25,7 +25,7 @@ class Mercadolibre::LabelController < ApplicationController
     elsif params[:print_status] == "não impressas"
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
     else
-    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7) 
+    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7)
       if @shippings.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
@@ -35,11 +35,11 @@ class Mercadolibre::LabelController < ApplicationController
 
   def index_admin
     if params[:query]
-      @shippings = Mercadolibre::Shipping.all(meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
+      @shippings = Mercadolibre::Shipping.all.where(meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
     elsif params[:print_status] == "não impressas"
       @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
     else
-    @shippings = Mercadolibre::Shipping.all.includes(:label).paginate(page: params[:page], per_page: 7) 
+      @shippings = Mercadolibre::Shipping.all.includes(:label).paginate(page: params[:page], per_page: 7)
       if @shippings.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"

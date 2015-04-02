@@ -66,7 +66,7 @@ module Mercadolibre
         feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
         meli_order_feedback                    = meli_order.feedback.sale
 
-        feedback_seller.meli_date_created      = meli_order_feedback.date_created?        
+        feedback_seller.meli_date_created      = meli_order_feedback.date_created?
         feedback_seller.rating                 = meli_order_feedback.rating?
         feedback_seller.fulfilled              = meli_order_feedback.fulfilled?
 
@@ -119,16 +119,16 @@ module Mercadolibre
         feedback_purchase                      = meli_order_feedback.purchase
 
         feedback_buyer.meli_feedback_id        = feedback_purchase.id
-        feedback_buyer.meli_date_created       = feedback_purchase.date_created?        
-        feedback_buyer.rating                  = feedback_purchase.rating
-        feedback_buyer.fulfilled               = feedback_purchase.fulfilled
+        feedback_buyer.meli_date_created       = feedback_purchase.date_created?
+        feedback_buyer.rating                  = feedback_purchase.rating?
+        feedback_buyer.fulfilled               = feedback_purchase.fulfilled?
 
         # attributes available only for replying a feedback
         feedback_buyer.reason                  = feedback_purchase.reason?
         feedback_buyer.message                 = feedback_purchase.message?
         # feedback_buyer.reply        = feedback_purchase.reply?
 
-        feedback_buyer.status                  = feedback_purchase.status
+        feedback_buyer.status                  = feedback_purchase.status?
 
         feedback_buyer.save
       end
@@ -140,18 +140,18 @@ module Mercadolibre
         feedback_sale                          = meli_order_feedback.sale
 
         feedback_seller.meli_feedback_id       = feedback_sale.id
-        feedback_seller.meli_date_created      = feedback_sale.date_created?        
-        feedback_seller.rating                 = feedback_sale.rating
-        feedback_seller.fulfilled              = feedback_sale.fulfilled
+        feedback_seller.meli_date_created      = feedback_sale.date_created?
+        feedback_seller.rating                 = feedback_sale.rating?
+        feedback_seller.fulfilled              = feedback_sale.fulfilled?
 
         # attributes available only when fetching from API
         feedback_seller.reason                 = feedback_sale.reason?
         feedback_seller.message                = feedback_sale.message?
         #feedback_seller.reply        = feedback_sale.reply?
 
-        feedback_seller.status                 = feedback_sale.status
+        feedback_seller.status                 = feedback_sale.status?
 
-        feedback_seller.restock_item           = feedback_sale.restock_item
+        feedback_seller.restock_item           = feedback_sale.restock_item?
 
         feedback_seller.save
       end
@@ -219,7 +219,7 @@ module Mercadolibre
 
         puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
       end
-    end    
+    end
 
 
 
