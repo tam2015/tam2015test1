@@ -32,7 +32,7 @@ module Mercadolibre
 
       # Create Buyer feedback is available
       if meli_order.feedback.purchase.present?
-        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
+        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "buyer")
         meli_order_feedback                    = meli_order.feedback.purchase
 
         feedback_buyer.meli_date_created       = meli_order_feedback.date_created?
@@ -55,7 +55,7 @@ module Mercadolibre
         feedback_buyer.save
 
       else # create empty objects
-        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :buyer)
+        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "buyer")
         feedback_buyer.meli_item_id            = meli_order.order_items[0].item.id
         feedback_buyer.dashboard_id            = dashboard_id
         feedback_buyer.save
@@ -63,7 +63,7 @@ module Mercadolibre
 
       # Create Seller feedback is available
       if meli_order.feedback.sale.present?
-        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
+        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "seller")
         meli_order_feedback                    = meli_order.feedback.sale
 
         feedback_seller.meli_date_created      = meli_order_feedback.date_created?
@@ -87,7 +87,7 @@ module Mercadolibre
 
       else # create empty objects
 
-        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: :seller)
+        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "seller")
         feedback_seller.meli_item_id           = meli_order.order_items[0].item.id
         feedback_seller.dashboard_id           = dashboard_id
         feedback_seller.save
