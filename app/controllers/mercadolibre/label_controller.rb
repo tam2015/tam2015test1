@@ -25,7 +25,7 @@ class Mercadolibre::LabelController < ApplicationController
     elsif params[:print_status] == "Todas"
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7)
     else
-    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
+    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {meli_first_date_printed: nil}).paginate(page: params[:page], per_page: 7)
       if @shippings.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
@@ -39,7 +39,7 @@ class Mercadolibre::LabelController < ApplicationController
     elsif params[:print_status] == "Todas"
       @shippings = Mercadolibre::Shipping.all.includes(:label)#.paginate(page: params[:page], per_page: 7)
     else
-      @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {aircrm_date_printed: nil})#.paginate(page: params[:page], per_page: 7)
+      @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {meli_first_date_printed: nil})#.paginate(page: params[:page], per_page: 7)
       if @shippings.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
