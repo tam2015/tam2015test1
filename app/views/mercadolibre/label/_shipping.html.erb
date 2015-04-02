@@ -2,6 +2,10 @@
   <% @shippings.each do | shipping| %>
     <% if shipping.label %>
       <tr id="item_<%= shipping.id %>">
+      <td class="text-center hidden-xs table-checkbox">
+
+        <%= check_box_tag "box_id[]", shipping.box.id %>
+      </td>
         <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
           <div class="user-heading round">
           <% if shipping.box.item.pictures and shipping.box.item.pictures.first and shipping.box.item.pictures.first.meli_url != nil %>

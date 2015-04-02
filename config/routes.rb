@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       scope module: 'mercadolibre' do
         resources :label
         get "meli_label", to: "label#meli_label"
+        get "multiple_meli_labels", to: "label#multiple_meli_labels"
 
         get "monitor", to: "monitor#monitor", on: :collection
         get "monitor_from_categories", to: "monitor#monitor_from_categories", on: :collection
@@ -100,7 +101,7 @@ Rails.application.routes.draw do
           member do
             get "publish"
             get "meli_update"
-            
+
 
           resources :pictures, only: [:index, :new, :create]
           end

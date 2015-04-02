@@ -22,10 +22,10 @@ class Mercadolibre::LabelController < ApplicationController
   def index_regular
     if params[:query]
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id, meli_order_id: params[:query]).includes(:label).paginate(page: params[:page], per_page: 7)
-    elsif params[:print_status] == "não impressas"
-      @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
+    elsif params[:print_status] == "Todas"
+      @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7)
     else
-    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).paginate(page: params[:page], per_page: 7)
+    @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {aircrm_date_printed: nil}).paginate(page: params[:page], per_page: 7)
       if @shippings.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas etiquetas. Por favor aguarde um momento"
@@ -56,5 +56,21 @@ class Mercadolibre::LabelController < ApplicationController
     shipping_id = box.shipping.meli_shipping_id
     label = box.shipping.label.update(aircrm_date_printed: Time.now)
     redirect_to "https://api.mercadolibre.com/shipment_labels?shipment_ids=#{shipping_id}&savePdf=Y&access_token=#{dashboard.credentials[:access_token]}"
+  end
+
+  def multiple_meli_labels
+    meli_shipping_ids = []
+    boxes_ids = params[:box_id]
+    boxes_ids.each do |box_id|
+      box = ::Box.find box_id
+      meli_shipping_id = box.shipping.meli_shipping_id
+      label = box.shipping.label.update(aircrm_date_printed: Time.now, meli_first_date_printed: Time.now)
+      meli_shipping_ids << meli_shipping_id
+    end
+    meli_shipping_ids_adjusted = meli_shipping_ids.join(",")
+    dashboard = current_user.dashboards.first
+    refresh_token = dashboard.credentials[:refresh_token]
+    Box.api.update_token(refresh_token)
+    redirect_to "https://api.mercadolibre.com/shipment_labels?shipment_ids=#{meli_shipping_ids_adjusted}&savePdf=Y&access_token=#{dashboard.credentials[:access_token]}"
   end
 end
