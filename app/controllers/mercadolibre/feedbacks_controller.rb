@@ -7,20 +7,32 @@ class Mercadolibre::FeedbacksController < ApplicationController
 
 
   def index
+    if current_user.admin?
+      index_admin
+    elsif current_user.regular?
+      index_regular
+    end
+  end
+
+  def index_regular
     if params[:rating_received]
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer", rating: params[:rating_received]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     elsif params[:rating_sent]
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     elsif params[:query]
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, meli_order_id: params[:query]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
-    elsif current_user.admin?
-      @buyer_feedbacks = Mercadolibre::Feedback.where(author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)    
     else
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
       if @buyer_feedbacks.count < 1
         redirect_to dashboards_path
         flash[:error] = "Estamos carregando suas qualificações recebidas. Por favor aguarde um momento"
       end
+    end
+  end
+
+  def index_admin
+    if current_user.admin?
+      @buyer_feedbacks = Mercadolibre::Feedback.where(author_type: "seller").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     end
   end
 
