@@ -11,22 +11,28 @@ class WebhookController < ApplicationController
   def provider
     @provider_name = params[:provider].to_sym
     @notification  = params[:webhook]
-
-    # Quit Request if provider is not available
     head :not_acceptable unless @@providers.include?(@provider_name)
 
-    @webhook    = Webhook.new @provider_name, @notification
-    @hook       = @webhook.instantiate_topic_class
-    queue_id    = @hook.queue_notification if @hook
+    dashboard = Dashboard.find_by(meli_user_id: params[:webhook][:user_id])
+    #nil is a temporary solution used to avoid bugs on old accounts
+    if dashboard.preferences.average_sales == nil or dashboard.preferences.average_sales < 1000
 
-    Rails.logger.info "\n\n\n-- WebhookController -------------------------------------------- "
-    Rails.logger.info "*** Provider: #{params[:provider]}"
-    Rails.logger.info "*** Type: #{@notification[:topic].capitalize} "
-    Rails.logger.info "*** Hook: #{@hook.class} - #{@hook} "
-    Rails.logger.info "*** Hook Queue ID: #{queue_id} "
-    Rails.logger.info "----------------------------------------------"
+      # Quit Request if provider is not available
 
-    # Notification stored
+      @webhook    = Webhook.new @provider_name, @notification
+      @hook       = @webhook.instantiate_topic_class
+      queue_id    = @hook.queue_notification if @hook
+
+      Rails.logger.info "\n\n\n-- WebhookController -------------------------------------------- "
+      Rails.logger.info "*** Provider: #{params[:provider]}"
+      Rails.logger.info "*** Type: #{@notification[:topic].capitalize} "
+      Rails.logger.info "*** Hook: #{@hook.class} - #{@hook} "
+      Rails.logger.info "*** Hook Queue ID: #{queue_id} "
+      Rails.logger.info "----------------------------------------------"
+      # Notification stored
+    else
+      puts "número de vendas maior que o permitido"
+    end
     head :ok
   end
 

@@ -25,6 +25,8 @@ class DashboardPreferences
   #feedback
   attribute :seller_feedback_message  , String    , default: "Comprador muito bom."
 
+  attribute :average_sales            , Integer
+
   # dump to hash (json and when necessary)
   def self.dump(attrs)
     attributes = attrs.to_hash if !attrs.nil? and attrs.respond_to? :to_hash

@@ -49,7 +49,6 @@ class Dashboard < ActiveRecord::Base
     #dashboard.user_ids          = [user.id]
     dashboard.account_id        = user.account.id
 
-
     if auth.provider == "mercadolibre" and auth.extra.present? and auth.extra.raw_info.present?
       dashboard.preferences.country_id                = auth.extra.raw_info.country_id
       dashboard.preferences.site_id                   = auth.extra.raw_info.site_id
@@ -58,6 +57,13 @@ class Dashboard < ActiveRecord::Base
       dashboard.preferences.mercadoenvios             = auth.extra.raw_info.status.mercadoenvios
       dashboard.preferences.shipping_modes            = auth.extra.raw_info.shipping_modes
       dashboard.preferences.seller_address            = auth.extra.raw_info.address
+
+      meli_registration_date                          = auth.extra.raw_info.registration_date.to_date
+      time_of_meli                                    = Time.now.to_date - meli_registration_date
+      time_of_meli_to_months                          = time_of_meli.to_i/365.0*12
+      number_of_transactions                          = auth.extra.raw_info.seller_reputation.transactions.total
+      average_transactions_per_month                  = number_of_transactions/time_of_meli_to_months
+      dashboard.preferences.average_sales             = average_transactions_per_month
     end
 
     sync_account = dashboard.new_record?
@@ -74,7 +80,7 @@ class Dashboard < ActiveRecord::Base
     dashboard.load_provider
 
     # fire workers
-    if sync_account
+    if sync_account and dashboard.preferences.average_sales < 1000
       Mercadolibre::AccountSyncWorker.perform_async dashboard.id
     end
 
