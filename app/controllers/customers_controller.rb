@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     if params[:query]
-      @customers = current_user.customers.where("name ilike :q or nickname ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
+      @customers = current_user.customers.where("email ilike :q or nickname ilike :q", q: "%#{params[:query]}%").paginate(page: params[:page], per_page: 5)
     elsif params[:status_question_customer]
       @customers = current_user.customers.where(blocked: params[:status_question_customer]).paginate(page: params[:page], per_page: 5)
     elsif params[:status_order_customer]

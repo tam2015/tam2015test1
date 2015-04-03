@@ -220,6 +220,10 @@ class BoxesController < ApplicationController
           @boxes = Customer.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
         elsif Customer.where(nickname: params[:query]).first and Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
           @boxes = Customer.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        else
+          #temporary solution
+          @boxes = Box.all.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5)
+          flash[:error] = "Não foi possível encontrar nenhuma venda nessa busca"
         end
 
       else

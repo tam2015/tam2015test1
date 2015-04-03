@@ -3,7 +3,7 @@
     <li class="dropdown" style="padding-right: 30px; float: left">
       <form action="#" class="pull-right position">
         <%= form_tag dashboard_customers_path, method: :get do %>
-          <input type="text" placeholder="nickname ou nome" class="form-control search-btn "
+          <input type="text" placeholder="nickname ou email" class="form-control search-btn "
             <%= text_field_tag :query, params[:query] %>
             <%= submit_tag "Search", name: nil, class: "hidden" %>
 
@@ -38,7 +38,7 @@
         Clientes
       </li>
     </ul>
-  </header>  
+  </header>
   <div class="panel-body">
     <div class="no-more-tables">
       <table class="display table table-bordered table-striped table-condensed no-more-tables">
@@ -55,27 +55,30 @@
         <% @customers.each do |customer| %>
         <tbody id="items-body">
           <tr>
-            <td style="width: 220px">
+            <td >
               <div class="first-part-question" >
                 <% if customer %>
-                <p><%= customer.nickname %></p>
                 <dl class="dl-horizontal">
+                  <dt>Nickname:</dt>
+                  <dd><%= link_to customer.nickname, dashboard_index_test_path(query: customer.nickname, dashboard_id: current_dashboard.id) %></dd>
                   <dt>Nome:</dt>
                   <dd><%= customer.name %></dd>
                   <dt>Telefone:</dt>
                   <dd><%= customer.phone%></dd>
+                  <% if customer.email %>
                   <dt>Email:</dt>
-                  <dd><%= customer.email%></dd>
+                  <dd><%= link_to customer.email, dashboard_index_test_path(query: customer.email, dashboard_id: current_dashboard.id)%></dd>
+                  <% end %>
                 </dl>
                 <% end %>
               </div>
             </td>
-            <td style="width: 220px">
+            <td >
               <div class="first-part-question" >
                 </dd>
                 <dl class="dl-horizontal">
                   <dt>Compras:</dt>
-                  <dd><%= customer.boxes ? customer.boxes.count : :nil%></dd>
+                  <dd><%= customer.boxes ? (link_to customer.boxes.count,dashboard_index_test_path(query: customer.nickname, dashboard_id: current_dashboard.id)) : :nil%></dd>
                   <dt>Perguntas:</dt>
                   <dd><%= customer.questions_count(params[:dashboard_id]) ? customer.questions_count(params[:dashboard_id]) : :nil%></dd>
                 </dl>
@@ -103,6 +106,11 @@
             </td>
             <td>
               <ul class="fourth-part-question">
+              <a href="javascript:;">
+                <i class="fa fa-envelope text-link"></i>
+                <%= link_to 'Ver vendas', dashboard_index_test_path(query: customer.nickname, dashboard_id: current_dashboard.id), style: "font-size: 11px" %>
+              </a>
+              </br>
               <% unless customer.blocked? %>
                 <a href="javascript:;">
                   <i class="fa fa-envelope text-link"></i>
