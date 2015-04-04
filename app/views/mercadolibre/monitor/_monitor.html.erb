@@ -13,7 +13,9 @@
       <%= item.price %>
     </td>
     <td>
+      <% if item.installments.present? %>
       <%= item.installments.quantity*(item.installments.amount).round(0) %>
+      <% end %>
     </td>
     <td>
         <%= item.sold_quantity? %>
