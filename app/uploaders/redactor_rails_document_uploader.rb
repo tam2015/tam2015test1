@@ -1,12 +1,12 @@
-# encoding: utf-8
-class RedactorRailsDocumentUploader < CarrierWave::Uploader::Base
-  include RedactorRails::Backend::CarrierWave
+# # encoding: utf-8
+# class RedactorRailsDocumentUploader < CarrierWave::Uploader::Base
+#   include RedactorRails::Backend::CarrierWave
 
-  def store_dir
-    "uploads/#{model.account_id}/documents/#{model.id}"
-  end
+#   def store_dir
+#     "uploads/#{model.account_id}/documents/#{model.id}"
+#   end
 
-  def extension_white_list
-    RedactorRails.document_file_types
-  end
-end
+#   def extension_white_list
+#     RedactorRails.document_file_types
+#   end
+# end
