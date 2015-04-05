@@ -225,15 +225,15 @@ class Box < ActiveRecord::Base
     #  end
 
 
-    if meli_order.feedback.sale == nil and 
-      meli_order.date_created > Time.now - 21.days and 
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and      
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and 
-      box.payments.first.tags.present and
-      box.payments.first.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
-      box.shipping.tags.present and
-      box.shipping.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]  
+    if meli_order.feedback.sale == nil and
+      meli_order.date_created > Time.now - 21.days #and
+      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
+      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
+      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
+      # box.payments.first.tags.present and
+      # box.payments.first.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
+      # box.shipping.tags.present and
+      # box.shipping.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
 
       puts "* Feedback: No sale present"
       ::Mercadolibre::Feedback.post_seller_feedback @dashboard.id, meli_order.id
@@ -444,7 +444,7 @@ class Box < ActiveRecord::Base
       box.tags = []
       box.tags << tag_of_payment
       box.tags << tag_of_shipping if tag_of_shipping.present? and tag_of_shipping != tag_of_payment
-      box.tags_will_change!      
+      box.tags_will_change!
       box.save
 
 
@@ -525,7 +525,7 @@ class Box < ActiveRecord::Base
       # order.save
 
 
-      #temporary removed  
+      #temporary removed
       # record_from_meli = Meli::Order.find box.meli_order_id
       # #if record_from_meli != 404
       # box_tags = [] if box.tags == nil

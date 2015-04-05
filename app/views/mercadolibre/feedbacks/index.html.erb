@@ -3,8 +3,8 @@
     <li class="dropdown" style="padding-right: 30px; float: left">
       <%= link_to dashboard_feedbacks_path(@dashboard), id: "refresh_items", class: "btn btn-info btn-sm" do %>
         <%= translate_button_content(:refresh, Box, icon: :refresh, label_class: "sr-only") %>
-      <% end %>        
-    </li>    
+      <% end %>
+    </li>
     <li class="dropdown" style="padding-right: 30px; float: left">
       <form action="#" class="pull-right position">
         <%= form_tag dashboard_feedbacks_path, method: :get do %>
@@ -14,7 +14,7 @@
 
           <%end%>
       </form>
-    </li>    
+    </li>
     <li class="dropdown" style="padding-right: 30px; float: left">
       <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Enviadas <b class="caret"></b></a>
       <ul class="dropdown-menu">
@@ -94,7 +94,7 @@
                 <% end %>
                   <p>
                     <%= buyer_feedback.meli_date_created[0..9] if buyer_feedback.meli_date_created %>
-                  </p>                  
+                  </p>
                   <p>
                     <%= buyer_feedback.message %>
                   </p>
@@ -106,11 +106,11 @@
                   <% status_class = feedback_seller(buyer_feedback).rating == :negative ? "danger" : "success" %>
 
                   <span type="button" class="badge alert-<%= status_class %>">
-                    <%= I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") %>
+                    <%= feedback_seller(buyer_feedback).rating ? I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") : I18n.t(:nil_feedback, scope: "helpers.feedback.ratings")%>
                   </span>
                   <p>
                     <%= feedback_seller(buyer_feedback).meli_date_created[0..9] if feedback_seller(buyer_feedback).meli_date_created %>
-                  </p>                                    
+                  </p>
                   <p>
                     <%= feedback_seller(buyer_feedback).message %>
                   </p>
