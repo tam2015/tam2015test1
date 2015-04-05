@@ -226,14 +226,14 @@ class Box < ActiveRecord::Base
 
 
     if meli_order.feedback.sale == nil and
-      meli_order.date_created > Time.now - 21.days #and
-      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
-      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
-      # @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
-      # box.payments.first.tags.present and
-      # box.payments.first.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
-      # box.shipping.tags.present and
-      # box.shipping.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
+      meli_order.date_created > Time.now - 21.days and
+      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
+      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
+      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
+      box.payments.first.tags.present and
+      box.payments.first.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
+      box.shipping.tags.present and
+      box.shipping.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
 
       puts "* Feedback: No sale present"
       ::Mercadolibre::Feedback.post_seller_feedback @dashboard.id, meli_order.id
