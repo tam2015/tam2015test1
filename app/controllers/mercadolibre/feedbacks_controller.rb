@@ -20,7 +20,7 @@ class Mercadolibre::FeedbacksController < ApplicationController
     elsif params[:rating_sent]
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "seller", rating: params[:rating_sent]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     elsif params[:query]
-      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, meli_order_id: params[:query]).order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
+      @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, meli_order_id: params[:query], author_type: "buyer").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
     else
       @buyer_feedbacks = Mercadolibre::Feedback.where(dashboard_id: current_user.dashboards.first.id, author_type: "buyer").order(meli_date_created: :desc).paginate(page: params[:page], per_page: 7)
       if @buyer_feedbacks.count < 1
