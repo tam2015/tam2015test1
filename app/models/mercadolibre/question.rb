@@ -52,10 +52,10 @@ module Mercadolibre
         question.user_id                = dashboard.users.first.id
 
         #user this line to Meli
-        question.author_id              = meli_item_question.from.id
+        # question.author_id              = meli_item_question.from.id
 
         #user this line to old gem
-        # question.author_id              = meli_item_question.user_id
+        question.author_id              = meli_item_question.user_id
 
         question.seller_id              = meli_item_question.seller_id
 
@@ -63,9 +63,9 @@ module Mercadolibre
         question.meli_item_id           = meli_item_question.item_id
         question.text                   = meli_item_question.text
         question.meli_question_id       = meli_item_question.id
-        question.deleted_from_listing   = meli_item_question.deleted_from_listing?
+        question.deleted_from_listing   = meli_item_question.deleted_from_listing
         question.status                 = meli_item_question.status.downcase
-        question.hold                   = meli_item_question.hold?
+        question.hold                   = meli_item_question.hold
         unless meli_item_question.answer.nil?
           question.answer                 = {
             text:                     meli_item_question.answer.text.to_s,
@@ -82,7 +82,7 @@ module Mercadolibre
         question.save
           #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
         customer = ::Customer.get_customer(question.seller_id, question.author_id)
-        
+
 
         # If Question is new, we can
         # notify user with an email
