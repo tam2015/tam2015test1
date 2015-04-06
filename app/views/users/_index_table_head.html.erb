@@ -1,0 +1,25 @@
+<tr>
+  <% # checkbox %>
+  <th class="table-checkbox"></th>
+  <th>
+    <%= @klass.human_attribute_name :name %>
+  </th>
+  <th>
+    <%= @klass.human_attribute_name :email %>
+  </th>
+  <th>
+    <%= @klass.human_attribute_name :phone %>
+  </th>
+  <th>
+    <%= "vendas" %>
+  </th>
+  <th>
+    <%= "qualificação" %>
+  </th>
+  <th>
+    <%= Subscription.human_attribute_name :expires_in %>
+  </th>
+  <% # actions %>
+  <th class="table-actions"></th>
+</tr>
+

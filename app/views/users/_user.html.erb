@@ -1,0 +1,33 @@
+<% if user %>
+  <tr id="user_<%= user.id %>">
+    <td class="text-center hidden-xs table-checkbox">
+      <input class="list-child" type="checkbox">/</input>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:name       ) %>">
+      <%= link_to user_path(user), title: user.name do %>
+        <%= truncate(user.name, length: 75) %>
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:email  ) %>">
+      <%= user.email %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:phone  ) %>">
+      <%= user.phone %>
+    </td>
+    <td data-title="<%= t_model(Account) %>">
+      <%= user.boxes.count %>
+    </td>
+    <td data-title="<%= t_model(Account) %>">
+      <% if user.dashboards.first.aircrm_preferences.first %>
+      <%= user.dashboards.first.aircrm_preferences.first.data %>
+      <% end %>
+    </td>
+    <td data-title="<%= Subscription.human_attribute_name(:expires_in  ) %>">
+      <%= subscription_date_expiration %>
+    </td>
+    <td class="table-actions">
+      <%= # render 'user_actions', user: user %>
+    </td>
+  </tr>
+<% end %>
+
