@@ -46,56 +46,58 @@ module Mercadolibre
 
     def self.create_or_update_record(meli_item_questions = [], dashboard)
       meli_item_questions.map do |meli_item_question|
-        question                        = Mercadolibre::Question.find_or_initialize_by(meli_question_id: meli_item_question.id)
+        if meli_item_question.status != 404
+          question                        = Mercadolibre::Question.find_or_initialize_by(meli_question_id: meli_item_question.id)
 
-        question.dashboard_id           = dashboard.id
-        question.user_id                = dashboard.users.first.id
+          question.dashboard_id           = dashboard.id
+          question.user_id                = dashboard.users.first.id
 
-        #user this line to Meli
-        # question.author_id              = meli_item_question.from.id
+          #user this line to Meli
+          # question.author_id              = meli_item_question.from.id
 
-        #user this line to old gem
-        question.author_id              = meli_item_question.user_id
+          #user this line to old gem
+          question.author_id              = meli_item_question.user_id
 
-        question.seller_id              = meli_item_question.seller_id
+          question.seller_id              = meli_item_question.seller_id
 
-        question.meli_date_created      = meli_item_question.date_created.to_date.to_s if meli_item_question.date_created
-        question.meli_item_id           = meli_item_question.item_id
-        question.text                   = meli_item_question.text
-        question.meli_question_id       = meli_item_question.id
-        question.deleted_from_listing   = meli_item_question.deleted_from_listing
-        question.status                 = meli_item_question.status.downcase
-        question.hold                   = meli_item_question.hold
-        unless meli_item_question.answer.nil?
-          question.answer                 = {
-            text:                     meli_item_question.answer.text.to_s,
-            # status:                   meli_item_question.status.downcase,
-            date_created:             Time.now.to_s
-          }
+          question.meli_date_created      = meli_item_question.date_created.to_date.to_s if meli_item_question.date_created
+          question.meli_item_id           = meli_item_question.item_id
+          question.text                   = meli_item_question.text
+          question.meli_question_id       = meli_item_question.id
+          question.deleted_from_listing   = meli_item_question.deleted_from_listing
+          question.status                 = meli_item_question.status.downcase
+          question.hold                   = meli_item_question.hold
+          unless meli_item_question.answer.nil?
+            question.answer                 = {
+              text:                     meli_item_question.answer.text.to_s,
+              # status:                   meli_item_question.status.downcase,
+              date_created:             Time.now.to_s
+            }
+          end
+
+          # we store if Question is new to
+          # notify user later on
+          new_question = question.new_record?
+
+          # save Question and fetch meli_customer associated to the question
+          question.save
+            #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
+          customer = ::Customer.get_customer(question.seller_id, question.author_id)
+
+
+          # If Question is new, we can
+          # notify user with an email
+          if new_question
+            # Notify User about new question?
+          end
+
+          # Data Collection for post analysis
+          # Datastores.create!(from: :meli_item_question,
+          #                   meli_id: meli_item_question.id,
+          #                   klass: meli_item_question.class,
+          #                   json: meli_item_question.serializable_hash)
+
         end
-
-        # we store if Question is new to
-        # notify user later on
-        new_question = question.new_record?
-
-        # save Question and fetch meli_customer associated to the question
-        question.save
-          #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
-        customer = ::Customer.get_customer(question.seller_id, question.author_id)
-
-
-        # If Question is new, we can
-        # notify user with an email
-        if new_question
-          # Notify User about new question?
-        end
-
-        # Data Collection for post analysis
-        # Datastores.create!(from: :meli_item_question,
-        #                   meli_id: meli_item_question.id,
-        #                   klass: meli_item_question.class,
-        #                   json: meli_item_question.serializable_hash)
-
       end
     end
 
