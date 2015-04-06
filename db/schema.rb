@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325195001) do
+ActiveRecord::Schema.define(version: 20150405222859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150325195001) do
     t.string   "meli_date_created"
     t.string   "meli_date_closed"
     t.string   "meli_last_updated"
+    t.integer  "item_quantity"
   end
 
   create_table "canned_responses", force: true do |t|

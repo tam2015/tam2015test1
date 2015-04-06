@@ -134,18 +134,19 @@ class Box < ActiveRecord::Base
 
   def parse_order_to_hash(order)
     {
-      meli_order_id:    order.id,
-      meli_item_id:     order.order_items[0].item.id,
+      meli_order_id:           order.id,
+      meli_item_id:            order.order_items[0].item.id,
 
-      name:             order_title(order),
-      description:      order_description(order),
-      status:           order.status?,
-      tags:             order.tags?,
+      name:                    order_title(order),
+      description:             order_description(order),
+      status:                  order.status?,
+      tags:                    order.tags?,
 
       meli_date_created:       order.date_created?.to_s,
       meli_last_updated:       order.last_updated?.to_s,
       meli_date_closed:        order.date_closed?.to_s,
-      price:            order.total_amount?
+      price:                   order.total_amount?,
+      item_quantity:           order.order_items.first.quantity
     }
   end
 
