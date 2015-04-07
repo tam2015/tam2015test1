@@ -22,6 +22,11 @@
       <%= user.dashboards.first.aircrm_preferences.first.data %>
       <% end %>
     </td>
+    <td data-title="<%= t_model(Account) %>">
+      <% if user.dashboards.first.preferences.average_sales %>
+      <%= user.dashboards.first.preferences.average_sales %>
+      <% end %>
+    </td>
     <td data-title="<%= Subscription.human_attribute_name(:expires_in  ) %>">
       <%= subscription_date_expiration %>
     </td>
