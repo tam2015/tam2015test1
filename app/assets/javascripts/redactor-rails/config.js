@@ -19,6 +19,6 @@ $(document).ready(
       "plugins": ["fontsize", "fontcolor", "fontfamily"]
     };
 
-    $('.redactor').redactor(RedactorConfigs);
+    $('.redactorbox').redactor(RedactorConfigs);
   }
 );
