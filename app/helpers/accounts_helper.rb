@@ -48,7 +48,8 @@ module AccountsHelper
   end
 
   def trial_period_end
-    Time.now + (eval(ENV["TRIAL_PERIOD"]) || 14.days)
+    #Time.now + (eval(ENV["TRIAL_PERIOD"]) || 14.days)
+    Time.now + 14.days
   end
 
   def trial_period_remaining_days
