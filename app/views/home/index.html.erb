@@ -1,0 +1,234 @@
+<!-- revolution slider start
+-->
+<div class="fullwidthbanner-container main-slider">
+  <div class="fullwidthabnner">
+    <ul id="revolutionul" style="display:none;">
+      <!-- 1st slide
+      -->
+      <li data-delay="9400" data-masterspeed="700" data-slotamount="8" data-transition="fade">
+        <!-- THE MAIN IMAGE IN THE FIRST SLIDE
+        -->
+        <img src="assets/home/banner/banner_bg-13467f721caaa5f38bf5eb759addb129.jpg"/>
+        <div class="caption lft slide_title" data-easing="easeOutExpo" data-speed="400" data-start="1500" data-x="10" data-y="125">
+          Aumente suas vendas
+        </div>
+        <div class="caption lft slide_subtitle dark-text" data-easing="easeOutExpo" data-speed="400" data-start="2000" data-x="10" data-y="180">
+          com o melhor sistema do Mercado Livre
+        </div>
+        <div class="caption lft slide_desc dark-text" data-easing="easeOutExpo" data-speed="400" data-start="2500" data-x="10" data-y="240">
+          Eleito por alguns vendedores do Mercado Livre, o melhor sistema
+          <br/>
+          de gerenciamento de vendas, moderno, prático e faz
+          <br/>
+          quase tudo para você.
+        </div>
+        <%= link_to user_session_path, class: "caption lft slide_btn btn red slide_item_left", data: { easing: "easeOutExpo", speed: "400", start: "3000", x: "10", y: "360" } do %>
+          <%= t(".free_trial") %>
+        <% end %>
+        <div class="caption lft start" data-easing="easeOutBack" data-speed="400" data-start="2000" data-x="640" data-y="115">
+          <iframe frameborder="0" height="315" src="//www.youtube.com/embed/xVfJ4JPGnvg" width="460"></iframe>
+        </div>
+        <div class="caption lft slide_item_right" data-easing="easeOutBack" data-speed="500" data-start="5000" data-x="330" data-y="20"></div>
+      </li>
+    </ul>
+    <div class="tp-bannertimer tp-top"></div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <!-- feature start
+    -->
+    <div class="text-center feature-head">
+      <h1>Como Funciona</h1>
+      <!--/%p Professional html Template Perfect for Admin Dashboard
+      -->
+    </div>
+    <div class="col-lg-4 col-sm-4">
+      <section>
+        <div class="f-box">
+          <img alt="Image 1" src="assets/logo-mercado-livre-5c5ca1a8a849b2b79f927e62fcafd5de.png" style="height:110px; width:110px"/>
+          <%= link_to user_omniauth_authorize_path(:mercadolibre) do %>
+            <h2>login com mercado livre</h2>
+          <% end %>
+        </div>
+        <p class="f-text">Você faz o login com seu Mercado Livre. Você terá um sistema totalmente integrado e não precisará mais entrar no site do Mercado Livre.</p>
+      </section>
+    </div>
+    <div class="col-lg-4 col-sm-4">
+      <section>
+        <div class="f-box active">
+          <i class="fa fa-code"></i>
+          <h2>Todas informações num só lugar</h2>
+        </div>
+        <p class="f-text">Acompanhe seus anúncios, suas ordens, seus pagamentos, suas perguntas e respostas, suas avaliações com um sistema fácil de trabalhar.</p>
+      </section>
+    </div>
+    <div class="col-lg-4 col-sm-4">
+      <section>
+        <div class="f-box">
+          <i class="fa fa-gears"></i>
+          <h2>O sistema trabalha por você</h2>
+        </div>
+        <p class="f-text">Ele identfica sozinho as ordens sem endereço e sem pagamento de frete e alerta o cliente por email. Imprima etiquetas mais rapidamente.</p>
+      </section>
+    </div>
+    <!-- feature end
+    -->
+  </div>
+  <div class="row">
+    <!-- quote start
+    -->
+    <div class="quote">
+      <div class="col-lg-9 col-sm-9">
+        <div class="quote-info">
+          <h1>Experimente Grátis por 14 dias</h1>
+          <p>Sem  necessidade de cartão de crédito, sem taxa de inscrição e sem obrigações contratuais!</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-3">
+        <%= link_to t(".free_trial"), user_session_path, class: "btn btn-info purchase-btn" %>
+      </div>
+    </div>
+    <!-- quote end
+    -->
+  </div>
+</div>
+
+
+<!-- property start
+-->
+<div class="property gray-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-sm-6 text-center">
+        <img src="assets/home/property-img-490445d42e1e7b8679a8fac2fe545cd0.png"/>
+      </div>
+      <div class="col-lg-6 col-sm-6">
+        <h1>Sistema moderno e fácil de trabalhar</h1>
+        <p>Além do sistema fazer quase tudo para você na hora de identificar o que está faltando numa ordem de compra ele é muito fácil de entender. Você pode personalizar e criar rotinas de acordo com suas necessidades. Você facilmente cria e edita anúncios em massa e faz impressão de etiquetas.</p>
+        <%= link_to t(".free_trial"), user_session_path, class: "btn btn-purchase" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--recent work start-->
+<div class="container">
+  <div class="row">
+      <div class="col-lg-12">
+          <h2 class="r-work">Alguns exemplos</h2>
+          <ul class="bxslider">
+              <li>
+                  <div class="element item view view-tenth" data-zlname="reverse-effect">
+                      <img src="assets/home/service/sales_management-021a08f2b6d52cbf34fc154c6c0a9ed1.png" alt="" />
+                      <div class="mask">
+                          <a data-zl-popup="link" href="javascript:;">
+                              <i class="fa fa-link"></i>
+                          </a>
+                          <a data-zl-popup="link2" class="fancybox" rel="group" href="assets/home/service/sales_management-021a08f2b6d52cbf34fc154c6c0a9ed1.png">
+                              <i class="fa fa-search"></i>
+                          </a>
+                      </div>
+                  </div>
+              </li>
+              <li>
+                <div class="element item view view-tenth" data-zlname="reverse-effect">
+                    <img src="assets/home/service/listing_management-3e33f5ca86221dd52714847478725d58.png" alt="" />
+                    <div class="mask">
+                        <a data-zl-popup="link" href="javascript:;">
+                            <i class="fa fa-link"></i>
+                        </a>
+                        <a data-zl-popup="link2" class="fancybox" rel="group" href="assets/home/service/listing_management-3e33f5ca86221dd52714847478725d58.png">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                </div>
+              </li>
+              <li>
+                  <div class="element item view view-tenth" data-zlname="reverse-effect">
+                      <img src="assets/home/service/question_management-7d0e80353d005c02f2b1ab181a5cf1bf.png" alt="" />
+                      <div class="mask">
+                          <a data-zl-popup="link" href="javascript:;">
+                              <i class="fa fa-link"></i>
+                          </a>
+                          <a data-zl-popup="link2" class="fancybox" rel="group" href="assets/home/service/question_management-7d0e80353d005c02f2b1ab181a5cf1bf.png">
+                              <i class="fa fa-search"></i>
+                          </a>
+                      </div>
+                  </div>
+              </li>
+              <li>
+                  <div class="element item view view-tenth" data-zlname="reverse-effect">
+                      <img src="assets/home/service/competition_management-050521cc635b81c7727da383371465c4.png" alt="" />
+                      <div class="mask">
+                          <a data-zl-popup="link" href="javascript:;">
+                              <i class="fa fa-link"></i>
+                          </a>
+                          <a data-zl-popup="link2" class="fancybox" rel="group" href="assets/home/service/competition_management-050521cc635b81c7727da383371465c4.png">
+                              <i class="fa fa-search"></i>
+                          </a>
+                      </div>
+                  </div>
+              </li>
+              <li>
+                  <div class="element item view view-tenth" data-zlname="reverse-effect">
+                      <img src="assets/home/service/feedback_management-7c867b1a6bc315bda232d569695b39d5.png" alt="" />
+                      <div class="mask">
+                          <a data-zl-popup="link" href="javascript:;">
+                              <i class="fa fa-link"></i>
+                          </a>
+                          <a data-zl-popup="link2" class="fancybox" rel="group" href="assets/home/service/feedback_management-7c867b1a6bc315bda232d569695b39d5.png">
+                              <i class="fa fa-search"></i>
+                          </a>
+                      </div>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  </div>
+</div>
+<!--recent work end-->
+
+<section class="parallax1">
+  <div class="container">
+    <div class="row">
+      <h1>
+        “Aumente suas vendas no Mercado Livre com um sistema que trabalha por você
+        <br/>
+        Experimente por 14 dias grátis”
+      </h1>
+    </div>
+  </div>
+</section>
+<!-- parallax end
+-->
+<div class="container">
+  <!-- clients start
+  -->
+  <div class="clients">
+    <div class="container">
+      <div class="row"></div>
+      <div class="text-center feature-head">
+        <h3>Powered by</h3>
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <img src="assets/logowayra-0e5b313ec8411123af9326ffe90e905c.png"/>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="assets/logo-mercado-livre-5c5ca1a8a849b2b79f927e62fcafd5de.png"/>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- clients end
+  -->
+</div>
+<!-- container end
+-->
