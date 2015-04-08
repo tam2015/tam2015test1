@@ -4,8 +4,8 @@
       <input class="list-child" type="checkbox">/</input>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:name       ) %>">
-      <%= link_to user_path(user), title: user.name do %>
-        <%= truncate(user.name, length: 75) %>
+      <%= link_to user_path(user), title: user.first_name do %>
+        <%= truncate(user.first_name, length: 75) %>
       <% end %>
     </td>
     <td data-title="<%= @klass.human_attribute_name(:email  ) %>">
