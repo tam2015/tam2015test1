@@ -211,8 +211,8 @@ module Mercadolibre
 
         params = {
           "fulfilled" => true,
-          "rating"    => "positive",
-          "message"   => "Excelente comprador."
+          "rating"    => dashboard.aircrm_preferences.first.data[:rating],
+          "message"   => dashboard.aircrm_preferences.first.data[:content]
         }
         # Post seller Feedback on Meli
         meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, params)

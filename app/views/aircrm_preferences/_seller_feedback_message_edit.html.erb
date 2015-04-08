@@ -1,5 +1,5 @@
 <% aircrm_preference ||= @aircrm_preference %>
-<%= simple_form_for @aircrm_preference, url: :dashboard_aircrm_preferences, method: :post,wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f| %>
+<%= simple_form_for @aircrm_preference, url: :dashboard_aircrm_preference, method: :put, wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f| %>
   <div class="row">
     <div class="col-lg-12">
       <%= f.error_notification %>
@@ -24,7 +24,7 @@
 
         <% #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] } %>
         <%= r.input :rating , label: "Nota da Avaliação", collection: ["positive", "neutral", "negative"], prompt: "Selecione a nota da avaliação", required: true %>
-        <%= r.input :content, as: :text, label: "Mensagem", required: true %>
+        <%= r.input :content, as: :text, label: "Mensagem", input_html: { value: @aircrm_preference.data[:content] }, required: true %>
         <%= r.input :payment_status , label: "Status do Pagamento", collection: Mercadolibre::Payment.statuses.keys, prompt: "Selecione o status do pagamento", required: true %>
         <%= r.input :shipping_status, label: "Status do Envio", collection: Mercadolibre::Shipping.statuses.keys, prompt: "Selecione o status do envio", required: true %>
       <% end %>

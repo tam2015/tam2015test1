@@ -231,10 +231,10 @@ class Box < ActiveRecord::Base
       @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
       @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
       @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
-      box.payments.first.tags.present and
-      box.payments.first.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
-      box.shipping.tags.present and
-      box.shipping.tags.include? @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
+      box.payments.first.status and
+      box.payments.first.status == @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
+      box.shipping.status and
+      box.shipping.status == @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
 
       puts "* Feedback: No sale present"
       ::Mercadolibre::Feedback.post_seller_feedback @dashboard.id, meli_order.id
