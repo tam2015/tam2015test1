@@ -38,7 +38,7 @@ module Mercadolibre
         meli_order.payments.map do |meli_order_payment|
 
           # Rescue or Initialize a payment for payment_id (meli_order_id) and order_id
-          payment = ::Mercadolibre::Payment.find_or_initialize_by(meli_payment_id: meli_order_payment.id, meli_order_id: meli_order.id)
+          payment = ::Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id, meli_order_id: meli_order.id).first_or_initialize
 
           # Associations
           payment.dashboard_id          = box.dashboard_id
@@ -69,7 +69,7 @@ module Mercadolibre
 
       # no payment associated yet
       else
-        payment = ::Mercadolibre::Payment.find_or_initialize_by(meli_order_id: meli_order.id)
+        payment = ::Mercadolibre::Payment.where(meli_order_id: meli_order.id).first_or_initialize
         # Associations
         payment.dashboard_id          = box.dashboard_id
         payment.meli_order_id         = meli_order.id

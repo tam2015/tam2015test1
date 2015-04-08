@@ -122,7 +122,7 @@ module Mercadolibre
       puts "* Mercadolibre::Shipping.parse..."
 
       # Rescue or Initialize a shipping for meli_order.id
-      shipping = ::Mercadolibre::Shipping.find_or_initialize_by(meli_order_id: meli_order.id)
+      shipping = ::Mercadolibre::Shipping.where(meli_order_id: meli_order.id).first_or_initialize
 
       # Associations
       shipping.dashboard_id         = box.dashboard_id.to_i
@@ -218,7 +218,7 @@ module Mercadolibre
       # })
 
       Rails.logger.debug "\n\n\n\n\n\n\n thiago_json------- #{receiver.to_json}"
-      notify = ::Notify.find_or_initialize_by(reference_id: self.id.to_s, reference_model: self.model_name.to_s)
+      notify = ::Notify.where(reference_id: self.id.to_s, reference_model: self.model_name.to_s).first_or_initialize
       notify.param        = type.to_sym || :no_address
       notify.receiver     = receiver
       # notify.sender       = sender

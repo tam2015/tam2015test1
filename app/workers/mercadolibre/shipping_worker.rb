@@ -10,7 +10,7 @@ module Mercadolibre
       raise ArgumentError, "Invalid dashboard element.\n dashboard_id=`#{dashboard_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
 
       box             = ::Box.find(box_id)
-      shipping        = ::Mercadolibre::Shipping.find_or_initialize_by(meli_order_id: order_id)
+      shipping        = ::Mercadolibre::Shipping.where(meli_order_id: order_id).first_or_initialize
       shipping_hash   = Meli::Shipment.find_by_order_id order_id
 
       puts "\n\nShipping Hash: #{shipping_hash.inspect}\n\n"

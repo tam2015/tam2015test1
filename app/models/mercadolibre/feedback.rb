@@ -32,7 +32,7 @@ module Mercadolibre
 
       # Create Buyer feedback is available
       if meli_order.feedback.purchase.present?
-        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "buyer")
+        feedback_buyer                         = ::Mercadolibre::Feedback.where(meli_order_id: meli_order.id, author_type: "buyer").first_or_initialize
         meli_order_feedback                    = meli_order.feedback.purchase
 
         feedback_buyer.meli_date_created       = meli_order_feedback.date_created?
@@ -55,7 +55,7 @@ module Mercadolibre
         feedback_buyer.save
 
       else # create empty objects
-        feedback_buyer                         = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "buyer")
+        feedback_buyer                         = ::Mercadolibre::Feedback.where(meli_order_id: meli_order.id, author_type: "buyer").first_or_initialize
         feedback_buyer.meli_item_id            = meli_order.order_items[0].item.id
         feedback_buyer.dashboard_id            = dashboard_id
         feedback_buyer.save
@@ -63,7 +63,7 @@ module Mercadolibre
 
       # Create Seller feedback is available
       if meli_order.feedback.sale.present?
-        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "seller")
+        feedback_seller                        = ::Mercadolibre::Feedback.where(meli_order_id: meli_order.id, author_type: "seller").first_or_initialize
         meli_order_feedback                    = meli_order.feedback.sale
 
         feedback_seller.meli_date_created      = meli_order_feedback.date_created?
@@ -87,7 +87,7 @@ module Mercadolibre
 
       else # create empty objects
 
-        feedback_seller                        = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order.id, author_type: "seller")
+        feedback_seller                        = ::Mercadolibre::Feedback.where(meli_order_id: meli_order.id, author_type: "seller").first_or_initialize
         feedback_seller.meli_item_id           = meli_order.order_items[0].item.id
         feedback_seller.dashboard_id           = dashboard_id
         feedback_seller.save
@@ -174,7 +174,7 @@ module Mercadolibre
     #
     def self.update_feedback_from_post(dashboard_id, meli_order_id, meli_order_feedback)
 
-      feedback_seller                   = ::Mercadolibre::Feedback.find_or_initialize_by(meli_order_id: meli_order_id, author_type: "seller") #meli_order_feedback.cust_role)
+      feedback_seller                   = ::Mercadolibre::Feedback.where(meli_order_id: meli_order_id, author_type: "seller").first_or_initialize #meli_order_feedback.cust_role)
 
       feedback_seller.meli_feedback_id  = meli_order_feedback.id
       feedback_seller.rating            = meli_order_feedback.rating.downcase

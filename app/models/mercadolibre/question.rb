@@ -47,7 +47,7 @@ module Mercadolibre
     def self.create_or_update_record(meli_item_questions = [], dashboard)
       meli_item_questions.map do |meli_item_question|
         if meli_item_question.status != 404
-          question                        = Mercadolibre::Question.find_or_initialize_by(meli_question_id: meli_item_question.id)
+          question                        = Mercadolibre::Question.where(meli_question_id: meli_item_question.id).first_or_initialize
 
           question.dashboard_id           = dashboard.id
           question.user_id                = dashboard.users.first.id
