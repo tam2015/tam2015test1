@@ -8,7 +8,7 @@
         </br>
           <div>
             <% if @seller_feedback_messages.count == 0  %>
-            <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "seller_feedback_message"), class: "btn btn-info", remote: true) do %>
+            <%= link_to(new_dashboard_aircrm_preference_path(dashboard_id: current_user.dashboards.first.id, preference_type: "seller_feedback_message", action_type: "new"), class: "btn btn-info", remote: true) do %>
               <i class="fa fa-user"></i> Adicionar
             <% end %>
             <% end %>

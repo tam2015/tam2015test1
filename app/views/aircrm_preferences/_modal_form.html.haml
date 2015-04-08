@@ -6,7 +6,7 @@
         = render "canned_response_new", aircrm_question_preference: @aircrm_question_preference
       - if params[:preference_type] == "feedback_aircrm_reason"
         = render "reason_feedback_new", aircrm_feedback_preference: @aircrm_feedback_preference
-      - if params[:preference_type] == "seller_feedback_message" and !params[:action_type] == "update"
+      - if params[:preference_type] == "seller_feedback_message" and params[:action_type] == "new"
         = render "seller_feedback_message_new", aircrm_feedback_preference: @aircrm_feedback_preference
       - if params[:preference_type] == "seller_feedback_message" and params[:action_type] == "update"
         = render "seller_feedback_message_edit", aircrm_feedback_preference: @aircrm_feedback_preference
