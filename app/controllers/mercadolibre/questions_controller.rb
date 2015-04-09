@@ -34,11 +34,11 @@ class Mercadolibre::QuestionsController < ApplicationController
       @questions = Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: params[:author_id], meli_item_id: params[:meli_item_id]).paginate(page: params[:page], per_page: 5)
 
     else
-      @questions = Mercadolibre::Question.where(dashboard_id: current_user.dashboards.first.id).paginate(page: params[:page], per_page: 5)
-      if @questions.count < 1
-        redirect_to dashboards_path
-        flash[:error] = "Estamos carregando suas perguntas. Por favor aguarde um momento"
-      end
+      @questions = Mercadolibre::Question.where(dashboard_id: current_user.dashboards.first.id, status: "unanswered").paginate(page: params[:page], per_page: 5)
+      # if @questions.count < 1
+      #   redirect_to dashboards_path
+      #   flash[:error] = "Estamos carregando suas perguntas. Por favor aguarde um momento"
+      # end
     end
   end
 
@@ -55,6 +55,7 @@ class Mercadolibre::QuestionsController < ApplicationController
   def edit
     #Rails.logger.debug "\n\n\n\n\n\n\n\n\n\n  ---- #{params[:id]} (#{params[:id].class})"
     @question = Mercadolibre::Question.find(params[:id])#, user_id: current_user.id).first
+    @questions_history = Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: params[:author_id], meli_item_id: params[:meli_item_id]).order(created_at: :asc).paginate(page: params[:page], per_page: 5)
   end
 
   def update

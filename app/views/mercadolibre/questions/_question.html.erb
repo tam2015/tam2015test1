@@ -12,7 +12,7 @@
         <dt>Qtd disponível:</dt>
         <dd><%= t(question.meli_item.item_storage.available_quantity) %></dd>
         <% end %>
-        
+
       </dl>
       <div class="user-heading round">
       <% if question.meli_item and question.meli_item.pictures and question.meli_item.pictures.first and question.meli_item.pictures.first.meli_url != nil%>
@@ -25,7 +25,7 @@
       </br>
     </td>
 
-    <td style="width:210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">    
+    <td style="width:210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
       <% if question.customer %>
       <dl class="dl-horizontal">
         <dt>Nickname:</dt>
@@ -52,13 +52,13 @@
         <span type="button" class="badge alert-success">
           <%= t(question.status, scope: "helpers.questions.status") || "" %>
         </span>
-      <% end %>      
+      <% end %>
 
       <% if Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: question.author_id, meli_item_id: question.meli_item_id).count > 1%>
         <span type="button" class="badge alert-warning">
           <%= link_to 'Ver histórico', dashboard_questions_path(author_id: question.author_id, meli_item_id: question.meli_item_id), method: :get, style: "font-size: 11px" %>
-        </span>    
-      <% end %>           
+        </span>
+      <% end %>
 
       <div class="group-rom" style="margin-top:15px">
         <div class="msg-time-chat">
@@ -72,7 +72,7 @@
                 <div class="text">
                   <% if question.customer and question.customer.nickname.present? %>
                     <p class="attribution"><a style= "color: #333"><%= question.customer.nickname%></a> <%= question.meli_date_created %> </p>
-                  <% end %>  
+                  <% end %>
                     <p><%= question.text.html_safe if question and question.text %></p>
                 </div>
             </div>
@@ -88,7 +88,7 @@
         <% if question.unanswered? %>
           <a href="javascript:;">
             <i class="fa fa-envelope text-link"></i>
-            <%= link_to 'Responder', edit_dashboard_question_path(current_dashboard, question.id), remote: true, style: "font-size: 11px" %>
+            <%= link_to 'Responder', edit_dashboard_question_path(current_dashboard, question.id, author_id: question.author_id, meli_item_id: question.meli_item_id), remote: true, style: "font-size: 11px" %>
           </a>
         <%end%>
         </br>

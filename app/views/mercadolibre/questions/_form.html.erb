@@ -1,26 +1,94 @@
 <div>
-  <%= form_for @question, url: dashboard_question_path(current_dashboard, @question) do |f| %>
+  <div>
+    <h3> Pergunta a ser respondida </h3>
+    <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+      <% if (question.status == :unanswered or question.status == :closed_unanswered or question.status == :under_review) %>
+        <span type="button" class="badge alert-danger">
+          <%= t(question.status, scope: "helpers.questions.status") || "" %>
+        </span>
+      <% end %>
 
+      <% if question.status? %>
+        <span type="button" class="badge alert-success">
+          <%= t(question.status, scope: "helpers.questions.status") || "" %>
+        </span>
+      <% end %>
 
-    <div class="hidden">
-      <%= f.text_field :id %>
-    </div>
-
-
-    <div class="panel-body">
-    <%= f.fields_for :answer do |n| %>
-      <div class="col-xs-12">
-        <%=  n.text_field :text, style: "height: 300px; width: 500px" %>
+      <div class="group-rom" style="margin-top:15px">
+        <div class="msg-time-chat">
+          <% if question.customer and question.customer.nickname.present? %>
+            <a href="#" class="message-img">
+              <%=image_tag("theme/avatar-mini.jpg", alt: question.customer.nickname, class: "lazy avatar-mini")%>
+            </a>
+          <% end %>
+            <div class="message-body msg-in">
+                <span class="arrow"></span>
+                <div class="text">
+                  <% if question.customer and question.customer.nickname.present? %>
+                    <p class="attribution"><a style= "color: #333"><%= question.customer.nickname%></a> <%= question.meli_date_created %> </p>
+                  <% end %>
+                    <p><%= question.text.html_safe if question and question.text %></p>
+                </div>
+            </div>
+        </div>
       </div>
-    </div>
-    <%end%>
+      <p style="margin-top: 0px"><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
+    </td>
+  </div>
+  <div>
+    <%= form_for @question, url: dashboard_question_path(current_dashboard, @question) do |f| %>
+      <div class="hidden">
+        <%= f.text_field :id %>
+      </div>
+      <div class="panel-body">
+      <%= f.fields_for :answer do |n| %>
+        <div class="col-xs-12" style="margin-top: 20px">
+          <%=  n.text_field :text, style: "height: 300px; width: 500px" %>
+        </div>
+      </div>
+      <%end%>
+      <%= f.submit "responder",  class: "btn btn-info", style: "width: 500px; margin-left: 30px" %>
+    <% end %>
+   </div>
+  </div>
+  <div>
+    <h3> Histórico da conversa </h3>
+    <% if @questions_history %>
+      <% @questions_history.each do |question| %>
+        <td data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+          <% if (question.status == :unanswered or question.status == :closed_unanswered or question.status == :under_review) %>
+            <span type="button" class="badge alert-danger">
+              <%= t(question.status, scope: "helpers.questions.status") || "" %>
+            </span>
+          <% end %>
 
+          <% if question.status? %>
+            <span type="button" class="badge alert-success">
+              <%= t(question.status, scope: "helpers.questions.status") || "" %>
+            </span>
+          <% end %>
 
-
-    <%= f.submit "responder",  class: "btn btn-info", style: "width: 500px; margin-left: 30px" %>
-
-  <% end %>
- </div>
-
-
-
+          <div class="group-rom" style="margin-top:15px">
+            <div class="msg-time-chat">
+              <% if question.customer and question.customer.nickname.present? %>
+                <a href="#" class="message-img">
+                  <%=image_tag("theme/avatar-mini.jpg", alt: question.customer.nickname, class: "lazy avatar-mini")%>
+                </a>
+              <% end %>
+                <div class="message-body msg-in">
+                    <span class="arrow"></span>
+                    <div class="text">
+                      <% if question.customer and question.customer.nickname.present? %>
+                        <p class="attribution"><a style= "color: #333"><%= question.customer.nickname%></a> <%= question.meli_date_created %> </p>
+                      <% end %>
+                        <p><%= question.text.html_safe if question and question.text %></p>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <p style="margin-top: 0px"><%= question.answer[:text] if question.answer and question.answer[:text]%></p>
+        </td>
+      <% end %>
+    <% end %>
+  </div>
+</div>
