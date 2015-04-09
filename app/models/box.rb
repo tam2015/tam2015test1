@@ -92,14 +92,14 @@ class Box < ActiveRecord::Base
     @account    = dashboard.account
     @user       = dashboard.users.last
 
-    box         = ::Box.where(meli_order_id: meli_order.id).first_or_initialize
+    box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
 
 
     ##
     # Customer
     # Customer needs to be parsed before because the box_to_customers association is different than others (shipping and payment)
     if meli_order.buyer? and meli_order.seller
-      customer = ::Customer.parse(meli_order.buyer, meli_order.seller)
+      customer = Customer.parse(meli_order.buyer, meli_order.seller)
     end
 
     # Parse necessary attributes from meli_order into a hash
