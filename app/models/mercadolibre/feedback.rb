@@ -5,6 +5,9 @@ module Mercadolibre
     # belongs_to :box
     alias_attribute :date_created, :created_at
 
+    default_scope  { order(:meli_order_id => :desc) }
+
+
     def self.provided_by
       :mercadolibre
     end
