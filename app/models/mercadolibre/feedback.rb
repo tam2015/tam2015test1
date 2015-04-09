@@ -224,35 +224,20 @@ module Mercadolibre
       end
     end
 
+    def self.post_seller_feedback_from_form(dashboard_id, meli_order_id, feedback_data)
+    dashboard = ::Dashboard.find_by(id: dashboard_id)
+    raise ArgumentError, "Invalid dashboard element.\n dashboard_id=`#{dashboard_id}`\n dashboard=`#{dashboard.inspect}`." unless dashboard.is_a?(::Dashboard)
+      if meli_order_id
+        # Post seller Feedback on Meli
+        refresh_token = dashboard.credentials[:refresh_token]
+        Mercadolibre::Feedback.api.update_token(refresh_token)        
+        # meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, feedback_data)
+        meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, feedback_data)
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
+      end
+    end    
 
     def self.meli_update(order_id, kind, feedback_data, dashboard)
       #update token before feedback posting
@@ -261,7 +246,39 @@ module Mercadolibre
 
       #using old mercadolivre gem
       @feedback = ::Dashboard.api.change_feedback_from_order(order_id, kind, feedback_data)
-    end
+    end    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # Get feedback
     def self.get_seller_feedback(box)

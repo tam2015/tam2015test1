@@ -1,7 +1,8 @@
+
 $("body")
   .find("#box-modal.modal")
     .remove()
   .end()
-  .append('<%= j render("edit_form") %>')
+  .append('<%= j render("new_form") %>')
   .find("#box-modal.modal")
     .modal();

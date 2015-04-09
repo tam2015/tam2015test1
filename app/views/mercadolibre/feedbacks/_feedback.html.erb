@@ -1,0 +1,99 @@
+<% buyer_feedback = feedback %>
+
+  <tr>
+    <td style= "width: 220px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+      <dl class="dl-horizontal">
+        <dt>Anúncio:</dt>
+        <% if buyer_feedback.meli_item %>
+        <dd><%= buyer_feedback.meli_item.meli_item_id %></dd>
+        <dt>Preço:</dt>
+        <dd>R$ <%= buyer_feedback.meli_item.price %></dd>
+        <dt>Qtd disponível:</dt>
+        <dd><%= t(buyer_feedback.meli_item.item_storage.available_quantity) %></dd>
+        <% end %>
+
+      </dl>
+      <div class="user-heading round">
+      <% if buyer_feedback.meli_item and buyer_feedback.meli_item.pictures and buyer_feedback.meli_item.pictures.first and buyer_feedback.meli_item.pictures.first.meli_url != nil%>
+        <a href="#">
+            <%= image_tag buyer_feedback.meli_item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
+            <%= truncate(buyer_feedback.meli_item.title, length: 18) %></br>
+        </a>
+      <% end %>
+      </div>
+      </br>
+    </td>
+    <td>
+      <p> <%= buyer_feedback.meli_order_id %></p>
+    </td>
+    <td>
+      <p> <%= box(buyer_feedback.meli_order_id).customer.nickname if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem apelido"%></p>
+      <p> <%= box(buyer_feedback.meli_order_id).customer.email if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem email"%></p>
+      <p> <%= box(buyer_feedback.meli_order_id).customer.phone if box(buyer_feedback.meli_order_id) and  box(buyer_feedback.meli_order_id).customer || "sem telefone"%></p>
+    </td>
+    <td>
+      <% status_class = "danger" if buyer_feedback and buyer_feedback.rating == "negative" %>
+      <% status_class = "info" if buyer_feedback and buyer_feedback.rating == "neutral" %>
+      <% status_class = "success" if buyer_feedback and buyer_feedback.rating == "positive" %>
+      <% status_class = "warning" if buyer_feedback and buyer_feedback.rating == nil %>
+
+      <span type="button" class="badge alert-<%= status_class %>">
+        <%= buyer_feedback.rating? ? I18n.t(buyer_feedback.rating, scope: "helpers.feedback.ratings") : I18n.t(:nil_feedback, scope: "helpers.feedback.ratings")%>
+      </span>
+
+      <p>
+        <%= buyer_feedback.meli_date_created[0..9] if buyer_feedback.meli_date_created %>
+      </p>
+      <p>
+        <%= buyer_feedback.message %>
+      </p>
+    </td>
+    <td style="width: 200px">
+      <% status_class = "danger" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "negative" %>
+      <% status_class = "info" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "neutral" %>
+      <% status_class = "success" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "positive" %>
+      <% status_class = "warning" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == nil %>
+
+      <span type="button" class="badge alert-<%= status_class %>">
+        <%= feedback_seller(buyer_feedback).rating ? I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") : I18n.t(:nil_feedback, scope: "helpers.feedback.ratings")%>
+      </span>
+      <p>
+        <%= feedback_seller(buyer_feedback).meli_date_created[0..9] if feedback_seller(buyer_feedback).meli_date_created %>
+      </p>
+      <p>
+        <%= feedback_seller(buyer_feedback).message %>
+      </p>
+    </td>
+    <td>
+      <a href="javascript:;">
+      <% if feedback_seller(buyer_feedback) and !feedback_seller(buyer_feedback).updated? and feedback_seller(buyer_feedback).rating != "positive" and feedback_seller(buyer_feedback).rating != nil and feedback_seller(buyer_feedback).status == "active" %>
+        <i class="fa fa-pencil text-link"></i>
+        <%= link_to 'Editar enviada', feedback_edit_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
+        <% elsif feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).updated %>
+          <i class="fa fa-pencil text-link"></i>
+          <%= link_to 'Já editado', style: "font-size: 11px" %>
+        <% elsif feedback_seller(buyer_feedback).rating == nil  %>
+          <i class="fa fa-pencil text-link"></i>
+          <%= link_to 'Qualificar', feedback_new_dashboard_boxes_path(feedback_action: "new", meli_order_id: buyer_feedback.meli_order_id, dashboard_id: current_dashboard.id), remote: true, style: "font-size: 11px" %>
+      </a>
+        <% end %>
+      </br>
+
+    </td>
+  </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
