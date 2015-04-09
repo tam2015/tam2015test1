@@ -94,6 +94,7 @@ class Box < ActiveRecord::Base
 
     box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
 
+    box.save
 
     ##
     # Customer
