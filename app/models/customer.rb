@@ -57,27 +57,18 @@ class Customer < ActiveRecord::Base
     # return nil unless account.instance_of? Account
 
     # Busca o primeiro ou cria o customer do usuário com o meli_user_id da ordem
-    customer = where({ meli_user_id: meli_customer.id }).first_or_initialize.tap do |b|
-      b.name      = [meli_customer.first_name?, meli_customer.last_name?].join("\s")
-      b.phone     = phone_to_s(meli_customer.phone?)
-      b.email     = meli_customer.email?
-      b.nickname  = meli_customer.nickname?
+    customer           = where({ meli_user_id: meli_customer.id }).first_or_initialize
+    customer.name      = [meli_customer.first_name?, meli_customer.last_name?].join("\s")
+    customer.phone     = phone_to_s(meli_customer.phone?)
+    customer.email     = meli_customer.email?
+    customer.nickname  = meli_customer.nickname?
       #b.address   = meli_buyer.address?
-      saved = b.save!
+    saved = customer.save
 
     if saved
       user_to_customer = UsersToCustomer.where(customer_id: b.id, user_id: meli_seller.id).first_or_initialize
       user_to_customer.save
     end
-
-    end
-
-    # Data Collection for post analysis
-    # Datastores.create!(from: :meli_order_customer,
-    #                   meli_id: meli_customer.id,
-    #                   klass: meli_customer.class,
-    #                   json: meli_customer.serializable_hash)
-
     customer
   end
 
@@ -88,7 +79,9 @@ class Customer < ActiveRecord::Base
       meli_seller = Dashboard.find_by(meli_user_id: user_id).users.first
 
       # Update Customer
-      Customer.parse(meli_customer, meli_seller)
+      unless customer = Customer.where({ meli_user_id: meli_customer.id }).first
+        Customer.parse(meli_customer, meli_seller)
+      end
     end
   end
 
