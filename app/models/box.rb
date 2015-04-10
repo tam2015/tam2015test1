@@ -88,12 +88,7 @@ class Box < ActiveRecord::Base
   def create_or_update_order(dashboard, meli_order)
     puts "# Box.create_or_update_order"
 
-    @dashboard  = dashboard
-    @account    = dashboard.account
-    @user       = dashboard.users.last
-
     box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
-
 
     ##
     # Customer
@@ -110,9 +105,9 @@ class Box < ActiveRecord::Base
       customer_id:      box_customer.id,
 
       #associations
-      dashboard_id: @dashboard.id,
-      account_id:   @account.id,
-      user_id:      @user.id,
+      dashboard_id: dashboard.id,
+      account_id:   dashboard.account.id,
+      user_id:      dashboard.users.first.id,
       })
 
     # Calculate if box type is recent or archived
@@ -165,7 +160,7 @@ class Box < ActiveRecord::Base
     # Orders can hold old products that Meli doesn't list to us
     # We still need to fetch these Items from Meli
     meli_order.order_items.map do |meli_item|
-      ::Mercadolibre::ItemWorker.perform_async @dashboard.meli_user_id, meli_item.item.id
+      ::Mercadolibre::ItemWorker.perform_async box.dashboard.meli_user_id, meli_item.item.id
     end
 
     ##
@@ -195,13 +190,13 @@ class Box < ActiveRecord::Base
     # means that there is no Shipping association
     # to be retrieved from Meli
     unless meli_order.shipping.status.to_sym == :to_be_agreed
-      ::Mercadolibre::ShippingWorker.perform_async @dashboard.id, meli_order.id, box.id
+      ::Mercadolibre::ShippingWorker.perform_async box.dashboard.id, meli_order.id, box.id
     end
 
 
     ##
     # Feedback {Parse from meli_order.feedback}
-    ::Mercadolibre::Feedback.parse @dashboard.id, meli_order
+    ::Mercadolibre::Feedback.parse box.dashboard.id, meli_order
 
     # {From Meli}: There's a rule that feedback remains hidden
     # to the other part until both parts have sent feedback,
@@ -228,21 +223,21 @@ class Box < ActiveRecord::Base
 
     if meli_order.feedback.sale == nil and
       meli_order.date_created > Time.now - 21.days and
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
-      @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
+      box.dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first and
+      box.dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data != nil and
+      box.dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:status] == "active" and
       box.payments.first.status and
-      box.payments.first.status == @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
+      box.payments.first.status == box.dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:payment_status] and
       box.shipping.status and
-      box.shipping.status == @dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
+      box.shipping.status == box.dashboard.aircrm_preferences.where(preference_type:"seller_feedback_message").first.data[:shipping_status]
 
       puts "* Feedback: No sale present"
-      ::Mercadolibre::Feedback.post_seller_feedback @dashboard.id, meli_order.id
+      ::Mercadolibre::Feedback.post_seller_feedback box.dashboard.id, meli_order.id
     end
 
     if meli_order.feedback.sale.present? || meli_order.feedback.purchase.present?
        puts "* Feedback: Sale and/or Purchase are present"
-      ::Mercadolibre::Feedback.get_meli_feedback @dashboard.id, meli_order.id
+      ::Mercadolibre::Feedback.get_meli_feedback box.dashboard.id, meli_order.id
     end
 
   end
