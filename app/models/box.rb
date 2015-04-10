@@ -94,21 +94,20 @@ class Box < ActiveRecord::Base
 
     box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
 
-    box.save
 
     ##
     # Customer
     # Customer needs to be parsed before because the box_to_customers association is different than others (shipping and payment)
-    if meli_order.buyer? and meli_order.seller
-      customer = Customer.parse(meli_order.buyer, meli_order.seller)
+    if meli_order.buyer and meli_order.seller
+      box_customer = Customer.parse(meli_order.buyer, meli_order.seller)
     end
 
     # Parse necessary attributes from meli_order into a hash
     # to update Box
-    order_hash  = parse_order_to_hash(meli_order)
+    order_hash  = box.parse_order_to_hash(meli_order)
     order_hash.merge!({
       #from parse
-      customer_id:      customer.id,
+      customer_id:      box_customer.id,
 
       #associations
       dashboard_id: @dashboard.id,
@@ -129,7 +128,7 @@ class Box < ActiveRecord::Base
     #   Payment
     #   Shipping
     #   Feedback
-    parse_order_associations meli_order, box
+    box.parse_order_associations meli_order, box
   end
 
 
