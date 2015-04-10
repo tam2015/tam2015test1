@@ -66,7 +66,7 @@ class Customer < ActiveRecord::Base
     saved = customer.save
 
     if saved
-      user_to_customer = UsersToCustomer.where(customer_id: b.id, user_id: meli_seller.id).first_or_initialize
+      user_to_customer = UsersToCustomer.where(customer_id: customer.id, user_id: meli_seller.id).first_or_initialize
       user_to_customer.save
     end
     customer
