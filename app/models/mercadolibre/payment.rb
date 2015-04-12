@@ -32,13 +32,13 @@ module Mercadolibre
       puts "* Mercadolibre::Payment.parse..."
 
       # has any payments?
-      unless meli_order.payments.empty?
+      if !meli_order.payments.empty?
 
         # An Order can have more than 1 payment
         meli_order.payments.map do |meli_order_payment|
 
           # Rescue or Initialize a payment for payment_id (meli_order_id) and order_id
-          payment = Mercadolibre::Payment.find_or_create_by(meli_payment_id: meli_order_payment.id, meli_order_id: meli_order.id)
+          payment = Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id, meli_order_id: meli_order.id).first_or_initialize
 
           # Associations
           payment.dashboard_id          = box.dashboard_id
@@ -68,8 +68,8 @@ module Mercadolibre
         end
 
       # no payment associated yet
-      else
-        payment = Mercadolibre::Payment.find_or_create_by(meli_order_id: meli_order.id)
+      elsif meli_order.payments.empty?
+        payment = Mercadolibre::Payment.where(meli_order_id: meli_order.id).first_or_initialize
         # Associations
         payment.dashboard_id          = box.dashboard_id
         payment.meli_order_id         = meli_order.id
