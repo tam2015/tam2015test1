@@ -85,10 +85,10 @@ class Box < ActiveRecord::Base
   # }
 
 
-  def create_or_update_order(dashboard, meli_order)
+  def create_or_update_order(dashboard, meli_order, box)
     puts "# Box.create_or_update_order"
 
-    box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
+    # box         = Box.where(meli_order_id: meli_order.id).first_or_initialize
 
     ##
     # Customer

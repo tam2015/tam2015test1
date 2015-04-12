@@ -13,11 +13,14 @@ module Mercadolibre
 
       #meli_order = ::Box.api.get_order(meli_order_id)
       refresh_token = dashboard.credentials[:refresh_token]
-      ::Box.api.update_token(refresh_token)      
-      meli_order = Meli::Order.find(meli_order_id)      
+      ::Box.api.update_token(refresh_token)
+      meli_order = Meli::Order.find(meli_order_id)
 
 
-      ::Box.new.create_or_update_order(dashboard, meli_order)
+      box = Box.where(meli_order_id: meli_order.id).first_or_initialize
+      box.create_or_update_order(@dashboard, meli_order, box)
+
+      # ::Box.new.create_or_update_order(dashboard, meli_order)
     end
 
   end
