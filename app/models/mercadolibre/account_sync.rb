@@ -81,7 +81,7 @@ module Mercadolibre
       partial_orders_collection.map do |meli_order|
 
 
-        box = Box.where(meli_order_id: meli_order.id).first_or_initialize
+        box = ::Box.where(meli_order_id: meli_order.id).first_or_initialize
         box.create_or_update_order(@dashboard, meli_order, box)
         # ::Box.new.create_or_update_order(@dashboard, meli_order)
 
