@@ -18,7 +18,7 @@ module Mercadolibre
 
 
       box = ::Box.where(meli_order_id: meli_order.id).first_or_initialize
-      box.create_or_update_order(@dashboard, meli_order, box)
+      box.create_or_update_order(dashboard, meli_order, box)
 
       # ::Box.new.create_or_update_order(dashboard, meli_order)
     end
