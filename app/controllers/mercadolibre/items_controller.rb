@@ -29,11 +29,39 @@ class Mercadolibre::ItemsController < ApplicationController
   # GET /items
   def index
     if current_user.admin?
-      @items = @klass.all.active.includes(:pictures).paginate(page: params[:page], per_page: 7)
+      admin_index
+    elsif current_user.regular?
+      regular_index
+    end
+  end
 
+  def admin_index
   #to search an item
-    elsif params[:status_item]
+    if params[:status_item]
+      @items = @klass.where(status: params[:status_item]).includes(:pictures).paginate(page: params[:page], per_page: 7)
+
+    elsif params[:query]
+      @items = @klass.all.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures).paginate(page: params[:page], per_page: 5)
+
+    else
+      @items = @klass.active.includes(:pictures).paginate(page: params[:page], per_page: 7)
+
+      # respond_with @items
+      respond_with(@items) do |format|
+        format.csv { send_data @items.to_csv, filename: 'aircrm_anuncios.csv' }
+        format.xls { send_data @items.to_xls, filename: 'aircrm_anuncios.xls' }
+        # format.xls # { send_data @users.to_csv(col_sep: "\t") }
+      end
+    end
+  end
+
+  def regular_index
+  #to search an item
+    if params[:status_item]
       @items = @klass.where(dashboard_id: current_dashboard.id, status: params[:status_item]).includes(:pictures).paginate(page: params[:page], per_page: 7)
+
+    elsif params[:query]
+      @items = current_account.items.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures).paginate(page: params[:page], per_page: 5)
 
     else
       @items = @klass.where(dashboard_id: current_dashboard.id).active.includes(:pictures).paginate(page: params[:page], per_page: 7)

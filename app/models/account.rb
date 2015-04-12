@@ -14,6 +14,7 @@ class Account < ActiveRecord::Base
   has_many :dashboards
   has_many :users
   has_many :boxes
+  has_many :items, class: Mercadolibre::Item
   has_one :subscription
   # has_many :owners                , foreign_key: "owner_of_account_id", class_name: "User"
   has_many :payment_notifications

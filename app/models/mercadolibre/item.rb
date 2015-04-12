@@ -21,6 +21,7 @@ module Mercadolibre
 
 
     # mount_uploaders :pictures_uploaded, ImageUploader
+    belongs_to :account, class: ::Account
     has_many :variations
     has_one :item_storage
     has_one :meli_info

@@ -64,6 +64,20 @@
             </div>
           </div>
           <div class="col-md-8">
+          <div class="btn-group">
+            <ul aria-labelledby="more-actions" >
+              <li >
+                <form action="#" class="pull-right position">
+                  <%= form_tag dashboard_categories_path, method: :get do %>
+                    <input type="text" placeholder="ID,Titulo ou descrição" class="form-control search-btn " style= "width: 300px"
+                      <%= text_field_tag :query, params[:query] %>
+                      <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+                    <%end%>
+                </form>
+              </li>
+            </ul>
+          </div>
 
           </div>
         </div>
