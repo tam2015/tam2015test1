@@ -103,7 +103,7 @@ Rails.application.routes.draw do
             get "meli_update"
 
 
-          resources :pictures, only: [:index, :new, :create]
+          resources :pictures, only: [:index, :new, :create, :destroy]
           end
 
           collection do

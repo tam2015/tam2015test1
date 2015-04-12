@@ -1,0 +1,69 @@
+<!-- MELI:  Buying mode,
+              Quantity,
+              Price,
+              Start Time,
+              End Time(-),
+              Payment (renders partial)
+                - MercadoPago,
+                - Custom[Até 199 reais],
+              Shipping (renders partial)
+                - Me1/Me2,
+                - Custom,
+                - Local Pickup),
+              Warranty -->
+
+  <div id="item-step-infos" class="row">
+    <div class="col-lg-12">
+
+
+      <div class="panel">
+        <div class="panel-body">
+          <div class="panel-heading">Informe preço e quantidade</div>
+
+          <!-- Buying Mode -->
+          <!-- :buy_it_now, :auction, :classified -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+
+          <!-- Quantity -->
+          <%=  f.fields_for :item_storages do |builder| %>
+          <%= builder.input :available_quantity, wrapper: false  %>
+          <% end %>
+
+
+          <!-- Price -->
+          <%= f.input :price, wrapper: false, required: true %>
+
+
+          <!-- Dates -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <%=  f.fields_for :meli_infos do |builder| %>
+          <!-- Payment -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Meios de pagamento</h4>
+          <%= render partial: "form_item_payment", f: builder %>
+
+
+          <!-- Shipping -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Formas de entrega</h4>
+          <%= render partial: "form_item_shipping", f: builder %>
+          <% end %>
+
+          <!-- Warranty -->
+          <!-- Only modifiable if item is not published -->
+          <br>
+          <h4>Garantia</h4>
+          <%= f.input :warranty, as: :text, wrapper: false %>
+
+          <br>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -33,6 +33,15 @@ class Mercadolibre::PicturesController < ApplicationController
     end
   end
 
+  def destroy
+    @picture = Mercadolibre::Picture.find params[:picture_id]
+    if @picture.destroy
+      redirect_to dashboard_pictures_path(item_id: params[:item_id])
+    else
+      redirect_to dashboard_pictures_path(item_id: params[:item_id])
+    end
+  end
+
   private
 
 

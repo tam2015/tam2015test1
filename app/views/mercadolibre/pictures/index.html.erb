@@ -24,6 +24,12 @@
       <% @pictures.each do |picture| %>
         <li class="dropdown" style="padding-right: 30px; float: left">
           <%= image_tag picture.cwave_url(:thumb) %>
+          </br></br>
+          <div class="col-action text-center">
+            <%= link_to dashboard_picture_path(picture_id: picture.id, id: picture.item_id), method: :delete, data: { confirm: 'Você tem certeza que deseja apagar?' }, class: "btn btn-danger" do %>
+             <%= "Apagar" %>
+            <% end %>
+          </div>
         </li>
       <% end %>
     </ul>
