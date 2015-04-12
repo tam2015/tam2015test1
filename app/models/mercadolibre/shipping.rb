@@ -122,7 +122,7 @@ module Mercadolibre
       puts "* Mercadolibre::Shipping.parse..."
 
       # Rescue or Initialize a shipping for meli_order.id
-      shipping = Mercadolibre::Shipping.where(meli_order_id: meli_order.id).first_or_initialize
+      shipping = Mercadolibre::Shipping.find_or_create_by(meli_order_id: meli_order.id)
 
       # Associations
       shipping.dashboard_id         = box.dashboard_id.to_i
