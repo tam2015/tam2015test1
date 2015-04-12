@@ -35,10 +35,10 @@ module Mercadolibre
       if meli_order.payments.present?
 
         # An Order can have more than 1 payment
-        meli_order.payments.map do |meli_order_payment|
+        meli_order.payments.each do |meli_order_payment|
 
           # Rescue or Initialize a payment for payment_id (meli_order_id) and order_id
-          payment = Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id, meli_order_id: meli_order.id).first_or_initialize
+          payment = Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id).first_or_initialize
 
           # Associations
           payment.dashboard_id          = box.dashboard_id
@@ -55,27 +55,20 @@ module Mercadolibre
           payment.total_paid_amount     = meli_order_payment.total_paid_amount?
           payment.card_id               = meli_order_payment.card_id?
 
-          if payment.save
-            # This is broken.
-            box.update_tags_from_payment_changes box, payment, params=nil
-          end
+          payment.save
+          box.update_tags_from_payment_changes box, payment, params=nil
 
-          # Data Collection for post analysis
-          # Datastores.create!(from: :meli_order_payment,
-          #                   meli_id: meli_order_payment.id,
-          #                   klass: meli_order_payment.class,
-          #                   json: meli_order_payment.serializable_hash)
         end
 
       # no payment associated yet
-      elsif meli_order.payments.empty?
+      elsif !meli_order.payments.present?
         payment = Mercadolibre::Payment.where(meli_order_id: meli_order.id).first_or_initialize
         # Associations
         payment.dashboard_id          = box.dashboard_id
         payment.meli_order_id         = meli_order.id
         payment.box_id                = box.id
-        payment.status              = :to_be_agreed
-        payment.accept_mercadopago  = false
+        payment.status                = :to_be_agreed
+        payment.accept_mercadopago    = false
         payment.save
       end
 
