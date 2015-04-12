@@ -36,7 +36,7 @@
         <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Endereço <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <% ["pending", "no_pending"].each do |status| %>
-            <li><%= link_to status, dashboard_index_test_path(status_address: status), method: :get %></li>
+            <li><%= link_to I18n.t(status, scope: "helpers.boxes.shippings"), dashboard_index_test_path(status_address: status), method: :get %></li>
           <% end %>
         </ul>
       </li>
