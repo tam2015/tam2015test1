@@ -32,7 +32,7 @@ module Mercadolibre
       puts "* Mercadolibre::Payment.parse..."
 
       # has any payments?
-      if !meli_order.payments.empty?
+      if meli_order.payments.present?
 
         # An Order can have more than 1 payment
         meli_order.payments.map do |meli_order_payment|
