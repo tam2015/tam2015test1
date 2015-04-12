@@ -30,6 +30,8 @@ class Customer < ActiveRecord::Base
   before_save :update_pendings
   before_save :update_pendings_status
 
+  default_scope  { order(:id => :desc) }
+
 
   def update_pendings
     self.pendings = []
