@@ -83,42 +83,42 @@
     </td>
 
     <td  style="width:200px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
-      <% if box.payments.first %>
+      <% if box.payments.last %>
       <div class="btn-group">
-        <% if !box.payments.first.tags? %>
+        <% if !box.payments.last.tags? %>
         <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
         <span class="caret"></span>
-          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+          <%= !box.payments.last.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.last.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
         </a>
-        <% elsif box.payments.first.tags and box.payments.first.tags.include?("pending") %>
+        <% elsif box.payments.last.tags and box.payments.last.tags.include?("pending") %>
         <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
-          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+          <%= !box.payments.last.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.last.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
         </a>
 
-        <% elsif box.payments.first.tags and box.payments.first.tags.include?("in_process") %>
+        <% elsif box.payments.last.tags and box.payments.last.tags.include?("in_process") %>
         <a href="#" class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
-          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+          <%= !box.payments.last.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.last.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
         </a>
 
-        <% elsif box.payments.first.tags and box.payments.first.tags.include?("approved") %>
+        <% elsif box.payments.last.tags and box.payments.last.tags.include?("approved") %>
         <a href="#" class="btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
-          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+          <%= !box.payments.last.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.last.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
         </a>
 
         <% else %>
         <a href="#" class="btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
-          <%= !box.payments.first.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.first.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
+          <%= !box.payments.last.tags? ? I18n.t(:to_be_agreed, scope: "helpers.boxes.payment_tags") : I18n.t(box.payments.last.tags.join(', '), scope: "helpers.boxes.payment_tags")%>
         </a>
         <% end %>
 
         <ul class="dropdown-menu">
           <% Mercadolibre::Payment::statuses.keys.each do |status| %>
-            <% unless status == box.payments.first.status %>
-              <li><%= link_to I18n.t(status, scope: "helpers.boxes.payment_tags"), edit_payment_path(box.payments.first, box_id: box.id, status: status ), remote: true %></li>
+            <% unless status == box.payments.last.status %>
+              <li><%= link_to I18n.t(status, scope: "helpers.boxes.payment_tags"), edit_payment_path(box.payments.last, box_id: box.id, status: status ), remote: true %></li>
             <% end %>
           <% end %>
         </ul>
@@ -128,28 +128,28 @@
       <dl class="dl-horizontal">
 
         <dt>Forma:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? :MP : :a_combinar %> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? :MP : :a_combinar %> </dd>
 
         <dt>ID:</dt>
-        <dd><%= box.payments.first.meli_payment_id %></dd>
+        <dd><%= box.payments.last.meli_payment_id %></dd>
 
         <dt>Valor Pago:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.total_paid_amount : :a_combinar%> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.total_paid_amount : :a_combinar%> </dd>
 
         <dt>Preço:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.transaction_amount : :a_combinar%> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.transaction_amount : :a_combinar%> </dd>
 
         <dt>Diferença:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.overpaid_amount : :a_combinar %> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.overpaid_amount : :a_combinar %> </dd>
 
         <dt>Frete:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.shipping_cost : :a_combinar %> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.shipping_cost : :a_combinar %> </dd>
 
         <dt>Metodo:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.payment_method_id : :a_combinar %> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.payment_method_id : :a_combinar %> </dd>
 
         <dt>Parcelas:</dt>
-        <dd><%= box.payments.first.accept_mercadopago == true ? box.payments.first.installments : :a_combinar %> </dd>
+        <dd><%= box.payments.last.accept_mercadopago == true ? box.payments.last.installments : :a_combinar %> </dd>
 
       </dl>
     <% end %>
