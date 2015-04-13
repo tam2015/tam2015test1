@@ -6,7 +6,7 @@
         <dd><%= question.meli_date_created[0..9] if question.meli_date_created %></dd>
         <dt>Anúncio:</dt>
         <% if question.meli_item %>
-        <dd><%= t(question.meli_item.meli_item_id) %></dd>
+        <dd><%= question.meli_item_id %></dd>
         <dt>Preço:</dt>
         <dd>R$ <%= question.meli_item.price %></dd>
         <dt>Qtd disponível:</dt>
