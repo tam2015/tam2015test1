@@ -15,7 +15,7 @@ class WebhookController < ApplicationController
 
     dashboard = Dashboard.find_by(meli_user_id: params[:webhook][:user_id])
     #nil is a temporary solution used to avoid bugs on old accounts
-    if dashboard.preferences.average_sales == nil or dashboard.preferences.average_sales < 1000
+    #if dashboard.preferences.average_sales == nil or dashboard.preferences.average_sales < 1000
 
       # Quit Request if provider is not available
 
@@ -30,9 +30,9 @@ class WebhookController < ApplicationController
       Rails.logger.info "*** Hook Queue ID: #{queue_id} "
       Rails.logger.info "----------------------------------------------"
       # Notification stored
-    else
-      puts "número de vendas maior que o permitido"
-    end
+    #else
+    #  puts "número de vendas maior que o permitido"
+    #end
     head :ok
   end
 
