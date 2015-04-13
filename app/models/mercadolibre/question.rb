@@ -23,7 +23,7 @@ module Mercadolibre
 
     def meli_item
       item_id = meli_item_id
-      item = Mercadolibre::Item.where(meli_item_id: item_id).first
+      item = Mercadolibre::Item.find_by(meli_item_id: item_id)
     end
 
     def customer
@@ -84,12 +84,16 @@ module Mercadolibre
             #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
           customer = ::Customer.get_customer(question.seller_id, question.author_id)
 
+          unless Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)
+            ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
+          end
+
 
           # If Question is new, we can
           # notify user with an email
-          if new_question
+          # if new_question
             # Notify User about new question?
-          end
+          # end
 
           # Data Collection for post analysis
           # Datastores.create!(from: :meli_item_question,
