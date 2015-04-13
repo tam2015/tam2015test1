@@ -129,7 +129,7 @@ module Mercadolibre
 
       raise ArgumentError, "Invalid dashboard element.\n dashboard=`#{dashboard}`." unless dashboard.is_a?(::Dashboard)
       account   = Account.current || dashboard.account
-      aircrm_item = Mercadolibre::Item.where(meli_item_id: meli_item.id).first_or_initialize
+      aircrm_item = Mercadolibre::Item.find_or_create_by(meli_item_id: meli_item.id)
 
       #associations
       aircrm_item.dashboard_id                           = dashboard.id
