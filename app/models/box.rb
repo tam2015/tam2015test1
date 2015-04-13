@@ -160,7 +160,9 @@ class Box < ActiveRecord::Base
     # Orders can hold old products that Meli doesn't list to us
     # We still need to fetch these Items from Meli
     meli_order.order_items.map do |meli_item|
-      ::Mercadolibre::ItemWorker.perform_async box.dashboard.meli_user_id, meli_item.item.id
+      unless Mercadolibre::Item.find_by(meli_item_id: meli_item.item.id)
+        ::Mercadolibre::ItemWorker.perform_async box.dashboard.meli_user_id, meli_item.item.id
+      end
     end
 
     ##
