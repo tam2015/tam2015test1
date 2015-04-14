@@ -376,7 +376,7 @@ class Box < ActiveRecord::Base
   def item
     item_mid = meli_item_id if meli_item_id.present?
     if item_mid
-      item = Mercadolibre::Item.where(meli_item_id: item_mid).first
+      item = Mercadolibre::Item.find_by(meli_item_id: item_mid)
     end
   end
 
