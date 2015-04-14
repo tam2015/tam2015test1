@@ -21,7 +21,16 @@
         </a>
       <% end %>
       </div>
-      </br>
+      <% if buyer_feedback.meli_item and buyer_feedback.meli_item.variations.present?%>
+      <dt>Variação</dt>
+      <dd>
+        <% buyer_feedback.meli_item.variations.each do |variation|%>
+          <% variation.variation_types.each do |variation_type|%>
+            <%= variation_type.meli_value_name %>
+          <% end %>
+        <% end %>
+      <% end %>
+      </dd>
     </td>
     <td>
       <p> <%= buyer_feedback.meli_order_id %></p>

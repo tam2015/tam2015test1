@@ -22,7 +22,16 @@
         </a>
       <% end %>
       </div>
-      </br>
+      <% if question.meli_item and question.meli_item.variations.present?%>
+      <dt>Variação</dt>
+      <dd>
+        <% question.meli_item.variations.each do |variation|%>
+          <% variation.variation_types.each do |variation_type|%>
+            <%= variation_type.meli_value_name %>
+          <% end %>
+        <% end %>
+      <% end %>
+      </dd>
     </td>
 
     <td style="width:210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
