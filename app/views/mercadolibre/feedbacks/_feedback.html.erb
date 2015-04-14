@@ -11,16 +11,7 @@
         <dt>Qtd disponível:</dt>
         <dd><%= t(buyer_feedback.meli_item.item_storage.available_quantity) %></dd>
         <% end %>
-
       </dl>
-      <div class="user-heading round">
-      <% if buyer_feedback.meli_item and buyer_feedback.meli_item.pictures and buyer_feedback.meli_item.pictures.first and buyer_feedback.meli_item.pictures.first.meli_url != nil%>
-        <a href="#">
-            <%= image_tag buyer_feedback.meli_item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
-            <%= truncate(buyer_feedback.meli_item.title, length: 18) %></br>
-        </a>
-      <% end %>
-      </div>
       <% if buyer_feedback.meli_item and buyer_feedback.meli_item.variations.present?%>
       <dt>Variação</dt>
       <dd>
@@ -29,8 +20,18 @@
             <%= variation_type.meli_value_name %>
           <% end %>
         <% end %>
+        </br>
+        </br>
       <% end %>
       </dd>
+      <div class="user-heading round">
+      <% if buyer_feedback.meli_item and buyer_feedback.meli_item.pictures and buyer_feedback.meli_item.pictures.first and buyer_feedback.meli_item.pictures.first.meli_url != nil%>
+        <a href="#">
+            <%= image_tag buyer_feedback.meli_item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
+            <%= truncate(buyer_feedback.meli_item.title, length: 18) %></br>
+        </a>
+      <% end %>
+      </div>
     </td>
     <td>
       <p> <%= buyer_feedback.meli_order_id %></p>
