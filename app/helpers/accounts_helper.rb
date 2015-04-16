@@ -24,7 +24,7 @@ module AccountsHelper
   def check_subscription_expired(subscription = nil)
     if user_signed_in?
       subscription ||= current_subscription
-      if subscription and subscription.expired?
+      if subscription and subscription.expired? and subscription.status !=  "Completed"
         redirect_to plans_path
       end
     end

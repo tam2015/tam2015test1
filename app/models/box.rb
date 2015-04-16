@@ -141,7 +141,8 @@ class Box < ActiveRecord::Base
       meli_last_updated:       order.last_updated?.to_s,
       meli_date_closed:        order.date_closed?.to_s,
       price:                   order.total_amount?,
-      item_quantity:           order.order_items.first.quantity
+      item_quantity:           order.order_items.first.quantity,
+      meli_variation_id:       order.order_items.first.item.variation_id
     }
   end
 

@@ -38,13 +38,13 @@ class Mercadolibre::ItemsController < ApplicationController
   def admin_index
   #to search an item
     if params[:status_item]
-      @items = @klass.where(status: params[:status_item]).includes(:pictures).paginate(page: params[:page], per_page: 7)
+      @items = @klass.where(status: params[:status_item]).includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 7)
 
     elsif params[:query]
-      @items = @klass.all.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures).paginate(page: params[:page], per_page: 5)
+      @items = @klass.all.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 5)
 
     else
-      @items = @klass.active.includes(:pictures).paginate(page: params[:page], per_page: 7)
+      @items = @klass.active.includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 7)
 
       # respond_with @items
       respond_with(@items) do |format|
@@ -58,13 +58,13 @@ class Mercadolibre::ItemsController < ApplicationController
   def regular_index
   #to search an item
     if params[:status_item]
-      @items = @klass.where(dashboard_id: current_dashboard.id, status: params[:status_item]).includes(:pictures).paginate(page: params[:page], per_page: 7)
+      @items = @klass.where(dashboard_id: current_dashboard.id, status: params[:status_item]).includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 7)
 
     elsif params[:query]
-      @items = current_account.items.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures).paginate(page: params[:page], per_page: 5)
+      @items = current_account.items.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 5)
 
     else
-      @items = @klass.where(dashboard_id: current_dashboard.id).active.includes(:pictures).paginate(page: params[:page], per_page: 7)
+      @items = @klass.where(dashboard_id: current_dashboard.id).active.includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 7)
 
       # respond_with @items
       respond_with(@items) do |format|

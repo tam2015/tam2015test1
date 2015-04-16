@@ -111,12 +111,12 @@
                 <%= link_to 'Ver vendas', dashboard_index_test_path(query: customer.nickname, dashboard_id: current_dashboard.id), style: "font-size: 11px" %>
               </a>
               </br>
-              <% unless customer.blocked? %>
+              <% if !customer.blocked? and customer.question(current_dashboard).present? %>
                 <a href="javascript:;">
                   <i class="fa fa-envelope text-link"></i>
                   <%= link_to 'Bloquear', block_customer_dashboards_path(params[:dashboard_id], customer.question(current_dashboard).id), method: :post, data: { confirm: 'Você tem certeza que deseja bloquear esse usuário?' }, style: "font-size: 11px" %>
                 </a>
-                <% else %>
+                <% elsif customer.blocked? and customer.question(current_dashboard).present?%>
                 <a href="javascript:;">
                   <i class="fa fa-envelope text-link"></i>
                   <%= link_to 'Desbloquear', unblock_customer_dashboards_path(params[:dashboard_id], customer.question(current_dashboard).id), method: :post, data: { confirm: 'Você tem certeza que deseja desbloquear esse usuário?' }, style: "font-size: 11px" %>
