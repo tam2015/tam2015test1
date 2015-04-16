@@ -8,7 +8,7 @@ class PaymentNotificationsController < ApplicationController
   # POST /payment_notifications
   # POST /payment_notifications.json
   def create
-    subscription = Subscription.where(:paypal_customer_token => params[:payer_id]).first
+    subscription = Subscription.find_by(:paypal_customer_token => params[:payer_id])
     subscription.update(:status => params[:payment_status]) if subscription
     account_id = subscription.account_id
 

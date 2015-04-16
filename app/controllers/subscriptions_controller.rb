@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
 
   def edit
     @subscription = Subscription.where(account_id: current_account.id).first
-    @plan = Plan.find(params[:plan_id]) 
+    @plan = Plan.find(params[:plan_id])
     @subscription = @plan.subscriptions.build
   end
 
@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
     subscription_change_params = {
       user_id:    current_user.id,
       account_id: current_account.id,
-      status: "Completed"
+      status: "completed"
     }.reverse_merge subscription_params
 
     @subscription = Subscription.where(:account_id => current_account.id).first_or_initialize

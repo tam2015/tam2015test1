@@ -1,0 +1,50 @@
+<% if plan.present? %>
+  <div class="col-lg-3 col-sm-3">
+  <% if plan.name == "ouro"%>
+    <div class="pricing-table most-popular">
+    <% else %>
+    <div class="pricing-table ">
+  <% end %>
+      <div class="pricing-head">
+        <h1>
+          <%= plan.name and plan.name.upcase %>
+        </h1>
+        <h2>
+          <span class="note">R$</span>
+          <%= plan.price %>
+        </h2>
+      </div>
+      <div class="price-actions">
+        <%= link_to t(".subscribe"), edit_subscription_url(:id, plan_id: plan.id), class: "btn btn-success" %>
+      </div>
+      <% if plan.name == "platinum" %>
+      <ul class="list-unstyled">
+        <li class="h4">Até 500 vendas/mês</li>
+        <li>Sem custo de setup</li>
+      </ul>
+      <% end %>
+      <% if plan.name == "ouro" %>
+      <ul class="list-unstyled">
+        <li class="h4">Até 300 vendas/mês</li>
+        <li>Sem custo de setup</li>
+      </ul>
+      <% end %>
+      <% if plan.name == "prata" %>
+      <ul class="list-unstyled">
+        <li class="h4">Até 200 vendas/mês</li>
+        <li>Sem custo de setup</li>
+      </ul>
+      <% end %>
+      <% if plan.name == "bronze" %>
+      <ul class="list-unstyled">
+        <li class="h4">Até 100 vendas/mês</li>
+        <li>Sem custo de setup</li>
+      </ul>
+      <% end %>
+
+
+    </div>
+  </div>
+<% end %>
+
+
