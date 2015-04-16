@@ -8,7 +8,7 @@ module Mercadolibre
       ::Mercadolibre::ItemSyncWorker.perform_async dashboard_id
 
       # Sync Question by Question for User (Seller)
-      ::Mercadolibre::QuestionSyncWorker.perform_async dashboard_id
+      # ::Mercadolibre::QuestionSyncWorker.perform_async dashboard_id
 
       # Sync Sale by Sale from User  (Seller)
       # TODO: ✔ if anything under AccountSync break,
