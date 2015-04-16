@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405222859) do
+ActiveRecord::Schema.define(version: 20150415190951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(version: 20150405222859) do
     t.string   "meli_date_closed"
     t.string   "meli_last_updated"
     t.integer  "item_quantity"
+    t.integer  "meli_variation_id", limit: 8
   end
+
+  add_index "boxes", ["meli_order_id", "meli_item_id"], name: "index_boxes_on_meli_order_id_and_meli_item_id", using: :btree
 
   create_table "canned_responses", force: true do |t|
     t.text     "answer"
@@ -140,7 +143,7 @@ ActiveRecord::Schema.define(version: 20150405222859) do
     t.integer  "sold_quantity"
     t.integer  "unpublished_quantity"
     t.integer  "item_id"
-    t.integer  "variation_id"
+    t.integer  "variation_id",         limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end

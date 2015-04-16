@@ -23,7 +23,7 @@ module Mercadolibre
     # mount_uploaders :pictures_uploaded, ImageUploader
     belongs_to :account, class: ::Account
     has_many :variations
-    has_one :item_storage
+    has_many :item_storages
     has_one :meli_info
     has_many :pictures
 
@@ -173,15 +173,15 @@ module Mercadolibre
 
 
     def parse_item_variations aircrm_item, meli_item
-      if aircrm_item.variations
-        aircrm_item.variations.each do |variation_to_be_deleted|
-          Mercadolibre::VariationToType.where(variation_id: variation_to_be_deleted)
-          Mercadolibre::Variation.find(variation_to_be_deleted.id)
-        end
-      end
+      # if aircrm_item.variations
+      #   aircrm_item.variations.each do |variation|
+      #     Mercadolibre::VariationToType.where(variation_id: variation.id)
+      #     Mercadolibre::Variation.find(variation_to_be_deleted.id)
+      #   end
+      # end
 
       meli_item.variations.map do |meli_variation|
-        variation = Mercadolibre::Variation.new
+        variation = Mercadolibre::Variation.find_or_initialize_by(meli_variation_id: meli_variation.id? )
         variation.item_id                           =   aircrm_item.id
         variation.price                             =   meli_variation.price?
         #variation.meli_picture_ids                  =   variation.picture_ids?
@@ -190,7 +190,7 @@ module Mercadolibre
         variation.save
 
         meli_variation.attribute_combinations.map do |meli_variation_type|
-          variation_type                            = Mercadolibre::VariationType.where(meli_value_id: meli_variation_type.value_id?).first_or_initialize
+          variation_type                            = Mercadolibre::VariationType.find_or_initialize_by(meli_value_id: meli_variation_type.value_id?)
           variation_type.meli_id                    = meli_variation_type.id?
           variation_type.meli_name                  = meli_variation_type.name?
           variation_type.meli_value_id              = meli_variation_type.value_id?
@@ -204,25 +204,26 @@ module Mercadolibre
     end
 
     def parse_item_storages aircrm_item, meli_item
-        aircrm_item_storage = Mercadolibre::ItemStorage.where(item_id: aircrm_item.id).first_or_initialize
+      if meli_item.variations.present?
+        meli_item.variations.each do |variation|
+          aircrm_item_storage = Mercadolibre::ItemStorage.find_or_initialize_by(item_id: aircrm_item.id, variation_id: variation.id)
 
-        aircrm_item_storage.item_id                   =  aircrm_item.id
-        aircrm_item_storage.initial_quantity          =  meli_item.initial_quantity
-        #aircrm_item_storage.unpublished_quantity      =  meli_item.unpublished_quantity
-        unless meli_item.variations.present?
-          aircrm_item_storage.available_quantity        =  meli_item.available_quantity
-          aircrm_item_storage.sold_quantity             =  meli_item.sold_quantity
+          aircrm_item_storage.available_quantity        =  variation.available_quantity
+          aircrm_item_storage.sold_quantity             =  variation.sold_quantity
           aircrm_item_storage.save
-        else
-          aircrm_item_storage.available_quantity        =  meli_item.variations.map { |variation| variation.available_quantity}.sum
-          aircrm_item_storage.sold_quantity             =  meli_item.variations.map { |variation| variation.sold_quantity}.sum
         end
+      elsif !meli_item.variations.present?
+        aircrm_item_storage = Mercadolibre::ItemStorage.find_or_initialize_by(item_id: aircrm_item.id)
+        aircrm_item_storage.initial_quantity          =  meli_item.initial_quantity
+        aircrm_item_storage.available_quantity        =  meli_item.available_quantity
+        aircrm_item_storage.sold_quantity             =  meli_item.sold_quantity
         aircrm_item_storage.save
+      end
     end
 
 
     def parse_item_infos aircrm_item, meli_item
-      aircrm_item_infos = Mercadolibre::MeliInfo.where(item_id: aircrm_item.id).first_or_initialize
+      aircrm_item_infos = Mercadolibre::MeliInfo.find_or_initialize_by(item_id: aircrm_item.id)
 
       aircrm_item_infos.accepts_mercadopago               =  meli_item.accepts_mercadopago
       aircrm_item_infos.non_mercado_pago_payment_methods  =  meli_item.non_mercado_pago_payment_methods.to_json
@@ -244,7 +245,7 @@ module Mercadolibre
 
     def parse_item_pictures aircrm_item, meli_item
       meli_item.pictures.each do |meli_picture|
-        aircrm_picture = Mercadolibre::Picture.where(meli_url: meli_picture.url, item_id: aircrm_item.id).first_or_initialize
+        aircrm_picture = Mercadolibre::Picture.find_or_initialize_by(meli_url: meli_picture.url, item_id: aircrm_item.id)
         aircrm_picture.meli_id                   = meli_picture.id if meli_picture.id
         aircrm_picture.meli_secure_url           = meli_picture.secure_url if meli_picture.secure_url
         aircrm_picture.meli_size                 = meli_picture.size if meli_picture.size

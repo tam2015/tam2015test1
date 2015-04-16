@@ -13,13 +13,11 @@
         <dd><%= box.item_quantity %></dd>
         <% end %>
       </dl>
-      <% if box.item and box.item.variations.present?%>
+      <% if box.item and box.meli_variation_id%>
       <dt style= "margin-top: -20px">Variação</dt>
       <dd>
-        <% box.item.variations.each do |variation|%>
-          <% variation.variation_types.each do |variation_type|%>
-            <%= variation_type.meli_value_name %>
-          <% end %>
+        <% box.item.variations.find_by(meli_variation_id: box.meli_variation_id).variation_types.each do |variation_type|  %>
+          <%= variation_type.meli_value_name %>
         <% end %>
         </br>
         </br>

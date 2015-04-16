@@ -9,16 +9,14 @@
         <dt>Preço:</dt>
         <dd>R$ <%= buyer_feedback.meli_item.price %></dd>
         <dt>Qtd disponível:</dt>
-        <dd><%= t(buyer_feedback.meli_item.item_storage.available_quantity) %></dd>
+        <dd><%= t(buyer_feedback.meli_item.item_storages.first.available_quantity) %></dd>
         <% end %>
       </dl>
-      <% if buyer_feedback.meli_item and buyer_feedback.meli_item.variations.present?%>
-      <dt>Variação</dt>
+      <% if buyer_feedback.box(buyer_feedback.meli_order_id).item and buyer_feedback.box(buyer_feedback.meli_order_id).meli_variation_id %>
+      <dt style= "margin-top: -20px">Variação</dt>
       <dd>
-        <% buyer_feedback.meli_item.variations.each do |variation|%>
-          <% variation.variation_types.each do |variation_type|%>
-            <%= variation_type.meli_value_name %>
-          <% end %>
+        <% buyer_feedback.box(buyer_feedback.meli_order_id).item.variations.find_by(meli_variation_id: buyer_feedback.box(buyer_feedback.meli_order_id).meli_variation_id).variation_types.each do |variation_type|  %>
+          <%= variation_type.meli_value_name %>
         <% end %>
         </br>
         </br>

@@ -230,14 +230,14 @@ module Mercadolibre
       if meli_order_id
         # Post seller Feedback on Meli
         refresh_token = dashboard.credentials[:refresh_token]
-        Mercadolibre::Feedback.api.update_token(refresh_token)        
+        Mercadolibre::Feedback.api.update_token(refresh_token)
         # meli_order_feedback  = Meli::Feedback.post_feedback(meli_order_id, feedback_data)
         meli_order_feedback  = Mercadolibre::Feedback.api.give_feedback_to_order(meli_order_id, feedback_data)
-        
+
 
         puts "\n\n ** Sale Feedback posted: #{meli_order_feedback.inspect}"
       end
-    end    
+    end
 
     def self.meli_update(order_id, kind, feedback_data, dashboard)
       #update token before feedback posting
@@ -246,7 +246,7 @@ module Mercadolibre
 
       #using old mercadolivre gem
       @feedback = ::Dashboard.api.change_feedback_from_order(order_id, kind, feedback_data)
-    end    
+    end
 
 
 
@@ -357,6 +357,10 @@ module Mercadolibre
        feedback =  Mercadolibre::Feedback.where(meli_order_id: meli_order_id, author_type: "buyer").first
        meli_item_id = feedback.meli_item_id
        item = Mercadolibre::Item.where(meli_item_id: meli_item_id).first
+    end
+
+    def box meli_order_id
+      box = ::Box.find_by(meli_order_id: meli_order_id)
     end
 
   end

@@ -1,35 +1,27 @@
 <% if question %>
   <tr id="question_<%= question.id %>">
-    <td style= "width: 210px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+    <td style= "width: 215px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
       <dl class="dl-horizontal">
         <dt>Data:</dt>
         <dd><%= question.meli_date_created[0..9] if question.meli_date_created %></dd>
         <dt>Anúncio:</dt>
         <% if question.meli_item %>
-        <dd><%= question.meli_item_id %></dd>
-        <dt>Preço:</dt>
-        <dd>R$ <%= question.meli_item.price %></dd>
-        <dt>Qtd disponível:</dt>
-        <dd><%= t(question.meli_item.item_storage.available_quantity) %></dd>
-        <% end %>
-        <% if question.meli_item and question.meli_item.variations.present?%>
-        <dt>Variação</dt>
-        <dd>
-          <% question.meli_item.variations.each do |variation|%>
-            <% variation.variation_types.each do |variation_type|%>
-              <%= variation_type.meli_value_name %>
-            <% end %>
+          <dd><%= question.meli_item_id %></dd>
+          <% if question.meli_item.variations.present? %>
+              <%= link_to "Ver variações", dashboard_items_path(@dashboard, query: question.meli_item.meli_item_id ) %>
+            <% else %>
+              <dt>Preço:</dt>
+              <dd>R$ <%= question.meli_item.price %></dd>
+              <dt>Qtd disponível:</dt>
+              <dd><%= t(question.meli_item.item_storages.first.available_quantity) %></dd>
           <% end %>
-          </br>
-          </br>
         <% end %>
-        </dd>
       </dl>
       <div class="user-heading round">
       <% if question.meli_item and question.meli_item.pictures and question.meli_item.pictures.first and question.meli_item.pictures.first.meli_url != nil%>
         <a href="#">
             <%= image_tag question.meli_item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
-            <%= truncate(question.meli_item.title, length: 18) %></br>
+            <%= link_to truncate(question.meli_item.title, length: 18), dashboard_items_path(@dashboard, query: question.meli_item.meli_item_id ) %></br>
         </a>
       <% end %>
       </div>

@@ -8,6 +8,17 @@
       </td>
         <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
           <div class="user-heading round">
+          <% if shipping.box.item and shipping.box.meli_variation_id%>
+          <dt style= "margin-top: -20px">Variação</dt>
+          <dd>
+            <% shipping.box.item.variations.find_by(meli_variation_id: shipping.box.meli_variation_id).variation_types.each do |variation_type|  %>
+              <%= variation_type.meli_value_name %>
+            <% end %>
+            </br>
+            </br>
+          <% end %>
+          </dd>
+
           <% if shipping.box.item.pictures and shipping.box.item.pictures.first and shipping.box.item.pictures.first.meli_url != nil %>
             <a href="#">
                 <%= image_tag shipping.box.item.pictures.first.meli_url, style: "width: 50px; height: 30px" %>
