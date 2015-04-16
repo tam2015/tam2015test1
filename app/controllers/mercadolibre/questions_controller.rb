@@ -34,8 +34,7 @@ class Mercadolibre::QuestionsController < ApplicationController
       @questions = Mercadolibre::Question.where(dashboard_id: current_dashboard.id, author_id: params[:author_id], meli_item_id: params[:meli_item_id]).paginate(page: params[:page], per_page: 5)
 
     elsif current_user.admin?
-      @questions = Mercadolibre::Question.all(status: "unanswered").paginate(page: params[:page], per_page: 5)
-
+      @questions = Mercadolibre::Question.where(status: "unanswered").paginate(page: params[:page], per_page: 5)
 
     else
       @questions = Mercadolibre::Question.where(dashboard_id: current_user.dashboards.first.id, status: "unanswered").paginate(page: params[:page], per_page: 5)
