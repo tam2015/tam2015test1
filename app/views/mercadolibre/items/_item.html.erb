@@ -1,4 +1,73 @@
 <% if item %>
+<% if !params[:variation_query] %>
+  <tr id="item_<%= item.id %>">
+    <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
+      <div class="user-heading round">
+      <% if item.pictures and item.pictures.first %>
+        <a href="#">
+            <%= image_tag item.pictures.first.meli_url, style: "width: 50px" %>
+        </a>
+      <% end %>
+      </div>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:meli_item_id       ) %>">
+      <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
+        <%= truncate(item.meli_item_id, length: 75) %>
+      <% end %>
+      </br>
+      <% if item.variations.present? %>
+        <%= link_to dashboard_items_path(@dashboard, variation_query: item.meli_item_id) do %>
+        <span type="button" class="badge alert-info %>">
+        <%= "ver variações" %>
+        <% end %>
+
+      <% end %>
+    </td>
+    <td data-title="<%= @klass.human_attribute_name(:meli_item_id       ) %>">
+      <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
+        <%= truncate(item.title, length: 75) %>
+      <% end %>
+    </td>
+
+      <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+        <%= item.price %>
+      </td>
+
+      <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+        <% if item.item_storages %>
+          <%= item.item_storages.first.sold_quantity %>
+        <% end %>
+      </td>
+
+      <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
+        <% if item.item_storages %>
+          <%= item.item_storages.first.available_quantity %>
+        <% end %>
+      </td>
+
+    <td data-title="<%= @klass.human_attribute_name(:status      ) %>">
+      <%= link_to 'Editar Anúncio', edit_dashboard_item_path(id: item.id),style: "font-size: 11px" %>
+    </br>
+      <%= link_to 'Ver concorrentes', monitor_dashboards_path(category_id: item.category_id, dashboard_id: @dashboard.id),style: "font-size: 11px" %>
+    </td>
+
+  </tr>
+<% end %>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+<% if params[:variation_query] %>
+
+<% if item %>
+<% item.variations.each do |variation| %>
   <tr id="item_<%= item.id %>">
     <td data-title="<%= @klass.human_attribute_name(:title       ) %>">
       <div class="user-heading round">
@@ -18,87 +87,28 @@
       <%= link_to dashboard_item_path(@dashboard, item), title: item.title do %>
         <%= truncate(item.title, length: 75) %>
       <% end %>
+      </br>
+      <% variation.variation_types.each do |variation_type| %>
+        <%= variation_type.meli_value_name%>
+      <% end %>
     </td>
 
-    <% if !item.variations.present? %>
       <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-        <%= item.price %>
+        <%= variation.price %>
       </td>
-    <% end %>
 
-    <% if !item.variations.present? %>
       <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-        <% if item.item_storages %>
-          <%= item.item_storages.first.sold_quantity %>
+        <% if Mercadolibre::ItemStorage.where(variation_id: variation.meli_variation_id).first %>
+          <%= Mercadolibre::ItemStorage.where(variation_id: variation.meli_variation_id).first.sold_quantity %>
         <% end %>
       </td>
-    <% end %>
 
-    <% if !item.variations.present? %>
+
       <td data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-        <% if item.item_storages %>
-          <%= item.item_storages.first.available_quantity %>
-        <% end %>
-      </td>
-    <% end %>
-
-
-    <% if item.variations.present? %>
-      <td style="width:200px" data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-        <% item.variations.each do |variation|  %>
-          <dl class="dl-horizontal">
-            <dt style="width:130px">
-              <%variation.variation_types.each do |variation_type| %>
-                <%= variation_type.meli_value_name %>
-              <% end %>
-            </dt>
-            <dd>
-              R$<%= variation.price %>
-            </dd>
-          </dl>
-        <% end %>
-      </td>
-    <% end %>
-
-
-      <% if item.variations.present? %>
-        <td style="width:200px" data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-          <% item.variations.each do |variation|  %>
-            <dl class="dl-horizontal">
-              <dt style="width:140px">
-                <%variation.variation_types.each do |variation_type| %>
-                  <%= variation_type.meli_value_name %>
-                <% end %>
-              </dt>
-              <dd>
-                <% if Mercadolibre::ItemStorage.find_by(variation_id: variation.meli_variation_id).sold_quantity %>
-                  <%= Mercadolibre::ItemStorage.find_by(variation_id: variation.meli_variation_id).sold_quantity %></br>
-                <% end %>
-              </dd>
-            </dl>
-          <% end %>
-        </td>
+      <% if Mercadolibre::ItemStorage.where(variation_id: variation.meli_variation_id).first %>
+        <%= Mercadolibre::ItemStorage.where(variation_id: variation.meli_variation_id).first.available_quantity %>
       <% end %>
-
-      <% if item.variations.present? %>
-        <td style="width:200px" data-title="<%= @klass.human_attribute_name(:start_time  ) %>">
-          <% item.variations.each do |variation|  %>
-            <dl class="dl-horizontal">
-              <dt style="width:140px">
-                <%variation.variation_types.each do |variation_type| %>
-                  <%= variation_type.meli_value_name %>
-                <% end %>
-              </dt>
-              <dd>
-                <% if Mercadolibre::ItemStorage.find_by(variation_id: variation.meli_variation_id).available_quantity %>
-                  <%= Mercadolibre::ItemStorage.find_by(variation_id: variation.meli_variation_id).available_quantity %></br>
-                <% end %>
-              </dd>
-            </dl>
-          <% end %>
-        </td>
-      <% end %>
-
+      </td>
 
     <td data-title="<%= @klass.human_attribute_name(:status      ) %>">
       <%= link_to 'Editar Anúncio', edit_dashboard_item_path(id: item.id),style: "font-size: 11px" %>
@@ -107,5 +117,8 @@
     </td>
 
   </tr>
+  <% end %>
+<% end %>
+
 <% end %>
 
