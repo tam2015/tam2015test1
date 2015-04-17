@@ -67,7 +67,7 @@ class Mercadolibre::ItemsController < ApplicationController
       @items = current_account.items.where("meli_item_id ilike :q or title ilike :q", q: "%#{params[:query]}%").includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 5)
 
     elsif params[:variation_query]
-      @items = @klass.all.where(dashboard_id: current_dashboard.id, meli_item_id: params[:variation_query]).includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 5)
+      @items = @klass.where(dashboard_id: current_dashboard.id, meli_item_id: params[:variation_query]).includes(:pictures, :variations, :item_storages).paginate(page: params[:page], per_page: 5)
 
 
     else

@@ -1,10 +1,6 @@
 <% if plan.present? %>
   <div class="col-lg-3 col-sm-3">
-  <% if plan.name == "ouro"%>
     <div class="pricing-table most-popular">
-    <% else %>
-    <div class="pricing-table ">
-  <% end %>
       <div class="pricing-head">
         <h1>
           <%= plan.name and plan.name.upcase %>

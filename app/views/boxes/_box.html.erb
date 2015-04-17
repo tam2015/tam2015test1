@@ -17,7 +17,9 @@
       <dt style= "margin-top: -20px">Variação</dt>
       <dd>
         <% box.item.variations.find_by(meli_variation_id: box.meli_variation_id).variation_types.each do |variation_type|  %>
-          <%= variation_type.meli_value_name %>
+          <span type="button" class="badge alert-info %>">
+            <%= variation_type.meli_value_name %>
+          </span>
         <% end %>
         </br>
         </br>
@@ -26,7 +28,7 @@
       <div class="user-heading round">
       <% if box.item and box.item.pictures and box.item.pictures.first and box.item.pictures.first.meli_url != nil%>
             <%= image_tag box.item.pictures.first.meli_url, style: "width: 50px; height: 70px" %>
-            <%= link_to truncate(box.item.title, length: 18), dashboard_items_path(@dashboard, query: box.item.meli_item_id) %>
+            <%= link_to truncate(box.item.title, length: 18), dashboard_items_path(@dashboard, variation_query: box.item.meli_item_id), target: "blank" %>
       <% end %>
       </div>
       </br>
