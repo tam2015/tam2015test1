@@ -274,7 +274,8 @@ module Mercadolibre
     end
 
     def serialize_storage
-      serializable_storage = item_storage.serializable_hash
+      #serializable_storage = item_storage.serializable_hash
+      serializable_storage = item_storages.first.serializable_hash
     end
 
     def serialize_pictures
