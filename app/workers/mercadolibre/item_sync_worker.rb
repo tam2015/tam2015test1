@@ -18,7 +18,7 @@ module Mercadolibre
       refresh_token = dashboard.credentials[:refresh_token]
       Mercadolibre::Item.api.update_token(refresh_token)
       ids = Mercadolibre::Item.api.get_all_my_item_ids
-      ids = Meli::Item.all_ids
+      #ids = Meli::Item.all_ids
       meli_item_ids = ids if ids.present?
       if meli_item_ids
         meli_item_ids.each do |meli_item_id|
