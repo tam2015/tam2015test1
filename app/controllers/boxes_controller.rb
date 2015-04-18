@@ -186,7 +186,7 @@ class BoxesController < ApplicationController
         end
 
       else
-        @boxes = current_user.dashboards.first.boxes.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.includes(:shipping).paginate(page: params[:page], per_page: 5)
         if @boxes.count < 1
           redirect_to dashboards_path
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
@@ -227,7 +227,7 @@ class BoxesController < ApplicationController
         end
 
       else
-        @boxes = Box.all.includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = Box.all.includes(:shipping).paginate(page: params[:page], per_page: 5)
         if @boxes.count < 1
           redirect_to dashboards_path
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
