@@ -161,32 +161,32 @@ class BoxesController < ApplicationController
 
     #address_status_filter
       if params[:status_address]
-        @boxes = current_user.dashboards.first.boxes.joins(:shipping).where(shippings: {pendings_status: params[:status_address]}).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.includes(:payments,:shipping, :customer).where(shippings: {pendings_status: params[:status_address]}).paginate(page: params[:page], per_page: 5)
 
       elsif params[:status_data]
-        @boxes = current_user.dashboards.first.boxes.includes(:customer).where(customers: { pendings_status: params[:status_data]}).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.includes(:payments,:shipping, :customer).where(customers: { pendings_status: params[:status_data]}).paginate(page: params[:page], per_page: 5)
 
       #payment_status_filter
       elsif params[:status_box_payment]
-        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
 
       #shipping_status_filter
       elsif params[:status_box_shipping]
-        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:shipping, :payments).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
       # elsif params[:status_box]
       #   @boxes = @dashboard.boxes.where("'rails' = ALL(tags)").paginate(page: params[:page], per_page: 5)
 
       elsif params[:query]
-        if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5).count > 0
-          @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:customer).paginate(page: params[:page], per_page: 5)
-        elsif current_user.customers.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
-          @boxes = current_user.customers.where(email: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
-        elsif current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5).count > 0
-          @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.paginate(page: params[:page], per_page: 5)
+        if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
+        elsif current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
+        elsif current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+          @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
         end
 
       else
-        @boxes = current_user.dashboards.first.boxes.includes(:shipping).paginate(page: params[:page], per_page: 5)
+        @boxes = current_user.dashboards.first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
         if @boxes.count < 1
           redirect_to dashboards_path
           flash[:error] = "Estamos carregando suas vendas. Por favor aguarde um momento"
