@@ -46,6 +46,7 @@ module Mercadolibre
           payment.meli_order_id         = meli_order.id
           payment.box_id                = box.id
 
+          payment.meli_payment_id       = meli_order_payment.id
           payment.status                = meli_order_payment.status || :to_be_agreed
           payment.accept_mercadopago    = true
           payment.payment_method_id     = meli_order_payment.payment_method_id?
