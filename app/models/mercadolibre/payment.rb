@@ -35,7 +35,8 @@ module Mercadolibre
       if meli_order.payments.present?
 
         # An Order can have more than 1 payment
-        meli_order.payments.each do |meli_order_payment|
+        # meli_order.payments.each do |meli_order_payment|
+          meli_order_payment = meli_order.payments.last
 
           # Rescue or Initialize a payment for payment_id (meli_order_id) and order_id
           payment = Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id).first_or_initialize
@@ -58,7 +59,7 @@ module Mercadolibre
           payment.save
           box.update_tags_from_payment_changes box, payment, params=nil
 
-        end
+        # end
 
       # no payment associated yet
       elsif !meli_order.payments.present?
