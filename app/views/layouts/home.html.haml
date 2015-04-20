@@ -22,6 +22,10 @@
 
     = csrf_meta_tags
 
+    = render 'layouts/chat'
+    = render 'layouts/analytics'
+    = render 'layouts/inspectlet'
+
   %body{ class: "#{dispatcher_class}", "data-route" => dispatcher_route }
     / header start
     %header.header-frontend
@@ -109,6 +113,3 @@
     = javascript_include_tag "home", "data-turbolinks-track" => true
     = javascript_include_tag "locales/#{I18n.locale}", "data-turbolinks-track" => true
 
-    = render 'layouts/analytics'  if ENV["GOOGLE_ANALYTICS_ACCOUNT"]
-    = render 'layouts/chat'       if ENV["ZOPIM_KEY"]
-    = render 'layouts/crazyegg'
