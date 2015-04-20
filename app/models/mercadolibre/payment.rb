@@ -39,7 +39,7 @@ module Mercadolibre
           meli_order_payment = meli_order.payments.last
 
           # Rescue or Initialize a payment for payment_id (meli_order_id) and order_id
-          payment = Mercadolibre::Payment.where(meli_payment_id: meli_order_payment.id).first_or_initialize
+          payment = Mercadolibre::Payment.where(meli_order_id: meli_order.id).first_or_initialize
 
           # Associations
           payment.dashboard_id          = box.dashboard_id
