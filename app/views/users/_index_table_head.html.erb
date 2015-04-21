@@ -1,6 +1,4 @@
 <tr>
-  <% # checkbox %>
-  <th class="table-checkbox"></th>
   <th>
     <%= @klass.human_attribute_name :name %>
   </th>
@@ -14,10 +12,16 @@
     <%= "vendas" %>
   </th>
   <th>
+    <%= "qualificação" %>
+  </th>
+  <th>
     <%= "Média de Vendas" %>
   </th>
   <th>
-    <%= "qualificação" %>
+    <%= "Dashboard_id" %>
+  </th>
+  <th>
+    <%= "Meli_User_Id" %>
   </th>
   <th>
     <%= Subscription.human_attribute_name :expires_in %>

@@ -1,8 +1,5 @@
 <% if user %>
   <tr id="user_<%= user.id %>">
-    <td class="text-center hidden-xs table-checkbox">
-      <input class="list-child" type="checkbox">/</input>
-    </td>
     <td data-title="<%= @klass.human_attribute_name(:name       ) %>">
       <%= link_to user_path(user), title: user.first_name do %>
         <%= truncate(user.first_name, length: 75) %>
@@ -27,8 +24,14 @@
       <%= user.dashboards.first.preferences.average_sales %>
       <% end %>
     </td>
+    <td data-title="<%= t_model(Account) %>">
+      <%= user.dashboards.first.id %>
+    </td>
+    <td data-title="<%= t_model(Account) %>">
+      <%= user.dashboards.first.meli_user_id %>
+    </td>
     <td data-title="<%= Subscription.human_attribute_name(:expires_in  ) %>">
-      <%= subscription_date_expiration %>
+      <%= user.expires_in %>
     </td>
     <td class="table-actions">
 
