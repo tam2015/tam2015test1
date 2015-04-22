@@ -66,7 +66,7 @@ GIT
 
 GIT
   remote: git://github.com/tam2015/tam2015testgem1.git
-  revision: edb547298db99e06bf8439c8406baa86470db90d
+  revision: ce658e63303693048d0831d2f2bc5e72bf10717f
   specs:
     meli (0.0.19)
       activeresource (~> 4.0, >= 4.0.0)
