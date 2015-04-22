@@ -2,7 +2,7 @@
   <form action="#" class="pull-center position" style="padding: 20px">
     <%= form_tag monitor_from_categories_dashboards_path, method: :get do %>
       <input type="text" placeholder="buscar" class="form-control search-btn "
-        <%= text_field_tag :query, params[:query] %>
+        <%= text_field_tag :text_search, params[:query] %>
         <%= submit_tag "Search", name: nil, class: "hidden" %>
     <%end%>
   </form>  

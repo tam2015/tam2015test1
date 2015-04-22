@@ -11,6 +11,16 @@
               <li><%= link_to "Visualização 2", monitor_from_categories_dashboards_path(dashboard_id: current_dashboard), method: :get  %></li>              
           </ul>
         </li>
+        <li class="dropdown" style="padding-right: 30px; float: left">
+          <form action="#" class="pull-right position">
+            <%= form_tag monitor_dashboards_path, method: :get do %>
+              <input type="text" placeholder="Palavra chave" class="form-control search-btn " style= "width: 300px"
+                <%= text_field_tag :text_search, params[:text_search] %>
+                <%= submit_tag "Search", name: nil, class: "hidden" %>
+
+              <%end%>
+          </form>
+        </li>                      
       </ul>
     </section>
 
