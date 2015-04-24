@@ -303,7 +303,7 @@ module Mercadolibre
     def self.reply_to_buyer feedback_id, reply_text, dashboard
       refresh_token = dashboard.credentials[:refresh_token]
       Mercadolibre::Feedback.api.update_token(refresh_token)      
-      Meli::Feedback.reply_feedback(feedback_id)#, reply_text)
+      Meli::Feedback.reply_feedback(feedback_id, reply_text)
     end
 
     def reasons_to_portuguese

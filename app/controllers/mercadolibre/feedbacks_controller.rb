@@ -81,9 +81,7 @@ class Mercadolibre::FeedbacksController < ApplicationController
       kind = params[:mercadolibre_feedback][:author_type]
       # order_id = params[:mercadolibre_feedback][:meli_order_id]
       feedback_id = params[:mercadolibre_feedback][:meli_feedback_id]
-      reply_text = {
-        text: params[:mercadolibre_feedback][:reply]
-      }
+      reply_text = params[:mercadolibre_feedback][:reply]
       @meli_reply_feedback = Mercadolibre::Feedback.reply_to_buyer(feedback_id,reply_text, current_dashboard)
       if @meli_reply_feedback #and @meli_updated_feedback["status"] != 400
          @feedback = Mercadolibre::Feedback.find_by(meli_order_id: params[:mercadolibre_feedback][:meli_order_id], author_type: "buyer")
