@@ -1,7 +1,46 @@
+<% if params[:feedback_type] == "reply" %>
+  <% feedback ||= @feedback %>
+  <%= simple_form_for @feedback, url: :feedback_update_dashboard_boxes, wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f| %>
+
+
+  <div class="modal fade" id="box-modal">
+    <div class="modal-dialog">
+      <div class="modal-content" style="padding: 20px">
+        <div class="row">
+          <div class="col-lg-12">
+            <%= f.error_notification %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h3> Edite sua qualificação </h3> </br>
+            <%= f.hidden_field :meli_order_id, :value => params[:meli_order_id] %>
+            <%= f.hidden_field :dashboard_id, :value => params[:dashboard_id] %>
+            <%= f.hidden_field :updated, :value => true %>
+            <%= f.label :label, label: "Nota" %>
+            <%= f.input :rating, collection: ["positive", "neutral"], prompt: "Selecione o status do pagamento", required: true %>
+            <%= f.label :label, label: "Texto" %>
+            <%= f.input :message %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-action text-center">
+            <%= f.button :button, type: :submit, class: "btn-success", title: t("helpers.submit.update", model: "") do %>
+              <%= "Enviar" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+
 <% feedback ||= @feedback %>
 <%= simple_form_for @feedback, url: :feedback_update_dashboard_boxes, wrapper: :small, html: { class: "comment_form form-horizontal",  role: "form" } do |f| %>
-  
- 
+
+
 <div class="modal fade" id="box-modal">
   <div class="modal-dialog">
     <div class="modal-content" style="padding: 20px">
@@ -12,14 +51,14 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <h3> Edite sua qualificação </h3> </br>
+          <h3> Responda ao comprador </h3> </br>
           <%= f.hidden_field :meli_order_id, :value => params[:meli_order_id] %>
+          <%= f.hidden_field :meli_feedback_id, :value => params[:meli_feedback_id] %>          
           <%= f.hidden_field :dashboard_id, :value => params[:dashboard_id] %>
           <%= f.hidden_field :updated, :value => true %>
-          <%= f.label :label, label: "Nota" %>
-          <%= f.input :rating, collection: ["positive", "neutral"], prompt: "Selecione o status do pagamento", required: true %>
-          <%= f.label :label, label: "Texto" %>
-          <%= f.input :message %>
+          <%= f.hidden_field :author_type, :value => "buyer" %>
+          <%= f.label :label, label: "Resposta" %>
+          <%= f.input :reply %>
         </div>
       </div>
       <div class="row">
@@ -33,3 +72,6 @@
     </div>
   </div>
 </div>
+
+<% end %>
+

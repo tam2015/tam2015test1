@@ -1,6 +1,6 @@
 class Notify < ActiveRecord::Base
 
-  enum param: [ :no_address ]#, default: nil
+  enum param: [ :no_address, :no_feedback ]#, default: nil
 
   enum delivery_method: [:email, :sms]#, multiple: true#, default: [:email]
 
@@ -20,7 +20,12 @@ class Notify < ActiveRecord::Base
 
 
   def notify!
-    # Mailing::Notify.delay(queue: :seldom, retry: false).no_address(self.id)
-    Mailing::Notify.no_address(self.id).deliver
+    # if param == 0
+    #   # Mailing::Notify.delay(queue: :seldom, retry: false).no_address(self.id)
+    #   Mailing::Notify.no_address(id).deliver
+    # elsif param == 1
+    #   # Mailing::Notify.delay(queue: :seldom, retry: false).no_address(self.id)
+      Mailing::Notify.no_feedback(id).deliver
+    # end
   end
 end

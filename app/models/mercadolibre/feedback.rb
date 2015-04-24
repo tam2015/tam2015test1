@@ -249,11 +249,72 @@ module Mercadolibre
     end
 
 
+    def notify(box, type = :no_address)
+      Rails.logger.debug "########################  Shipping notify!  #############################"
+      Rails.logger.info " ===  box: #{box.id} (#{box})  ==="
+      Rails.logger.info " ===  box.customer: #{box.customer.id} (#{box.customer})  ==="
+      Rails.logger.info " ===  type: #{type} (#{type.class})  ==="
+
+      return unless box.customer
+      # return unless box.user and box.customer
+      full_name = box.customer.name.split(" ")
+
+      receiver = NotifyAgent.find_or_initialize_by({
+        # type:         "buyer",
+        meli_user_id: box.customer.meli_user_id,
+        full_name:  box.customer.name,
+        first_name: full_name.shift,
+        last_name:  full_name.join(" "),
+        nickname:   box.customer.nickname,
+        email:      box.customer.email,
+        phone:      box.customer.phone,
+        created_at: box.customer.created_at,
+        updated_at: box.customer.updated_at
+      })
+
+      # sender = NotifyAgent.new({
+      #   type:       "seller",
+      #   id:         box.user.id,
+      #   uid:        box.user.id,
+      #   first_name: box.user.first_name,
+      #   last_name:  box.user.last_name,
+      #   nickname:   box.user.username,
+      #   email:      box.user.email,
+      #   phone:      box.user.phone,
+      #   created_at: box.user.created_at,
+      #   updated_at: box.user.updated_at
+      # })
+
+      Rails.logger.debug "\n\n\n\n\n\n\n thiago_json------- #{receiver.to_json}"
+      notify = ::Notify.find_or_initialize_by(reference_id: id.to_s, reference_model: model_name.to_s)
+      notify.param        = type.to_sym || :no_feedback
+      notify.receiver     = receiver
+      # notify.sender       = sender
+      notify.dashboard_id = box.dashboard.id.to_s
+      notify.box_id       = box.id.to_s
+      notify.meli_order_id = box.meli_order_id.to_s
+
+      Rails.logger.info " ===  notify.param: #{notify.param} ==="
+      saved = notify.save
+      notify
+    end
 
 
+    def self.reply_to_buyer feedback_id, reply_text, dashboard
+      refresh_token = dashboard.credentials[:refresh_token]
+      Mercadolibre::Feedback.api.update_token(refresh_token)      
+      Meli::Feedback.reply_feedback(feedback_id)#, reply_text)
+    end
 
+    def reasons_to_portuguese
+      reasons = ["SELLER_REGRETS", "THEY_DIDNT_ANSWER", "BUYER_REGRETS", "SELLER_OUT_OF_STOCK", "SELLER_DIDNT_TRY_TO_CONTACT_BUYER", "BUYER_NOT_ENOUGH_MONEY", "THEY_NOT_HONORING_POLICIES", "OTHER_MY_RESPONSIBILITY", "OTHER_THEIR_RESPONSIBILITY"]
+      reasons.map! { |reason| I18n.t(reason, scope: "helpers.feedback.reasons_to_portuguese", default: reason) }
+    end
 
-
+    def reasons_to_english
+      reasons = ["Desisti de vende-lo", "O comprador não respondeu minhas mensagens", "O comprador desistiu de compra-lo ", "Fique sem estoque", "Não tentei entrar em contato com o comprador", "O comprador não tinha dinheiro", "O comprador não respeitou as políticas de envio e pagamento do produto ", "Outros motivos por responsabilidade do vendedor", "Outros motivos por responsabilidade do comprador"]
+      reasons.map! { |reason| I18n.t(reason, scope: "helpers.feedback.reasons_to_english", default: reason) }
+    end
 
 
 

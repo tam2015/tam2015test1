@@ -22,6 +22,22 @@ class Mailing::Notify < ActionMailer::Base
     mail headers
   end
 
+  def no_feedback(notify_id)
+    return if !set_notify(notify_id)
+    return if !set_reference
+
+    @sender   = @notify.sender || NotifyAgent.new
+    @receiver = @notify.receiver
+    # @token    = @reference.generate_token
+
+    @notify.update({
+      status:             :delivered,
+      email_delivered_at: Time.current
+      })
+
+    mail headers
+  end
+
 
   def welcome(user)
     @user = user

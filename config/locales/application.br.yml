@@ -183,6 +183,30 @@ br:
         nil_feedback: sem avaliação
         nil: sem motivo
 
+      reasons_to_portuguese:
+        SELLER_REGRETS: Desisti_de_vender
+        THEY_DIDNT_ANSWER: O_comprador_não_respondeu_minhas_mensagens 
+        BUYER_REGRETS: O_comprador_desistiu_de_comprar 
+        SELLER_OUT_OF_STOCK: Fique_sem_estoque
+        SELLER_DIDNT_TRY_TO_CONTACT_BUYER: Não_tentei_entrar_em_contato_com_o_comprador
+        BUYER_NOT_ENOUGH_MONEY: O_comprador_não_tinha_dinheiro
+        THEY_NOT_HONORING_POLICIES: O_comprador_não_respeitou_as_políticas_de_envio_e_pagamento_do_produto 
+        OTHER_MY_RESPONSIBILITY: Outros_motivos_por_responsabilidade_do_vendedor
+        OTHER_THEIR_RESPONSIBILITY: Outros_motivos_por_responsabilidade_do_comprador
+
+      reasons_to_english:
+        Desisti_de_vender: SELLER_REGRETS
+        O_comprador_não_respondeu_minhas_mensagens: THEY_DIDNT_ANSWER
+        O_comprador_desistiu_de_comprar: BUYER_REGRETS
+        Fique_sem_estoque: SELLER_OUT_OF_STOCK
+        Não_tentei_entrar_em_contato_com_o_comprador: SELLER_DIDNT_TRY_TO_CONTACT_BUYER
+        O_comprador_não_tinha_dinheiro: BUYER_NOT_ENOUGH_MONEY
+        O_comprador_não_respeitou_as_políticas_de_envio_e_pagamento_do_produto: THEY_NOT_HONORING_POLICIES
+        Outros_motivos_por_responsabilidade_do_vendedor: OTHER_MY_RESPONSIBILITY
+        Outros_motivos_por_responsabilidade_do_comprador: OTHER_THEIR_RESPONSIBILITY
+
+
+
     customers:
       status:
         blocked: bloqueado

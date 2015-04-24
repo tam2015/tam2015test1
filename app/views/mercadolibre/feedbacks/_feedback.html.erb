@@ -55,13 +55,22 @@
       <p>
         <%= buyer_feedback.message %>
       </p>
+
+      <% if !buyer_feedback.reply.present? and buyer_feedback.rating == "negative" %>
+        <i class="fa fa-pencil text-link"></i>      
+        <%= link_to 'Responder', feedback_edit_dashboard_boxes_path(meli_order_id: box(buyer_feedback.meli_order_id).meli_order_id, author_type: "buyer", meli_feedback_id: buyer_feedback.meli_feedback_id),remote: true ,style: "font-size: 11px" %>
+      <% elsif buyer_feedback.reply.present? %>
+        </br>
+        <h6 style="color: #58c9f3"> Sua resposta </h6>
+        <%= buyer_feedback.reply %>
+      <% end %>
     </td>
     <td style="width: 200px">
       <% status_class = "danger" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "negative" %>
       <% status_class = "info" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "neutral" %>
       <% status_class = "success" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == "positive" %>
       <% status_class = "warning" if buyer_feedback and feedback_seller(buyer_feedback) and feedback_seller(buyer_feedback).rating == nil %>
-
+      
       <span type="button" class="badge alert-<%= status_class %>">
         <%= feedback_seller(buyer_feedback).rating ? I18n.t(feedback_seller(buyer_feedback).rating, scope: "helpers.feedback.ratings") : I18n.t(:nil_feedback, scope: "helpers.feedback.ratings")%>
       </span>
@@ -83,6 +92,10 @@
         <% elsif feedback_seller(buyer_feedback).rating == nil  %>
           <i class="fa fa-pencil text-link"></i>
           <%= link_to 'Qualificar', feedback_new_dashboard_boxes_path(feedback_action: "new", meli_order_id: buyer_feedback.meli_order_id, dashboard_id: current_dashboard.id), remote: true, style: "font-size: 11px" %>
+          </br>
+          <i class="fa fa-pencil text-link"></i>
+          <%= link_to 'Negativar e Cancelar', feedback_new_dashboard_boxes_path(feedback_action: "new", meli_order_id: buyer_feedback.meli_order_id, dashboard_id: current_dashboard.id, feedback_type: "cancel_negative"), remote: true, style: "font-size: 11px" %>
+
       </a>
         <% end %>
       </br>

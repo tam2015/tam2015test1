@@ -146,6 +146,7 @@ Rails.application.routes.draw do
             patch "feedback/edit", to: "feedbacks#update", as: :feedback_update, on: :collection
             get "feedback/edit_reason", to: "feedbacks#edit_reason", as: :feedback_edit_reason, on: :collection
             patch "feedback/edit_reason", to: "feedbacks#update_reason", as: :feedback_update_reason, on: :collection
+            post "feedback/notify", to: "feedbacks#notify", on: :collection
           end
         end
         post "status"
