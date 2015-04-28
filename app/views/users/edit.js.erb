@@ -1,0 +1,7 @@
+$("body")
+  .find("#user-modal.modal")
+    .remove()
+  .end()
+  .append('<%= j render("modal_form") %>')
+  .find("#user-modal.modal")
+    .modal();

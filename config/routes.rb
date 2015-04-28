@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, path: "u", only: [ :index, :show ]
+    resources :users, path: "u", only: [ :index, :show, :edit, :update ]
 
     # Payments
     resources :payment_notifications
@@ -147,6 +147,8 @@ Rails.application.routes.draw do
             get "feedback/edit_reason", to: "feedbacks#edit_reason", as: :feedback_edit_reason, on: :collection
             patch "feedback/edit_reason", to: "feedbacks#update_reason", as: :feedback_update_reason, on: :collection
             post "feedback/notify", to: "feedbacks#notify", on: :collection
+
+            resources :receipts
           end
         end
         post "status"

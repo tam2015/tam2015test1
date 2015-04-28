@@ -20,6 +20,8 @@
 class Customer < ActiveRecord::Base
   include Provider::ModelBase
 
+  serialize :billing_info
+
   belongs_to :account
 
 
@@ -59,16 +61,17 @@ class Customer < ActiveRecord::Base
     # return nil unless account.instance_of? Account
 
     # Busca o primeiro ou cria o customer do usuário com o meli_user_id da ordem
-    customer           = where({ meli_user_id: meli_customer.id }).first_or_initialize
-    customer.name      = [meli_customer.first_name?, meli_customer.last_name?].join("\s")
-    customer.phone     = phone_to_s(meli_customer.phone?)
-    customer.email     = meli_customer.email?
-    customer.nickname  = meli_customer.nickname?
+    customer                  = where({ meli_user_id: meli_customer.id }).first_or_initialize
+    customer.name             = [meli_customer.first_name?, meli_customer.last_name?].join("\s")
+    customer.phone            = phone_to_s(meli_customer.phone?)
+    customer.email            = meli_customer.email?
+    customer.nickname         = meli_customer.nickname?
+    customer.billing_info     = meli_customer.billing_info.serializable_hash if meli_customer.billing_info.present?
       #b.address   = meli_buyer.address?
     saved = customer.save
 
     if saved
-      user_to_customer = UsersToCustomer.where(customer_id: customer.id, user_id: meli_seller.id).first_or_initialize
+      user_to_customer        = UsersToCustomer.where(customer_id: customer.id, user_id: meli_seller.id).first_or_initialize
       user_to_customer.save
     end
     customer

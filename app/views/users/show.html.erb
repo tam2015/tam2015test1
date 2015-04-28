@@ -23,6 +23,26 @@
                   <div class="bio-row">
                       <p><span>Email: </span><%= current_user.email %></p>
                   </div>
+                  <div class="bio-row">
+                      <p><span>Email do Recibo: </span><%= current_user.alternative_email %></p>
+                  </div>
+                  <div class="bio-row">
+                      <p><span>Endereço: </span><%= current_user.address["address_line"] %></p>
+                  </div>               
+                  <div class="bio-row">
+                      <p><span>Razão Social: </span><%= current_user.razaosocial %></p>
+                  </div>               
+                  <div class="bio-row">
+                      <p><span>CNPJ: </span><%= current_user.cnpj %></p>
+                  </div>
+
+                  <div class="bio-row">
+                      <p><span>Website: </span><%= current_user.website %></p>
+                  </div>
+
+                  <div class="bio-row">
+                      <%= link_to "Editar", edit_user_path(current_user.id), remote: true %>
+                  </div>                  
 
               </div>
           </div>

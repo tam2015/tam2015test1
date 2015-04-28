@@ -239,6 +239,13 @@
         <i class="fa fa-pencil text-link"></i>
         <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: box.id) ,style: "font-size: 11px" %>
       </a>
+
+      </br>
+      <a href="javascript:;">
+        <i class="fa fa-pencil text-link"></i>
+        <%= link_to 'Ver Recibo', dashboard_box_receipt_path(id: box.id, box_id: box.id) ,style: "font-size: 11px", target: "blank" %>
+      </a>
+
     </td>
 
   </tr>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html class="no-js">
+   <!--<![endif]-->
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>AirCRM</title>
+      <meta name="description" content="Magalla Magazine and News Template on Themeforest">
+      <meta name="viewport" content="width=device-width">
+
+
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+      <%= csrf_meta_tags %>
+
+   </head>
+
+
+   <body style="background-color: #fff; padding: 50px !important">
+
+      <div class='col-md-12' style='border: 1px solid #dddddd'>
+      <div class='col-md-6'>
+         <div class="user-heading round">
+            <% if current_user and current_user.image.present? %>
+               <%= image_tag current_user.image, style: "width: 110px; height: 130px; padding: 10px" %>
+            <% end %>
+         </div>
+      </div>      
+
+      <div class='col-md-6'>
+         <p style="padding-top: 10px; font-weight: bold;">
+            <%= current_user.razaosocial %></br>
+            <%= current_user.cnpj %></br>
+            <%= current_user.address["address_line"] if current_user.address.present? %></br>
+            <%= current_user.phone %></br>
+            <%= current_user.email %></br>            
+            <%= current_user.website %>
+         </p>
+      </div>
+      </div>
+      
+      <div class="col-md-12" >
+         <h4> INFORMAÇOES DO PEDIDO </h4>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Número </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.meli_order_id %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Data </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.meli_date_created[0..9] if @box.meli_date_created %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Valor </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            R$ <%= @box.item.price %>
+         </p>
+      </div>
+
+      <div class="col-md-12" >
+         <h4> CLIENTE </h4>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Nome </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.customer.name %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> CPF </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.customer.billing_info[:doc_number] if @box.customer.billing_info %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Telefone </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.customer.phone %>
+         </p>
+      </div>      
+
+      <div class="col-md-12" >
+         <h4> PRODUTOS </h4>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Produto </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.item.title %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Quantidade </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.item_quantity %>
+         </p>
+      </div>
+      <div class='col-md-4' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Preço </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            R$ <%= @box.item.price %>
+         </p>
+      </div>      
+
+
+      <div class="col-md-12" >
+         <h4> INFORMAÇOES DE ENTREGA </h4>
+      </div>
+      <div class='col-md-12' style='border: 1px solid #dddddd'>
+         <p style="padding-top: 5px"> Endereço </p>
+         <p style="margin-top: -5px; font-weight: bold;">
+            <%= @box.shipping.receiver_address[:address_line] %></br>
+            <%= @box.shipping.receiver_address[:city][:name] %>, 
+            <%= @box.shipping.receiver_address[:state][:name] %></br>
+            <%= @box.shipping.receiver_address[:zip_code] %>
+         </p>
+      </div>
+
+
+   <%= yield %>
+
+   <!-- Footer -->
+
+   </body>
+
+</html>
+
+
+

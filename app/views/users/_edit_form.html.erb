@@ -1,0 +1,21 @@
+<% user ||= @user %>
+<%= simple_form_for @user, url: user_path, method: :put, html: { class: "sign_user_form sign_up_user_form form-horizontal",  role: "form" } do |f| %>
+  <div class="modal-body">
+    <%= f.input :razaosocial, label: "Razão Social" %>
+    <%= f.input :cnpj, label: "CPF ou CNPJ" %>
+    <%= f.input :phone, label: "Telefone" %>    
+    <%= f.input :alternative_email, label: "Email" %>    
+    <%= f.input :website, label: "Website ou Facebook" %>
+    <h4> Logotipo </h4>
+    <%= f.file_field :image %>        
+
+    <%= f.fields_for :address do |r| %>
+      <%= r.input :address_line, label: "Endereço Completo" %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <%= f.button :button, type: :submit, class: 'btn btn-primary', title: t("helpers.submit.create", model: down_model(User)) do %>
+      <%= "Editar" %>
+    <% end %>
+  </div>
+<% end %>

@@ -46,6 +46,7 @@
 class User < ActiveRecord::Base
   include Provider::ModelBase
 
+  mount_uploader :image, CwaveUploader
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable

@@ -59,6 +59,21 @@ class UsersController < ApplicationController
     redirect_to user_signup_url
   end
 
+  def edit
+    @user = User.find params[:id]
+  end
+
+  def update
+    @user = User.find params[:id]
+    if @user.update(user_params)
+      flash[:success] = 'Atualizado com sucesso'
+      redirect_to profile_path
+    else
+      flash[:success] = 'Não foi possível atualizar'
+      redirect_to profile_path
+    end
+  end
+
 
 
   def show
@@ -87,6 +102,11 @@ class UsersController < ApplicationController
       user_id = params[:id] || params[:user_id] || current_user.id
       @user = @klass.unscoped.find(user_id)
     end
+
+    def user_params
+      address_params = [ :address_line ]
+      params.require(:user).permit(:razaosocial, :cnpj, :phone, :alternative_email, :website, :image, address: address_params)
+    end    
 
 
 

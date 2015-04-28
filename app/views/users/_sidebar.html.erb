@@ -1,9 +1,15 @@
     <aside class="profile-nav col-lg-3">
       <section class="panel">
         <div class="user-heading round">
+            <% if current_user.image.present? %>
+            <a href="#">
+              <%= image_tag current_user.image %>
+            </a>
+            <% else %>
             <a href="#">
               <%= image_tag("theme/avatar-mini.jpg", alt: current_user.name, class: "lazy avatar-mini") %>
             </a>
+            <% end %>
             <h1><%=current_user.name%></h1>
             <p><%=current_user.email%></p>
         </div>
