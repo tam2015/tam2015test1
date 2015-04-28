@@ -24,18 +24,26 @@
          <div class="user-heading round">
             <% if current_user and current_user.image.present? %>
                <%= image_tag current_user.image, style: "width: 110px; height: 130px; padding: 10px" %>
+            <% else %>
+               <p style="padding-top: 10px; font-weight: bold;">
+                  <%= link_to "Clique aqui para colocar seu logotipo", edit_user_path(current_user.id, box_id: @box.id, from_receipt_page: true), remote: true %>
+               </p>
             <% end %>
          </div>
       </div>      
 
       <div class='col-md-6'>
          <p style="padding-top: 10px; font-weight: bold;">
-            <%= current_user.razaosocial %></br>
-            <%= current_user.cnpj %></br>
-            <%= current_user.address["address_line"] if current_user.address.present? %></br>
-            <%= current_user.phone %></br>
-            <%= current_user.email %></br>            
-            <%= current_user.website %>
+            <% if current_user.razaosocial? and current_user.cnpj? and current_user.image.present? %>
+               <%= current_user.razaosocial %></br>
+               <%= current_user.cnpj %></br>
+               <%= current_user.address["address_line"] if current_user.address.present? %></br>
+               <%= current_user.phone %></br>
+               <%= current_user.email %></br>            
+               <%= current_user.website %>
+            <% else %>
+               <%= link_to "Clique aqui para colocar seu CNPJ, Razão Social, Endereço e outros dados", edit_user_path(current_user.id, box_id: @box.id, from_receipt_page: true), remote: true %>
+            <% end %>
          </p>
       </div>
       </div>

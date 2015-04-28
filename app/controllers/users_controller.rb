@@ -65,9 +65,14 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    if @user.update(user_params)
+    if params[:from_receipt_page] != "true"
+      @user.update(user_params)
       flash[:success] = 'Atualizado com sucesso'
       redirect_to profile_path
+    elsif params[:from_receipt_page] == "true"
+      @user.update(user_params)
+      flash[:success] = 'Atualizado com sucesso'
+      redirect_to dashboard_box_receipt_path(id: params[:box_id], box_id: params[:box_id], dashboard_id: current_user.dashboards.first.id)
     else
       flash[:success] = 'Não foi possível atualizar'
       redirect_to profile_path

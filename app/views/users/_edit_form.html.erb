@@ -1,5 +1,5 @@
 <% user ||= @user %>
-<%= simple_form_for @user, url: user_path, method: :put, html: { class: "sign_user_form sign_up_user_form form-horizontal",  role: "form" } do |f| %>
+<%= simple_form_for @user, url: user_path(from_receipt_page: params[:from_receipt_page], box_id: params[:box_id]), method: :put, html: { class: "sign_user_form sign_up_user_form form-horizontal",  role: "form" } do |f| %>
   <div class="modal-body">
     <%= f.input :razaosocial, label: "Razão Social" %>
     <%= f.input :cnpj, label: "CPF ou CNPJ" %>

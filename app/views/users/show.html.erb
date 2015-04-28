@@ -27,7 +27,7 @@
                       <p><span>Email do Recibo: </span><%= current_user.alternative_email %></p>
                   </div>
                   <div class="bio-row">
-                      <p><span>Endereço: </span><%= current_user.address["address_line"] %></p>
+                      <p><span>Endereço: </span><%= current_user.address["address_line"] if current_user.address.present? %></p>
                   </div>               
                   <div class="bio-row">
                       <p><span>Razão Social: </span><%= current_user.razaosocial %></p>
