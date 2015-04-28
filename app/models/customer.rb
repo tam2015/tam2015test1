@@ -66,7 +66,7 @@ class Customer < ActiveRecord::Base
     customer.phone            = phone_to_s(meli_customer.phone?)
     customer.email            = meli_customer.email?
     customer.nickname         = meli_customer.nickname?
-    customer.billing_info     = meli_customer.billing_info.serializable_hash if meli_customer.billing_info.present?
+    customer.billing_info     = meli_customer.billing_info?.serializable_hash if meli_customer.billing_info? != nil
       #b.address   = meli_buyer.address?
     saved = customer.save
 
