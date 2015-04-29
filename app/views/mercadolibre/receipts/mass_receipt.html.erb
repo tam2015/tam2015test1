@@ -18,7 +18,7 @@
 
 
    <body style="background-color: #fff; padding: 50px !important">
-
+      <% @boxes.each do |box| %>
       <div class='col-md-12' style='border: 1px solid #dddddd'>
       <div class='col-md-6'>
          <div class="user-heading round">
@@ -26,7 +26,7 @@
                <%= image_tag current_user.image, style: "width: 150px; height: 100px; padding: 10px" %>
             <% else %>
                <p style="padding-top: 10px; font-weight: bold;">
-                  <%= link_to "Clique aqui para colocar seu logotipo", edit_user_path(current_user.id, box_id: @box.id, from_receipt_page: true), remote: true %>
+                  <%= link_to "Clique aqui para colocar seu logotipo", edit_user_path(current_user.id, box_id: box.id, from_receipt_page: true), remote: true %>
                </p>
             <% end %>
          </div>
@@ -54,19 +54,19 @@
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Número </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.meli_order_id %>
+            <%= box.meli_order_id %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Data </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.meli_date_created[0..9] if @box.meli_date_created %>
+            <%= box.meli_date_created[0..9] if box.meli_date_created %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Valor </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            R$ <%= @box.item.price %>
+            R$ <%= box.item.price %>
          </p>
       </div>
 
@@ -76,19 +76,19 @@
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Nome </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.customer.name %>
+            <%= box.customer.name %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> CPF </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.customer.billing_info[:doc_number] if @box.customer.billing_info %>
+            <%= box.customer.billing_info[:doc_number] if box.customer.billing_info %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Telefone </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.customer.phone %>
+            <%= box.customer.phone %>
          </p>
       </div>      
 
@@ -98,19 +98,19 @@
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Produto </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.item.title %>
+            <%= box.item.title %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Quantidade </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.item_quantity %>
+            <%= box.item_quantity %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Preço </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            R$ <%= @box.item.price %>
+            R$ <%= box.item.price %>
          </p>
       </div>      
 
@@ -121,18 +121,20 @@
       <div class='col-md-12' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Endereço </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.shipping.receiver_address[:address_line] %></br>
-            <%= @box.shipping.receiver_address[:city][:name] %>, 
-            <%= @box.shipping.receiver_address[:state][:name] %></br>
-            <%= @box.shipping.receiver_address[:zip_code] %>
+            <%= box.shipping.receiver_address[:address_line] %></br>
+            <%= box.shipping.receiver_address[:city][:name] %>, 
+            <%= box.shipping.receiver_address[:state][:name] %></br>
+            <%= box.shipping.receiver_address[:zip_code] %>
          </p>
       </div>
-
+      <div class='col-md-12' style="margin-top: 50px">
+         <h1 style="margin-top: 200px; color: #fff">espaco</h1>      
+      </div>
 
    <%= yield %>
 
    <!-- Footer -->
-
+   <% end %>
    </body>
 
 </html>

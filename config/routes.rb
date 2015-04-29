@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       # Mercadolibre
       scope module: 'mercadolibre' do
         resources :label
+        get "/mass_receipts", to: "receipts#mass_receipt"
         get "meli_label", to: "label#meli_label"
         get "multiple_meli_labels", to: "label#multiple_meli_labels"
 

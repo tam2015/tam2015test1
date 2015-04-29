@@ -21,6 +21,8 @@
             %li
               = link_to "Etiquetas", dashboard_label_index_path(dashboard)
             %li
+              = link_to "Recibos", dashboard_box_receipts_path(dashboard, box_id: 1)            
+            %li
               = link_to "#{t_model(Mercadolibre::Item)}", dashboard_items_path(dashboard)
             / %li
             /   = link_to "Etiquetagem", dashboard_label_index_path(dashboard)
