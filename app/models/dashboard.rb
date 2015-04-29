@@ -80,9 +80,9 @@ class Dashboard < ActiveRecord::Base
     dashboard.load_provider
 
     # fire workers
-    if sync_account and (dashboard.preferences.average_sales == nil or dashboard.preferences.average_sales < 1000 )
+    # if sync_account and (dashboard.preferences.average_sales == nil or dashboard.preferences.average_sales < 1000 )
       Mercadolibre::AccountSyncWorker.perform_async dashboard.id
-    end
+    # end
 
     dashboard
   end
