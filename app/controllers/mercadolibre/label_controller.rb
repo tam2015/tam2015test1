@@ -56,7 +56,6 @@ class Mercadolibre::LabelController < ApplicationController
           shippings << box.shipping
         end        
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
-      end
       elsif params[:status_box_payment]
         @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
         shippings = []
@@ -64,7 +63,6 @@ class Mercadolibre::LabelController < ApplicationController
           shippings << box.shipping
         end        
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
-      end       
       elsif params[:status_box_shipping]
         @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)      
         shippings = []
@@ -107,7 +105,6 @@ class Mercadolibre::LabelController < ApplicationController
           shippings << box.shipping
         end        
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
-      end
       elsif params[:status_box_payment]
         @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
         shippings = []
@@ -115,7 +112,6 @@ class Mercadolibre::LabelController < ApplicationController
           shippings << box.shipping
         end        
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
-      end       
       elsif params[:status_box_shipping]
         @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)      
         shippings = []
