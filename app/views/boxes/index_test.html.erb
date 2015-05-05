@@ -17,7 +17,7 @@
       <li class="dropdown" style="padding-right: 30px; float: left">
         <form action="#" class="pull-right position">
           <%= form_tag dashboard_categories_path, method: :get do %>
-            <input type="text" placeholder="ID ordem ou anúncio ou nick ou email" class="form-control search-btn " style= "width: 300px"
+            <input type="text" placeholder="Ordem ou anúncio ou nick ou email" class="form-control search-btn " style= "width: 300px"
               <%= text_field_tag :query, params[:query] %>
               <%= submit_tag "Search", name: nil, class: "hidden" %>
 
