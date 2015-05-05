@@ -3,7 +3,7 @@ module Mercadolibre
     include Provider::ModelBase
     serialize :answer
 
-    default_scope  { order(:meli_date_created => :desc) }
+    default_scope  { order(:meli_question_id => :desc) }
     # Question status. Possible values:
       # unanswered: Question is not answered yet.
       # answered: Question was answered.
