@@ -87,6 +87,8 @@
   </div>
 </div>
 
+<% unless params[:status_box_payment] or params[:status_box_shipping] %> 
 <div class="col-md-12" id="question_paginate" >
 <%= will_paginate @shippings, previous_label: h("<"), next_label: h(">") %>
 </div>
+<% end %>
