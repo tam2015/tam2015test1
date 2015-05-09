@@ -10,6 +10,14 @@ class Mercadolibre::ReceiptsController < ApplicationController
 
 
   def index
+    if current_user.admin?
+      admin_index
+    elsif current_user.regular?
+      regular_index
+    end    
+  end
+
+  def regular_index
     if params[:query]
       if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
         @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
@@ -48,6 +56,46 @@ class Mercadolibre::ReceiptsController < ApplicationController
       @boxes = current_user.boxes.order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
     end
   end
+
+  def admin_index
+    if params[:query]
+      if ::Box.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+        @boxes = ::Box.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
+      elsif ::Customer.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+        @boxes = ::Customer.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
+      elsif ::Customer.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+        @boxes = ::Customer.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
+      end      
+    elsif params[:status_box_payment]
+      @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
+    #shipping_status_filter
+    elsif params[:status_box_shipping]
+      @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)      
+    elsif params[:status_feedback] == "com_feedback"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: ["positive", "neutral", "negative"])
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = ::Box.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      end
+    elsif params[:status_feedback] == "sem_feedback"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: nil)
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = ::Box.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      # else
+      #   @boxes = []
+      #   # redirect_to dashboard_box_receipts_path
+      end
+    else   
+      @boxes = ::Box.order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
+    end
+  end  
 
   def show
 	@box = ::Box.find params[:box_id]
