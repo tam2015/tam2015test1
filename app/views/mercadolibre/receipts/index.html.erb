@@ -35,7 +35,7 @@
       </ul>
     </li>    
     <li class="dropdown" style="padding-right: 30px; float: left">
-      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Envio <b class="caret"></b></a>
+      <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Qualificação <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% ["com_feedback", "sem_feedback"].each do |feedback_status| %>
           <li><%= link_to feedback_status, dashboard_box_receipts_path(status_feedback: feedback_status), method: :get %></li>
