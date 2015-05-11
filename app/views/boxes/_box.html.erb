@@ -227,14 +227,6 @@
         <% end %>
       </a>
       </br>
-      <% if box.feedback_seller(box) %>
-      <a href="javascript:;">
-        <i class="fa fa-pencil text-link"></i>
-        <%= link_to 'Editar Avaliação', feedback_edit_dashboard_boxes_path(meli_order_id: box.meli_order_id, author_type: "seller"),remote: true ,style: "font-size: 11px" %>
-      </a>
-      <% end %>
-      </br>
-
       <a href="javascript:;">
         <i class="fa fa-pencil text-link"></i>
         <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: box.id) ,style: "font-size: 11px" %>
