@@ -76,13 +76,17 @@
       <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
          <p style="padding-top: 5px"> Nome </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.customer.name %>
+            <% if @box.customer %>
+               <%= @box.customer.name %>
+            <% end %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
          <p style="padding-top: 5px"> CPF </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.customer.billing_info[:doc_number] if @box.customer.billing_info %>
+            <% if @box.customer and @box.customer.billing_info %> 
+               <%= @box.customer.billing_info[:doc_number] if @box.customer.billing_info %>
+            <% end %>
          </p>
       </div>
       <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
@@ -98,10 +102,12 @@
       <div class='col-md-12' style='border: 1px solid #dddddd'>
          <p style="padding-top: 5px"> Endereço </p>
          <p style="margin-top: -5px; font-weight: bold;">
-            <%= @box.shipping.receiver_address[:address_line] %></br>
-            <%= @box.shipping.receiver_address[:city][:name] %>, 
-            <%= @box.shipping.receiver_address[:state][:name] %></br>
-            <%= @box.shipping.receiver_address[:zip_code] %>
+            <% if @box.shipping and @box.shipping.receiver_address.present? %>
+               <%= @box.shipping.receiver_address[:address_line] %></br>
+               <%= @box.shipping.receiver_address[:city][:name] %>, 
+               <%= @box.shipping.receiver_address[:state][:name] %></br>
+               <%= @box.shipping.receiver_address[:zip_code] %>
+            <% end %>
          </p>
       </div>         
 

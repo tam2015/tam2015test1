@@ -42,7 +42,7 @@
                <%= current_user.email %></br>            
                <%= current_user.website %>
             <% else %>
-               <%= link_to "Clique aqui para colocar seu CNPJ, Razão Social, Endereço e outros dados", edit_user_path(current_user.id, box_id: @box.id, from_receipt_page: true), remote: true %>
+               <%= link_to "Clique aqui para colocar seu CNPJ, Razão Social, Endereço e outros dados", edit_user_path(current_user.id, box_id: box.id, from_receipt_page: true), remote: true %>
             <% end %>
          </p>
       </div>
