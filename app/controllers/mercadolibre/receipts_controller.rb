@@ -31,7 +31,7 @@ class Mercadolibre::ReceiptsController < ApplicationController
     #shipping_status_filter
     elsif params[:status_box_shipping]
       @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)      
-    elsif params[:status_feedback] == "com_feedback"
+    elsif params[:status_feedback] == "com_qualificação"
       feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: ["positive", "neutral", "negative"])
       if feedbacks.present?
         meli_order_ids = []
@@ -40,7 +40,7 @@ class Mercadolibre::ReceiptsController < ApplicationController
         end
         @boxes = current_user.dashboards.first.boxes.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
       end
-    elsif params[:status_feedback] == "sem_feedback"
+    elsif params[:status_feedback] == "sem_qualificação"
       feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: nil)
       if feedbacks.present?
         meli_order_ids = []
