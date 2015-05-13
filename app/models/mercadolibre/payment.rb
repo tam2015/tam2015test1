@@ -4,7 +4,7 @@ module Mercadolibre
 
 
     # associations
-    belongs_to :box
+    belongs_to :box, class: ::Box
 
     #Dúvidas
     #include Geocoder::Model::Mongoid

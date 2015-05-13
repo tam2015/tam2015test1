@@ -21,16 +21,16 @@
     <li class="dropdown" style="padding-right: 30px; float: left">
       <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Pagamento <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <% list_of_payment_tags.each do |payment_status| %>
-          <li><%= link_to I18n.t(payment_status, scope: "helpers.boxes.payment_tags"), dashboard_box_receipts_path(status_box_payment: payment_status), method: :get %></li>
+        <% Mercadolibre::Payment.statuses.each do |payment_status| %>
+          <li><%= link_to I18n.t(payment_status[0], scope: "helpers.boxes.payment_tags"), dashboard_box_receipts_path(status_box_payment: payment_status[1]), method: :get %></li>
         <% end %>
       </ul>
     </li>
     <li class="dropdown" style="padding-right: 30px; float: left">
       <a style="color:#31708f  ; background: #d9edf7 " href="#" class="form-control input-sm m-bot15" data-toggle="dropdown"> Status Envio <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <% list_of_shipping_tags.each do |shipping_status| %>
-          <li><%= link_to I18n.t(shipping_status, scope: "helpers.boxes.shipping_tags"), dashboard_box_receipts_path(status_box_shipping: shipping_status), method: :get %></li>
+        <% Mercadolibre::Shipping.statuses.each do |shipping_status| %>
+          <li><%= link_to I18n.t(shipping_status[0], scope: "helpers.boxes.shipping_tags"), dashboard_box_receipts_path(status_box_shipping: shipping_status[1]), method: :get %></li>
         <% end %>
       </ul>
     </li>    
@@ -59,7 +59,7 @@
         </ul>
       </header>
       <div class="panel-body">
-        <% if @boxes.present? %>
+        <% if @shippings.present? or @boxes.present? or @payments.present?%>
           <div class="no-more-tables">
             <table class="display table table-bordered table-striped table-condensed no-more-tables">
               <thead>
@@ -79,6 +79,16 @@
   </div>
 </div>
 
-<div class="col-md-12" id="question_paginate" >
-<%= will_paginate @boxes, previous_label: h("<"), next_label: h(">") %>
-</div>
+<% if params[:status_box_payment]%> 
+  <div class="col-md-12" id="question_paginate" >
+  <%= will_paginate @payments, previous_label: h("<"), next_label: h(">") %>
+  </div>
+<% elsif params[:status_box_shipping]%> 
+  <div class="col-md-12" id="question_paginate" >
+  <%= will_paginate @shippings, previous_label: h("<"), next_label: h(">") %>
+  </div>  
+<% else %>
+  <div class="col-md-12" id="question_paginate" >
+  <%= will_paginate @boxes, previous_label: h("<"), next_label: h(">") %>
+  </div>
+<% end %>

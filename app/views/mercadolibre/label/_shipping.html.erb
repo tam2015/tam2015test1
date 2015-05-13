@@ -62,3 +62,141 @@
   <% end %>
 <% end %>
 
+
+
+
+
+
+
+
+<% if @boxes %>
+  <% @boxes.each do | box| %>
+    <% if box.shipping.label %>
+      <tr id="item_<%= box.shipping.id %>">
+      <td class="text-center hidden-xs table-checkbox">
+
+        <%= check_box_tag "box_id[]", box.id %>
+      </td>
+        <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+          <div class="user-heading round">
+          <% if box.item and box.meli_variation_id%>
+          <dt style= "margin-top: -20px">Variação</dt>
+          <dd>
+            <% box.item.variations.find_by(meli_variation_id: box.meli_variation_id).variation_types.each do |variation_type|  %>
+              <%= variation_type.meli_value_name %>
+            <% end %>
+            </br>
+            </br>
+          <% end %>
+          </dd>
+
+          <% if box.item.pictures and box.item.pictures.first and box.item.pictures.first.meli_url != nil %>
+            <a href="#">
+                <%= image_tag box.item.pictures.first.meli_url, style: "width: 50px; height: 30px" %>
+                <%= truncate(box.item.title, length: 28) %>
+            </a>
+          <% end %>
+          </div>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+            <%= box.meli_order_id %>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+          <% if box.customer %>
+            <%= box.customer.nickname %>
+          <% end %>
+        </td>
+        <td data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if box.shipping.receiver_address %>
+            <%= box.shipping.receiver_address[:address_line] %>
+          <% end %>
+        </td>
+        <td style= "width: 90px" data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if box.shipping.label and box.shipping.label.meli_first_date_printed? %>
+          <span type="button" class="badge alert-success">
+          <%= "impresso" %>
+          </span>
+          <%= box.shipping.label.aircrm_date_printed[0..9] if box.shipping.label.aircrm_date_printed?%>
+          <%= box.shipping.label.meli_first_date_printed[0..9] if box.shipping.label.meli_first_date_printed?%>
+          <% else %>
+          <span type="button" class="badge alert-danger">
+          <%= "não impresso" %>
+          </span>
+          <% end %>
+        </td>
+        <td style= "width: 100px" data-title="<%= Mercadolibre::Label.human_attribute_name(:status      ) %>">
+          <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: box.id) ,style: "font-size: 11px" %>
+        </td>
+
+      </tr>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+
+<% if @payments %>
+  <% @payments.each do | payment| %>
+    <% if payment.box.shipping.label %>
+      <tr id="item_<%= payment.box.shipping.id %>">
+      <td class="text-center hidden-xs table-checkbox">
+
+        <%= check_box_tag "box_id[]", payment.box.id %>
+      </td>
+        <td style= "width: 250px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
+          <div class="user-heading round">
+          <% if payment.box.item and payment.box.meli_variation_id%>
+          <dt style= "margin-top: -20px">Variação</dt>
+          <dd>
+            <% payment.box.item.variations.find_by(meli_variation_id: payment.box.meli_variation_id).variation_types.each do |variation_type|  %>
+              <%= variation_type.meli_value_name %>
+            <% end %>
+            </br>
+            </br>
+          <% end %>
+          </dd>
+
+          <% if payment.box.item.pictures and payment.box.item.pictures.first and payment.box.item.pictures.first.meli_url != nil %>
+            <a href="#">
+                <%= image_tag payment.box.item.pictures.first.meli_url, style: "width: 50px; height: 30px" %>
+                <%= truncate(payment.box.item.title, length: 28) %>
+            </a>
+          <% end %>
+          </div>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+            <%= payment.box.meli_order_id %>
+        </td>
+        <td style= "width: 130px" data-title="<%= Mercadolibre::Label.human_attribute_name(:meli_item_id       ) %>">
+          <% if payment.box.customer %>
+            <%= payment.box.customer.nickname %>
+          <% end %>
+        </td>
+        <td data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if payment.box.shipping.receiver_address %>
+            <%= payment.box.shipping.receiver_address[:address_line] %>
+          <% end %>
+        </td>
+        <td style= "width: 90px" data-title="<%= Mercadolibre::Label.human_attribute_name(:start_time  ) %>">
+          <% if payment.box.shipping.label and payment.box.shipping.label.meli_first_date_printed? %>
+          <span type="button" class="badge alert-success">
+          <%= "impresso" %>
+          </span>
+          <%= payment.box.shipping.label.aircrm_date_printed[0..9] if payment.box.shipping.label.aircrm_date_printed?%>
+          <%= payment.box.shipping.label.meli_first_date_printed[0..9] if payment.box.shipping.label.meli_first_date_printed?%>
+          <% else %>
+          <span type="button" class="badge alert-danger">
+          <%= "não impresso" %>
+          </span>
+          <% end %>
+        </td>
+        <td style= "width: 100px" data-title="<%= Mercadolibre::Label.human_attribute_name(:status      ) %>">
+          <%= link_to 'Ver Etiqueta', dashboard_meli_label_path(box_id: payment.box.id) ,style: "font-size: 11px" %>
+        </td>
+
+      </tr>
+    <% end %>
+  <% end %>
+<% end %>
+

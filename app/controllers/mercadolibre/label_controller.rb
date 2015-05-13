@@ -58,21 +58,29 @@ class Mercadolibre::LabelController < ApplicationController
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
       end
     elsif params[:status_box_payment]
-      @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc)
-      shippings = []
-      @boxes.each do |box|
-        shippings << box.shipping
-      end        
-      @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
+      @payments = Mercadolibre::Payment.where(dashboard_id: current_dashboard.id, status: params[:status_box_payment]).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)                  
     elsif params[:status_box_shipping]
-      @boxes = current_user.dashboards.first.boxes.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc)
-      shippings = []
-      @boxes.each do |box|
-        shippings << box.shipping
-      end        
-      @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
+      @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id, status: params[:status_box_shipping]).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)                        
     elsif params[:print_status] == "Todas"
       @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
+    elsif params[:status_feedback] == "com_qualificação"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: ["positive", "neutral", "negative"])
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = current_user.dashboards.first.boxes.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      end
+    elsif params[:status_feedback] == "sem_qualificação"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: nil)
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = current_user.dashboards.first.boxes.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      end      
     else
     @shippings = Mercadolibre::Shipping.where(dashboard_id: current_dashboard.id).includes(:label).where(labels: {meli_first_date_printed: nil}).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
       # if @shippings.count < 1
@@ -108,21 +116,29 @@ class Mercadolibre::LabelController < ApplicationController
         @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
       end
     elsif params[:status_box_payment]
-      @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_payment]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc)
-      shippings = []
-      @boxes.each do |box|
-        shippings << box.shipping
-      end        
-      @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
+      @payments = Mercadolibre::Payment.where(status: params[:status_box_payment]).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
     elsif params[:status_box_shipping]
-      @boxes = ::Box.where("tags && ARRAY['#{params[:status_box_shipping]}']::character varying(255)[]").includes(:payments,:shipping, :customer).order(meli_order_id: :desc)
-      shippings = []
-      @boxes.each do |box|
-        shippings << box.shipping
-      end        
-      @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
+      @shippings = Mercadolibre::Shipping.where(status: params[:status_box_shipping]).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)                        
     elsif params[:print_status] == "Todas"
       @shippings = Mercadolibre::Shipping.all.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
+    elsif params[:status_feedback] == "com_qualificação"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: ["positive", "neutral", "negative"])
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = ::Box.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      end
+    elsif params[:status_feedback] == "sem_qualificação"
+      feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: nil)
+      if feedbacks.present?
+        meli_order_ids = []
+        feedbacks.each do |feedback| 
+          meli_order_ids << feedback.meli_order_id
+        end
+        @boxes = ::Box.where(meli_order_id: meli_order_ids).includes(:payments,:shipping, :customer).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+      end      
     else
     @shippings = Mercadolibre::Shipping.all.includes(:label).where(labels: {meli_first_date_printed: nil}).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
       # if @shippings.count < 1
