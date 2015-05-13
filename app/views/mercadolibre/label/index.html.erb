@@ -87,16 +87,18 @@
   </div>
 </div>
 
-<% if params[:status_box_payment]%> 
-  <div class="col-md-12" id="question_paginate" >
-  <%= will_paginate @payments, previous_label: h("<"), next_label: h(">") %>
-  </div>
-<% elsif params[:status_feedback]%> 
-  <div class="col-md-12" id="question_paginate" >
-  <%= will_paginate @boxes, previous_label: h("<"), next_label: h(">") %>
-  </div>  
-<% else %>
-  <div class="col-md-12" id="question_paginate" >
-  <%= will_paginate @shippings, previous_label: h("<"), next_label: h(">") %>
-  </div>
+<% if !params[:query] %>
+  <% if params[:status_box_payment]%> 
+    <div class="col-md-12" id="question_paginate" >
+    <%= will_paginate @payments, previous_label: h("<"), next_label: h(">") %>
+    </div>
+  <% elsif params[:status_feedback]%> 
+    <div class="col-md-12" id="question_paginate" >
+    <%= will_paginate @boxes, previous_label: h("<"), next_label: h(">") %>
+    </div>  
+  <% else %>
+    <div class="col-md-12" id="question_paginate" >
+    <%= will_paginate @shippings, previous_label: h("<"), next_label: h(">") %>
+    </div>
+  <% end %>
 <% end %>
