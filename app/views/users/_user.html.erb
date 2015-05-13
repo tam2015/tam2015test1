@@ -15,7 +15,7 @@
       <%= user.boxes.count %>
     </td>
     <td data-title="<%= t_model(Account) %>">
-      <% if user.dashboards.first.aircrm_preferences.first %>
+      <% if user.dashboards.first and user.dashboards.first.aircrm_preferences.first %>
       <%= user.dashboards.first.aircrm_preferences.first.data %>
       <% end %>
     </td>
