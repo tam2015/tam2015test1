@@ -41,21 +41,21 @@ class Mercadolibre::LabelController < ApplicationController
         @boxes.each do |box|
           shippings << box.shipping
         end
-        @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
+        @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
       elsif current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
         @boxes = current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
         shippings = []
         @boxes.each do |box|
           shippings << box.shipping
         end    
-        @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
+        @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
       elsif current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
         @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
         shippings = []
         @boxes.each do |box|
           shippings << box.shipping
         end        
-        @shippings = shippings.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
+        @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        
       end
     elsif params[:status_box_payment]
       @payments = Mercadolibre::Payment.where(dashboard_id: current_dashboard.id, status: params[:status_box_payment]).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)                  

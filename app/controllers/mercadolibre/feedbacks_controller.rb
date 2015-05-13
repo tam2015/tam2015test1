@@ -31,8 +31,18 @@ class Mercadolibre::FeedbacksController < ApplicationController
   end
 
   def index_admin
-    if current_user.admin?
+    if params[:rating_received]
+      @feedbacks = Mercadolibre::Feedback.where(author_type: "buyer", rating: params[:rating_received]).paginate(page: params[:page], per_page: 7)
+    elsif params[:rating_sent]
+      @feedbacks = Mercadolibre::Feedback.where(author_type: "seller", rating: params[:rating_sent]).paginate(page: params[:page], per_page: 7)
+    elsif params[:query]
+      @feedbacks = Mercadolibre::Feedback.where(meli_order_id: params[:query], author_type: "buyer").paginate(page: params[:page], per_page: 7)
+    else
       @feedbacks = Mercadolibre::Feedback.where(author_type: "buyer").paginate(page: params[:page], per_page: 7)
+      if @feedbacks.count < 1
+        redirect_to dashboards_path
+        flash[:error] = "Estamos carregando suas qualificações recebidas. Por favor aguarde um momento"
+      end
     end
   end
 
