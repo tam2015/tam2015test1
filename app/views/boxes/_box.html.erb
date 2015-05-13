@@ -1,4 +1,4 @@
-<% if box and box.payments %>
+<% if box and box.payments and box.shipping %> 
   <tr id="item_<%= box.id %>">
     <td style= "width: 200px" data-title="<%= Mercadolibre::Label.human_attribute_name(:title       ) %>">
       <dl class="dl-horizontal">

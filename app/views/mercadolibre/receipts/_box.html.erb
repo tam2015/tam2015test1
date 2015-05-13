@@ -1,6 +1,6 @@
 <% if @boxes %>
   <% @boxes.each do | box| %>
-    <% if box and box.payments %>
+    <% if box and box.payments and box.shipping %>
       <tr id="item_<%= box.id %>">
       <td class="text-center hidden-xs table-checkbox">
 
@@ -55,7 +55,7 @@
 
 <% if @payments %>
   <% @payments.each do |payment| %>
-    <% if payment.box %>
+    <% if payment.box and payment.box.shipping %>
       <tr id="item_<%= payment.box.id %>">
       <td class="text-center hidden-xs table-checkbox">
 
