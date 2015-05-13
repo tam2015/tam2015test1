@@ -20,15 +20,19 @@
       <% end %>
     </td>
     <td data-title="<%= t_model(Account) %>">
-      <% if user.dashboards.first.preferences.average_sales %>
+      <% if user.dashboards.first and user.dashboards.first.preferences.average_sales %>
       <%= user.dashboards.first.preferences.average_sales %>
       <% end %>
     </td>
     <td data-title="<%= t_model(Account) %>">
-      <%= user.dashboards.first.id %>
+      <% if user.dashboards.first %>      
+        <%= user.dashboards.first.id %>
+      <% end %>
     </td>
     <td data-title="<%= t_model(Account) %>">
-      <%= user.dashboards.first.meli_user_id %>
+      <% if user.dashboards.first %>            
+        <%= user.dashboards.first.meli_user_id %>
+      <% end %>
     </td>
     <td data-title="<%= Subscription.human_attribute_name(:expires_in  ) %>">
       <%= user.account.subscription.expires_in %>
