@@ -25,8 +25,8 @@
         <% #= r.input :address_line   , required: true, input_html: { value: receiver_address[:address_line] } %>
         <%= r.input :rating , label: "Nota da Avaliação", collection: ["positive", "neutral", "negative"], prompt: "Selecione a nota da avaliação", required: true %>
         <%= r.input :content, as: :text, label: "Mensagem", required: true %>
-        <%= r.input :payment_status , label: "Status do Pagamento", collection: Mercadolibre::Payment.statuses.keys, prompt: "Selecione o status do pagamento", required: true %>
-        <%= r.input :shipping_status, label: "Status do Envio", collection: Mercadolibre::Shipping.statuses.keys, prompt: "Selecione o status do envio", required: true %>
+        <%= r.input :payment_status , label: "Status do Pagamento", collection: @aircrm_preference.payment_status_to_portuguese, prompt: "Selecione o status do pagamento", required: true %>
+        <%= r.input :shipping_status, label: "Status do Envio", collection: @aircrm_preference.shipping_status_to_portuguese, prompt: "Selecione o status do envio", required: true %>
       <% end %>
     </div>
   </div>

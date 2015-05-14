@@ -173,6 +173,51 @@ br:
       sync: Sincronizar %{model}
       update: Atualizar %{model}
 
+    aircrm_preferences:
+      payment_status_to_portuguese:
+        to_be_agreed: a_combinar
+        pending: pendente
+        approved: aprovado
+        in_process: processando
+        rejected: rejeitado
+        cancelled: cancelado
+        refunded: reembolsado
+        in_mediation: em_mediação
+        charged_back: charged_back
+
+
+      shipping_status_to_portuguese:
+        to_be_agreed: a_combinar
+        pending: pendente
+        handling: empacotando
+        ready_to_ship: pronto_para_entrega
+        shipped: enviado
+        delivered: entregue
+        not_delivered: não_entregue
+        cancelled: cancelado
+
+      payment_status_to_english:
+        a_combinar: to_be_agreed
+        pendente: pending
+        aprovado: approved
+        processando: in_process
+        rejeitado: rejected
+        cancelado: cancelled
+        reembolsado: refunded
+        em_mediação: in_mediation
+        charged_back: charged_back
+
+
+      shipping_status_to_english:
+        a_combinar: to_be_agreed
+        pendente: pending
+        empacotando: handling
+        pronto_para_entrega: ready_to_ship
+        enviado: shipped
+        entregue: delivered
+        não_entregue: not_delivered
+        cancelado: cancelled
+
     # "providers/mercadolibre/shippings":
     # titles
     feedback:

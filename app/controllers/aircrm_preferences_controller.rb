@@ -5,7 +5,19 @@ class AircrmPreferencesController < ApplicationController
   end
 
   def create
-    if @aircrm_preference = AircrmPreference.create(aircrm_preference_params)
+    @aircrm_preference = AircrmPreference.new    
+    @aircrm_preference.preference_type    = params[:aircrm_preference][:preference_type]
+    @aircrm_preference.dashboard_id       = params[:aircrm_preference][:dashboard_id]
+    @aircrm_preference.data               = 
+    { 
+      status: params[:aircrm_preference][:data][:status],
+      rating: params[:aircrm_preference][:data][:rating], 
+      content:params[:aircrm_preference][:data][:content],
+      payment_status: I18n.t(params[:aircrm_preference][:data][:payment_status], scope: "helpers.aircrm_preferences.payment_status_to_english"),
+      shipping_status: I18n.t(params[:aircrm_preference][:data][:shipping_status], scope: "helpers.aircrm_preferences.shipping_status_to_english")
+    }
+
+    if @aircrm_preference.save
       redirect_to  dashboard_aircrm_preferences_path(dashboard_id: current_user.dashboards.first.id, preference_type: params[:aircrm_preference][:preference_type])
     else
       puts "não foi possivel"
