@@ -10,11 +10,6 @@
   <section class="panel" style="background: #2a3542 ">
     <ul class="panel" style= "width: 100%; height: 60px; padding-top:15px; padding-left: 30px;">
       <li class="dropdown" style="padding-right: 30px; float: left">
-        <%= link_to dashboard_index_test_path(@dashboard), id: "refresh_items", class: "btn btn-info btn-sm" do %>
-          <%= "Puxar novos dados" %>
-        <% end %>
-      </li>
-      <li class="dropdown" style="padding-right: 30px; float: left">
         <form action="#" class="pull-right position">
           <%= form_tag dashboard_categories_path, method: :get do %>
             <input type="text" placeholder="Ordem ou anúncio ou nick ou email" class="form-control search-btn " style= "width: 300px"
@@ -56,6 +51,11 @@
           <% end %>
         </ul>
       </li>
+      <li class="dropdown" style="padding-right: 30px; float: left">
+        <%= link_to dashboard_index_test_path(@dashboard), id: "refresh_items", class: "btn btn-info btn-sm" do %>
+          <%= translate_button_content(:refresh, Box, icon: :refresh, label_class: "sr-only") %>
+        <% end %>
+      </li>      
     </ul>
   </section>
 

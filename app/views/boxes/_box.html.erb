@@ -23,6 +23,14 @@
         <% end %>
         </br>
         </br>
+      <% elsif box.manual_variation %>
+      <dt style= "margin-top: -20px">Variação</dt>
+      <dd>
+          <span type="button" class="badge alert-info %>">
+            <%= box.manual_variation %>
+          </span>
+        </br>
+        </br>
       <% end %>
       </dd>
       <div class="user-heading round">
@@ -236,6 +244,11 @@
       <a href="javascript:;">
         <i class="fa fa-pencil text-link"></i>
         <%= link_to 'Ver Recibo', dashboard_box_receipt_path(id: box.id, box_id: box.id) ,style: "font-size: 11px", target: "blank" %>
+      </a>
+      </br>      
+      <a href="javascript:;">
+        <i class="fa fa-pencil text-link"></i>
+        <%= link_to 'Variação manual', edit_dashboard_box_path(id: box.id, box_id: box.id) ,style: "font-size: 11px", remote: true %>
       </a>
 
     </td>

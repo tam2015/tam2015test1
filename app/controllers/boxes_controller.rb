@@ -47,6 +47,7 @@ class BoxesController < ApplicationController
 
   def edit
     @customer = @box.customer
+    @box = Box.find params[:id]
   end
 
   def create
@@ -58,41 +59,47 @@ class BoxesController < ApplicationController
   end
 
   def update
-    if @dashboard and @dashboard.provider?
-      Rails.logger.debug "\n\n"
-      Rails.logger.debug " ======== Box.update#status"
+    # if @dashboard and @dashboard.provider?
+    #   Rails.logger.debug "\n\n"
+    #   Rails.logger.debug " ======== Box.update#status"
 
-      box_params.slice(:status).each do |key, value|
-        @box.send("#{key}=", value) if @box.respond_to? key
-      end
-      Rails.logger.debug " =========== box.changes: #{@box.changes}"
+    #   box_params.slice(:status).each do |key, value|
+    #     @box.send("#{key}=", value) if @box.respond_to? key
+    #   end
+    #   Rails.logger.debug " =========== box.changes: #{@box.changes}"
 
-      if @box.changed?
-        provider_of_box = "#{@dashboard.provider}::Box".classify.constantize.new @dashboard
-        @box = provider_of_box.post @box
-      end
+    #   if @box.changed?
+    #     provider_of_box = "#{@dashboard.provider}::Box".classify.constantize.new @dashboard
+    #     @box = provider_of_box.post @box
+    #   end
 
-      box_params.each do |key, value|
-        @box.send("#{key}=", value) if @box.respond_to? key
-      end
+    #   box_params.each do |key, value|
+    #     @box.send("#{key}=", value) if @box.respond_to? key
+    #   end
 
-      Rails.logger.debug "-------------------------"
-      Rails.logger.debug " =========== api posted: #{@box.inspect}"
-      Rails.logger.debug " =========== api errors: #{@box.errors.to_json}"
-      Rails.logger.debug "\n\n"
-    end
+    #   Rails.logger.debug "-------------------------"
+    #   Rails.logger.debug " =========== api posted: #{@box.inspect}"
+    #   Rails.logger.debug " =========== api errors: #{@box.errors.to_json}"
+    #   Rails.logger.debug "\n\n"
+    # end
 
-    @box.save if @box.errors.empty? and @box.changed?
+    # @box.save if @box.errors.empty? and @box.changed?
 
-    if !@box.errors.empty?
-      @box.errors.each do |code, message|
-        flash[:error] = message
-      end
+    # if !@box.errors.empty?
+    #   @box.errors.each do |code, message|
+    #     flash[:error] = message
+    #   end
+    # else
+    #   flash[:success] = 'Box was successfully updated.'
+    # end
+
+    # respond_with @box
+    @box = Box.find params[:id]
+    if @box.update(box_params)
+      redirect_to dashboard_index_test_path
     else
-      flash[:success] = 'Box was successfully updated.'
+      redirect_to dashboard_index_test_path
     end
-
-    respond_with @box
   end
 
 
@@ -142,7 +149,7 @@ class BoxesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def box_params
-      params.require(:box).permit(:name, :description, :position, :closed, :price, :status, :favorite, :tags,
+      params.require(:box).permit(:name, :description, :position, :closed, :price, :status, :favorite, :tags, :manual_variation, 
         # Providers
         :meli_order_id,
         # Assosiations

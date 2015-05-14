@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428003513) do
+ActiveRecord::Schema.define(version: 20150514002306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20150428003513) do
     t.string   "meli_last_updated"
     t.integer  "item_quantity"
     t.integer  "meli_variation_id", limit: 8
+    t.text     "manual_variation"
   end
 
   add_index "boxes", ["meli_order_id", "meli_item_id"], name: "index_boxes_on_meli_order_id_and_meli_item_id", using: :btree

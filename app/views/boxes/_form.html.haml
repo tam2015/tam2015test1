@@ -1,0 +1,26 @@
+- box ||= @box
+
+
+= simple_form_for(box, as: :box, url: :dashboard_box, method: :put ,html: { class: "shipping_form", role: "form" }) do |f|
+  .row
+    .col-lg-12
+      = f.error_notification
+
+  .row
+    .col-lg-12
+      - #= f.input :receiver_address_s, required: true, autofocus: true, input_html: { required: true }
+
+      = f.input :manual_variation
+
+    .hidden
+      = f.hidden_field :id, value: params[:box_id]
+
+  .row
+    .col-action.text-center
+      = f.button :button, type: :submit, class: "btn btn-success" do
+        = translate_button_content(:submit, box, icon: :check, label_class: "hidden-xs")
+
+      = link_to :back, class: "btn btn-default", id: "cancel" do
+        = translate_button_content(:cancel, box, icon: :times, label_class: "hidden-xs")
+
+
