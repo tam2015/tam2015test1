@@ -105,7 +105,9 @@ module Mercadolibre
             puts "\n\n\n\n\n---------customer_zip_code#{customer_zip_code}-----------\n\n\n\n\n\n "
             puts "\n\n\n\n\n---------seller_zip_code#{seller_zip_code}-----------\n\n\n\n\n\n "
             puts "\n\n\n\n\n---------dimension#{dimension}-----------\n\n\n\n\n\n "
-            costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
+            if customer_zip_code and seller_zip_code and dimension
+              costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
+            end
             if costs 
               question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost} e via Sedex custa R$#{costs.options.last.cost}" 
               question.save
