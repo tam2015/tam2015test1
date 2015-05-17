@@ -15,7 +15,6 @@ module Mercadolibre
         refresh_token = dashboard.credentials[:refresh_token]
         Mercadolibre::Question.api.update_token(refresh_token)
         meli_questions  = Meli::Question.find_by_item_id(item_id)
-        Mercadolibre::Question.perform_async
 
         # Create Questions
         unless meli_questions.questions.empty?
