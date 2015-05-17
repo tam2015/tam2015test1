@@ -89,7 +89,7 @@ module Mercadolibre
             ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
           end
 
-          if question.text.include?("cep")
+          if question.text.include?("cep") or question.text.include?("CEP") or question.text.include?("Cep") or question.text.include?("Frete") or question.text.include?("frete") or question.text.include?("FRETE")
             item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)            
             customer_zip_code = question.text.gsub(/[^0-9]/, '')
             seller_zip_code   = item.meli_info.seller_address["zip_code"]#dashboard.preferences.seller_address["zip_code"]
