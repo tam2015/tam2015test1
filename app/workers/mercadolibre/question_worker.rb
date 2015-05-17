@@ -35,19 +35,18 @@ module Mercadolibre
         # used to destroy questions that are removed by Mercado Livre
         if meli_question.status == 404 or meli_question.status == 400
           q = Mercadolibre::Question.find_by(meli_question_id: question_id)
-          if q
-            q.destroy
-          end
+          q.destroy
+        else
+          question << meli_question  
+          Mercadolibre::Question.create_or_update_record(question, dashboard)          
         end          
         # meli_question  = Meli::Question.find question_id
-        if meli_question
-          question << meli_question
-        end
+        # question << meli_question
 
-        # Create Question
-        unless question.empty?
-          Mercadolibre::Question.create_or_update_record(question, dashboard)
-        end
+        # # Create Question
+        # unless question.empty?
+        #   Mercadolibre::Question.create_or_update_record(question, dashboard)
+        # end
       end
     end
 
