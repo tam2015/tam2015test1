@@ -64,6 +64,14 @@ GIT
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
 
+GIT
+  remote: git://github.com/tam2015/tam2015testgem1.git
+  revision: a7e02bd6519e430a59ca1b89362f31a1b495228e
+  specs:
+    meli (0.0.19)
+      activeresource (~> 4.0, >= 4.0.0)
+      oauth2 (~> 1.0, >= 1.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -516,6 +524,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   less-rails
+  meli (~> 0.0.19)!
   mercadolibre!
   mini_magick (~> 3.7.0)
   mongoid (~> 4.0.0.rc1)
