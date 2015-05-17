@@ -87,15 +87,17 @@ module Mercadolibre
             seller_zip_code   = dashboard.preferences.seller_address["zip_code"]
             item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)
             if item.meli_info.shipping and item.meli_info.shipping["dimensions"] != nil
-              dimension = item.meli_info.shipping["dimensions"]
+              dimension = item.meli_info.shipping["dimensions"] || "15x15x25,500"
             else
               # category = item.category_id
               # dimension = Meli::Category.find category
               dimension = "15x15x25,500"
             end
             costs = Meli::Shipment.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
-            question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost if costs.options.first.name == "Expresso"} e via Sedex custa R$#{costs.options.last.cost if costs.options.last.name == "Normal"}" 
-            question.save
+            if costs 
+              question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost if costs.options.first.name == "Expresso"} e via Sedex custa R$#{costs.options.last.cost if costs.options.last.name == "Normal"}" 
+              question.save
+            end
           end
 
             #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
