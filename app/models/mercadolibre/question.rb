@@ -93,7 +93,7 @@ module Mercadolibre
               # dimension = Meli::Category.find category
               dimension = "15x15x25,500"
             end
-            costs = Meli::Shipment.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
+            costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
             if costs 
               question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost if costs.options.first.name == "Expresso"} e via Sedex custa R$#{costs.options.last.cost if costs.options.last.name == "Normal"}" 
               question.save
