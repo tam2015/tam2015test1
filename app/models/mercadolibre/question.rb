@@ -93,7 +93,7 @@ module Mercadolibre
             item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)            
             # customer_zip_code = question.text.gsub(/[^0-9]/, '')
             # customer_zip_code = question.text.partition('cep').last[0..8].delete(' ,-') if question.text.partition('cep').last[0..8].delete(' ,-,:') != ""
-            customer_zip_code = question.text..scan(/\d+.\d+.\d+/).map{ |s| s.gsub(/\D+/, '') }[0]
+            customer_zip_code = question.text.scan(/\d+.\d+.\d+/).map{ |s| s.gsub(/\D+/, '') }[0]
             seller_zip_code   = item.meli_info.seller_address["zip_code"]#dashboard.preferences.seller_address["zip_code"]
             if item.meli_info.shipping and item.meli_info.shipping["dimensions"] != nil
               dimension = item.meli_info.shipping["dimensions"] || "15x15x25,500"
