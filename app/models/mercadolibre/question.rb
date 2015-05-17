@@ -90,9 +90,9 @@ module Mercadolibre
           end
 
           if question.text.include?("cep")
+            item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)            
             customer_zip_code = question.text.gsub(/[^0-9]/, '')
-            seller_zip_code   = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id).meli_info.seller_address["zip_code"]#dashboard.preferences.seller_address["zip_code"]
-            item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)
+            seller_zip_code   = item.meli_info.seller_address["zip_code"]#dashboard.preferences.seller_address["zip_code"]
             if item.meli_info.shipping and item.meli_info.shipping["dimensions"] != nil
               dimension = item.meli_info.shipping["dimensions"] || "15x15x25,500"
             else
@@ -100,6 +100,9 @@ module Mercadolibre
               # dimension = Meli::Category.find category
               dimension = "15x15x25,500"
             end
+            puts "\n\n\n\n\n---------customer_zip_code#{customer_zip_code}-----------\n\n\n\n\n\n "
+            puts "\n\n\n\n\n---------seller_zip_code#{seller_zip_code}-----------\n\n\n\n\n\n "
+            puts "\n\n\n\n\n---------dimension#{dimension}-----------\n\n\n\n\n\n "
             costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
             if costs 
               question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost} e via Sedex custa R$#{costs.options.last.cost}" 
