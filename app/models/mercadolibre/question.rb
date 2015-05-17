@@ -107,18 +107,13 @@ module Mercadolibre
             ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
           end
 
-
-          # If Question is new, we can
-          # notify user with an email
-          # if new_question
-            # Notify User about new question?
-          # end
-
-          # Data Collection for post analysis
-          # Datastores.create!(from: :meli_item_question,
-          #                   meli_id: meli_item_question.id,
-          #                   klass: meli_item_question.class,
-          #                   json: meli_item_question.serializable_hash)
+          refresh_token = dashboard.credentials[:refresh_token]
+          Mercadolibre::Question.api.update_token(refresh_token)
+          meli_question = Mercadolibre::Question.api.get_question question_id
+          question_worker = Mercadolibre::QuestionWorker.perform_in(10.minutes, dashboard.meli_user_id, item_id = [],question.meli_question_id)
+          if question_worker.status == 404 or question_worker.status == 400
+            question.destroy
+          end          
 
         end
       end
