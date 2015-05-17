@@ -95,7 +95,7 @@ module Mercadolibre
             end
             costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
             if costs 
-              question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost if costs.options.first.name == "Expresso"} e via Sedex custa R$#{costs.options.last.cost if costs.options.last.name == "Normal"}" 
+              question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost} e via Sedex custa R$#{costs.options.last.cost}" 
               question.save
             end
           end
