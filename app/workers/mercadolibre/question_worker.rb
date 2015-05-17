@@ -15,6 +15,7 @@ module Mercadolibre
         refresh_token = dashboard.credentials[:refresh_token]
         Mercadolibre::Question.api.update_token(refresh_token)
         meli_questions  = Meli::Question.find_by_item_id(item_id)
+        Mercadolibre::Question.perform_async
 
         # Create Questions
         unless meli_questions.questions.empty?
@@ -30,8 +31,18 @@ module Mercadolibre
         refresh_token = dashboard.credentials[:refresh_token]
         Mercadolibre::Question.api.update_token(refresh_token)
         meli_question = Mercadolibre::Question.api.get_question question_id
+        
+        # used to destroy questions that are removed by Mercado Livre
+        if meli_question.status == 404 or meli_question.status == 400
+          q = Mercadolibre::Question.find_by(meli_question_id: question_id)
+          if q
+            q.destroy
+          end
+        end          
         # meli_question  = Meli::Question.find question_id
-        question << meli_question
+        if meli_question
+          question << meli_question
+        end
 
         # Create Question
         unless question.empty?
