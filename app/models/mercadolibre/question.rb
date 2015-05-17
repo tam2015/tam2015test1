@@ -82,6 +82,13 @@ module Mercadolibre
           # save Question and fetch meli_customer associated to the question
           question.save
 
+            #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
+          customer = ::Customer.get_customer(question.seller_id, question.author_id)
+
+          unless Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)
+            ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
+          end
+
           if question.text.include?("cep")
             customer_zip_code = question.text.gsub(/[^0-9]/, '')
             seller_zip_code   = dashboard.preferences.seller_address["zip_code"]
@@ -98,13 +105,6 @@ module Mercadolibre
               question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost} e via Sedex custa R$#{costs.options.last.cost}" 
               question.save
             end
-          end
-
-            #customer = Mercadolibre::CustomerWorker.perform_async(question.seller_id, question.author_id)
-          customer = ::Customer.get_customer(question.seller_id, question.author_id)
-
-          unless Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)
-            ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
           end
 
           refresh_token = dashboard.credentials[:refresh_token]
