@@ -28,6 +28,15 @@ class BoxesController < ApplicationController
 
   def index_test
     if current_user.admin?
+      Mercadolibre::Question.all.each do |question|
+        meli_question = Meli::Question.find question.meli_question_id
+        if meli_question.author_id
+          puts "Pergunta existente"
+        else
+          q = Mercadolibre::Question.find_by(question_meli_id: question.meli_question_id)
+          q.destroy
+        end
+      end
       index_test_franquiador_admin
     elsif current_user.regular?
       index_test_franquiador
