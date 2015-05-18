@@ -28,14 +28,11 @@ class BoxesController < ApplicationController
 
   def index_test
     if current_user.admin?
+      dashboard = current_user.dashboards.first
+      refresh_token = dashboard.credentials[:refresh_token]
+      Mercadolibre::Question.api.update_token(refresh_token)
       Mercadolibre::Question.all.each do |question|
-        meli_question = Meli::Question.find question.meli_question_id
-        if meli_question.author_id
-          puts "Pergunta existente"
-        else
-          q = Mercadolibre::Question.find_by(question_meli_id: question.meli_question_id)
-          q.destroy
-        end
+        question_worker = Mercadolibre::QuestionWorker.perform_async(dashboard.meli_user_id, item_id = [],question.meli_question_id)
       end
       index_test_franquiador_admin
     elsif current_user.regular?
