@@ -35,7 +35,7 @@ module Mercadolibre
         question << meli_question
 
         # # Create Question
-        unless question.empty?
+        unless question.empty? and worker_action
           Mercadolibre::Question.create_or_update_record(question, dashboard)
         end
 
