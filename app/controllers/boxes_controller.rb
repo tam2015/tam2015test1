@@ -32,7 +32,8 @@ class BoxesController < ApplicationController
       refresh_token = dashboard.credentials[:refresh_token]
       Mercadolibre::Question.api.update_token(refresh_token)
       Mercadolibre::Question.all.each do |question|
-        question_worker = Mercadolibre::QuestionWorker.perform_async(dashboard.meli_user_id, item_id = [],question.meli_question_id)
+        worker_action = "check"
+        question_worker = Mercadolibre::QuestionWorker.perform_async(dashboard.meli_user_id, item_id = [],question.meli_question_id, worker_action)
       end
       index_test_franquiador_admin
     elsif current_user.regular?

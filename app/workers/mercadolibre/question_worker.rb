@@ -3,7 +3,7 @@ module Mercadolibre
     include Sidekiq::Worker
     sidekiq_options queue: :orders, retry: true, backtrace: true
 
-    def perform(user_id, item_id = [], question_id = nil)
+    def perform(user_id, item_id = [], question_id = nil, worker_action = nil)
       puts "\n\n* Mercadolibre::QuestionWorker.perform - meli_user_id: #{user_id}, item_id: #{item_id}, question_id: #{question_id}\n"
 
       # Rescue Dashboard
@@ -31,21 +31,20 @@ module Mercadolibre
         Mercadolibre::Question.api.update_token(refresh_token)
         meli_question = Mercadolibre::Question.api.get_question question_id
         
-        # used to destroy questions that are removed by Mercado Livre
-        if meli_question.status == 404 or meli_question.status == 400
-          q = Mercadolibre::Question.find_by(meli_question_id: question_id)
-          q.destroy
-        else
-          question << meli_question  
-          Mercadolibre::Question.create_or_update_record(question, dashboard)          
-        end          
         # meli_question  = Meli::Question.find question_id
-        # question << meli_question
+        question << meli_question
 
         # # Create Question
-        # unless question.empty?
-        #   Mercadolibre::Question.create_or_update_record(question, dashboard)
-        # end
+        unless question.empty?
+          Mercadolibre::Question.create_or_update_record(question, dashboard)
+        end
+
+        # used to destroy questions that are removed by Mercado Livre
+        if worker_action and meli_question.status == 404 or meli_question.status == 400
+          q = Mercadolibre::Question.find_by(meli_question_id: question_id)
+          q.destroy
+        end
+
       end
     end
 
