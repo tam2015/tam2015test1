@@ -96,11 +96,11 @@ module Mercadolibre
             customer_zip_code = question.text.scan(/\d+.\d+.\d+/).map{ |s| s.gsub(/\D+/, '') }[0]
             seller_zip_code   = item.meli_info.seller_address["zip_code"]#dashboard.preferences.seller_address["zip_code"]
             if item.meli_info.shipping and item.meli_info.shipping["dimensions"] != nil
-              dimension = item.meli_info.shipping["dimensions"] || "15x15x25,500"
+              dimension = item.meli_info.shipping["dimensions"] || "16x11x7,337"
             else
               # category = item.category_id
               # dimension = Meli::Category.find category
-              dimension = "15x15x25,500"
+              dimension = "16x11x7,337"
             end
             puts "\n\n\n\n\n---------customer_zip_code#{customer_zip_code}-----------\n\n\n\n\n\n "
             puts "\n\n\n\n\n---------seller_zip_code#{seller_zip_code}-----------\n\n\n\n\n\n "

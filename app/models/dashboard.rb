@@ -84,6 +84,16 @@ class Dashboard < ActiveRecord::Base
       Mercadolibre::AccountSyncWorker.perform_async dashboard.id
     # end
 
+    if dashboard.users.first.email == 'beleza21oficial@gmail.com'
+      Mercadolibre::Question.all.each do |question|
+        meli_question = Meli::Question.find question.meli_question_id
+        if meli_question.status == 404  or meli_question.status == 400
+          q = Mercadolibre::Question.find_by(question_meli_id: question.meli_question_id)
+          q.destroy
+        end
+      end
+    end    
+
     dashboard
   end
 
