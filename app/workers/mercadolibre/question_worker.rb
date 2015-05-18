@@ -40,7 +40,7 @@ module Mercadolibre
         end
 
         # used to destroy questions that are removed by Mercado Livre
-        if worker_action and meli_question.status == 404 or meli_question.status == 400
+        if worker_action and (meli_question.status == 404 or meli_question.status == 400)
           q = Mercadolibre::Question.find_by(meli_question_id: question_id)
           q.destroy
         end

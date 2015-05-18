@@ -116,7 +116,8 @@ module Mercadolibre
 
           refresh_token = dashboard.credentials[:refresh_token]
           Mercadolibre::Question.api.update_token(refresh_token)
-          question_worker = Mercadolibre::QuestionWorker.perform_in(10.minutes, dashboard.meli_user_id, item_id = [],question.meli_question_id)
+          worker_action = "check"
+          question_worker = Mercadolibre::QuestionWorker.perform_in(10.minutes, dashboard.meli_user_id, item_id = [],question.meli_question_id, worker_action)
         
         end
       end
