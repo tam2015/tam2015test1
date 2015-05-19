@@ -12,8 +12,11 @@ module Mercadolibre
       end
 
       def queue_notification
-        ::Mercadolibre::QuestionWorker.perform_async(self.user_id, item_id = [], self.id)
+        # ::Mercadolibre::QuestionWorker.perform_async(self.user_id, item_id = [], self.id)
+        ::Mercadolibre::QuestionWorker.perform_in(2.minutes, self.user_id, item_id = [], self.id)
       end
     end
   end
 end
+
+
