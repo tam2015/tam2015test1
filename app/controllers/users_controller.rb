@@ -110,7 +110,7 @@ class UsersController < ApplicationController
 
     def user_params
       address_params = [ :address_line ]
-      params.require(:user).permit(:razaosocial, :cnpj, :phone, :alternative_email, :website, :image, address: address_params)
+      params.require(:user).permit(:razaosocial, :cnpj, :phone, :alternative_email, :website, :image, :warranty_term, address: address_params)
     end    
 
 

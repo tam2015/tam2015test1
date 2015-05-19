@@ -51,19 +51,19 @@
       <div class="col-md-12" >
          <h4> INFORMAÇOES DO PEDIDO </h4>
       </div>
-      <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
+      <div class='col-md-4' style='border: 1px solid #dddddd; height: 100px'>
          <p style="padding-top: 5px"> Número </p>
          <p style="margin-top: -5px; font-weight: bold;">
             <%= @box.meli_order_id %>
          </p>
       </div>
-      <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
+      <div class='col-md-4' style='border: 1px solid #dddddd; height: 100px'>
          <p style="padding-top: 5px"> Data </p>
          <p style="margin-top: -5px; font-weight: bold;">
             <%= @box.meli_date_created[0..9] if @box.meli_date_created %>
          </p>
       </div>
-      <div class='col-md-4' style='border: 1px solid #dddddd; height: 58px'>
+      <div class='col-md-4' style='border: 1px solid #dddddd; height: 100px'>
          <p style="padding-top: 5px"> Garantia</p>
          <p style="margin-top: -5px; font-weight: bold;">
             <%= @box.item.warranty %>            
@@ -143,7 +143,23 @@
          <p style="margin-top: -5px; font-weight: bold;">
             R$ <%= @box.item.price.*(@box.item_quantity) %>
          </p>
-      </div>      
+      </div>     
+
+      <% if current_user.warranty_term %>
+      <div class="col-md-12">
+         <h4> TERMO DE GARANTIA </h4>
+      </div>
+      <div class='col-md-12' style='border: 1px solid #dddddd;'>
+         <p style="padding-top: 5px">  </p>
+         <p style="margin-top: -5px; font-size: 9px">
+            <%= current_user.warranty_term %>            
+         </p>
+      </div>
+      <% end %>  
+
+      <div class="col-md-12">
+         <h4>  </h4>
+      </div>
 
 
    <%= yield %>

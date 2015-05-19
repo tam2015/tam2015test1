@@ -11,6 +11,8 @@
     <%= f.fields_for :address do |r| %>
       <%= r.input :address_line, label: "Endereço Completo" %>
     <% end %>
+
+    <%= f.input :warranty_term, label: "Termo de Garantia" %>    
   </div>
   <div class="modal-footer">
     <%= f.button :button, type: :submit, class: 'btn btn-primary', title: t("helpers.submit.create", model: down_model(User)) do %>
