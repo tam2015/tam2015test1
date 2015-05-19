@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514002306) do
+ActiveRecord::Schema.define(version: 20150519143335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,7 @@ ActiveRecord::Schema.define(version: 20150514002306) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "meli_date_created"
+    t.text     "shipping_answer"
   end
 
   add_index "questions", ["meli_question_id", "meli_item_id"], name: "index_questions_on_meli_question_id_and_meli_item_id", using: :btree
@@ -424,6 +425,7 @@ ActiveRecord::Schema.define(version: 20150514002306) do
     t.string   "image"
     t.string   "website"
     t.string   "alternative_email"
+    t.text     "warranty_term"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

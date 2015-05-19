@@ -108,8 +108,9 @@ module Mercadolibre
             if customer_zip_code and seller_zip_code and dimension
               costs = Meli::Trend.shipping_calculator(seller_zip_code, customer_zip_code, dimension)
             end
-            if costs 
-              question.shipping_answer = "O frete via pac custa R$#{costs.options.first.cost} e via Sedex custa R$#{costs.options.last.cost}" 
+            if costs
+              customer = ::Customer.find_by(meli_user_id: question.author_id) 
+              question.shipping_answer = "Olá #{customer.name}, obrigado pela pergunta. O preço de envio desse produto via PAC é de R$#{costs.options.first.cost} e via Sedex é de R$#{costs.options.last.cost}. Estamos a disposição. Atenciosamente. #{dashboard.meli_user_username}" 
               question.save
             end
           end

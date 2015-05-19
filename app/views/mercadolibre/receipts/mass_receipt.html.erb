@@ -131,14 +131,32 @@
             <% end %>
          </p>
       </div>
+
+      <% if current_user.warranty_term %>
+      <div class="col-md-12">
+         <h4> TERMO DE GARANTIA </h4>
+      </div>
+      <div class='col-md-12' style='border: 1px solid #dddddd;'>
+         <p style="padding-top: 5px">  </p>
+         <p style="margin-top: -5px; font-size: 9px">
+            <%= current_user.warranty_term %>            
+         </p>
+      </div>
+      <% end %>  
+
+      <div class="col-md-12">
+         <h4>  </h4>
+      </div>      
+
       <div class='col-md-12' style="margin-top: 50px">
-         <h1 style="margin-top: 200px; color: #fff">espaco</h1>      
+         <h1 style="margin-top: 50px; color: #fff">espaco</h1>      
       </div>
 
    <%= yield %>
 
    <!-- Footer -->
    <% end %>
+
    </body>
 
 </html>

@@ -84,7 +84,7 @@ class Customer < ActiveRecord::Base
       meli_seller = Dashboard.find_by(meli_user_id: user_id).users.first
 
       # Update Customer
-      unless customer = Customer.where({ meli_user_id: meli_customer.id }).first
+      unless customer = Customer.find_by({ meli_user_id: meli_customer.id })
         Customer.parse(meli_customer, meli_seller)
       end
     end
