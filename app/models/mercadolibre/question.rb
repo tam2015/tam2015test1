@@ -89,7 +89,7 @@ module Mercadolibre
             ::Mercadolibre::ItemWorker.perform_async question.seller_id, question.meli_item_id
           end
 
-          if question.text.include?("cep") or question.text.include?("CEP") or question.text.include?("Cep") or question.text.include?("Frete") or question.text.include?("frete") or question.text.include?("FRETE")
+          if question.text.include?("cep") or question.text.include?("CEP") or question.text.include?("Cep") or question.text.include?("Frete") or question.text.include?("frete") or question.text.include?("FRETE") or question.text.include?("PAC") or question.text.include?("SEDEX") or question.text.include?("Pac") or question.text.include?("Sedex") or question.text.include?("sedex") or question.text.include?("pac")
             item = Mercadolibre::Item.find_by(meli_item_id: question.meli_item_id)            
             # customer_zip_code = question.text.gsub(/[^0-9]/, '')
             # customer_zip_code = question.text.partition('cep').last[0..8].delete(' ,-') if question.text.partition('cep').last[0..8].delete(' ,-,:') != ""
@@ -114,10 +114,10 @@ module Mercadolibre
             end
           end
 
-          refresh_token = dashboard.credentials[:refresh_token]
-          Mercadolibre::Question.api.update_token(refresh_token)
-          worker_action = "check"
-          question_worker = Mercadolibre::QuestionWorker.perform_in(10.minutes, dashboard.meli_user_id, item_id = [],question.meli_question_id, worker_action)
+          # refresh_token = dashboard.credentials[:refresh_token]
+          # Mercadolibre::Question.api.update_token(refresh_token)
+          # worker_action = "check"
+          # question_worker = Mercadolibre::QuestionWorker.perform_in(10.minutes, dashboard.meli_user_id, item_id = [],question.meli_question_id, worker_action)
         
         end
       end
