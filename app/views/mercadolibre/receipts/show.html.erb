@@ -34,14 +34,25 @@
 
       <div class='col-md-6'>
          <p style="padding-top: 10px; font-weight: bold;">
-            <% if current_user.razaosocial? and current_user.cnpj? and current_user.image.present? %>
+            <% if current_user.razaosocial.present? %> 
                <%= current_user.razaosocial %></br>
+            <% end %>
+            <% if current_user.cnpj.present? %>
                <%= current_user.cnpj %></br>
-               <%= current_user.address["address_line"] if current_user.address.present? %></br>
+            <% end %>   
+            <% if current_user.address.present? %>                        
+               <%= current_user.address["address_line"] %></br>
+            <% end %>
+            <% if current_user.phone.present? %>                                    
                <%= current_user.phone %></br>
+            <% end %>
+            <% if current_user.email.present? %>
                <%= current_user.email %></br>            
+            <% end %>
+            <% if current_user.website.present? %>
                <%= current_user.website %>
-            <% else %>
+            <% end %>
+            <% if !current_user.razaosocial? and !current_user.cnpj? and !current_user.image.present? %>
                <%= link_to "Clique aqui para colocar seu CNPJ, Razão Social, Endereço e outros dados", edit_user_path(current_user.id, box_id: @box.id, from_receipt_page: true), remote: true %>
             <% end %>
          </p>
@@ -145,7 +156,7 @@
          </p>
       </div>     
 
-      <% if current_user.warranty_term %>
+      <% if current_user.warranty_term.present? %>
       <div class="col-md-12">
          <h4> TERMO DE GARANTIA </h4>
       </div>

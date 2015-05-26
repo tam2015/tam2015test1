@@ -36,23 +36,23 @@ class Mercadolibre::LabelController < ApplicationController
   def index_regular
     if params[:query]
       if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).count > 0
-        @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer)
+        boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer)
         shippings = []
-        @boxes.each do |box|
+        boxes.each do |box|
           shippings << box.shipping
         end
         @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)
-      elsif current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
-        @boxes = current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
+      elsif current_user.customers.where(email: params[:query]).count > 0 and current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
+        boxes = current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
         shippings = []
-        @boxes.each do |box|
+        boxes.each do |box|
           shippings << box.shipping
         end    
         @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)            
-      elsif current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
-        @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
+      elsif current_user.customers.where(nickname: params[:query]).count > 0 and current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).count > 0
+        boxes = current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer)
         shippings = []
-        @boxes.each do |box|
+        boxes.each do |box|
           shippings << box.shipping
         end        
         @shippings = shippings#.includes(:label).order(meli_order_id: :desc).paginate(page: params[:page], per_page: 30)        

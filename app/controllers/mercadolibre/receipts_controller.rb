@@ -21,9 +21,9 @@ class Mercadolibre::ReceiptsController < ApplicationController
     if params[:query]
       if current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
         @boxes = current_user.dashboards.first.boxes.where("meli_item_id ilike :q or name ilike :q", q: "%#{params[:query]}%").includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
-      elsif current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+      elsif current_user.customers.where(email: params[:query]).count > 0 and current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
         @boxes = current_user.customers.where(email: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
-      elsif current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
+      elsif current_user.customers.where(nickname: params[:query]).count > 0 and current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5).count > 0
         @boxes = current_user.customers.where(nickname: params[:query]).first.boxes.includes(:payments,:shipping, :customer).paginate(page: params[:page], per_page: 5)
       end      
     elsif params[:status_box_payment]
