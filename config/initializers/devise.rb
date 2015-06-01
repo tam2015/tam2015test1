@@ -299,6 +299,6 @@ Devise.setup do |config|
   #   { scope: ENV['FACEBOOK_SCOPE'], client_options: { ssl: { ca_file: '/usr/lib/ssl/certs/ca-certificates.crt' } } }
 
   # require "omniauth-mercadolibre"
-  config.omniauth :mercadolibre, ENV['MERCADOLIBRE_APP_ID'], ENV['MERCADOLIBRE_APP_SECRET'], client_options: { ssl: { version: "SSLv3" } }#, provider_ignores_state: true
+  config.omniauth :mercadolibre, ENV['MERCADOLIBRE_APP_ID'], ENV['MERCADOLIBRE_APP_SECRET'], provider_ignores_state: true#, client_options: { ssl: { version: "SSLv3" } }#, provider_ignores_state: true
 
 end
